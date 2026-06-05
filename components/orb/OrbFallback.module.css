@@ -1,0 +1,56 @@
+/* Clinic Genie — official palette: Genie Cyan #18C4D9, Soft Aqua #78E2DD, Strategic Teal #062D36 */
+.orb {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #EAFBFB 0%, #78E2DD 20%, #18C4D9 50%, #0E5F6B 80%, #062D36 100%);
+  box-shadow:
+    0 0 80px 12px rgba(24,196,217,0.6),
+    0 0 160px 40px rgba(24,196,217,0.32),
+    0 0 240px 80px rgba(120,226,221,0.2);
+  isolation: isolate;
+}
+
+.orb::before {
+  content: "";
+  position: absolute;
+  inset: -22%;
+  border-radius: 50%;
+  background: conic-gradient(from 0deg, #18C4D9, #78E2DD, #7DAFE3, #CCF4F6, #18C4D9);
+  filter: blur(30px);
+  opacity: 0.55;
+  z-index: -1;
+  animation: orb-plasma-swirl 11s linear infinite;
+}
+
+.orb::after {
+  content: "";
+  position: absolute;
+  inset: 4%;
+  border-radius: 50%;
+  background: radial-gradient(circle at 62% 68%, rgba(234,251,251,0.9), rgba(24,196,217,0.2) 44%, transparent 62%);
+  mix-blend-mode: screen;
+  animation: orb-glow-breathe 5s ease-in-out infinite;
+}
+
+.spark {
+  position: absolute;
+  border-radius: 50%;
+  background: #EAFBFB;
+  filter: blur(0.5px);
+  box-shadow: 0 0 6px 1px rgba(120, 226, 221, 0.9);
+  animation: orb-twinkle 3.4s ease-in-out infinite;
+}
+
+.static,
+.static::before,
+.static::after { animation: none !important; }
+
+@keyframes orb-plasma-swirl  { to { transform: rotate(360deg); } }
+@keyframes orb-glow-breathe  { 0%,100% { opacity:.75; transform:scale(.98); } 50% { opacity:1; transform:scale(1.02); } }
+@keyframes orb-twinkle       { 0%,100% { opacity:.2; transform:scale(.7); } 50% { opacity:1; transform:scale(1.15); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .orb, .orb::before, .orb::after, .spark { animation: none !important; }
+}

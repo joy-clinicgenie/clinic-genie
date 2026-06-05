@@ -1,0 +1,130 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* === OFFICIAL CLINIC GENIE BRAND COLOURS === */
+:root {
+  --genie-cyan:  #18C4D9;
+  --soft-aqua:   #78E2DD;
+  --clinical-sky:#7DAFE3;
+  --strat-teal:  #062D36;
+  --teal-80:     #0B4652;
+  --teal-60:     #0E5F6B;
+  --mist-aqua:   #EAFBFB;
+  --slate-teal:  #395D66;
+  --soft-grey:   #E6EEF1;
+  --clean-white: #FFFFFF;
+
+  --container:  75rem;
+  --prose:      45rem;
+  --page-pad:   clamp(1.25rem, 5vw, 2.5rem);
+  --ease-genie: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-out-soft: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-micro:  180ms;
+  --dur-ui:     300ms;
+  --dur-reveal: 700ms;
+  --orb-size:   clamp(200px, 35vw, 480px);
+}
+
+@layer base {
+  html { scroll-behavior: smooth; }
+
+  body {
+    /* Strategic Teal dark (#062D36) as the base dark background */
+    background-color: #062D36;
+    @apply text-onDark font-sans antialiased;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background: rgba(24, 196, 217, 0.35);
+    color: #fff;
+  }
+
+  :focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(24, 196, 217, 0.55), 0 0 0 5px rgba(6, 45, 54, 0.9);
+    border-radius: 6px;
+  }
+
+  ::-webkit-scrollbar { width: 10px; }
+  ::-webkit-scrollbar-track { background: #041F27; }
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #0E5F6B, #062D36);
+    border-radius: 999px;
+    border: 2px solid #041F27;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #18C4D9, #0E5F6B);
+  }
+}
+
+@layer components {
+  /* Glass — on dark Strategic Teal backgrounds */
+  .glass {
+    background: rgba(255, 255, 255, 0.07);
+    backdrop-filter: blur(20px) saturate(130%);
+    -webkit-backdrop-filter: blur(20px) saturate(130%);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.18), 0 16px 40px rgba(4,31,39,0.5);
+  }
+  .glass-tint {
+    background: rgba(24, 196, 217, 0.1);
+    backdrop-filter: blur(20px) saturate(130%);
+    -webkit-backdrop-filter: blur(20px) saturate(130%);
+    border: 1px solid rgba(24, 196, 217, 0.22);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.18), 0 16px 40px rgba(4,31,39,0.5);
+  }
+  /* Glass — on light Mist Aqua / White backgrounds */
+  .glass-light {
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(16px) saturate(120%);
+    -webkit-backdrop-filter: blur(16px) saturate(120%);
+    border: 1px solid rgba(230, 238, 241, 0.9);
+    box-shadow: 0 8px 24px rgba(6,45,54,0.08), inset 0 1px 0 rgba(255,255,255,0.8);
+  }
+
+  /* Genie Cyan gradient text (dark surfaces only) */
+  .genie-text {
+    background-image: linear-gradient(92deg, #18C4D9, #78E2DD 60%, #7DAFE3);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .hairline-glow {
+    background: linear-gradient(90deg, transparent, #18C4D9, #78E2DD, #18C4D9, transparent);
+  }
+
+  .link-underline {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    background-size: 0% 1.5px;
+    transition: background-size 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .link-underline:hover { background-size: 100% 1.5px; }
+
+  .prose-reading { max-width: var(--prose); }
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .glass       { background: rgba(11, 70, 82, 0.85); }
+  .glass-tint  { background: rgba(14, 95, 107, 0.85); }
+  .glass-light { background: rgba(255, 255, 255, 0.94); }
+}
+
+@media (pointer: fine) {
+  body[data-custom-cursor="on"],
+  body[data-custom-cursor="on"] * { cursor: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

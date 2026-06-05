@@ -1,0 +1,43 @@
+{
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "Bash(find \"/Users/cgdesign/Documents/clinic genie/clients/clinic genie/REVAMP\" -type f 2>/dev/null | head -100; echo \"==== FOR WEBSITE ====\"; find \"/Users/cgdesign/Documents/clinic genie/clients/clinic genie/for website\" -type f 2>/dev/null | head -60)",
+      "Read(//Users/cgdesign/Documents/clinic genie/clients/clinic genie/**)",
+      "Bash(find REVAMP -maxdepth 2)",
+      "Bash(find \"for website\" -maxdepth 2)",
+      "Bash(find REVAMP -type f \\\\\\( -iname \"*.txt\" -o -iname \"*.md\" -o -iname \"*.docx\" -o -iname \"*.pdf\" -o -iname \"*.rtf\" \\\\\\))",
+      "Bash(mkdir -p public/brand)",
+      "Bash(cp \"../REVAMP/CG brandmark.svg\" \"public/brand/brandmark.svg\")",
+      "Bash(cp \"../REVAMP/circle 1.svg\" \"public/brand/orbit.svg\")",
+      "Bash(cp \"../clinic genie brand mark.png\" \"public/brand/brandmark.png\")",
+      "Bash(cp \"../REVAMP/Clinic Genie logo.avif\" \"public/brand/logo.avif\")",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:drei.docs.pmnd.rs)",
+      "WebFetch(domain:react-postprocessing.docs.pmnd.rs)",
+      "Bash(python3 -c ' *)",
+      "Bash(curl -s -o /tmp/cg-home.html -w \"%{http_code}\" http://localhost:3939/)",
+      "Read(//tmp/**)",
+      "mcp__Claude_in_Chrome__list_connected_browsers",
+      "Bash(npm i *)",
+      "Bash(npx playwright *)",
+      "Bash(node /tmp/shoot.mjs)",
+      "Bash(cp /tmp/shoot.mjs ./.shoot.mjs)",
+      "Bash(node ./.shoot.mjs)",
+      "Bash(node ./.shoot3.mjs)",
+      "Bash(npx tsc *)",
+      "Bash(node ./.shoot4.mjs)",
+      "Bash(grep -v -E '^\\\\.$|^\\\\.\\\\.$')",
+      "Bash(echo \"tsc clean=$?\")",
+      "Bash(pkill -f \"next start\")",
+      "Bash(npm run *)",
+      "Bash(curl -s \"http://localhost:3940/_next/static/css/3cf81fc81d0a2a5e.css\")",
+      "Bash(BASE=http://localhost:3941 node -e ' *)",
+      "Bash(node -e ' *)",
+      "Bash(npx vercel *)",
+      "Bash(git init *)",
+      "Bash(git add *)",
+      "Bash(git commit -m 'Initial commit: Clinic Genie magical redesign *)"
+    ]
+  }
+}
