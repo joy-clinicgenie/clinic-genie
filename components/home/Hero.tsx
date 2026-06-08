@@ -1,105 +1,103 @@
 "use client";
 
+import { useEffect } from "react";
+import Link from "next/link";
+import { motion, useReducedMotion } from "framer-motion";
 import { Container } from "@/components/ui/Container";
-import { Kicker } from "@/components/ui/Kicker";
-import { MagneticButton } from "@/components/ui/MagneticButton";
-import { SparkleField } from "@/components/ui/SparkleField";
-import { OrbAnchor, usePageOrb } from "@/components/orb/OrbAnchor";
-import { MakeAWish } from "./MakeAWish";
-import { motion } from "framer-motion";
+import { OrbVisual } from "@/components/home/OrbVisual";
+import { CTAButton } from "@/components/home/CTAButton";
+import { useOrbStore } from "@/components/orb/store";
 import { ease } from "@/lib/motion";
 
-const WORDS = "The right patients are searching.".split(" ");
-
 export function Hero() {
-  usePageOrb("home");
+  const reduceMotion = useReducedMotion();
+  const setScene = useOrbStore((s) => s.setScene);
+
+  // Inline misty orb is the hero focal point — hide the global companion until scroll.
+  useEffect(() => {
+    setScene({ anchorId: null, intensity: 0.25, mood: "idle" });
+    return () => setScene({ anchorId: "orb-anchor-hero", intensity: 0.7 });
+  }, [setScene]);
 
   return (
-    <section className="relative flex min-h-screen items-center overflow-hidden bg-aurora-hero pb-20 pt-32">
-      <SparkleField density={46} parallax />
-      {/* orb sits center-right (mobile: top-center, behind copy) */}
-      <OrbAnchor
-        id="hero"
-        variant="home"
-        mood="idle"
-        scale={1}
-        intensity={0.85}
-        className="absolute left-1/2 top-[16%] h-px w-px -translate-x-1/2 lg:left-auto lg:right-[12%] lg:top-1/2 lg:translate-x-0"
+    <section
+      id="hero"
+      aria-labelledby="hero-title"
+      className="relative flex min-h-[88vh] items-center overflow-hidden bg-white pb-20 pt-28 lg:pt-32"
+    >
+      {/* Soft ambient teal/cyan tints on white */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(65%_50%_at_75%_8%,rgba(24,196,217,0.08),transparent_65%),radial-gradient(55%_45%_at_8%_78%,rgba(120,226,221,0.06),transparent_65%),linear-gradient(180deg,#F0F7F8_0%,#FFFFFF_40%,#F0F7F8_100%)]"
       />
 
       <Container size="wide" className="relative z-10">
-        <div className="flex max-w-3xl flex-col gap-7 pt-24 lg:pt-0">
-          <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease: ease.glide }}>
-            <Kicker>Singapore&apos;s clinic marketing genie</Kicker>
-          </motion.div>
-
-          <h1 className="text-h1 font-display text-balance text-onDark">
-            {WORDS.map((w, i) => (
-              <motion.span
-                key={i}
-                className="inline-block"
-                initial={{ opacity: 0, y: 24, filter: "blur(8px)" }}
-                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                transition={{ duration: 0.55, ease: ease.glide, delay: 0.1 + i * 0.08 }}
-              >
-                {w}&nbsp;
-              </motion.span>
-            ))}
-            <motion.span
-              className="block"
-              initial={{ opacity: 0, y: 24 }}
+        <div className="grid items-center gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-8">
+          {/* Copy */}
+          <div className="flex flex-col gap-7 text-center lg:text-left">
+            <motion.h1
+              id="hero-title"
+              className="font-display text-h1 text-balance text-ink-900"
+              initial={reduceMotion ? false : { opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, ease: ease.glide, delay: 0.5 }}
+              transition={{ duration: 0.65, ease: ease.glide }}
             >
-              Make sure your clinic is the one they <span className="genie-text">trust</span>.
-            </motion.span>
-          </h1>
+              The right patients are searching.
+              <span className="mt-2 block bg-gradient-to-r from-genie-700 to-genie-500 bg-clip-text text-transparent">
+                Clinic Genie helps them find you.
+              </span>
+            </motion.h1>
 
-          <motion.p
-            className="max-w-xl text-lead text-onDark-muted"
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: ease.glide, delay: 0.7 }}
-          >
-            We help specialist clinics grow through healthcare SEO, medical SEM, clinic websites, content, AI search, and
-            compliance-aware digital strategy.
-          </motion.p>
+            <motion.p
+              className="mx-auto max-w-[38ch] text-lead text-ink-700 lg:mx-0"
+              initial={reduceMotion ? false : { opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, ease: ease.glide, delay: 0.12 }}
+            >
+              Clinic Genie helps specialist clinics grow through healthcare SEO, medical SEM, clinic websites,
+              content, AI search, and compliance-aware digital strategy.
+            </motion.p>
 
+            <motion.div
+              className="flex flex-wrap items-center justify-center gap-4 lg:justify-start"
+              initial={reduceMotion ? false : { opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, ease: ease.glide, delay: 0.24 }}
+            >
+              <CTAButton href="/contact">Book a Strategy Call</CTAButton>
+              <CTAButton href="/portfolio" variant="ghost" tone="light">
+                See Our Work
+              </CTAButton>
+            </motion.div>
+          </div>
+
+          {/* Misty orb — soft, barely formed */}
           <motion.div
-            className="flex flex-wrap items-center gap-3"
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: ease.glide, delay: 0.85 }}
+            className="relative flex justify-center lg:justify-end"
+            initial={reduceMotion ? false : { opacity: 0, scale: 0.92 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, ease: ease.glide, delay: 0.15 }}
           >
-            <MagneticButton href="/contact" size="lg" withMiniOrb>
-              Book a strategy call
-            </MagneticButton>
-            <MagneticButton href="/portfolio" size="lg" variant="secondary">
-              See our works
-            </MagneticButton>
+            <OrbVisual state="misty" float={!reduceMotion} size="hero" />
           </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: ease.glide, delay: 1 }}
-          >
-            <MakeAWish />
-          </motion.div>
-
-          <motion.p
-            className="max-w-lg text-sm text-onDark-faint"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 1.15 }}
-          >
-            Trusted by aesthetic, dermatology, dental, fertility and orthopaedic clinics across Singapore.
-          </motion.p>
         </div>
       </Container>
 
-      {/* fade into next (light) section */}
-      <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-b from-transparent to-night-900" />
+      <Link
+        href="#why"
+        aria-label="Scroll to Why Clinic Genie"
+        className="absolute bottom-8 left-1/2 z-10 grid h-[42px] w-[26px] -translate-x-1/2 place-items-start rounded-[14px] border border-ink-900/15 pt-2 transition-colors hover:border-genie-500/50 focus-visible:shadow-focus"
+      >
+        <span
+          aria-hidden="true"
+          className="h-2 w-1 rounded-sm bg-genie-600 motion-safe:animate-cue"
+        />
+      </Link>
+
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-b from-transparent to-[#EAFBFB]"
+      />
     </section>
   );
 }

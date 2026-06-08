@@ -50,17 +50,16 @@ export function CustomCursor() {
     <>
       <motion.div
         aria-hidden="true"
-        className="pointer-events-none fixed left-0 top-0 z-[100] h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-cg-aqua mix-blend-screen"
+        className="pointer-events-none fixed left-0 top-0 z-[100] h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white mix-blend-difference"
         style={{ x: dotX, y: dotY, scale: down ? 0.6 : 1 }}
       />
       <motion.div
         aria-hidden="true"
-        className="pointer-events-none fixed left-0 top-0 z-[100] h-8 w-8 -translate-x-1/2 -translate-y-1/2 rounded-full border border-cg-aqua/50 mix-blend-screen"
+        className="pointer-events-none fixed left-0 top-0 z-[100] h-8 w-8 -translate-x-1/2 -translate-y-1/2 rounded-full border border-white mix-blend-difference"
         style={{
           x: ringX,
           y: ringY,
           scale: hovering ? 1.6 : down ? 0.8 : 1,
-          boxShadow: hovering ? "0 0 18px rgba(120,226,221,0.6)" : "0 0 8px rgba(24,196,217,0.3)",
         }}
         transition={{ scale: { duration: 0.2 } }}
       />
