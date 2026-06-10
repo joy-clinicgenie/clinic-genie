@@ -13,10 +13,23 @@ import { MobileMenu } from "./MobileMenu";
 export function Nav() {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
+  const [light, setLight] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 80);
+    const NAV_Y = 44; // vertical midpoint of the nav pill
+    const onScroll = () => {
+      setScrolled(window.scrollY > 80);
+      // Find which section is behind the nav and read its theme
+      const sections = document.querySelectorAll<HTMLElement>("[data-nav-theme]");
+      for (const el of sections) {
+        const r = el.getBoundingClientRect();
+        if (r.top <= NAV_Y && r.bottom > NAV_Y) {
+          setLight(el.dataset.navTheme === "light");
+          return;
+        }
+      }
+    };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -29,11 +42,14 @@ export function Nav() {
       <header className="fixed inset-x-0 top-0 z-50 flex justify-center px-[var(--page-pad)] pt-3 sm:pt-4">
         <motion.nav
           className={cn(
-            "flex w-full max-w-wide items-center justify-between gap-4 rounded-pill border border-white/10 px-4 py-2.5 transition-all duration-ui sm:px-5",
-            scrolled ? "glass shadow-glass-dark" : "bg-transparent"
+            "flex w-full max-w-wide items-center justify-between gap-4 rounded-pill border px-4 py-2.5 transition-all duration-ui sm:px-5",
+            light ? "border-ink-900/10" : "border-white/10",
+            scrolled
+              ? light ? "glass-light shadow-glass-light" : "glass shadow-glass-dark"
+              : "bg-transparent"
           )}
         >
-          <Logo />
+          <Logo tone={light ? "light" : "dark"} />
 
           <ul className="hidden items-center gap-1 lg:flex">
             {NAV_ITEMS.map((item) => {
@@ -44,7 +60,9 @@ export function Nav() {
                     href={item.href}
                     className={cn(
                       "relative inline-block rounded-md px-3.5 py-2 text-sm font-medium transition-colors duration-ui",
-                      active ? "text-onDark" : "text-onDark-muted hover:text-onDark"
+                      light
+                        ? active ? "text-ink-900" : "text-ink-700 hover:text-ink-900"
+                        : active ? "text-onDark" : "text-onDark-muted hover:text-onDark"
                     )}
                   >
                     {item.label}
@@ -72,7 +90,10 @@ export function Nav() {
               type="button"
               onClick={() => setMenuOpen(true)}
               aria-label="Open menu"
-              className="grid h-10 w-10 place-items-center rounded-full text-onDark transition-colors hover:bg-white/10 lg:hidden"
+              className={cn(
+                "grid h-10 w-10 place-items-center rounded-full transition-colors lg:hidden",
+                light ? "text-ink-900 hover:bg-ink-900/8" : "text-onDark hover:bg-white/10"
+              )}
             >
               <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
                 <path d="M3 6h16M3 11h16M3 16h16" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />

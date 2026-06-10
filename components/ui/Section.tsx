@@ -20,6 +20,7 @@ export function Section({
   return (
     <section
       id={id}
+      data-nav-theme={tone}
       className={cn(
         "relative scroll-mt-24 py-20 md:py-32",
         tone === "light" && "bg-cg-mist text-ink-900",

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { Section } from "@/components/ui/Section";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
@@ -10,6 +11,7 @@ import { ProcessSteps } from "@/components/ui/ProcessSteps";
 import { SparkleField } from "@/components/ui/SparkleField";
 import { OrbAnchor } from "@/components/orb/OrbAnchor";
 import { PILLARS, PROCESS_STEPS } from "@/lib/data/services";
+import { CORE_PILLARS } from "@/lib/data/pillars";
 
 export const metadata: Metadata = {
   title: "Services — Strategy, Digital Growth & Brand for Clinics | Clinic Genie",
@@ -66,8 +68,8 @@ export default function ServicesPage() {
                 <MagneticButton href="/contact" size="lg" withMiniOrb>
                   Book a strategy call
                 </MagneticButton>
-                <MagneticButton href="#strategy" size="lg" variant="secondary">
-                  See the three wishes
+                <MagneticButton href="/services/core-pillars" size="lg" variant="secondary">
+                  Explore core service pillars
                 </MagneticButton>
               </div>
             </Reveal>
@@ -183,6 +185,54 @@ export default function ServicesPage() {
           </Section>
         );
       })}
+
+      {/* 4.5 — Core service pillars */}
+      <Section tone="light">
+        <Container className="flex flex-col gap-12">
+          <div className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-end">
+            <SectionHeading
+              kicker="Core service pillars"
+              title="Explore each service in depth."
+              highlight="depth"
+              tone="light"
+              subtitle="Eight focused pillars, each with its own page — from FindClinic.sg to GEO & AI Search."
+            />
+            <MagneticButton
+              href="/services/core-pillars"
+              variant="ghost"
+              className="text-genie-700 hover:text-genie-900"
+            >
+              See all pillars →
+            </MagneticButton>
+          </div>
+          <RevealGroup className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {CORE_PILLARS.map((pillar) => (
+              <RevealItem key={pillar.slug} className="h-full">
+                <Link
+                  href={`/services/core-pillars/${pillar.slug}`}
+                  className="group block h-full"
+                  aria-label={`Explore ${pillar.name}`}
+                >
+                  <GlassCard tone="light" radius="xl" hover className="flex h-full flex-col gap-3 p-6">
+                    <span
+                      aria-hidden="true"
+                      className="h-1 w-10 rounded-full"
+                      style={{ backgroundColor: pillar.accent }}
+                    />
+                    <h3 className="font-display text-base font-semibold text-ink-900">{pillar.name}</h3>
+                    <span className="mt-auto inline-flex items-center gap-1.5 text-sm font-semibold text-genie-700 transition-colors group-hover:text-genie-900">
+                      Explore
+                      <span aria-hidden="true" className="transition-transform group-hover:translate-x-0.5">
+                        →
+                      </span>
+                    </span>
+                  </GlassCard>
+                </Link>
+              </RevealItem>
+            ))}
+          </RevealGroup>
+        </Container>
+      </Section>
 
       {/* 5 — Expanded process */}
       <Section tone="dark" id="process">

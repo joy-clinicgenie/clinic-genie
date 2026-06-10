@@ -5,7 +5,6 @@ import "./globals.css";
 import { OrbProvider } from "@/lib/providers/OrbProvider";
 import { LenisProvider } from "@/lib/providers/LenisProvider";
 import { MotionProvider } from "@/lib/providers/MotionConfig";
-import { OrbCompanion } from "@/components/orb/OrbCompanion";
 import { Nav } from "@/components/layout/Nav";
 import { Footer } from "@/components/layout/Footer";
 import { PageTransition } from "@/components/layout/PageTransition";
@@ -59,7 +58,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               </a>
               <CustomCursor />
               <PointerRipples />
-              <OrbCompanion />
               <Nav />
               <main id="main">
                 <PageTransition>{children}</PageTransition>
