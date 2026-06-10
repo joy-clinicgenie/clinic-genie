@@ -1,0 +1,44 @@
+.viewport {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 10%, #000 90%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000 10%, #000 90%, transparent);
+}
+
+.track {
+  display: flex;
+  width: max-content;
+  align-items: center;
+  /* Two identical copies; shifting by exactly -50% loops seamlessly. */
+  animation: marquee-left var(--marquee-duration, 36s) linear infinite;
+}
+
+.viewport:hover .track {
+  animation-play-state: paused;
+}
+
+.item {
+  /* Spacing baked into each item (no flex gap) so the -50% loop is seamless. */
+  padding: 0 clamp(1.5rem, 3.5vw, 3.25rem);
+}
+
+@keyframes marquee-left {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .track {
+    animation: none;
+    flex-wrap: wrap;
+    justify-content: center;
+    row-gap: 0.75rem;
+    width: 100%;
+  }
+  .item[data-clone="true"] {
+    display: none;
+  }
+}

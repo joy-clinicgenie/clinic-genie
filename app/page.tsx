@@ -12,17 +12,20 @@ import { ProcessSteps } from "@/components/ui/ProcessSteps";
 import { PartnerStrip } from "@/components/ui/PartnerStrip";
 import { Kicker } from "@/components/ui/Kicker";
 import { PostCard } from "@/components/blog/PostCard";
+import { LogoMarquee, type MarqueeLogo } from "@/components/home/LogoMarquee";
 import { OrbAnchor } from "@/components/orb/OrbAnchor";
 import { PILLARS, PROCESS_STEPS } from "@/lib/data/services";
 import { PARTNERS } from "@/lib/data/partners";
 import { POSTS } from "@/lib/data/posts";
 
-const CLIENTS = [
-  "The Acne Clinic",
-  "The Aesthetics Clinic",
-  "Stellaris Fertility",
-  "Lumière Dental",
-  "Orchard Orthopaedics",
+const CLIENT_LOGOS: MarqueeLogo[] = [
+  { src: "/clients/medical-surgical-dermatology.png", alt: "Medical & Surgical Dermatology", width: 875, height: 156 },
+  { src: "/clients/sunrise-heart.png", alt: "Sunrise Heart Specialist Clinic", width: 884, height: 245 },
+  { src: "/clients/straits-eye-centre.png", alt: "The Straits Eye Centre", width: 879, height: 256 },
+  { src: "/clients/cedar-endocrine.png", alt: "Cedar Endocrine Clinic", width: 872, height: 237 },
+  { src: "/clients/clementi-family-aesthetic.png", alt: "Clementi Family & Aesthetic Clinic", width: 1024, height: 644 },
+  { src: "/clients/stellaris-robotics.png", alt: "Stellaris Robotics", width: 775, height: 733 },
+  { src: "/clients/time-key.png", alt: "Time Key", width: 850, height: 180 },
 ];
 
 const HOME_STATS = [
@@ -42,13 +45,9 @@ export default function HomePage() {
           <Reveal>
             <p className="text-center font-mono text-kicker uppercase text-genie-700">Clinics we&apos;ve helped grow</p>
           </Reveal>
-          <RevealGroup className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3">
-            {CLIENTS.map((c) => (
-              <RevealItem key={c}>
-                <span className="font-display text-lg font-semibold text-ink-700/70">{c}</span>
-              </RevealItem>
-            ))}
-          </RevealGroup>
+          <Reveal>
+            <LogoMarquee logos={CLIENT_LOGOS} />
+          </Reveal>
           <StatTrio stats={HOME_STATS} tone="light" />
         </Container>
       </Section>
