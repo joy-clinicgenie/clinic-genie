@@ -1,0 +1,6 @@
+# Design references — not needed at runtime
+.design-ref/
+
+# Local build/cache
+.next/
+node_modules/
