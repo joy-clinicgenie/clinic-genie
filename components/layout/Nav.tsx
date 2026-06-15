@@ -46,7 +46,7 @@ export function Nav() {
             light ? "border-ink-900/10" : "border-white/10",
             scrolled
               ? light ? "glass-light shadow-glass-light" : "glass shadow-glass-dark"
-              : "bg-transparent"
+              : light ? "border border-ink-900/8 bg-white/55 shadow-glass-light backdrop-blur-glass-light" : "border border-white/10 bg-white/5 backdrop-blur-glass"
           )}
         >
           <Logo tone={light ? "light" : "dark"} />

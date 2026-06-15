@@ -6,17 +6,25 @@ import type { ReactNode } from "react";
 import { cn } from "@/lib/cn";
 import { useMagnetic } from "@/lib/hooks/useMagnetic";
 import { useOrbStore } from "@/components/orb/store";
+import { Brandmark } from "@/components/ui/Logo";
 
 type Variant = "primary" | "secondary" | "ghost";
 type Size = "sm" | "md" | "lg";
+type Tone = "dark" | "light";
 
 const BASE =
   "group relative inline-flex items-center justify-center gap-2 rounded-pill font-sans font-semibold tracking-[0.01em] transition-[box-shadow,background-color,color] duration-ui ease-out-soft focus-visible:outline-none disabled:opacity-50";
 
-const VARIANTS: Record<Variant, string> = {
-  primary: "bg-gradient-to-br from-genie-500 to-genie-700 text-white shadow-glow-cta hover:shadow-glow-cta-hover",
-  secondary: "glass text-onDark border border-white/15 hover:shadow-glow-md",
-  ghost: "text-genie-200 hover:text-white",
+const PRIMARY = "btn-cta hover:-translate-y-0.5";
+
+const SECONDARY: Record<Tone, string> = {
+  dark: "glass text-onDark border border-white/15 hover:shadow-glow-md",
+  light: "border border-[#D8DEE1] bg-white/80 text-ink-900 hover:border-[#9FB6BD] hover:-translate-y-0.5",
+};
+
+const GHOST: Record<Tone, string> = {
+  dark: "text-genie-200 hover:text-white",
+  light: "border border-[#D8DEE1] bg-white text-ink-900 hover:border-[#9FB6BD] hover:-translate-y-0.5",
 };
 
 const SIZES: Record<Size, string> = {
@@ -25,11 +33,17 @@ const SIZES: Record<Size, string> = {
   lg: "px-8 py-4 text-base",
 };
 
-function MiniOrb() {
+const BRANDMARK_SIZES: Record<Size, string> = {
+  sm: "h-4 w-4",
+  md: "h-5 w-5",
+  lg: "h-5 w-5",
+};
+
+function ButtonBrandmark({ size }: { size: Size }) {
   return (
-    <span
+    <Brandmark
+      className={cn(BRANDMARK_SIZES[size], "shrink-0 text-current opacity-95")}
       aria-hidden="true"
-      className="relative inline-block h-5 w-5 rounded-full bg-[radial-gradient(circle_at_35%_30%,#EAF8FE,#6CBAD9_55%,#1E5C78)] shadow-[0_0_10px_2px_rgba(127,233,240,0.8)] motion-safe:animate-glow-breathe"
     />
   );
 }
@@ -40,6 +54,7 @@ export function MagneticButton({
   type = "button",
   variant = "primary",
   size = "md",
+  tone = "dark",
   withMiniOrb = false,
   magnetic = true,
   className,
@@ -51,6 +66,7 @@ export function MagneticButton({
   type?: "button" | "submit";
   variant?: Variant;
   size?: Size;
+  tone?: Tone;
   withMiniOrb?: boolean;
   magnetic?: boolean;
   className?: string;
@@ -64,7 +80,7 @@ export function MagneticButton({
 
   const inner = (
     <>
-      {withMiniOrb && <MiniOrb />}
+      {withMiniOrb && <ButtonBrandmark size={size} />}
       <motion.span
         style={magnetic ? { x: labelX, y: labelY } : undefined}
         className="relative z-10 inline-flex items-center gap-2"
@@ -83,7 +99,10 @@ export function MagneticButton({
     onPointerEnter: () => pulse(),
   };
 
-  const classes = cn(BASE, VARIANTS[variant], SIZES[size], className);
+  const variantClass =
+    variant === "primary" ? PRIMARY : variant === "secondary" ? SECONDARY[tone] : GHOST[tone];
+
+  const classes = cn(BASE, variantClass, SIZES[size], className);
 
   if (href) {
     const isInternal = href.startsWith("/") || href.startsWith("#");

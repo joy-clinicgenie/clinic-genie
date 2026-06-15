@@ -1,0 +1,241 @@
+/* Premium strategy-lens orb — misty → lens states via CSS variables */
+.orb {
+  --sharp: 0.5;
+  --orb-blur: 0px;
+  --size: clamp(280px, 38vw, 460px);
+  position: relative;
+  width: var(--size);
+  height: var(--size);
+  display: grid;
+  place-items: center;
+  isolation: isolate;
+  margin-inline: auto;
+  transform: translateY(var(--drift, 0px));
+  will-change: transform;
+}
+
+.shadow {
+  position: absolute;
+  bottom: 1%;
+  left: 16%;
+  right: 16%;
+  height: 9%;
+  z-index: 0;
+  background: radial-gradient(ellipse at center, rgba(24, 196, 217, 0.5), rgba(31, 207, 145, 0.14) 45%, transparent 72%);
+  filter: blur(13px);
+  opacity: calc(0.35 + 0.5 * var(--sharp));
+  transition: opacity 0.6s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.halo {
+  position: absolute;
+  inset: -6%;
+  z-index: 0;
+  background: radial-gradient(circle at 50% 50%, rgba(26, 178, 207, 0.45) 0%, rgba(26, 178, 207, 0.22) 38%, transparent 66%);
+  filter: blur(24px);
+  opacity: calc(0.32 + 0.5 * var(--sharp));
+  transition: opacity 0.6s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.sphere {
+  position: absolute;
+  inset: 6%;
+  border-radius: 50%;
+  z-index: 1;
+  background: radial-gradient(
+    circle at 50% 47%,
+    rgba(236, 252, 255, 0.7) 0%,
+    rgba(180, 237, 250, 0.4) 26%,
+    rgba(124, 214, 238, 0.24) 48%,
+    rgba(74, 192, 221, 0.18) 68%,
+    rgba(150, 232, 250, 0.26) 86%,
+    rgba(198, 244, 254, 0.44) 95%,
+    rgba(120, 210, 235, 0.08) 100%
+  );
+  box-shadow:
+    inset 20px 24px 56px rgba(255, 255, 255, 0.22),
+    inset -22px -20px 60px rgba(150, 228, 248, 0.12),
+    inset 0 0 40px rgba(214, 246, 255, 0.1),
+    0 0 46px -10px rgba(26, 178, 207, 0.45);
+  filter: blur(var(--orb-blur)) saturate(calc(0.85 + 0.25 * var(--sharp))) brightness(calc(0.95 + 0.12 * var(--sharp)));
+  backdrop-filter: blur(3px);
+  transition: filter 0.5s cubic-bezier(0.22, 0.61, 0.36, 1), opacity 0.5s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.rim {
+  position: absolute;
+  inset: 6%;
+  border-radius: 50%;
+  z-index: 2;
+  mix-blend-mode: screen;
+  background:
+    radial-gradient(circle at 72% 80%, rgba(214, 251, 255, 0.95) 0%, rgba(214, 251, 255, 0.22) 7%, transparent 14%),
+    radial-gradient(circle at 50% 50%, transparent 72%, rgba(176, 240, 253, 0.42) 90%, rgba(120, 220, 245, 0.06) 100%);
+  opacity: calc(0.5 + 0.5 * var(--sharp));
+}
+
+.glass {
+  position: absolute;
+  inset: 6%;
+  border-radius: 50%;
+  z-index: 3;
+  mix-blend-mode: screen;
+  background: radial-gradient(60% 40% at 50% 9%, rgba(255, 255, 255, 0.34), rgba(255, 255, 255, 0.06) 55%, transparent 72%);
+  opacity: calc(0.5 + 0.5 * var(--sharp));
+}
+
+.highlight {
+  position: absolute;
+  left: 18%;
+  top: 12%;
+  width: 36%;
+  height: 26%;
+  z-index: 4;
+  border-radius: 50%;
+  transform: rotate(-26deg);
+  filter: blur(1px);
+  background: radial-gradient(ellipse at 50% 50%, rgba(255, 255, 255, 0.98) 0%, rgba(255, 255, 255, 0.55) 38%, transparent 72%);
+  opacity: calc(0.6 + 0.4 * var(--sharp));
+}
+
+.highlight2 {
+  position: absolute;
+  left: 25%;
+  top: 63%;
+  width: 17%;
+  height: 10%;
+  z-index: 4;
+  border-radius: 50%;
+  filter: blur(2px);
+  background: radial-gradient(ellipse at center, rgba(220, 248, 255, 0.6), transparent 70%);
+  opacity: calc(0.35 + 0.4 * var(--sharp));
+}
+
+.particles {
+  position: absolute;
+  inset: 6%;
+  border-radius: 50%;
+  overflow: hidden;
+  z-index: 2;
+  opacity: calc(0.3 + 0.5 * var(--sharp));
+}
+
+.particle {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: #a8dcea;
+  box-shadow: 0 0 6px #a8dcea;
+  animation: drift 9s ease-in-out infinite;
+}
+
+.reticle {
+  position: absolute;
+  inset: 6%;
+  border-radius: 50%;
+  z-index: 4;
+  opacity: 0;
+  transition: opacity 0.6s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.reticle::before,
+.reticle::after {
+  content: "";
+  position: absolute;
+  background: rgba(206, 246, 255, 0.4);
+}
+
+.reticle::before {
+  left: 50%;
+  top: 20%;
+  bottom: 20%;
+  width: 1px;
+  transform: translateX(-0.5px);
+}
+
+.reticle::after {
+  top: 50%;
+  left: 20%;
+  right: 20%;
+  height: 1px;
+  transform: translateY(-0.5px);
+}
+
+/* State tuning */
+.misty {
+  --sharp: 0.2;
+  --orb-blur: 3px;
+}
+
+.misty .sphere {
+  opacity: 0.82;
+}
+
+.misty .highlight {
+  opacity: 0.45;
+}
+
+.forming {
+  --sharp: 0.6;
+  --orb-blur: 0.5px;
+}
+
+.full {
+  --sharp: 0.95;
+}
+
+.full .reticle {
+  opacity: 0.4;
+}
+
+.lens {
+  --sharp: 1;
+  --size: clamp(260px, 30vw, 360px);
+}
+
+.lens .sphere {
+  box-shadow:
+    inset 20px 24px 56px rgba(255, 255, 255, 0.26),
+    inset -22px -20px 60px rgba(150, 228, 248, 0.14),
+    inset 0 0 42px rgba(214, 246, 255, 0.12),
+    0 0 70px -8px rgba(26, 178, 207, 0.45),
+    0 0 110px -12px rgba(31, 207, 145, 0.3);
+}
+
+.lens .reticle {
+  opacity: 0.65;
+}
+
+.float {
+  animation: float 8s ease-in-out infinite;
+}
+
+@keyframes drift {
+  0%,
+  100% {
+    transform: translate(0, 0);
+    opacity: 0.25;
+  }
+  50% {
+    transform: translate(var(--dx, 10px), var(--dy, -14px));
+    opacity: 0.75;
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-16px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .float,
+  .particle {
+    animation: none !important;
+  }
+}

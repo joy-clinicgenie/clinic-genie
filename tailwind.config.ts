@@ -113,6 +113,8 @@ const config: Config = {
         content: "75rem",
         wide:    "82.5rem",
         prose:   "45rem",
+        /** Body copy width — 70% of container */
+        "landing-body": "70%",
       },
       borderRadius: {
         xs: "6px", sm: "10px", md: "14px", lg: "20px",
@@ -140,6 +142,7 @@ const config: Config = {
         "aurora-hero":   "linear-gradient(160deg, #062D36 0%, #0B4652 55%, #083C47 100%)",
         "primary-grad":  "linear-gradient(135deg, #EAFBFB 0%, #FFFFFF 50%, #DDF7F8 100%)",
         "accent-glow":   "linear-gradient(135deg, #18C4D9 0%, #78E2DD 100%)",
+        "btn-cta":       "linear-gradient(90deg, #54B9CE 0%, #217B8E 48%, #041F27 100%)",
         "premium-dark":  "linear-gradient(160deg, #062D36 0%, #0B4652 100%)",
         // Legacy names kept so existing pages don't break
         "conjure-sweep": "linear-gradient(135deg, #18C4D9 0%, #78E2DD 50%, #7DAFE3 100%)",
@@ -169,6 +172,7 @@ const config: Config = {
         "rise-in":      { from: { opacity: "0", transform: "translateY(20px)" }, to: { opacity: "1", transform: "translateY(0)" } },
         "shimmer-sweep":{ "0%": { backgroundPosition: "-150% 0" }, "100%": { backgroundPosition: "250% 0" } },
         "spin-slow":    { to: { transform: "rotate(360deg)" } },
+        cue:            { "0%,100%": { opacity: "0.3", transform: "translateY(0)" }, "50%": { opacity: "1", transform: "translateY(6px)" } },
       },
       animation: {
         "orb-bob":       "orb-bob 7s cubic-bezier(0.45,0,0.55,1) infinite",
@@ -178,6 +182,7 @@ const config: Config = {
         "rise-in":       "rise-in 700ms cubic-bezier(0.22,1,0.36,1) both",
         "shimmer-sweep": "shimmer-sweep 1.2s cubic-bezier(0.22,1,0.36,1) 1",
         "spin-slow":     "spin-slow 40s linear infinite",
+        cue:             "cue 1.6s ease-in-out infinite",
       },
     },
   },

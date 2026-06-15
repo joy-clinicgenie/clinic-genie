@@ -129,6 +129,35 @@ export const PROCESS_STEPS: ProcessStep[] = [
   },
 ];
 
+/** Homepage scroll-driven 5-step process (MagicProcess) */
+export const HOME_PROCESS_STEPS: ProcessStep[] = [
+  {
+    n: 1,
+    title: "Discover",
+    body: "Understand your clinic, patients, services, and goals.",
+  },
+  {
+    n: 2,
+    title: "Strategise",
+    body: "Build a roadmap around search intent and growth priorities.",
+  },
+  {
+    n: 3,
+    title: "Create",
+    body: "Produce the website, content, campaigns, and visuals.",
+  },
+  {
+    n: 4,
+    title: "Launch",
+    body: "Go live with SEO, tracking, forms, and key checks in place.",
+  },
+  {
+    n: 5,
+    title: "Optimise",
+    body: "Measure, refine, and improve over time.",
+  },
+];
+
 export const FOOTER_SERVICES = [
   { label: "Healthcare SEO", href: "/services#growth" },
   { label: "Medical SEM & Paid Ads", href: "/services#growth" },

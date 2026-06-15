@@ -23,7 +23,7 @@ export function Section({
       data-nav-theme={tone}
       className={cn(
         "relative scroll-mt-24 py-20 md:py-32",
-        tone === "light" && "bg-cg-mist text-ink-900",
+        tone === "light" && "surface-light text-ink-900",
         tone === "dark" && "bg-gradient-to-b from-night-700 to-night-800 text-onDark",
         className
       )}

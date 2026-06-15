@@ -6,33 +6,33 @@ export interface TeamMember {
 
 export const TEAM: TeamMember[] = [
   {
-    name: "Marcus Tan",
+    name: "Roger Ng",
     role: "Founder & Growth Strategist",
     bio: "Spent a decade marketing healthcare before deciding clinics deserved a specialist. Lives in spreadsheets and SERPs.",
   },
   {
-    name: "Priya Nair",
+    name: "Siti",
     role: "Head of SEO & Content",
     bio: "Turns clinical expertise into pages patients find and trust. Obsessive about intent, allergic to fluff.",
   },
   {
-    name: "Daniel Lim",
+    name: "Vash Chen",
     role: "Lead Designer",
     bio: "Designs brands and websites that make great clinics look as good as their outcomes.",
   },
   {
-    name: "Sara Wong",
-    role: "Performance & SEM Lead",
+    name: "Joy",
+    role: "Graphic Designer",
     bio: "Manages every campaign to a cost-per-enquiry, not a vanity click. Reports in plain English.",
   },
   {
-    name: "Javier Cruz",
-    role: "Web Developer",
+    name: "Fathima",
+    role: "Content Intern",
     bio: "Builds fast, accessible clinic sites on a modern stack. Believes three seconds is two too many.",
   },
   {
-    name: "Aisha Rahman",
-    role: "Compliance & Copy",
+    name: "Anna",
+    role: "Content Intern",
     bio: "Keeps ambitious marketing on the right side of Singapore's advertising guidelines — without dulling the message.",
   },
 ];

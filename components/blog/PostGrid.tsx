@@ -51,7 +51,7 @@ export function PostGrid() {
               {isActive && (
                 <motion.span
                   layoutId="filter-pill"
-                  className="absolute inset-0 rounded-pill bg-gradient-to-br from-genie-500 to-genie-700 shadow-glow-sm"
+                  className="btn-cta absolute inset-0 rounded-pill"
                   transition={{ type: "spring", stiffness: 380, damping: 32 }}
                   aria-hidden="true"
                 />

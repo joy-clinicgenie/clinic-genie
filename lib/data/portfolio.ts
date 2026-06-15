@@ -44,11 +44,11 @@ export const CASE_STUDIES: CaseStudy[] = [
       text: "Clinic Genie made us look like we'd been around for years — in months. The bookings speak for themselves.",
       author: "Founder, The Acne Clinic",
     },
-    next: "Now expanding into TikTok and live content with partner Qianyi.",
+    next: "PLACEHOLDER",
   },
   {
     slug: "the-aesthetics-clinic",
-    name: "The Aesthetics Clinic",
+    name: "PilotPulse",
     specialty: "Aesthetics / Dermatology",
     line: "Premium rebrand + content engine for chemical peels, fractional laser and skin boosters.",
     tags: ["Web Design", "SEO", "Content"],

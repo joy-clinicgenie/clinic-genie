@@ -59,11 +59,8 @@ export default function GenieTipPage({ params }: { params: { slug: string } }) {
 
   return (
     <>
-      {/* 1 — Reading hero (dark / conjuring register) */}
-      <Section
-        tone="dark"
-        className="bg-aurora-hero relative min-h-[68vh] overflow-hidden pb-20 pt-36"
-      >
+      {/* 1 — Reading hero */}
+      <Section tone="dark" className="relative min-h-[68vh] overflow-hidden bg-transparent pb-20 pt-36">
         <SparkleField density={32} parallax />
         {/* Companion orb parked in the upper-right margin of the article. */}
         <OrbAnchor
@@ -102,30 +99,25 @@ export default function GenieTipPage({ params }: { params: { slug: string } }) {
           </Reveal>
         </Container>
 
-        {/* fade into the next (light) reading section */}
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-b from-transparent to-genie-50"
-        />
       </Section>
 
-      {/* 2 — Reading body (light / clarity register) */}
-      <Section tone="light">
+      {/* 2 — Reading body */}
+      <Section tone="dark" className="bg-transparent">
         <Container size="prose" className="flex flex-col gap-12">
           <article className="flex flex-col gap-10">
             {hasSections ? (
               <>
                 {post.intro && (
                   <Reveal variant="up">
-                    <p className="text-lead text-pretty text-ink-700">{post.intro}</p>
+                    <p className="text-lead text-pretty text-onDark-muted">{post.intro}</p>
                   </Reveal>
                 )}
 
                 {post.sections!.map((section) => (
                   <Reveal key={section.heading} variant="up" className="flex flex-col gap-4">
-                    <h2 className="text-h3 font-display text-ink-900">{section.heading}</h2>
+                    <h2 className="text-h3 font-display text-onDark">{section.heading}</h2>
                     {section.body.map((para, i) => (
-                      <p key={i} className="text-body leading-relaxed text-ink-700">
+                      <p key={i} className="text-body leading-relaxed text-onDark-muted">
                         {para}
                       </p>
                     ))}
@@ -135,12 +127,12 @@ export default function GenieTipPage({ params }: { params: { slug: string } }) {
             ) : (
               <>
                 <Reveal variant="up">
-                  <p className="text-lead text-pretty text-ink-700">{post.intro ?? post.dek}</p>
+                  <p className="text-lead text-pretty text-onDark-muted">{post.intro ?? post.dek}</p>
                 </Reveal>
 
                 <Reveal variant="up" delay={0.05} className="flex flex-col gap-4">
                   {editorialNote(post.dek).map((para, i) => (
-                    <p key={i} className="text-body leading-relaxed text-ink-700">
+                    <p key={i} className="text-body leading-relaxed text-onDark-muted">
                       {para}
                     </p>
                   ))}
@@ -151,12 +143,12 @@ export default function GenieTipPage({ params }: { params: { slug: string } }) {
 
           {/* CTA box — the wish */}
           <Reveal variant="scale">
-            <GlassCard tone="light" radius="2xl" glow className="flex flex-col items-start gap-5 p-8 sm:p-10">
-              <Kicker tone="light">Make your first wish</Kicker>
-              <h2 className="text-h3 font-display text-balance text-ink-900">
-                Want this done for you? Book a free <span className="text-genie-700">strategy call</span>.
+            <GlassCard tone="dark" radius="2xl" glow className="flex flex-col items-start gap-5 p-8 sm:p-10">
+              <Kicker>Make your first wish</Kicker>
+              <h2 className="text-h3 font-display text-balance text-onDark">
+                Want this done for you? Book a free <span className="genie-text">strategy call</span>.
               </h2>
-              <p className="max-w-xl text-body leading-relaxed text-ink-700">
+              <p className="max-w-xl text-body leading-relaxed text-onDark-muted">
                 Thirty minutes, no obligation. We&apos;ll map where the right patients are searching — and exactly how to
                 make your clinic the one they trust.
               </p>
@@ -168,10 +160,10 @@ export default function GenieTipPage({ params }: { params: { slug: string } }) {
 
           {/* Author / agency bio */}
           <Reveal variant="up">
-            <div className="flex flex-col gap-2 border-t border-ink-900/10 pt-8">
-              <p className="font-mono text-kicker uppercase tracking-wider text-genie-700">Written by</p>
-              <p className="font-display text-h4 text-ink-900">The Clinic Genie team</p>
-              <p className="max-w-xl text-sm leading-relaxed text-ink-500">
+            <div className="flex flex-col gap-2 border-t border-white/10 pt-8">
+              <p className="font-mono text-kicker uppercase tracking-wider text-genie-300">Written by</p>
+              <p className="font-display text-h4 text-onDark">The Clinic Genie team</p>
+              <p className="max-w-xl text-sm leading-relaxed text-onDark-faint">
                 Strategists, writers, designers and developers who work only with clinics — turning specialist expertise
                 into a digital presence patients can find, believe and book, the compliant way.
               </p>
@@ -180,8 +172,8 @@ export default function GenieTipPage({ params }: { params: { slug: string } }) {
         </Container>
       </Section>
 
-      {/* 3 — Related posts (dark / conjuring register) */}
-      <Section tone="dark">
+      {/* 3 — Related posts */}
+      <Section tone="dark" className="bg-transparent">
         <OrbAnchor
           id="post-related"
           mood="curious"
@@ -197,7 +189,7 @@ export default function GenieTipPage({ params }: { params: { slug: string } }) {
           <RevealGroup className="grid gap-5 md:grid-cols-3">
             {related.map((p) => (
               <RevealItem key={p.slug} className="h-full">
-                <PostCard post={p} tone="light" />
+                <PostCard post={p} tone="dark" />
               </RevealItem>
             ))}
           </RevealGroup>

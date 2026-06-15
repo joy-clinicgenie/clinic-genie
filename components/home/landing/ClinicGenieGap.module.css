@@ -1,0 +1,111 @@
+.section {
+  position: relative;
+  padding-block: clamp(5rem, 10vh, 7rem);
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.25rem, 2.5vh, 1.75rem);
+  max-width: 42rem;
+  margin-bottom: clamp(2.5rem, 5vh, 3.5rem);
+}
+
+.title {
+  font-family: var(--font-sora), Sora, ui-sans-serif, system-ui, sans-serif;
+  font-size: clamp(2rem, 1.35rem + 2.2vw, 3.25rem);
+  font-weight: 600;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  color: #062d36;
+}
+
+.titleMuted {
+  color: #9fb6bd;
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 3.25rem minmax(0, 1fr) min(8.5rem, 20vw);
+  gap: 1.25rem clamp(1.5rem, 4vw, 3rem);
+  align-items: center;
+  padding-block: clamp(2rem, 4vh, 2.75rem);
+  border-top: 1px solid #e5eaec;
+}
+
+.index {
+  align-self: start;
+  padding-top: 0.15rem;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.8125rem;
+  letter-spacing: 0.08em;
+  color: #b8c5ca;
+}
+
+.copy {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.rowTitle {
+  font-family: var(--font-sora), Sora, ui-sans-serif, system-ui, sans-serif;
+  font-size: clamp(1.125rem, 1rem + 0.45vw, 1.35rem);
+  font-weight: 600;
+  line-height: 1.25;
+  color: #062d36;
+}
+
+.rowBody {
+  max-width: 34rem;
+  font-size: 0.9375rem;
+  line-height: 1.65;
+  color: #7e8c92;
+}
+
+.graphic {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.graphic svg {
+  width: min(100%, 7.5rem);
+  height: auto;
+}
+
+.footer {
+  display: flex;
+  justify-content: flex-start;
+  padding-top: clamp(2rem, 4vh, 2.75rem);
+  border-top: 1px solid #e5eaec;
+}
+
+@media (max-width: 767px) {
+  .row {
+    grid-template-columns: 2.75rem minmax(0, 1fr);
+    grid-template-areas:
+      "index copy"
+      ". graphic";
+  }
+
+  .index {
+    grid-area: index;
+  }
+
+  .copy {
+    grid-area: copy;
+  }
+
+  .graphic {
+    grid-area: graphic;
+    justify-content: flex-start;
+    padding-top: 0.5rem;
+  }
+}

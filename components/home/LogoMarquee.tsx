@@ -7,6 +7,7 @@ import styles from "./LogoMarquee.module.css";
 export interface MarqueeLogo {
   src: string;
   alt: string;
+  href: string;
   width: number;
   height: number;
 }
@@ -45,14 +46,23 @@ export function LogoMarquee({
               data-clone={isClone ? "true" : undefined}
               aria-hidden={isClone ? true : undefined}
             >
-              <Image
-                src={logo.src}
-                alt={isClone ? "" : logo.alt}
-                width={logo.width}
-                height={logo.height}
-                className="h-9 w-auto object-contain opacity-65 grayscale transition duration-300 hover:opacity-100 hover:grayscale-0 sm:h-10 lg:h-11"
-                sizes="(max-width: 640px) 140px, 200px"
-              />
+              <a
+                href={logo.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                tabIndex={isClone ? -1 : undefined}
+                className="group block rounded-md outline-none focus-visible:ring-2 focus-visible:ring-[#217B8E]/40 focus-visible:ring-offset-2"
+                aria-label={isClone ? undefined : `Visit ${logo.alt} website`}
+              >
+                <Image
+                  src={logo.src}
+                  alt={isClone ? "" : logo.alt}
+                  width={logo.width}
+                  height={logo.height}
+                  className="h-9 w-auto object-contain opacity-55 grayscale transition duration-300 group-hover:opacity-100 group-hover:grayscale-0 sm:h-10 lg:h-11"
+                  sizes="(max-width: 640px) 140px, 200px"
+                />
+              </a>
             </li>
           );
         })}

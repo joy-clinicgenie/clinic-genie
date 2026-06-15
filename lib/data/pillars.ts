@@ -94,6 +94,7 @@ export const CORE_PILLARS: CorePillar[] = [
       "Choosing a clinic can feel overwhelming. Patients search, compare, read, and look for signs that they are making the right decision.",
       "FindClinic.sg helps clinics become easier to discover, understand, and trust through clear clinic profiles, doctor-led content, healthcare articles, and patient-friendly information.",
     ],
+    
     heroPrimaryCta: { label: "Join FindClinic.sg", href: "/contact" },
     heroSecondaryCta: { label: "Explore Clinic Listings", href: "/contact" },
     whyTitle: "Patients are searching for more than a clinic name.",

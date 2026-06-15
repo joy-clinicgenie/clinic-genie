@@ -1,253 +1,307 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Hero } from "@/components/home/Hero";
-import { Section } from "@/components/ui/Section";
-import { Container } from "@/components/ui/Container";
-import { SectionHeading } from "@/components/ui/SectionHeading";
+import { LogoMarquee } from "@/components/home/LogoMarquee";
 import { Reveal, RevealGroup, RevealItem } from "@/components/ui/Reveal";
 import { MagneticButton } from "@/components/ui/MagneticButton";
-import { GlassCard } from "@/components/ui/GlassCard";
-import { StatTrio } from "@/components/ui/StatTrio";
-import { PillarCard } from "@/components/ui/PillarCard";
-import { ProcessSteps } from "@/components/ui/ProcessSteps";
-import { PartnerStrip } from "@/components/ui/PartnerStrip";
-import { Kicker } from "@/components/ui/Kicker";
 import { PostCard } from "@/components/blog/PostCard";
-import { LogoMarquee, type MarqueeLogo } from "@/components/home/LogoMarquee";
-import { OrbAnchor } from "@/components/orb/OrbAnchor";
-import { PILLARS, PROCESS_STEPS } from "@/lib/data/services";
-import { PARTNERS } from "@/lib/data/partners";
+import { CORE_PILLARS } from "@/lib/data/pillars";
+import { HOME_PROCESS_STEPS } from "@/lib/data/services";
 import { POSTS } from "@/lib/data/posts";
+import {
+  LandingSection,
+  LandingFinale,
+  LandingIntro,
+  LandingKicker,
+  LandingHeading,
+  LandingBody,
+  MetricsGrid,
+  MetricCell,
+} from "@/components/home/landing/LandingLayout";
+import { ClinicGenieGap } from "@/components/home/landing/ClinicGenieGap";
+import { WishStack } from "@/components/home/landing/WishStack";
+import { MagicProcess } from "@/components/home/landing/MagicProcess";
+import { SpecialistClinicsOrb } from "@/components/home/landing/SpecialistClinicsOrb";
+import { PortfolioWorksCarousel } from "@/components/home/landing/PortfolioWorksCarousel";
+import { CLIENT_LOGOS } from "@/lib/data/client-logos";
+import { ALLIES } from "@/lib/data/allies";
+import { cn } from "@/lib/cn";
 
-const CLIENT_LOGOS: MarqueeLogo[] = [
-  { src: "/clients/medical-surgical-dermatology.png", alt: "Medical & Surgical Dermatology", width: 875, height: 156 },
-  { src: "/clients/sunrise-heart.png", alt: "Sunrise Heart Specialist Clinic", width: 884, height: 245 },
-  { src: "/clients/straits-eye-centre.png", alt: "The Straits Eye Centre", width: 879, height: 256 },
-  { src: "/clients/cedar-endocrine.png", alt: "Cedar Endocrine Clinic", width: 872, height: 237 },
-  { src: "/clients/clementi-family-aesthetic.png", alt: "Clementi Family & Aesthetic Clinic", width: 1024, height: 644 },
-  { src: "/clients/stellaris-robotics.png", alt: "Stellaris Robotics", width: 775, height: 733 },
-  { src: "/clients/time-key.png", alt: "Time Key", width: 850, height: 180 },
+const WISH_CHIPS: Record<string, string> = {
+  findclinic: "PLATFORM",
+  "healthcare-seo": "SEO",
+  "medical-sem": "SEM",
+  "branding-copywriting": "BRAND",
+  "web-design-development": "WEB",
+  "photo-video": "MEDIA",
+  "social-media": "SOCIAL",
+  "geo-ai-search": "AI SEARCH",
+};
+
+const COMPLIANCE_CARDS = [
+  {
+    title: "Compliance-aware",
+    body: "Aligned with HCSA, PHMC, SMC, and PDPA.",
+  },
+  {
+    title: "No false promises",
+    body: "No exaggerated claims, no misleading content.",
+  },
+  {
+    title: "Reputation first",
+    body: "Clear, credible content that protects your clinic.",
+  },
+
 ];
 
-const HOME_STATS = [
-  { value: "3.4×", label: "average increase in qualified clinic enquiries" },
-  { value: "Page 1", label: "Google rankings for high-intent treatment searches" },
-  { value: "100%", label: "healthcare-only — we market clinics, nothing else" },
+const METRICS = [
+  { value: "20+", label: "Added enquiries / month" },
+  { value: "8-12", label: "Potential consultations" },
+  { value: "$33.6K+", label: "Annual revenue opportunity" },
+  { value: "5 channels", label: "Working as one engine" },
 ];
 
 export default function HomePage() {
   return (
-    <>
+    <div className="home-landing-flow">
+      {/* 1 — Hero */}
       <Hero />
 
-      {/* 2 — Trust bar / social proof */}
-      <Section tone="light">
-        <Container className="flex flex-col gap-10">
-          <Reveal>
-            <p className="text-center font-mono text-kicker uppercase text-genie-700">Clinics we&apos;ve helped grow</p>
-          </Reveal>
-          <Reveal>
-            <LogoMarquee logos={CLIENT_LOGOS} />
-          </Reveal>
-          <StatTrio stats={HOME_STATS} tone="light" />
-        </Container>
-      </Section>
+      {/* 2 — Trust: client logos */}
+      <LandingSection tone="white" className="py-16" containerClassName="flex flex-col gap-10">
+        <Reveal>
+          <p className="text-center font-mono text-kicker uppercase tracking-[0.3em] text-[#217B8E]">
+            Clinics we&apos;ve helped grow
+          </p>
+        </Reveal>
+        <Reveal className="-mx-[var(--page-pad)] w-[calc(100%+2*var(--page-pad))]">
+          <LogoMarquee logos={CLIENT_LOGOS} />
+        </Reveal>
+      </LandingSection>
 
-      {/* 3 — The problem (empathy) */}
-      <Section tone="dark">
-        <OrbAnchor id="problem" mood="curious" scale={0.85} className="absolute right-[10%] top-1/2 hidden h-px w-px lg:block" />
-        <Container className="max-w-prose">
-          <SectionHeading
-            kicker="The gap"
-            title="Great medicine deserves to be found."
-            highlight="found"
-            as="h2"
-          />
-          <Reveal delay={0.1}>
-            <p className="mt-6 text-lead text-onDark-muted">
-              You trained for years to treat patients well. But online, the clinic that ranks first, loads fast, and reads
-              as trustworthy often wins the booking — not always the best doctor. We close that gap. Clinic Genie turns
-              your expertise into a digital presence patients can find, believe, and book — without crossing a single
-              advertising-compliance line.
-            </p>
-          </Reveal>
-        </Container>
-      </Section>
+      {/* 3 — Meet your Clinic Genie: capabilities-style rows */}
+      <ClinicGenieGap />
 
-      {/* 4 — Three service pillars */}
-      <Section tone="dark">
-        <OrbAnchor id="pillars" mood="focus" scale={0.8} intensity={0.9} className="absolute left-1/2 top-24 h-px w-px -translate-x-1/2" />
-        <Container className="flex flex-col gap-12">
-          <SectionHeading
-            kicker="The three wishes we grant"
-            title="Three kinds of magic, one growth engine."
-            highlight="magic"
-            subtitle="Strategy, growth and brand — woven together, never sold in isolation."
-            align="center"
-          />
-          <RevealGroup className="grid gap-5 md:grid-cols-3">
-            {PILLARS.map((p) => (
-              <RevealItem key={p.id} className="h-full">
-                <PillarCard number={p.number} title={p.title} blurb={p.blurb} href={p.href} accent={p.accent} />
-              </RevealItem>
+      {/* 4 — Eight Wishes: cyan band, sticky stacked cards */}
+      <LandingSection id="wishes" tone="cyan" className="py-24" containerClassName="flex flex-col">
+        <WishStack
+          pillars={CORE_PILLARS}
+          chips={WISH_CHIPS}
+          intro={{
+            kicker: "The eight wishes we grant",
+            title: "Eight kinds of magic, one growth engine.",
+            highlight: "magic",
+            subtitle:
+              "Clinic marketing should never work in silos. We connect search, content, design, and campaigns into one engine, so your digital presence is clearer, stronger, and easier to measure.",
+          }}
+        />
+      </LandingSection>
+
+      {/* 5 — How the magic works: sticky scroll + 5 steps */}
+      <LandingSection
+        tone="white"
+        navTheme="dark"
+        className="bg-[#062D36] py-0 text-onDark"
+        containerClassName="flex flex-col"
+      >
+        <MagicProcess
+          dark
+          steps={HOME_PROCESS_STEPS}
+          intro={{
+            kicker: "How the magic works",
+            title: "Clear process. Measurable direction.",
+            subtitle:
+              "Every good wish needs a plan. From first spark to long-term growth, Clinic Genie gives your clinic marketing a clearer path from strategy to execution.",
+          }}
+        />
+      </LandingSection>
+
+      {/* 6 — Marketing metrics: left-aligned header + 2×2 grid */}
+      <LandingSection tone="white" className="py-24" containerClassName="flex flex-col gap-12">
+        <div className="flex flex-col gap-4">
+          <Reveal>
+            <LandingKicker align="left">Marketing metrics</LandingKicker>
+          </Reveal>
+        </div>
+        <Reveal>
+          <MetricsGrid>
+            {METRICS.map((metric, i) => (
+              <MetricCell key={metric.label} value={metric.value} label={metric.label} index={i} />
             ))}
-          </RevealGroup>
-          <Reveal className="flex justify-center">
-            <MagneticButton href="/services" variant="secondary">
-              Explore all services
+          </MetricsGrid>
+        </Reveal>
+        <Reveal delay={0.08}>
+          <div className="flex flex-col items-start gap-5">
+            <LandingBody center={false} className="max-w-md text-sm">
+              Figures are illustrative estimates only. Actual results vary by specialty, clinic fees, competition,
+              budget, patient journey, and conversion performance.
+            </LandingBody>
+            <MagneticButton href="/portfolio" size="md" withMiniOrb>
+              See the Numbers
             </MagneticButton>
-          </Reveal>
-        </Container>
-      </Section>
+          </div>
+        </Reveal>
+      </LandingSection>
 
-      {/* 5 — 3-step process */}
-      <Section tone="light">
-        <Container className="flex flex-col gap-14">
-          <SectionHeading
-            kicker="How the magic works"
-            title="How we conjure growth — in three moves."
-            highlight="conjure"
-            tone="light"
-            align="center"
+      {/* 7 — Compliance: three cards in one row, CTA below */}
+      <LandingSection tone="white" className="py-24" containerClassName="flex flex-col gap-12">
+        <Reveal>
+          <LandingIntro
+            kicker="Stay visible, stay compliant."
+            title="Our medical clinic marketing is built around Singapore's HCSA, PHMC, and SMC guidelines"
           />
-          <ProcessSteps steps={PROCESS_STEPS} tone="light" />
-          <Reveal className="text-center">
-            <p className="font-mono text-kicker uppercase text-genie-700">Research. Data. Results.</p>
-          </Reveal>
-        </Container>
-      </Section>
-
-      {/* 6 — Featured case study */}
-      <Section tone="dark">
-        <Container size="wide">
-          <div className="grid items-center gap-10 lg:grid-cols-2">
-            <div className="flex flex-col gap-5">
-              <Kicker>Proof, not promises</Kicker>
-              <h2 className="text-h2 font-display text-onDark">
-                How The Acne Clinic <span className="genie-text">doubled</span> its qualified enquiries in 6 months.
-              </h2>
-              <p className="text-lead text-onDark-muted">
-                A new aesthetics brand (&ldquo;Face it. Fix it.&rdquo;) needed to own competitive acne and scarring
-                searches in Singapore. We rebuilt the site, published compliance-aware treatment content, and ran tightly
-                targeted medical SEM.
-              </p>
-              <div className="flex flex-wrap gap-3">
-                <MagneticButton href="/portfolio/the-acne-clinic">Read the case study</MagneticButton>
-                <MagneticButton href="/portfolio" variant="ghost">
-                  See all works →
-                </MagneticButton>
+        </Reveal>
+        <Reveal>
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-3 md:items-stretch">
+            {COMPLIANCE_CARDS.map((card) => (
+              <div key={card.title} className="glass-light flex h-full flex-col overflow-hidden rounded-2xl">
+                <div aria-hidden="true" className="h-56 bg-gradient-to-br from-[#F7FAFB] via-white to-[#EAFBFB]" />
+                <div className="flex flex-col gap-2 px-8 pb-8 pt-2 text-center">
+                  <h3 className="font-display text-base font-semibold text-ink-900">{card.title}</h3>
+                  <p className="text-sm leading-relaxed text-pretty text-[#7E8C92]">{card.body}</p>
+                </div>
               </div>
-            </div>
-            <div className="relative">
-              <OrbAnchor id="case" mood="celebrate" scale={0.7} className="absolute -right-6 -top-10 hidden h-px w-px lg:block" />
-              <RevealGroup className="grid gap-4 sm:grid-cols-2">
-                {["+118% organic traffic", "Page 1 for “acne scar treatment Singapore”", "2.1× consult bookings", "38% lower cost-per-enquiry"].map(
-                  (chip) => (
-                    <RevealItem key={chip}>
-                      <GlassCard tone="dark" radius="lg" className="flex h-full items-center p-5">
-                        <span className="text-base font-semibold text-onDark">{chip}</span>
-                      </GlassCard>
-                    </RevealItem>
-                  )
-                )}
+            ))}
+          </div>
+        </Reveal>
+        <Reveal delay={0.08}>
+          <div className="flex justify-center">
+            <MagneticButton href="/services#compliance" size="md" withMiniOrb>
+              How We Keep You Compliant
+            </MagneticButton>
+          </div>
+        </Reveal>
+      </LandingSection>
+
+      {/* 8 — Allies: strategic teal band, 4 partner cards */}
+      <LandingSection
+        tone="white"
+        navTheme="dark"
+        className="bg-[#062D36] py-24 text-onDark"
+        containerClassName="flex flex-col gap-12"
+      >
+        <Reveal>
+          <LandingIntro
+            light
+            kicker="Allies in the lamp"
+            title="The Network Behind Better Clinic Growth"
+            highlight="Network"
+            subtitle="The genie works best with good company. Trusted partners in design, technology, AI, and growth, so your clinic gets more than marketing."
+          />
+        </Reveal>
+        <RevealGroup className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          {ALLIES.map((ally) => (
+            <RevealItem key={ally.name} className="h-full">
+              <div className="glass flex h-full flex-col gap-4 rounded-2xl p-8 transition-shadow duration-ui hover:shadow-glow-md">
+                <div className="flex h-12 items-center">
+                  <Image
+                    src={ally.image}
+                    alt={ally.name}
+                    width={ally.imageWidth ?? 160}
+                    height={ally.imageHeight ?? 48}
+                    className={cn(
+                      "h-9 w-auto max-w-[180px] object-contain object-left sm:h-10",
+                      ally.logoWhite !== false && "brightness-0 invert opacity-90"
+                    )}
+                    sizes="180px"
+                  />
+                </div>
+                <h3 className="font-display text-base font-semibold text-white">{ally.name}</h3>
+                <p className="text-sm leading-relaxed text-[#C9E4EA]">{ally.body}</p>
+              </div>
+            </RevealItem>
+          ))}
+        </RevealGroup>
+        <Reveal delay={0.04}>
+          <p className="text-center font-display text-lg font-bold italic leading-snug text-[#9FDCE8]">
+            Stronger partners. Better support. Clearer growth for your clinic.
+          </p>
+        </Reveal>
+      </LandingSection>
+
+      {/* 8b — Specialist clinics & works: interactive grey orb */}
+      <LandingSection tone="white" className="py-24" containerClassName="flex flex-col gap-16">
+        <Reveal>
+          <LandingIntro
+            kicker="Specialist clinics & works"
+            title="Built around how patients choose specialist care."
+            subtitle="Every specialty has different patient concerns, search behaviour, and trust barriers. Clinic Genie shapes each clinic marketing strategy around how patients search, compare, and decide."
+          />
+        </Reveal>
+        <Reveal delay={0.08}>
+          <SpecialistClinicsOrb />
+        </Reveal>
+        <Reveal delay={0.12}>
+          <PortfolioWorksCarousel />
+        </Reveal>
+      </LandingSection>
+
+      {/* 10 — Dark finale: Genie Tips + final CTA */}
+      <LandingFinale>
+        <section className="py-24">
+          <div className="mx-auto w-full max-w-wide px-[var(--page-pad)]">
+            <div className="flex flex-col gap-10">
+              <div className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-end">
+                <div className="flex flex-col gap-4">
+                  <LandingKicker light>Genie Insights</LandingKicker>
+                  <LandingHeading highlight="growth" light>
+                  Clear insights on clinic growth today.
+                  </LandingHeading>
+                  <LandingBody light center={false}>
+                  Search, design, content, branding, and trust. Genie Insights covers every part of how patients discover and choose specialist clinics.
+                  </LandingBody>
+                </div>
+                <Link
+                  href="/genie-tips"
+                  className="inline-flex shrink-0 items-center gap-1.5 text-sm font-semibold text-white/90 transition-colors hover:text-white"
+                >
+                  Read the Genie's Insights <span aria-hidden="true">→</span>
+                </Link>
+              </div>
+              <RevealGroup className="grid gap-5 md:grid-cols-3">
+                {POSTS.slice(0, 3).map((post) => (
+                  <RevealItem key={post.slug} className="h-full">
+                    <PostCard post={post} tone="dark" showImage={false} />
+                  </RevealItem>
+                ))}
               </RevealGroup>
             </div>
           </div>
-        </Container>
-      </Section>
+        </section>
 
-      {/* 7 — Compliance */}
-      <Section tone="light">
-        <Container className="flex flex-col gap-10">
-          <SectionHeading
-            kicker="Compliance, handled"
-            title="Marketing that respects the rules medicine runs on."
-            highlight="respects"
-            tone="light"
-            subtitle="Healthcare advertising in Singapore has real limits — and a generalist agency can put your licence at risk. Because we work only with clinics, compliance-awareness is built into everything we write and ship, aligned with PHMC/HCSA advertising guidelines. Ambitious growth, responsibly delivered."
-          />
-          <RevealGroup className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {["Specialty-specific", "Compliance-aware copy", "Transparent reporting", "Singapore-based team"].map((item) => (
-              <RevealItem key={item}>
-                <div className="glass-light flex items-center gap-3 rounded-xl p-5">
-                  <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-genie-100 text-genie-700">
-                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                      <path d="M3 8.5l3 3 7-7.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                  </span>
-                  <span className="text-sm font-medium text-ink-900">{item}</span>
-                </div>
-              </RevealItem>
-            ))}
-          </RevealGroup>
-        </Container>
-      </Section>
-
-      {/* 8 — Partners */}
-      <Section tone="dark">
-        <OrbAnchor id="partners" mood="focus" scale={0.85} className="absolute left-1/2 top-20 h-px w-px -translate-x-1/2" />
-        <Container className="flex flex-col gap-10">
-          <SectionHeading
-            kicker="Allies in the lamp"
-            title="A genie with the right friends."
-            highlight="friends"
-            subtitle="When your wish needs a specialist, we bring the best in the room."
-            align="center"
-          />
-          <PartnerStrip partners={PARTNERS} layout="satellite" />
-        </Container>
-      </Section>
-
-      {/* 9 — Genie Tips preview */}
-      <Section tone="light">
-        <Container className="flex flex-col gap-10">
-          <div className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-end">
-            <SectionHeading
-              kicker="Genie Tips"
-              title="Clinic growth, demystified."
-              highlight="demystified"
-              tone="light"
-              subtitle="Practical, no-fluff advice for clinic owners. Free wishes, basically."
-            />
-            <MagneticButton href="/genie-tips" variant="ghost" className="text-genie-700 hover:text-genie-900">
-              Read Genie Tips →
-            </MagneticButton>
+        <section className="pb-32 pt-16">
+          <div className="mx-auto flex max-w-wide flex-col items-center gap-7 px-[var(--page-pad)] text-center">
+            <Reveal>
+              <LandingKicker light>Make your first wish</LandingKicker>
+            </Reveal>
+            <Reveal delay={0.05}>
+              <LandingHeading highlight="growth" light>
+              What is your clinic’s growth wish?
+              <br />
+              Let’s help make it come true.
+              </LandingHeading>
+            </Reveal>
+            <Reveal delay={0.1}>
+              <LandingBody light>
+              Whether you are launching, scaling, or refining your clinic marketing, start with a focused conversation about your clinic, your goals, and the enquiries you want to attract.
+              </LandingBody>
+            </Reveal>
+            <Reveal delay={0.2}>
+              <div className="flex flex-wrap items-center justify-center gap-4">
+                <MagneticButton href="/contact" size="lg" withMiniOrb>
+                  Make Your Clinic&apos;s Growth Wish Come True
+                </MagneticButton>
+                <MagneticButton href="/contact" size="lg" variant="ghost" tone="light">
+                  Send Your Wish to the Genie
+                </MagneticButton>
+              </div>
+            </Reveal>
+            <Reveal delay={0.3}>
+              <p className="text-sm text-[#8FB7C2]">No vague wishes. No confusing jargon. Just a clearer path to responsible clinic growth.</p>
+            </Reveal>
           </div>
-          <RevealGroup className="grid gap-5 md:grid-cols-3">
-            {POSTS.slice(0, 3).map((post) => (
-              <RevealItem key={post.slug} className="h-full">
-                <PostCard post={post} tone="light" />
-              </RevealItem>
-            ))}
-          </RevealGroup>
-        </Container>
-      </Section>
-
-      {/* 10 — Final CTA */}
-      <Section tone="dark" className="overflow-hidden">
-        <OrbAnchor id="cta" mood="celebrate" scale={1.1} intensity={1} className="absolute left-1/2 top-10 h-px w-px -translate-x-1/2" />
-        <Container className="flex flex-col items-center gap-7 text-center">
-          <SectionHeading
-            kicker="Make your first wish"
-            title="Ready to grant your clinic some growth?"
-            highlight="growth"
-            align="center"
-          />
-          <Reveal delay={0.1}>
-            <p className="mx-auto max-w-xl text-lead text-onDark-muted">
-              Book a free 30-minute strategy call. We&apos;ll map where the right patients are searching — and exactly how
-              to make your clinic the one they trust.
-            </p>
-          </Reveal>
-          <Reveal delay={0.2}>
-            <MagneticButton href="/contact" size="lg" withMiniOrb>
-              Book a strategy call
-            </MagneticButton>
-          </Reveal>
-          <Reveal delay={0.3}>
-            <p className="text-sm text-onDark-faint">No obligation. No jargon. Just a clear next step.</p>
-          </Reveal>
-        </Container>
-      </Section>
-    </>
+        </section>
+      </LandingFinale>
+    </div>
   );
 }

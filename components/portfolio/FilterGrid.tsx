@@ -39,14 +39,14 @@ export function FilterGrid() {
               aria-pressed={isActive}
               className={cn(
                 "relative rounded-pill px-4 py-2 font-sans text-sm font-medium transition-colors duration-ui focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-genie-400/60",
-                isActive ? "text-night-900" : "text-onDark-muted hover:text-onDark"
+                isActive ? "text-white" : "text-onDark-muted hover:text-onDark"
               )}
             >
               {isActive && (
                 <motion.span
                   layoutId="filter-pill"
                   aria-hidden="true"
-                  className="absolute inset-0 rounded-pill bg-gradient-to-br from-genie-200 to-genie-400 shadow-glow-sm"
+                  className="btn-cta absolute inset-0 rounded-pill"
                   transition={{ type: "spring", stiffness: 380, damping: 32 }}
                 />
               )}

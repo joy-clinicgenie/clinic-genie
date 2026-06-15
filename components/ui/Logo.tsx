@@ -21,6 +21,29 @@ export function Logo({
   showWordmark?: boolean;
   tone?: "dark" | "light";
 }) {
+  // Light tone: use the real brand logo image (transparent PNG, any background)
+  if (tone === "light") {
+    return (
+      <Link
+        href="/"
+        aria-label="Clinic Genie — home"
+        className={cn("group inline-flex items-center", className)}
+      >
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/clinic-genie-logo.png"
+          alt="Clinic Genie"
+          width={150}
+          height={32}
+          className="h-8 w-auto transition-opacity duration-ui group-hover:opacity-80"
+          style={{ background: "transparent" }}
+          fetchPriority="high"
+        />
+      </Link>
+    );
+  }
+
+  // Dark tone: white SVG brandmark + wordmark (for dark section nav)
   return (
     <Link
       href="/"
@@ -35,12 +58,7 @@ export function Logo({
         <Brandmark className="relative h-9 w-9 text-genie-500 transition-colors duration-ui group-hover:text-genie-300" />
       </span>
       {showWordmark && (
-        <span
-          className={cn(
-            "font-display text-lg font-bold tracking-tight",
-            tone === "dark" ? "text-onDark" : "text-ink-900"
-          )}
-        >
+        <span className="font-display text-lg font-bold tracking-tight text-onDark">
           Clinic <span className="genie-text">Genie</span>
         </span>
       )}

@@ -187,7 +187,7 @@ clinic-genie/
 6. **Clarity Fade** (`clarity-fade`): `linear-gradient(180deg, #0B1226 0%, #0F1730 40%, #F0F8FC 100%)`
 
 ### 3.2 Typography (Google Fonts)
-- **Display/Headings — Sora** (600/700). H1–H2 700, H3 600.
+- **Display/Headings — Sora** (400/500). H1–H2 700, H3 600.
 - **Body/UI — Inter** (400 body, 500 nav/labels, 600 emphasis).
 - **Mono accent — JetBrains Mono** (500) for metrics, kickers ("RESEARCH. DATA. RESULTS."), keyword chips.
 

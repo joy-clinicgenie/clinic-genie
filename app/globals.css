@@ -27,17 +27,24 @@
 }
 
 @layer base {
-  html { scroll-behavior: smooth; }
+  html { scroll-behavior: smooth;
+    @apply font-sans; }
 
   body {
     /* Strategic Teal dark (#062D36) as the base dark background */
-    background-color: #062D36;
-    @apply text-onDark font-sans antialiased;
+    background: linear-gradient(180deg, #0e5f6b 0%, #062d36 30%, #041f27 50%);
+    background-attachment: fixed;
+    @apply font-sans antialiased text-onDark;
     overflow-x: hidden;
   }
 
+  body.blog-post-page {
+    background: linear-gradient(180deg, #006b7c 0%, #041f27 100%);
+    background-attachment: fixed;
+  }
+
   ::selection {
-    background: rgba(24, 196, 217, 0.35);
+    background: rgba(24, 196, 217, 0.10);
     color: #fff;
   }
 
@@ -56,6 +63,11 @@
   }
   ::-webkit-scrollbar-thumb:hover {
     background: linear-gradient(180deg, #18C4D9, #0E5F6B);
+  }
+
+  /* Genie Tip article — gradient runs from hero through footer nav */
+  body.blog-post-page footer {
+    background: transparent;
   }
 }
 
@@ -84,6 +96,44 @@
     box-shadow: 0 8px 24px rgba(6,45,54,0.08), inset 0 1px 0 rgba(255,255,255,0.8);
   }
 
+  /* Light register — mist gradient section backgrounds */
+  .surface-light {
+    background: linear-gradient(135deg, #eafbfb 0%, #ffffff 52%, #ddf7f8 100%);
+  }
+
+  .surface-cyan {
+    background: #e3f6fa;
+  }
+
+  /* Homepage — flowing light canvas; dark finale block sits below */
+  .home-landing-flow {
+    background: linear-gradient(
+      180deg,
+      #ffffff 0%,
+      #f8fdfd 6%,
+      #f2fbfb 12%,
+      #eafbfb 22%,
+      #e8f9fb 32%,
+      #e4f7fa 42%,
+      #e3f6fa 52%,
+      #e7f8fb 62%,
+      #eafbfb 72%,
+      #e5f6f8 82%,
+      #e3f6fa 90%,
+      #e9f8fb 96%,
+      #eef9fb 100%
+    );
+    color: #062d36;
+  }
+
+  body:has(.home-landing-flow) {
+    background: #eafbfb;
+  }
+
+  .surface-panel {
+    @apply glass-light rounded-[28px];
+  }
+
   /* Genie Cyan gradient text (dark surfaces only) */
   .genie-text {
     background-image: linear-gradient(92deg, #18C4D9, #78E2DD 60%, #7DAFE3);
@@ -106,6 +156,27 @@
   .link-underline:hover { background-size: 100% 1.5px; }
 
   .prose-reading { max-width: var(--prose); }
+
+  /* Primary CTA — cyan → teal → navy (left to right) */
+  .btn-cta {
+    color: #fff;
+    background-color: #217b8e;
+    background-image: linear-gradient(90deg, #54b9ce 0%, #217b8e 48%, #041f27 100%);
+    box-shadow:
+      0 8px 24px rgba(11, 70, 82, 0.35),
+      inset 0 0 0 1px rgba(24, 196, 217, 0.35);
+    transition:
+      transform var(--dur-ui) var(--ease-out-soft),
+      box-shadow var(--dur-ui) var(--ease-out-soft),
+      filter var(--dur-ui) var(--ease-out-soft);
+  }
+
+  .btn-cta:hover {
+    filter: brightness(1.06);
+    box-shadow:
+      0 10px 30px rgba(11, 70, 82, 0.45),
+      0 0 36px rgba(24, 196, 217, 0.55);
+  }
 }
 
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
@@ -126,5 +197,9 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
     scroll-behavior: auto !important;
+  }
+
+  .wish-stack article {
+    position: static !important;
   }
 }
