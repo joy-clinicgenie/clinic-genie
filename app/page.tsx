@@ -220,7 +220,7 @@ export default function HomePage() {
       </LandingSection>
 
       {/* 8b — Specialist clinics & works: interactive grey orb */}
-      <LandingSection tone="white" className="py-24" containerClassName="flex flex-col gap-16">
+      <LandingSection tone="white" className="bg-white py-24" containerClassName="flex flex-col gap-16">
         <Reveal>
           <LandingIntro
             kicker="Specialist clinics & works"

@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState, type CSSProperties, type KeyboardEvent } from "react";
+import { useCallback, useEffect, useImperativeHandle, useMemo, useRef, useState, forwardRef, type CSSProperties, type KeyboardEvent } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -19,32 +19,48 @@ import { PORTFOLIO_WORKS, type PortfolioWorkSlide } from "@/lib/data/portfolio-w
 import { cn } from "@/lib/cn";
 import styles from "./PortfolioWorksCarousel.module.css";
 
-const CARD_GAP = 6;
+const CARD_GAP = -24;
 const CARD_WIDTH_MOBILE = 220;
 const CARD_WIDTH_DESKTOP = 280;
-const ANGLE_PER_SLOT = 36;
+const ANGLE_PER_SLOT = 24;
+const LOOP_COPIES = 3;
 
-function clampIndex(index: number, count: number) {
-  return Math.max(0, Math.min(count - 1, index));
+export type CarouselControlsHandle = {
+  prev: () => void;
+  next: () => void;
+};
+
+function buildLoopedSlides(slides: PortfolioWorkSlide[]) {
+  return Array.from({ length: LOOP_COPIES }, () => slides).flat();
+}
+
+function normalizeLoopIndex(index: number, originalCount: number) {
+  if (index >= originalCount && index < originalCount * 2) return index;
+  const mod = ((index % originalCount) + originalCount) % originalCount;
+  return originalCount + mod;
 }
 
 function getCardWidth(viewportWidth: number) {
   return viewportWidth >= 768 ? CARD_WIDTH_DESKTOP : CARD_WIDTH_MOBILE;
 }
 
+function getCardStep(cardWidth: number) {
+  return cardWidth + CARD_GAP;
+}
+
 function getTargetX(index: number, cardWidth: number, viewportWidth: number) {
-  const step = cardWidth + CARD_GAP;
+  const step = getCardStep(cardWidth);
   return viewportWidth / 2 - (index * step + cardWidth / 2);
 }
 
-function getIndexFromX(x: number, cardWidth: number, viewportWidth: number, count: number) {
-  const step = cardWidth + CARD_GAP;
+function getIndexFromX(x: number, cardWidth: number, viewportWidth: number) {
+  const step = getCardStep(cardWidth);
   const raw = (viewportWidth / 2 - x - cardWidth / 2) / step;
-  return clampIndex(Math.round(raw), count);
+  return Math.round(raw);
 }
 
 function getVirtualIndex(x: number, cardWidth: number, viewportWidth: number) {
-  const step = cardWidth + CARD_GAP;
+  const step = getCardStep(cardWidth);
   return (viewportWidth / 2 - x - cardWidth / 2) / step;
 }
 
@@ -56,10 +72,10 @@ function cylinderTransform(offset: number) {
   return {
     rotateY: offset * -ANGLE_PER_SLOT,
     scale: 0.73 + depth * 0.34,
-    translateZ: depth * 130 - 145,
-    translateX: offset * -4,
+    translateZ: depth * 110 - 120,
+    translateX: offset * -3,
     opacity: 0.62 + Math.min(abs * 0.11, 0.34),
-    zIndex: Math.round(depth * 130 - 145 + 520),
+    zIndex: Math.round(depth * 110 - 120 + 520),
   };
 }
 
@@ -77,7 +93,7 @@ function WorkCard({
   const content = (
     <>
       <div className={styles.cardInner} style={{ background: slide.gradient }}>
-        {slide.image && (
+        {slide.image ? (
           <Image
             src={slide.image}
             alt=""
@@ -85,6 +101,10 @@ function WorkCard({
             className={styles.cardImage}
             sizes="(max-width: 768px) 220px, 280px"
           />
+        ) : (
+          <div className={styles.cardPlaceholder} aria-hidden="true">
+            <span className={styles.cardPlaceholderLabel}>{slide.title}</span>
+          </div>
         )}
       </div>
       <div className={styles.cardOverlay}>
@@ -168,12 +188,34 @@ function CarouselSlide({
   );
 }
 
-function DragCarousel({ slides }: { slides: PortfolioWorkSlide[] }) {
+function CarouselControls({ onPrev, onNext }: { onPrev: () => void; onNext: () => void }) {
+  return (
+    <div className={styles.navControls} role="group" aria-label="Carousel navigation">
+      <button type="button" className={styles.navButton} aria-label="Previous project" onClick={onPrev}>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+          <path d="M15 6l-6 6 6 6" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      </button>
+      <button type="button" className={styles.navButton} aria-label="Next project" onClick={onNext}>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+          <path d="M9 6l6 6-6 6" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      </button>
+    </div>
+  );
+}
+
+const DragCarousel = forwardRef<CarouselControlsHandle, { slides: PortfolioWorkSlide[] }>(function DragCarousel(
+  { slides },
+  ref
+) {
+  const loopedSlides = useMemo(() => buildLoopedSlides(slides), [slides]);
   const regionRef = useRef<HTMLDivElement>(null);
-  const [focusedIndex, setFocusedIndex] = useState(Math.floor(slides.length / 2));
+  const skipAnimateRef = useRef(false);
+  const [focusedIndex, setFocusedIndex] = useState(slides.length);
   const [dragging, setDragging] = useState(false);
   const [layout, setLayout] = useState({ cardWidth: CARD_WIDTH_DESKTOP, viewportWidth: 1280 });
-  const x = useMotionValue(0);
+  const x = useMotionValue(getTargetX(slides.length, CARD_WIDTH_DESKTOP, 1280));
 
   useEffect(() => {
     const updateLayout = () => {
@@ -186,23 +228,49 @@ function DragCarousel({ slides }: { slides: PortfolioWorkSlide[] }) {
     return () => window.removeEventListener("resize", updateLayout);
   }, []);
 
+  const recenterIfNeeded = useCallback(
+    (index: number) => {
+      const normalized = normalizeLoopIndex(index, slides.length);
+      if (normalized === index) return;
+      skipAnimateRef.current = true;
+      x.set(getTargetX(normalized, layout.cardWidth, layout.viewportWidth));
+      setFocusedIndex(normalized);
+    },
+    [layout.cardWidth, layout.viewportWidth, slides.length, x]
+  );
+
   useEffect(() => {
+    if (skipAnimateRef.current) {
+      skipAnimateRef.current = false;
+      return;
+    }
     const target = getTargetX(focusedIndex, layout.cardWidth, layout.viewportWidth);
-    animate(x, target, { type: "spring", stiffness: 280, damping: 32, mass: 0.85 });
-  }, [focusedIndex, layout.cardWidth, layout.viewportWidth, x]);
+    animate(x, target, {
+      type: "spring",
+      stiffness: 280,
+      damping: 32,
+      mass: 0.85,
+      onComplete: () => {
+        const currentIndex = getIndexFromX(x.get(), layout.cardWidth, layout.viewportWidth);
+        recenterIfNeeded(currentIndex);
+      },
+    });
+  }, [focusedIndex, layout.cardWidth, layout.viewportWidth, recenterIfNeeded, x]);
 
   useMotionValueEvent(x, "change", (currentX) => {
     if (dragging) {
-      setFocusedIndex(getIndexFromX(currentX, layout.cardWidth, layout.viewportWidth, slides.length));
+      setFocusedIndex(getIndexFromX(currentX, layout.cardWidth, layout.viewportWidth));
     }
   });
 
-  const snapToIndex = useCallback(
-    (index: number) => {
-      setFocusedIndex(clampIndex(index, slides.length));
-    },
-    [slides.length]
-  );
+  const snapToIndex = useCallback((index: number) => {
+    setFocusedIndex(index);
+  }, []);
+
+  useImperativeHandle(ref, () => ({
+    prev: () => setFocusedIndex((index) => index - 1),
+    next: () => setFocusedIndex((index) => index + 1),
+  }));
 
   const onDragEnd = useCallback(
     (_: unknown, info: PanInfo) => {
@@ -210,9 +278,9 @@ function DragCarousel({ slides }: { slides: PortfolioWorkSlide[] }) {
       const currentX = x.get();
       const velocityBias = info.velocity.x * 0.14;
       const projected = currentX + velocityBias;
-      snapToIndex(getIndexFromX(projected, layout.cardWidth, layout.viewportWidth, slides.length));
+      snapToIndex(getIndexFromX(projected, layout.cardWidth, layout.viewportWidth));
     },
-    [layout.cardWidth, layout.viewportWidth, slides.length, snapToIndex, x]
+    [layout.cardWidth, layout.viewportWidth, snapToIndex, x]
   );
 
   const onKeyDown = useCallback(
@@ -229,6 +297,7 @@ function DragCarousel({ slides }: { slides: PortfolioWorkSlide[] }) {
   );
 
   const { cardWidth, viewportWidth } = layout;
+  const activeSlide = slides[((focusedIndex % slides.length) + slides.length) % slides.length];
 
   return (
     <div
@@ -246,7 +315,7 @@ function DragCarousel({ slides }: { slides: PortfolioWorkSlide[] }) {
           style={{ x }}
           drag="x"
           dragConstraints={{
-            left: getTargetX(slides.length - 1, cardWidth, viewportWidth),
+            left: getTargetX(loopedSlides.length - 1, cardWidth, viewportWidth),
             right: getTargetX(0, cardWidth, viewportWidth),
           }}
           dragElastic={0.06}
@@ -254,9 +323,9 @@ function DragCarousel({ slides }: { slides: PortfolioWorkSlide[] }) {
           onDragStart={() => setDragging(true)}
           onDragEnd={onDragEnd}
         >
-          {slides.map((slide, index) => (
+          {loopedSlides.map((slide, index) => (
             <CarouselSlide
-              key={slide.id}
+              key={`${slide.id}-${index}`}
               index={index}
               slide={slide}
               x={x}
@@ -269,13 +338,71 @@ function DragCarousel({ slides }: { slides: PortfolioWorkSlide[] }) {
         </motion.div>
       </div>
       <p className="sr-only" aria-live="polite">
-        Showing {slides[focusedIndex]?.title}, slide {focusedIndex + 1} of {slides.length}
+        Showing {activeSlide?.title}, slide {((focusedIndex % slides.length) + slides.length) % slides.length + 1} of{" "}
+        {slides.length}
       </p>
     </div>
   );
-}
+});
 
-function ScrollCarousel({ slides }: { slides: PortfolioWorkSlide[] }) {
+const ScrollCarousel = forwardRef<CarouselControlsHandle, { slides: PortfolioWorkSlide[] }>(function ScrollCarousel(
+  { slides },
+  ref
+) {
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const loopedSlides = useMemo(() => buildLoopedSlides(slides), [slides]);
+  const recenteringRef = useRef(false);
+
+  const getScrollStep = useCallback(() => {
+    const el = scrollRef.current;
+    if (!el) return 0;
+    const first = el.querySelector<HTMLElement>(`.${styles.scrollSlide}`);
+    if (!first) return 0;
+    const gap = Number.parseFloat(getComputedStyle(el).gap) || 0;
+    const marginRight = Number.parseFloat(getComputedStyle(first).marginRight) || CARD_GAP;
+    return first.offsetWidth + marginRight + gap;
+  }, []);
+
+  const recenterScroll = useCallback(() => {
+    const el = scrollRef.current;
+    if (!el || recenteringRef.current) return;
+    const step = getScrollStep();
+    if (!step) return;
+    const setWidth = slides.length * step;
+    if (el.scrollLeft < setWidth * 0.5) {
+      recenteringRef.current = true;
+      el.scrollLeft += setWidth;
+      recenteringRef.current = false;
+    } else if (el.scrollLeft > setWidth * 1.5) {
+      recenteringRef.current = true;
+      el.scrollLeft -= setWidth;
+      recenteringRef.current = false;
+    }
+  }, [getScrollStep, slides.length]);
+
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const step = getScrollStep();
+    if (step) el.scrollLeft = slides.length * step;
+  }, [getScrollStep, slides.length]);
+
+  const scrollByStep = useCallback(
+    (direction: -1 | 1) => {
+      const el = scrollRef.current;
+      if (!el) return;
+      const step = getScrollStep();
+      if (!step) return;
+      el.scrollBy({ left: direction * step, behavior: "auto" });
+    },
+    [getScrollStep]
+  );
+
+  useImperativeHandle(ref, () => ({
+    prev: () => scrollByStep(-1),
+    next: () => scrollByStep(1),
+  }));
+
   return (
     <div
       className={styles.viewport}
@@ -283,32 +410,42 @@ function ScrollCarousel({ slides }: { slides: PortfolioWorkSlide[] }) {
       aria-label="Portfolio works"
       aria-roledescription="carousel"
     >
-      <div className={styles.scrollViewport}>
-        {slides.map((slide) => (
-          <div key={slide.id} className={styles.scrollSlide}>
+      <div ref={scrollRef} className={styles.scrollViewport} onScroll={recenterScroll}>
+        {loopedSlides.map((slide, index) => (
+          <div key={`${slide.id}-${index}`} className={styles.scrollSlide}>
             <WorkCard slide={slide} tabIndex={0} />
           </div>
         ))}
       </div>
     </div>
   );
-}
+});
 
 export function PortfolioWorksCarousel() {
   const reducedMotion = useReducedMotion();
   const slides = PORTFOLIO_WORKS;
+  const carouselRef = useRef<CarouselControlsHandle>(null);
 
   return (
-    <div className="flex w-full flex-col gap-8 pt-4">
-      <div className={styles.intro}>
-        <LandingHeading highlight="magic">Magic beyond the clinic.</LandingHeading>
-        <LandingBody>
-          The same magic, beyond healthcare. From cafés to consultancies, built to help brands grow.
-        </LandingBody>
-      </div>
-
+    <div className="flex w-full flex-col">
       <div className={styles.band}>
-        {reducedMotion ? <ScrollCarousel slides={slides} /> : <DragCarousel slides={slides} />}
+        <div className={styles.intro}>
+          <LandingHeading highlight="magic">Magic beyond the clinic.</LandingHeading>
+          <LandingBody>
+            The same magic, beyond healthcare. From cafés to consultancies, built to help brands grow.
+          </LandingBody>
+        </div>
+
+        {reducedMotion ? (
+          <ScrollCarousel ref={carouselRef} slides={slides} />
+        ) : (
+          <DragCarousel ref={carouselRef} slides={slides} />
+        )}
+
+        <CarouselControls
+          onPrev={() => carouselRef.current?.prev()}
+          onNext={() => carouselRef.current?.next()}
+        />
 
         <div className={styles.ctaBlock}>
           <MagneticButton href="/portfolio" size="lg" withMiniOrb>

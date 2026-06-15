@@ -33,9 +33,9 @@ export function Logo({
         <img
           src="/clinic-genie-logo.png"
           alt="Clinic Genie"
-          width={150}
-          height={32}
-          className="h-8 w-auto transition-opacity duration-ui group-hover:opacity-80"
+          width={235}
+          height={50}
+          className="h-8 w-auto object-contain transition-opacity duration-ui group-hover:opacity-80"
           style={{ background: "transparent" }}
           fetchPriority="high"
         />

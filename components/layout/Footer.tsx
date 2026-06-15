@@ -31,14 +31,14 @@ export function Footer() {
       <Container size="wide" className="flex flex-col gap-14">
         <div className="grid gap-12 lg:grid-cols-[1.5fr_0.8fr_0.9fr_1.2fr]">
           {/* Col 1 — Brand */}
-          <div className="flex flex-col gap-5">
+          <div className="flex flex-col items-start gap-5">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/clinic-genie-logo.png"
               alt="Clinic Genie"
-              width={180}
-              height={24}
-              className="h-8 w-auto brightness-0 invert"
+              width={235}
+              height={50}
+              className="h-8 w-auto self-start object-contain object-left brightness-0 invert"
             />
             <p className="max-w-xs text-sm leading-relaxed text-white/85">
               Strategies for specialist growth. Research. Data. Results.
