@@ -56,12 +56,20 @@ export function Hero() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.65, ease: ease.glide, delay: 0.05 }}
             >
-              The right patients are searching. <br></br>
-              <span className="genie-text">Clinic Genie</span> helps them find you.
+              <span className="genie-text">Clinic Genie</span> helps patients find you.
             </motion.h1>
 
             <motion.p
-              className="max-w-2xl text-lead leading-relaxed text-pretty text-ink-700 lg:mx-0"
+              className="font-display text-h3 font-normal text-ink-700"
+              initial={reduceMotion ? false : { opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, ease: ease.glide, delay: 0.08 }}
+            >
+              Clinic marketing, granted
+            </motion.p>
+
+            <motion.p
+              className="mx-auto max-w-[75%] text-lead leading-relaxed text-pretty text-ink-700 lg:mx-0"
               initial={reduceMotion ? false : { opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, ease: ease.glide, delay: 0.12 }}

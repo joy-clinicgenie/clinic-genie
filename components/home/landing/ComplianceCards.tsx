@@ -43,7 +43,7 @@ export function ComplianceCards({ tone = "light" }: { tone?: "light" | "dark" })
             </h3>
             <p
               className={cn(
-                "text-sm leading-relaxed text-pretty",
+                "mx-auto max-w-[75%] text-sm leading-relaxed text-pretty",
                 isDark ? "text-[#C9E4EA]" : "text-[#7E8C92]"
               )}
             >

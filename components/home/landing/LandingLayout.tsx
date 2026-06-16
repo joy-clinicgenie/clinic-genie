@@ -112,6 +112,9 @@ export function LandingHeading({
   return <h3 className={base}>{children}</h3>;
 }
 
+/** Shared max width for section body paragraphs */
+export const landingParagraphWidth = "max-w-[75%]";
+
 export function LandingBody({
   children,
   light = false,
@@ -126,6 +129,7 @@ export function LandingBody({
   return (
     <p
       className={cn(
+        landingParagraphWidth,
         "text-base leading-relaxed text-pretty",
         light ? "text-[#C9E4EA]" : "text-[#7E8C92]",
         center && "mx-auto text-center",

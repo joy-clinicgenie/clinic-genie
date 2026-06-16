@@ -343,6 +343,7 @@
 }
 
 .ctaNote {
+  max-width: 75%;
   font-size: 1rem;
   line-height: 1.65;
   color: #7e8c92;

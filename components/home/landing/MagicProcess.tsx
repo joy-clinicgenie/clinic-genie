@@ -166,7 +166,7 @@ function ProcessCard({
         <h3 className={cn("font-display text-h4", dark ? "text-white" : "text-ink-900")}>{step.title}</h3>
         <p
           className={cn(
-            "mx-auto text-sm leading-relaxed text-pretty",
+            "mx-auto max-w-[75%] text-sm leading-relaxed text-pretty",
             dark ? "text-[#C9E4EA]" : "text-[#7E8C92]"
           )}
         >

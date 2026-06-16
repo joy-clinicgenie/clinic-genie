@@ -1,3 +1,10 @@
+.stack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.875rem;
+}
+
 .wrap {
   position: relative;
   width: min(504px, 86vw);
@@ -68,6 +75,35 @@
   visibility: visible;
   pointer-events: auto;
   transform: scale(1);
+}
+
+.nudge {
+  margin: 0;
+  max-width: 14rem;
+  text-align: center;
+  font-size: 0.875rem;
+  line-height: 1.45;
+  color: #7e8c92;
+  letter-spacing: 0.01em;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .nudge {
+    animation: orb-nudge 2.8s ease-in-out infinite;
+  }
+}
+
+@keyframes orb-nudge {
+  0%,
+  100% {
+    opacity: 0.72;
+    transform: translateY(0);
+  }
+
+  50% {
+    opacity: 1;
+    transform: translateY(-2px);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

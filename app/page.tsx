@@ -117,7 +117,7 @@ export default function HomePage() {
         </Reveal>
         <Reveal delay={0.08}>
           <div className="flex flex-col items-start gap-5">
-            <LandingBody center={false} className="max-w-md text-sm">
+            <LandingBody center={false} className="text-sm">
               Figures are illustrative estimates only. Actual results vary by specialty, clinic fees, competition,
               budget, patient journey, and conversion performance.
             </LandingBody>
@@ -195,7 +195,7 @@ export default function HomePage() {
       </LandingSection>
 
       {/* 8b — Specialist clinics & works: interactive grey orb */}
-      <LandingSection tone="white" className="bg-white py-24" containerClassName="flex flex-col gap-16">
+      <LandingSection tone="white" className="bg-white pt-24 pb-0" containerClassName="flex flex-col gap-16">
         <Reveal>
           <LandingIntro
             kicker="Specialist clinics & works"
@@ -272,7 +272,7 @@ export default function HomePage() {
               </div>
             </Reveal>
             <Reveal delay={0.3}>
-              <p className="text-sm text-[#8FB7C2]">No vague wishes. No confusing jargon. Just a clearer path to responsible clinic growth.</p>
+              <p className="mx-auto max-w-[75%] text-sm text-[#8FB7C2]">No vague wishes. No confusing jargon. Just a clearer path to responsible clinic growth.</p>
             </Reveal>
           </div>
         </section>

@@ -19,41 +19,49 @@ export function HeroOrb({ className }: { className?: string }) {
   }, []);
 
   return (
-    <div
-      className={cn(styles.wrap, active && styles.active, "motion-safe:animate-orb-bob", className)}
-      tabIndex={-1}
-      onMouseEnter={() => {
-        if (canHover) setActive(true);
-      }}
-      onMouseLeave={() => {
-        if (canHover) setActive(false);
-      }}
-      onFocusCapture={() => setActive(true)}
-      onBlurCapture={(e) => {
-        if (!e.currentTarget.contains(e.relatedTarget as Node)) {
-          setActive(false);
-        }
-      }}
-      onKeyDown={(e) => {
-        if (e.key === "Escape") setActive(false);
-      }}
-    >
-      <button
-        type="button"
-        className={styles.orbHit}
-        aria-label="Ask the orb a question"
-        aria-expanded={active}
-        tabIndex={active ? -1 : 0}
-        onClick={() => {
-          if (!canHover) setActive((open) => !open);
+    <div className={cn(styles.stack, className)}>
+      <div
+        className={cn(styles.wrap, active && styles.active, "motion-safe:animate-orb-bob")}
+        tabIndex={-1}
+        onMouseEnter={() => {
+          if (canHover) setActive(true);
+        }}
+        onMouseLeave={() => {
+          if (canHover) setActive(false);
+        }}
+        onFocusCapture={() => setActive(true)}
+        onBlurCapture={(e) => {
+          if (!e.currentTarget.contains(e.relatedTarget as Node)) {
+            setActive(false);
+          }
+        }}
+        onKeyDown={(e) => {
+          if (e.key === "Escape") setActive(false);
         }}
       >
-        {!active && <Orb hue={0} hoverIntensity={0} rotateOnHover={false} forceHoverState={false} />}
-      </button>
+        <button
+          type="button"
+          className={styles.orbHit}
+          aria-label="Ask the orb a question"
+          aria-expanded={active}
+          tabIndex={active ? -1 : 0}
+          onClick={() => {
+            if (!canHover) setActive((open) => !open);
+          }}
+        >
+          {!active && <Orb hue={0} hoverIntensity={0} rotateOnHover={false} forceHoverState={false} />}
+        </button>
 
-      <div className={styles.wishPanel} aria-hidden={!active}>
-        <MakeAWish tone="light" submitLabel="Make a wish" chipLayout="grid" className={styles.wishForm} />
+        <div className={styles.wishPanel} aria-hidden={!active}>
+          <MakeAWish tone="light" submitLabel="Make a wish" chipLayout="grid" className={styles.wishForm} />
+        </div>
       </div>
+
+      {!active && (
+        <p className={styles.nudge} aria-hidden="true">
+          {canHover ? "Hover the orb to make a wish" : "Tap the orb to make a wish"}
+        </p>
+      )}
     </div>
   );
 }
