@@ -23,6 +23,7 @@ import { WishStack } from "@/components/home/landing/WishStack";
 import { MagicProcess } from "@/components/home/landing/MagicProcess";
 import { SpecialistClinicsOrb } from "@/components/home/landing/SpecialistClinicsOrb";
 import { PortfolioWorksCarousel } from "@/components/home/landing/PortfolioWorksCarousel";
+import { ComplianceCards } from "@/components/home/landing/ComplianceCards";
 import { CLIENT_LOGOS } from "@/lib/data/client-logos";
 import { ALLIES } from "@/lib/data/allies";
 import { cn } from "@/lib/cn";
@@ -37,22 +38,6 @@ const WISH_CHIPS: Record<string, string> = {
   "social-media": "SOCIAL",
   "geo-ai-search": "AI SEARCH",
 };
-
-const COMPLIANCE_CARDS = [
-  {
-    title: "Compliance-aware",
-    body: "Aligned with HCSA, PHMC, SMC, and PDPA.",
-  },
-  {
-    title: "No false promises",
-    body: "No exaggerated claims, no misleading content.",
-  },
-  {
-    title: "Reputation first",
-    body: "Clear, credible content that protects your clinic.",
-  },
-
-];
 
 const METRICS = [
   { value: "20+", label: "Added enquiries / month" },
@@ -152,17 +137,7 @@ export default function HomePage() {
           />
         </Reveal>
         <Reveal>
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-3 md:items-stretch">
-            {COMPLIANCE_CARDS.map((card) => (
-              <div key={card.title} className="glass-light flex h-full flex-col overflow-hidden rounded-2xl">
-                <div aria-hidden="true" className="h-56 bg-gradient-to-br from-[#F7FAFB] via-white to-[#EAFBFB]" />
-                <div className="flex flex-col gap-2 px-8 pb-8 pt-2 text-center">
-                  <h3 className="font-display text-base font-semibold text-ink-900">{card.title}</h3>
-                  <p className="text-sm leading-relaxed text-pretty text-[#7E8C92]">{card.body}</p>
-                </div>
-              </div>
-            ))}
-          </div>
+          <ComplianceCards />
         </Reveal>
         <Reveal delay={0.08}>
           <div className="flex justify-center">

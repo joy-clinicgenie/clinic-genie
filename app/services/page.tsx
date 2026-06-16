@@ -12,6 +12,7 @@ import { SparkleField } from "@/components/ui/SparkleField";
 import { OrbAnchor } from "@/components/orb/OrbAnchor";
 import { PILLARS, PROCESS_STEPS } from "@/lib/data/services";
 import { CORE_PILLARS } from "@/lib/data/pillars";
+import { ComplianceCards } from "@/components/home/landing/ComplianceCards";
 
 export const metadata: Metadata = {
   title: "Services — Strategy, Digital Growth & Brand for Clinics | Clinic Genie",
@@ -297,18 +298,23 @@ export default function ServicesPage() {
           intensity={0.85}
           className="absolute right-[12%] top-1/2 hidden h-px w-px lg:block"
         />
-        <Container className="max-w-prose">
-          <SectionHeading
-            kicker="Compliance, handled"
-            title="Ambitious growth, responsibly delivered."
-            highlight="responsibly"
-            as="h2"
-          />
-          <Reveal variant="up" delay={0.1}>
-            <p className="mt-6 text-lead text-onDark-muted">
-              Every word we publish is written with Singapore&apos;s healthcare advertising guidelines (PHMC/HCSA) in
-              mind, and reviewed with your team. Growth should never put your licence at risk.
-            </p>
+        <Container className="flex flex-col gap-12">
+          <div className="max-w-prose">
+            <SectionHeading
+              kicker="Compliance, handled"
+              title="Ambitious growth, responsibly delivered."
+              highlight="responsibly"
+              as="h2"
+            />
+            <Reveal variant="up" delay={0.1}>
+              <p className="mt-6 text-lead text-onDark-muted">
+                Every word we publish is written with Singapore&apos;s healthcare advertising guidelines (PHMC/HCSA) in
+                mind, and reviewed with your team. Growth should never put your licence at risk.
+              </p>
+            </Reveal>
+          </div>
+          <Reveal variant="up" delay={0.15}>
+            <ComplianceCards tone="dark" />
           </Reveal>
         </Container>
       </Section>
