@@ -60,10 +60,16 @@ function buildMagicPath(points: Point[], vertical: boolean) {
 }
 
 function stepThresholds(count: number, index: number) {
+  if (index === 0) {
+    return { start: 0, end: 0, activeAt: 0 };
+  }
+
+  const revealCount = count - 1;
   const lead = 0.1;
   const tail = 0.08;
-  const span = (1 - lead - tail) / count;
-  const start = lead + index * span;
+  const span = (1 - lead - tail) / revealCount;
+  const revealIndex = index - 1;
+  const start = lead + revealIndex * span;
   const end = start + span * 0.72;
   return { start, end, activeAt: start + span * 0.2 };
 }
@@ -146,20 +152,21 @@ function ProcessCard({
 }) {
   const reduced = useReducedMotion();
   const { start, end } = stepThresholds(total, index);
-  const opacity = useTransform(progress, [start, end], [0, 1]);
-  const y = useTransform(progress, [start, end], [24, 0]);
+  const isFirst = index === 0;
+  const opacity = useTransform(progress, isFirst ? [0, 1] : [start, end], isFirst ? [1, 1] : [0, 1]);
+  const y = useTransform(progress, isFirst ? [0, 1] : [start, end], isFirst ? [0, 0] : [24, 0]);
 
   return (
     <motion.article
-      className={cn("flex flex-col items-center gap-4 md:items-start", className)}
+      className={cn("flex flex-col items-center gap-4 text-center", className)}
       style={reduced ? undefined : { opacity, y }}
     >
       <MagicNumber n={step.n} active={active} circleRef={circleRef} />
-      <div className="flex flex-col gap-2 text-center md:text-left">
+      <div className="flex flex-col gap-2">
         <h3 className={cn("font-display text-h4", dark ? "text-white" : "text-ink-900")}>{step.title}</h3>
         <p
           className={cn(
-            "mx-auto text-sm leading-relaxed text-pretty md:mx-0",
+            "mx-auto text-sm leading-relaxed text-pretty",
             dark ? "text-[#C9E4EA]" : "text-[#7E8C92]"
           )}
         >
@@ -194,7 +201,7 @@ export function MagicProcess({
   const reduced = useReducedMotion();
   const [pathD, setPathD] = useState("");
   const [pathLength, setPathLength] = useState(1);
-  const [activeSteps, setActiveSteps] = useState(() => steps.map(() => false));
+  const [activeSteps, setActiveSteps] = useState(() => steps.map((_, index) => index === 0));
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -274,7 +281,7 @@ export function MagicProcess({
       return;
     }
     setActiveSteps(
-      steps.map((_, index) => value >= stepThresholds(steps.length, index).activeAt)
+      steps.map((_, index) => index === 0 || value >= stepThresholds(steps.length, index).activeAt)
     );
   });
 
