@@ -14,6 +14,7 @@ import {
   type PanInfo,
 } from "framer-motion";
 import { MagneticButton } from "@/components/ui/MagneticButton";
+import { SparkleCluster } from "@/components/ui/SparkleCluster";
 import { SparkleRing } from "@/components/ui/SparkleRing";
 import { LandingBody, LandingHeading } from "@/components/home/landing/LandingLayout";
 import { PORTFOLIO_WORKS, type PortfolioWorkSlide } from "@/lib/data/portfolio-works";
@@ -36,12 +37,12 @@ function worksSparkleRng(seed: number) {
   return x - Math.floor(x);
 }
 
-const WORKS_SPARKLES = Array.from({ length: 12 }, (_, i) => ({
+const WORKS_SPARKLES = Array.from({ length: 20 }, (_, i) => ({
   x: `${(worksSparkleRng(i + 1) * 92 + 4).toFixed(2)}%`,
   y: `${(worksSparkleRng(i + 7.3) * 88 + 6).toFixed(2)}%`,
-  size: `${(1 + worksSparkleRng(i + 3.1) * 1.5).toFixed(2)}px`,
+  size: 10 + Math.floor(worksSparkleRng(i + 3.1) * 7),
   delay: `${(worksSparkleRng(i + 5.7) * 5).toFixed(2)}s`,
-  dur: `${(4 + worksSparkleRng(i + 2.2) * 3).toFixed(2)}s`,
+  dur: `${(3.2 + worksSparkleRng(i + 2.2) * 2.8).toFixed(2)}s`,
   color: SPARKLE_COLORS[i % SPARKLE_COLORS.length],
 }));
 
@@ -658,50 +659,51 @@ export function PortfolioWorksCarousel() {
               className={styles.bandSparkle}
               style={
                 {
-                  "--spark-x": spark.x,
-                  "--spark-y": spark.y,
-                  "--spark-size": spark.size,
-                  "--spark-delay": spark.delay,
-                  "--spark-dur": spark.dur,
-                  "--spark-color": spark.color,
-                  "--spark-glow": `${spark.color}59`,
+                  left: spark.x,
+                  top: spark.y,
+                  width: spark.size,
+                  height: spark.size,
+                  color: spark.color,
+                  animationDelay: spark.delay,
+                  animationDuration: spark.dur,
                 } as CSSProperties
               }
-            />
+            >
+              <SparkleCluster glow className="h-full w-full" />
+            </span>
           ))}
         </div>
         <div className={styles.intro}>
-          <LandingHeading as="h3" highlight="magic" light>
+          <LandingHeading as="h3" highlight="magic">
             Magic beyond the clinic.
           </LandingHeading>
-          <LandingBody light>
+          <LandingBody>
             The same magic, beyond healthcare. From cafés to consultancies, built to help brands grow.
           </LandingBody>
         </div>
 
         <div className={styles.carouselShell}>
+          <div className={styles.carouselReflection} aria-hidden="true">
+            <div className={styles.carouselReflectionFill} />
+          </div>
           {reducedMotion ? (
             <ScrollCarousel ref={carouselRef} slides={slides} />
           ) : (
             <DragCarousel ref={carouselRef} slides={slides} />
           )}
-
-          <div className={styles.carouselReflection} aria-hidden="true">
-            <div className={styles.horizonGlow} />
-            <div className={styles.horizonArc} />
-            <div className={styles.horizonBloom} />
-          </div>
         </div>
 
-        <CarouselControls
-          onPrev={() => carouselRef.current?.prev()}
-          onNext={() => carouselRef.current?.next()}
-        />
+        <div className={styles.controlsBlock}>
+          <CarouselControls
+            onPrev={() => carouselRef.current?.prev()}
+            onNext={() => carouselRef.current?.next()}
+          />
 
-        <div className={styles.ctaBlock}>
-          <MagneticButton href="/portfolio" size="lg" withMiniOrb>
-            View Our Works
-          </MagneticButton>
+          <div className={styles.ctaBlock}>
+            <MagneticButton href="/portfolio" size="lg" withMiniOrb>
+              View Our Works
+            </MagneticButton>
+          </div>
         </div>
       </div>
     </div>

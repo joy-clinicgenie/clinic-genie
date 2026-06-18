@@ -2,29 +2,40 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: stretch;
   gap: 0;
   width: 100%;
-  padding-bottom: 1.5rem;
 }
 
-.wrap::after {
+.contentBand {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  overflow-x: clip;
+  padding-bottom: 4rem;
+}
+
+.contentBand::before {
   content: "";
   position: absolute;
-  left: 50%;
+  z-index: -1;
+  top: 0;
   bottom: 0;
-  z-index: 0;
-  width: 100vw;
-  height: clamp(4rem, 10vh, 6rem);
+  left: 50%;
+  width: 100dvw;
   transform: translateX(-50%);
   pointer-events: none;
-  background: linear-gradient(180deg, transparent 0%, rgba(234, 251, 251, 0.45) 55%, rgba(234, 251, 251, 0.92) 100%);
+  background: #ffffff;
 }
 
 .orbCenter {
   display: flex;
   justify-content: center;
   width: 100%;
+  background: #ffffff;
 }
 
 .orbShell {
@@ -42,31 +53,6 @@
   border-radius: 50%;
   overflow: hidden;
   isolation: isolate;
-}
-
-.orbVisual::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 3;
-  background:
-    radial-gradient(
-      circle at 50% 50%,
-      rgba(255, 255, 255, 0) 0%,
-      rgba(255, 255, 255, 0) 58%,
-      rgba(120, 226, 221, 0.03) 72%,
-      rgba(24, 196, 217, 0.06) 84%,
-      rgba(84, 185, 206, 0.07) 94%,
-      rgba(33, 123, 142, 0.05) 100%
-    ),
-    radial-gradient(
-      circle at 36% 30%,
-      rgba(204, 244, 246, 0.12) 0%,
-      rgba(120, 226, 221, 0.05) 28%,
-      transparent 52%
-    );
 }
 
 .orbVisual :global(.orb-container) {
@@ -248,8 +234,9 @@
   display: grid;
   grid-template-columns: repeat(1, minmax(0, 1fr));
   gap: 0.65rem;
+  align-self: stretch;
   width: 100%;
-  max-width: min(1080px, 100%);
+  max-width: 100%;
   margin-top: 2rem;
 }
 

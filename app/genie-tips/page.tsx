@@ -7,10 +7,12 @@ import { Kicker } from "@/components/ui/Kicker";
 import { Reveal } from "@/components/ui/Reveal";
 import { MagneticButton } from "@/components/ui/MagneticButton";
 import { GlassCard } from "@/components/ui/GlassCard";
-import { SparkleField } from "@/components/ui/SparkleField";
+import { LightHero } from "@/components/ui/LightHero";
 import { OrbAnchor } from "@/components/orb/OrbAnchor";
 import { PostGrid } from "@/components/blog/PostGrid";
 import { NewsletterCapture } from "@/components/blog/NewsletterCapture";
+import { PageFinale } from "@/components/ui/PageFinale";
+import { PageFinaleCTA } from "@/components/ui/PageFinaleCTA";
 import { POSTS } from "@/lib/data/posts";
 
 export const metadata: Metadata = {
@@ -24,35 +26,12 @@ const featured = POSTS.find((p) => p.featured) ?? POSTS[0];
 export default function GenieTipsPage() {
   return (
     <>
-      {/* 1 — Hero */}
-      <Section tone="dark" className="bg-aurora-hero overflow-hidden pb-20 pt-36 md:min-h-[68vh]">
-        <SparkleField density={32} parallax />
-        <OrbAnchor
-          id="genie-tips-hero"
-          variant="blog"
-          mood="curious"
-          scale={0.9}
-          intensity={0.7}
-          className="absolute left-1/2 top-[14%] h-px w-px -translate-x-1/2 lg:left-auto lg:right-[12%] lg:top-1/2 lg:translate-x-0"
-        />
-        <Container size="wide" className="relative z-10">
-          <div className="flex max-w-3xl flex-col gap-6">
-            <Reveal variant="up">
-              <Kicker>Genie Tips</Kicker>
-            </Reveal>
-            <SectionHeading
-              title="Clinic growth, demystified."
-              highlight="demystified"
-              as="h1"
-              subtitle="Practical, compliance-aware advice on SEO, ads, websites and brand — written for clinic owners and specialist doctors in Singapore. Free wishes, basically."
-            />
-          </div>
-        </Container>
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-b from-transparent to-night-900"
-        />
-      </Section>
+      <LightHero
+        kicker="Genie Tips"
+        title="Clinic growth, demystified."
+        highlight="demystified"
+        subtitle="Practical, compliance-aware advice on SEO, ads, websites and brand — written for clinic owners and specialist doctors in Singapore. Free wishes, basically."
+      />
 
       {/* 2 — Featured post */}
       <Section tone="light">
@@ -144,37 +123,16 @@ export default function GenieTipsPage() {
       </Section>
 
       {/* 5 — Final CTA */}
-      <Section tone="dark" className="overflow-hidden">
-        <OrbAnchor
-          id="genie-tips-cta"
-          mood="celebrate"
-          scale={1.05}
-          intensity={1}
-          className="absolute left-1/2 top-10 h-px w-px -translate-x-1/2"
+      <PageFinale>
+        <PageFinaleCTA
+          kicker="Skip the reading"
+          title="What is your clinic's growth wish? Let's help make it come true."
+          highlight="wish"
+          body="Whether you are launching, scaling, or refining your clinic marketing, start with a focused conversation about your clinic, your goals, and the enquiries you want to attract."
+          footnote="No vague wishes. No confusing jargon. Just a clearer path to responsible clinic growth."
+          primaryCta={{ href: "/contact", label: "Make Your First Wish" }}
         />
-        <Container className="flex flex-col items-center gap-7 text-center">
-          <SectionHeading
-            kicker="Skip the reading"
-            title="Prefer we just handle it?"
-            highlight="handle"
-            align="center"
-          />
-          <Reveal delay={0.1}>
-            <p className="mx-auto max-w-xl text-lead text-onDark-muted">
-              Tips are free, but a plan is faster. Book a 30-minute strategy call and we&apos;ll show you exactly where
-              your clinic&apos;s next patients are searching.
-            </p>
-          </Reveal>
-          <Reveal delay={0.2}>
-            <MagneticButton href="/contact" size="lg" withMiniOrb>
-              Book a strategy call
-            </MagneticButton>
-          </Reveal>
-          <Reveal delay={0.3}>
-            <p className="text-sm text-onDark-faint">No obligation. No jargon. Just a clear next step.</p>
-          </Reveal>
-        </Container>
-      </Section>
+      </PageFinale>
     </>
   );
 }

@@ -53,6 +53,13 @@
   --text-h1:     2.98625rem;  /* 47.78px */
   --text-lead:   var(--text-h6);
   --text-display: 3.583rem;   /* 57.33px */
+
+  /* Landing finale + footer gradient stack */
+  --finale-from: #2A6B77;
+  --finale-via:  #1A4F5D;
+  --finale-to:   #0C323D;
+  --footer-from: #0C323D;
+  --footer-to:   #062D36;
 }
 
 @layer base {
@@ -135,6 +142,28 @@
 
   .surface-cyan {
     background: #e3f6fa;
+  }
+
+  /* Landing finale shell — rounded top transition off light canvas */
+  .finale-shell {
+    @apply relative overflow-hidden rounded-t-[44px];
+  }
+
+  .surface-finale {
+    background: linear-gradient(
+      180deg,
+      var(--finale-from) 0%,
+      var(--finale-via) 50%,
+      var(--finale-to) 100%
+    );
+  }
+
+  .surface-footer {
+    background: linear-gradient(
+      180deg,
+      var(--footer-from) 0%,
+      var(--footer-to) 100%
+    );
   }
 
   /* Homepage — flowing light canvas; dark finale block sits below */

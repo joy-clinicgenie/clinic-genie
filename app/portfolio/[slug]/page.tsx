@@ -8,8 +8,10 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal, RevealGroup, RevealItem } from "@/components/ui/Reveal";
 import { MagneticButton } from "@/components/ui/MagneticButton";
 import { GlassCard } from "@/components/ui/GlassCard";
-import { SparkleField } from "@/components/ui/SparkleField";
+import { LightHero } from "@/components/ui/LightHero";
 import { OrbAnchor } from "@/components/orb/OrbAnchor";
+import { PageFinale } from "@/components/ui/PageFinale";
+import { PageFinaleCTA } from "@/components/ui/PageFinaleCTA";
 import { CASE_STUDIES, getCaseStudy } from "@/lib/data/portfolio";
 
 export function generateStaticParams() {
@@ -39,79 +41,44 @@ export default function CaseStudyPage({ params }: { params: { slug: string } }) 
 
   return (
     <>
-      {/* 1 — Case hero (carries the portfolio orb variant) */}
-      <section className="relative flex min-h-[68vh] items-center overflow-hidden bg-aurora-hero pb-20 pt-36">
-        <SparkleField density={34} parallax />
-        <OrbAnchor
-          id="case-hero"
-          variant="portfolio"
-          mood="idle"
-          scale={0.95}
-          intensity={0.85}
-          className="absolute left-1/2 top-[14%] h-px w-px -translate-x-1/2 lg:left-auto lg:right-[12%] lg:top-1/2 lg:translate-x-0"
-        />
-
-        <Container size="wide" className="relative z-10">
-          <div className="flex max-w-3xl flex-col gap-7 pt-24 lg:pt-0">
-            <Reveal variant="up">
-              <Link
-                href="/portfolio"
-                className="inline-flex w-fit items-center gap-2 font-display text-kicker uppercase text-genie-300 transition-colors hover:text-white"
-              >
-                <span aria-hidden="true">←</span> Our works
-              </Link>
-            </Reveal>
-
-            <Reveal variant="up" delay={0.04}>
-              <Kicker>{cs.specialty}</Kicker>
-            </Reveal>
-
-            <Reveal variant="up" delay={0.08} className="overflow-hidden">
-              <h1 className="text-h1 font-display text-balance text-onDark">{cs.name}</h1>
-            </Reveal>
-
-            {cs.tagline && (
-              <Reveal variant="up" delay={0.12}>
-                <p className="font-display text-h3 text-pretty">
-                  <span className="genie-text">{cs.tagline}</span>
-                </p>
-              </Reveal>
-            )}
-
-            <Reveal variant="up" delay={0.16}>
-              <p className="max-w-xl text-lead text-onDark-muted">{cs.line}</p>
-            </Reveal>
-
-            <RevealGroup className="flex flex-wrap gap-2.5" stagger={0.06}>
-              {cs.tags.map((tag) => (
-                <RevealItem key={tag}>
-                  <span className="glass inline-flex items-center rounded-pill border border-white/10 px-4 py-2 text-sm font-medium text-onDark">
-                    {tag}
-                  </span>
-                </RevealItem>
-              ))}
-            </RevealGroup>
-
-            <Reveal variant="up" delay={0.24}>
-              <p
-                className="inline-flex w-fit items-center rounded-pill px-5 py-2.5 text-base font-semibold text-onDark"
-                style={{
-                  background: `${cs.accent}1f`,
-                  boxShadow: `0 0 0 1px ${cs.accent}55 inset, 0 0 28px -8px ${cs.accent}`,
-                }}
-              >
-                {cs.result}
-              </p>
-            </Reveal>
-          </div>
-        </Container>
-
-        {/* fade into next section */}
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-b from-transparent to-night-900"
-        />
-      </section>
+      <LightHero
+        leading={
+          <Link
+            href="/portfolio"
+            className="inline-flex w-fit items-center gap-2 font-display text-kicker uppercase text-genie-700 transition-colors hover:text-genie-900"
+          >
+            <span aria-hidden="true">←</span> Our works
+          </Link>
+        }
+        kicker={cs.specialty}
+        title={cs.name}
+      >
+        {cs.tagline && (
+          <p className="font-display text-h3 text-pretty">
+            <span className="genie-text">{cs.tagline}</span>
+          </p>
+        )}
+        <p className="max-w-xl text-lead text-ink-700">{cs.line}</p>
+        <div className="flex flex-wrap gap-2.5">
+          {cs.tags.map((tag) => (
+            <span
+              key={tag}
+              className="glass-light inline-flex items-center rounded-pill border border-[#E6EEF1] px-4 py-2 text-sm font-medium text-ink-900"
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+        <p
+          className="inline-flex w-fit items-center rounded-pill px-5 py-2.5 text-base font-semibold text-ink-900"
+          style={{
+            background: `${cs.accent}1f`,
+            boxShadow: `0 0 0 1px ${cs.accent}55 inset, 0 0 28px -8px ${cs.accent}`,
+          }}
+        >
+          {cs.result}
+        </p>
+      </LightHero>
 
       {/* 2 — The Challenge (clarity register) */}
       <Section tone="light">
@@ -307,38 +274,17 @@ export default function CaseStudyPage({ params }: { params: { slug: string } }) 
         </Container>
       </Section>
 
-      {/* 8 — Final CTA (conjuring register, orb flare) */}
-      <Section tone="dark" className="overflow-hidden">
-        <OrbAnchor
-          id="case-cta"
-          mood="celebrate"
-          scale={1.1}
-          intensity={1}
-          className="absolute left-1/2 top-10 h-px w-px -translate-x-1/2"
+      {/* 8 — Final CTA */}
+      <PageFinale>
+        <PageFinaleCTA
+          kicker="Make your first wish"
+          title="Want results like these?"
+          highlight="results"
+          body="Book a free 30-minute strategy call. We'll map where the right patients are searching — and exactly how to make your clinic the one they trust."
+          primaryCta={{ href: "/contact", label: "Make Your First Wish" }}
+          footnote="No obligation. No jargon. Just a clear next step."
         />
-        <Container className="flex flex-col items-center gap-7 text-center">
-          <SectionHeading
-            kicker="Make your first wish"
-            title="Want results like these?"
-            highlight="results"
-            align="center"
-          />
-          <Reveal delay={0.1}>
-            <p className="mx-auto max-w-xl text-lead text-onDark-muted">
-              Book a free 30-minute strategy call. We&apos;ll map where the right patients are searching — and exactly
-              how to make your clinic the one they trust.
-            </p>
-          </Reveal>
-          <Reveal delay={0.2}>
-            <MagneticButton href="/contact" size="lg" withMiniOrb>
-              Book a strategy call
-            </MagneticButton>
-          </Reveal>
-          <Reveal delay={0.3}>
-            <p className="text-sm text-onDark-faint">No obligation. No jargon. Just a clear next step.</p>
-          </Reveal>
-        </Container>
-      </Section>
+      </PageFinale>
     </>
   );
 }

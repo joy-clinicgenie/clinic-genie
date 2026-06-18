@@ -27,7 +27,7 @@ const ROWS = [
   },
 ] as const;
 
-const CARD_TILT = [styles.cardTiltLeft, styles.cardTiltCenter, styles.cardTiltRight] as const;
+const CARD_BACKGROUNDS = [styles.cardBgMint, styles.cardBgGray, styles.cardBgCyan] as const;
 
 function cardSparkleRng(seed: number) {
   const x = Math.sin(seed * 99.13) * 43758.5453;
@@ -99,42 +99,40 @@ export function ClinicGenieGap() {
         <ul className={styles.cardGrid}>
           {ROWS.map((row, index) => (
             <Reveal key={row.title} as="li" className={styles.cardItem} delay={index * 0.05}>
-              <article className={cn("group", styles.card, CARD_TILT[index])}>
+              <article className={cn("group", styles.card, CARD_BACKGROUNDS[index])}>
+                <div className={styles.cardGraphic}>
+                  <div className={styles.cardGraphicCore}>
+                    <Image
+                      src={row.image}
+                      alt=""
+                      width={48}
+                      height={48}
+                      className={styles.cardIcon}
+                    />
+                  </div>
+                  <div className={styles.cardSparkles} aria-hidden="true">
+                    {CARD_SPARKLE_SETS[index].map((spark) => (
+                      <span
+                        key={spark.id}
+                        className={styles.cardSparkle}
+                        style={{
+                          left: spark.x,
+                          top: spark.y,
+                          width: spark.size,
+                          height: spark.size,
+                          animationDelay: spark.delay,
+                          animationDuration: spark.duration,
+                        }}
+                      >
+                        <SparkleCluster glow className="h-full w-full" />
+                      </span>
+                    ))}
+                  </div>
+                </div>
                 <h3 className={styles.cardTitle}>
                   <CardTitle title={row.title} highlight={row.highlight} />
                 </h3>
-                <div className={styles.cardFooter}>
-                  <p className={styles.cardBody}>{row.body}</p>
-                  <div className={styles.cardGraphic}>
-                    <div className={styles.cardGraphicCore}>
-                      <Image
-                        src={row.image}
-                        alt=""
-                        width={48}
-                        height={48}
-                        className={styles.cardIcon}
-                      />
-                    </div>
-                    <div className={styles.cardSparkles} aria-hidden="true">
-                      {CARD_SPARKLE_SETS[index].map((spark) => (
-                        <span
-                          key={spark.id}
-                          className={styles.cardSparkle}
-                          style={{
-                            left: spark.x,
-                            top: spark.y,
-                            width: spark.size,
-                            height: spark.size,
-                            animationDelay: spark.delay,
-                            animationDuration: spark.duration,
-                          }}
-                        >
-                          <SparkleCluster glow className="h-full w-full" />
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </div>
+                <p className={styles.cardBody}>{row.body}</p>
               </article>
             </Reveal>
           ))}

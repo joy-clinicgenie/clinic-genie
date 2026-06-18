@@ -197,7 +197,7 @@ const PAEDIATRICS_DETAIL: Omit<SpecialtyHubDetail, keyof SpecialtyHubCard> = {
     subtitle: "Ready to grow your paediatric clinic?",
     title: "What is your clinic's growth wish?",
     body: "Tell us about your clinic, your young patients, and the families you want to reach. No vague wishes. No confusing jargon. Just a clearer path to being found, trusted, and chosen.",
-    cta: { label: "Make Your Clinic Wish Come True", href: "/contact" },
+    cta: { label: "Make Your First Wish", href: "/contact" },
   },
 };
 

@@ -15,6 +15,7 @@ import { LandingIntro } from "@/components/home/landing/LandingLayout";
 import { MagneticButton } from "@/components/ui/MagneticButton";
 import { SparkleRing } from "@/components/ui/SparkleRing";
 import { cn } from "@/lib/cn";
+import { useScrollExitDelay } from "@/lib/hooks/useScrollExitDelay";
 import styles from "./MagicProcess.module.css";
 
 type Point = { x: number; y: number };
@@ -191,6 +192,14 @@ export function MagicProcess({
   const ctaOpacity = useTransform(progress, [lastStepReveal.end, ctaRevealEnd], [0, 1]);
   const ctaY = useTransform(progress, [lastStepReveal.end, ctaRevealEnd], [20, 0]);
 
+  useScrollExitDelay({
+    containerRef: sectionRef,
+    scrollYProgress,
+    threshold: ctaRevealEnd,
+    delayMs: 500,
+    enabled: !reduced,
+  });
+
   const measurePath = useCallback(() => {
     const svg = svgRef.current;
     if (!svg) return;
@@ -364,7 +373,7 @@ export function MagicProcess({
             style={reduced ? undefined : { opacity: ctaOpacity, y: ctaY }}
           >
             <MagneticButton href="/contact" size="lg" withMiniOrb tone="dark">
-              Start the Magic
+              Make Your First Wish
             </MagneticButton>
           </motion.div>
         </div>

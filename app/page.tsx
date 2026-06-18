@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Image from "next/image";
 import { Hero } from "@/components/home/Hero";
 import { LogoMarquee } from "@/components/home/LogoMarquee";
 import { Reveal, RevealGroup, RevealItem } from "@/components/ui/Reveal";
@@ -10,7 +9,6 @@ import { HOME_PROCESS_STEPS } from "@/lib/data/services";
 import { POSTS } from "@/lib/data/posts";
 import {
   LandingSection,
-  LandingFinale,
   LandingIntro,
   LandingKicker,
   LandingHeading,
@@ -18,15 +16,15 @@ import {
   MetricsRowStats,
   MetricCell,
 } from "@/components/home/landing/LandingLayout";
+import { PageFinale } from "@/components/ui/PageFinale";
 import { ClinicGenieGap } from "@/components/home/landing/ClinicGenieGap";
 import { WishStack } from "@/components/home/landing/WishStack";
 import { MagicProcess } from "@/components/home/landing/MagicProcess";
 import { SpecialistClinicsOrb } from "@/components/home/landing/SpecialistClinicsOrb";
 import { PortfolioWorksCarousel } from "@/components/home/landing/PortfolioWorksCarousel";
+import { AlliesCards, AlliesTagline } from "@/components/home/landing/AlliesCards";
 import { ComplianceCards } from "@/components/home/landing/ComplianceCards";
 import { CLIENT_LOGOS } from "@/lib/data/client-logos";
-import { ALLIES } from "@/lib/data/allies";
-import { cn } from "@/lib/cn";
 
 const WISH_CHIPS: Record<string, string> = {
   findclinic: "PLATFORM",
@@ -135,9 +133,7 @@ export default function HomePage() {
             subtitle="We build Singapore’s healthcare advertising standards into every draft, page, and campaign from the start. Nothing is bolted on after."
           />
         </Reveal>
-        <Reveal>
-          <ComplianceCards />
-        </Reveal>
+        <ComplianceCards />
         <Reveal delay={0.08}>
           <div className="flex justify-center">
             <MagneticButton href="/services#compliance" size="md" withMiniOrb>
@@ -160,43 +156,27 @@ export default function HomePage() {
             kicker="Allies in the lamp"
             title="The Network Behind Better Clinic Growth"
             highlight="Network"
-            subtitle="The genie works best with good company. Trusted partners in design, technology, AI, and growth, so your clinic gets more than marketing."
+            subtitle={
+              <>
+                The genie works best with good company.
+                <br />
+                Trusted partners in design, technology, AI, and growth, so your clinic gets more than marketing.
+              </>
+            }
           />
         </Reveal>
-        <RevealGroup className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {ALLIES.map((ally) => (
-            <RevealItem key={ally.name} className="h-full">
-              <div className="glass flex h-full flex-col gap-4 rounded-2xl p-8 transition-shadow duration-ui hover:shadow-glow-md">
-                <div className="flex h-12 items-center">
-                  <Image
-                    src={ally.image}
-                    alt={ally.name}
-                    width={ally.imageWidth ?? 160}
-                    height={ally.imageHeight ?? 48}
-                    className={cn(
-                      "h-9 w-auto max-w-[180px] object-contain object-left sm:h-10",
-                      ally.logoWhite !== false && "brightness-0 invert opacity-90"
-                    )}
-                    sizes="180px"
-                  />
-                </div>
-                <h3 className="font-display text-base font-semibold text-white">{ally.name}</h3>
-                <p className="text-sm leading-relaxed text-[#C9E4EA]">{ally.body}</p>
-              </div>
-            </RevealItem>
-          ))}
-        </RevealGroup>
-        <Reveal delay={0.04}>
-          <p className="text-center font-display text-h6 font-regular italic leading-snug text-[#9FDCE8]">
-            Stronger partners. Better support. Clearer growth for your clinic.
-          </p>
-        </Reveal>
+        <div className="relative">
+          <div className="relative z-10">
+            <AlliesCards />
+          </div>
+          <AlliesTagline />
+        </div>
       </LandingSection>
 
       {/* 8b — Specialist clinics & works: interactive grey orb */}
       <LandingSection
         tone="white"
-        className="bg-gradient-to-b from-white via-[#f4fcfc] to-[#eafbfb] pt-24 pb-16"
+        className="bg-white pt-24 pb-0"
         containerClassName="flex flex-col gap-16"
       >
         <Reveal>
@@ -206,7 +186,7 @@ export default function HomePage() {
             subtitle="Every specialty has different patient concerns, search behaviour, and trust barriers. Clinic Genie shapes each clinic marketing strategy around how patients search, compare, and decide."
           />
         </Reveal>
-        <Reveal delay={0.08}>
+        <Reveal delay={0.08} className="w-full">
           <SpecialistClinicsOrb />
         </Reveal>
       </LandingSection>
@@ -216,26 +196,30 @@ export default function HomePage() {
       </Reveal>
 
       {/* 10 — Dark finale: Genie Tips + final CTA */}
-      <LandingFinale>
+      <PageFinale>
         <section className="py-24">
           <div className="mx-auto w-full max-w-wide px-[var(--page-pad)]">
             <div className="flex flex-col gap-10">
-              <div className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-end">
-                <div className="flex flex-col gap-4">
+              <div className="flex flex-col gap-6">
+                <div className="flex flex-col items-center gap-4 text-center">
                   <LandingKicker light>Genie Insights</LandingKicker>
-                  <LandingHeading highlight="growth" light>
-                  Clear insights on clinic growth today.
+                  <LandingHeading highlight="growth" light className="text-center">
+                    Clear insights on clinic growth today.
                   </LandingHeading>
-                  <LandingBody light center={false}>
-                  Search, design, content, branding, and trust. Genie Insights covers every part of how patients discover and choose specialist clinics.
-                  </LandingBody>
                 </div>
-                <Link
-                  href="/genie-tips"
-                  className="inline-flex shrink-0 items-center gap-1.5 text-sm font-semibold text-white/90 transition-colors hover:text-white"
-                >
-                  Read the Genie's Insights <span aria-hidden="true">→</span>
-                </Link>
+                <div className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-end">
+                  <LandingBody light center={false}>
+                    Search, design, content, branding, and trust.
+                    <br />
+                    Genie Insights covers every part of how patients discover and choose specialist clinics.
+                  </LandingBody>
+                  <Link
+                    href="/genie-tips"
+                    className="inline-flex shrink-0 items-center gap-1.5 text-sm font-semibold text-white/90 transition-colors hover:text-white"
+                  >
+                    Read the Genie&apos;s Insights <span aria-hidden="true">→</span>
+                  </Link>
+                </div>
               </div>
               <RevealGroup className="grid gap-5 md:grid-cols-3">
                 {POSTS.slice(0, 3).map((post) => (
@@ -268,7 +252,7 @@ export default function HomePage() {
             <Reveal delay={0.2}>
               <div className="flex flex-wrap items-center justify-center gap-4">
                 <MagneticButton href="/contact" size="lg" withMiniOrb>
-                  Make Your Clinic&apos;s Growth Wish Come True
+                  Make Your First Wish
                 </MagneticButton>
                 <MagneticButton href="/contact" size="lg" variant="ghost" tone="light">
                   Send Your Wish to the Genie
@@ -280,7 +264,7 @@ export default function HomePage() {
             </Reveal>
           </div>
         </section>
-      </LandingFinale>
+      </PageFinale>
     </div>
   );
 }

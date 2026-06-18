@@ -64,7 +64,7 @@ const FALLBACK: Wish = {
   title: "Let's map your wish.",
   body: "Tell us where you want to grow and we'll recommend the right mix — strategy, growth and brand, woven into one engine.",
   href: "/contact",
-  cta: "Book a strategy call",
+  cta: "Make Your First Wish",
   match: [],
 };
 
@@ -137,9 +137,9 @@ export function MakeAWish({
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
         className={cn(
-          "group flex items-center gap-0 overflow-hidden rounded-pill p-2 pl-5 transition-[gap] duration-200 hover:gap-2 focus-within:gap-2",
+          "group flex items-center gap-0 overflow-hidden rounded-pill p-2 pl-5 transition-[gap,box-shadow,border-color] duration-200 hover:gap-2 focus-within:gap-2",
           isLight
-            ? "border border-[#E6EEF1] bg-white shadow-sm"
+            ? "glass-light shadow-glass-light focus-within:border-[#54B9CE]/45"
             : "glass pl-5"
         )}
       >

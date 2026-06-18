@@ -4,8 +4,9 @@ import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal, RevealGroup, RevealItem } from "@/components/ui/Reveal";
 import { MagneticButton } from "@/components/ui/MagneticButton";
-import { SparkleField } from "@/components/ui/SparkleField";
-import { OrbAnchor } from "@/components/orb/OrbAnchor";
+import { LightHero } from "@/components/ui/LightHero";
+import { PageFinale } from "@/components/ui/PageFinale";
+import { PageFinaleCTA } from "@/components/ui/PageFinaleCTA";
 import { SpecialtyHubCard } from "@/components/specialty-hub/SpecialtyHubCard";
 import { SPECIALTY_HUBS } from "@/lib/data/specialty-hubs";
 
@@ -18,46 +19,14 @@ export const metadata: Metadata = {
 export default function SpecialtyHubPage() {
   return (
     <>
-      <section className="relative flex min-h-[60vh] items-center overflow-hidden bg-aurora-hero pb-20 pt-36">
-        <SparkleField density={38} parallax />
-        <OrbAnchor
-          id="specialty-hub-index-hero"
-          variant="services"
-          mood="idle"
-          scale={1}
-          intensity={0.85}
-          className="absolute left-1/2 top-[14%] h-px w-px -translate-x-1/2 lg:left-auto lg:right-[12%] lg:top-1/2 lg:translate-x-0"
-        />
-        <Container size="wide" className="relative z-10">
-          <div className="flex max-w-3xl flex-col gap-7 pt-12 lg:pt-0">
-            <Reveal variant="up">
-              <p className="font-display text-kicker uppercase text-genie-300">Specialty Hub</p>
-            </Reveal>
-            <SectionHeading
-              as="h1"
-              title="Growth engines built for your specialty."
-              highlight="your specialty"
-              className="gap-0"
-            />
-            <Reveal variant="up" delay={0.12}>
-              <p className="max-w-xl text-lead text-onDark-muted">
-                Every specialty searches differently. Parents, patients, and families each need a different kind of
-                trust. Explore the growth systems Clinic Genie has built — and is building — for specialist clinics
-                like yours.
-              </p>
-            </Reveal>
-            <Reveal variant="up" delay={0.2}>
-              <MagneticButton href="/contact" size="lg" withMiniOrb>
-                Book a strategy call
-              </MagneticButton>
-            </Reveal>
-          </div>
-        </Container>
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-b from-transparent to-night-900"
-        />
-      </section>
+      <LightHero
+        kicker="Specialty Hub"
+        title="Growth engines built for your specialty."
+        highlight="your specialty"
+        subtitle="Every specialty searches differently. Parents, patients, and families each need a different kind of trust. Explore the growth systems Clinic Genie has built — and is building — for specialist clinics like yours."
+        primaryCta={{ href: "/contact", label: "Make Your First Wish" }}
+        minHeight="min-h-[60vh]"
+      />
 
       <Section tone="light">
         <Container className="flex flex-col gap-12">
@@ -79,34 +48,15 @@ export default function SpecialtyHubPage() {
         </Container>
       </Section>
 
-      <Section tone="dark" className="overflow-hidden">
-        <OrbAnchor
-          id="specialty-hub-index-cta"
-          mood="celebrate"
-          scale={1.08}
-          intensity={1}
-          className="absolute left-1/2 top-10 h-px w-px -translate-x-1/2"
+      <PageFinale>
+        <PageFinaleCTA
+          kicker="Your specialty not listed yet?"
+          title="The magic still works."
+          highlight="magic"
+          body="If patients search for your specialty, we can help them find you. Tell us your wish and we'll map the right growth engine."
+          primaryCta={{ href: "/contact", label: "Make Your First Wish" }}
         />
-        <Container className="flex flex-col items-center gap-7 text-center">
-          <SectionHeading
-            kicker="Your specialty not listed yet?"
-            title="The magic still works."
-            highlight="magic"
-            align="center"
-          />
-          <Reveal variant="up" delay={0.1}>
-            <p className="mx-auto max-w-xl text-lead text-onDark-muted">
-              If patients search for your specialty, we can help them find you. Tell us your wish and we&apos;ll map
-              the right growth engine.
-            </p>
-          </Reveal>
-          <Reveal variant="up" delay={0.2}>
-            <MagneticButton href="/contact" size="lg" withMiniOrb>
-              Make your first wish
-            </MagneticButton>
-          </Reveal>
-        </Container>
-      </Section>
+      </PageFinale>
     </>
   );
 }

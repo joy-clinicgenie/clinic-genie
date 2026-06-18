@@ -28,7 +28,7 @@
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: clamp(0.75rem, 1.5vw, 1rem);
-  align-items: end;
+  align-items: stretch;
 }
 
 .cardItem {
@@ -37,75 +37,38 @@
 
 .card {
   display: flex;
-  min-height: clamp(15rem, 24vw, 18.5rem);
   height: 100%;
+  min-height: clamp(15rem, 24vw, 18.5rem);
   flex-direction: column;
-  justify-content: space-between;
-  gap: 2rem;
-  padding: clamp(1.25rem, 2.5vw, 1.75rem);
+  align-items: flex-start;
+  gap: 1.25rem;
+  padding: clamp(1.5rem, 2vw, 2rem);
   border-radius: 1.25rem;
-  transform-origin: center bottom;
-  transition: transform var(--dur-ui) var(--ease-out-soft);
+  transition: transform var(--dur-ui) var(--ease-out-soft), box-shadow var(--dur-ui) var(--ease-out-soft);
 }
 
-.cardTiltLeft {
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 16px 40px rgba(6, 45, 54, 0.08);
+}
+
+.cardBgMint {
   background: #eafbfb;
-  transform: rotate(-2.75deg);
 }
 
-.cardTiltLeft:hover {
-  transform: rotate(-2.75deg) translate(-8px, -10px);
-}
-
-.cardTiltCenter {
+.cardBgGray {
   background: #f3f5f6;
-  transform: rotate(0deg);
 }
 
-.cardTiltCenter:hover {
-  transform: translateY(-10px);
-}
-
-.cardTiltRight {
+.cardBgCyan {
   background: #e3f6fa;
-  transform: rotate(2.75deg);
-}
-
-.cardTiltRight:hover {
-  transform: rotate(2.75deg) translate(8px, -10px);
-}
-
-.cardTitle {
-  font-family: var(--font-sora), Sora, ui-sans-serif, system-ui, sans-serif;
-  font-size: var(--text-h4);
-  font-weight: 600;
-  line-height: 1.25;
-  letter-spacing: -0.005em;
-  color: #217b8e;
-}
-
-.cardFooter {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 1rem;
-}
-
-.cardBody {
-  flex: 1;
-  min-width: 0;
-  max-width: 75%;
-  font-size: var(--text-body);
-  line-height: 1.65;
-  color: #7e8c92;
 }
 
 .cardGraphic {
   position: relative;
   flex-shrink: 0;
-  align-self: flex-end;
-  width: clamp(4rem, 9vw, 4.75rem);
-  height: clamp(4rem, 9vw, 4.75rem);
+  width: clamp(3.75rem, 8vw, 4.25rem);
+  height: clamp(3.75rem, 8vw, 4.25rem);
   overflow: visible;
 }
 
@@ -156,9 +119,25 @@
 
 .cardGraphicCore svg,
 .cardIcon {
-  width: clamp(2.5rem, 5vw, 3rem);
-  height: clamp(2.5rem, 5vw, 3rem);
+  width: clamp(2.25rem, 4.5vw, 2.75rem);
+  height: clamp(2.25rem, 4.5vw, 2.75rem);
   object-fit: contain;
+}
+
+.cardTitle {
+  font-family: var(--font-sora), Sora, ui-sans-serif, system-ui, sans-serif;
+  font-size: var(--text-h4);
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.005em;
+  color: #217b8e;
+}
+
+.cardBody {
+  margin: 0;
+  font-size: var(--text-body);
+  line-height: 1.65;
+  color: #395d66;
 }
 
 .footer {
@@ -170,27 +149,10 @@
 @media (max-width: 900px) {
   .cardGrid {
     grid-template-columns: 1fr;
-    align-items: stretch;
   }
 
   .card {
-    min-height: 14rem;
-  }
-
-  .cardBody {
-    max-width: 70%;
-  }
-
-  .cardTiltLeft,
-  .cardTiltCenter,
-  .cardTiltRight {
-    transform: none;
-  }
-
-  .cardTiltLeft:hover,
-  .cardTiltCenter:hover,
-  .cardTiltRight:hover {
-    transform: translateY(-8px);
+    min-height: auto;
   }
 }
 
@@ -199,15 +161,14 @@
     transition: none;
   }
 
+  .card:hover {
+    transform: none;
+    box-shadow: none;
+  }
+
   .cardSparkle {
     animation: none;
     opacity: 0.55;
-    transform: none;
-  }
-
-  .cardTiltLeft:hover,
-  .cardTiltCenter:hover,
-  .cardTiltRight:hover {
-    transform: none;
+    transform: translate(-50%, -50%);
   }
 }

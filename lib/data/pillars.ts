@@ -80,7 +80,7 @@ export const PILLAR_SPECIALTIES: KeyPoint[] = [
   { title: "Aqua Physiotherapy", body: "For aquatic physiotherapy and rehabilitation clinics." },
 ];
 
-const CONTACT_CTA: CtaLink = { label: "Book a strategy call", href: "/contact" };
+const CONTACT_CTA: CtaLink = { label: "Make Your First Wish", href: "/contact" };
 
 export const CORE_PILLARS: CorePillar[] = [
   // ───────────────────────────── 1. FindClinic.sg ─────────────────────────────

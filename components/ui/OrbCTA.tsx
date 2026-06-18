@@ -43,7 +43,7 @@ export function OrbCTA({ href = "/contact" }: { href?: string }) {
       </div>
 
       <div className="flex flex-col items-center gap-1">
-        <MagneticButton href={href} size="lg" withMiniOrb ariaLabel="Book a strategy call">
+        <MagneticButton href={href} size="lg" withMiniOrb ariaLabel="Make Your First Wish">
           Make Your First Wish
         </MagneticButton>
         <span className="text-xs text-onDark-faint">30 minutes · no obligation</span>

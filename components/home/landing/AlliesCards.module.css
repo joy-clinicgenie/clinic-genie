@@ -1,0 +1,24 @@
+.shine {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(
+    105deg,
+    transparent 38%,
+    rgba(255, 255, 255, 0.08) 44%,
+    rgba(120, 226, 221, 0.42) 50%,
+    rgba(255, 255, 255, 0.08) 56%,
+    transparent 62%
+  );
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shine {
+    display: none;
+  }
+}
+
+.tagline {
+  margin-top: 4rem;
+}

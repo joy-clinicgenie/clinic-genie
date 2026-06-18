@@ -1,11 +1,10 @@
 "use client";
 
 import { useState, useId } from "react";
-import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
 import { MagneticButton } from "@/components/ui/MagneticButton";
 import { useOrbStore } from "@/components/orb/store";
 import { cn } from "@/lib/cn";
-import { ease } from "@/lib/motion";
 import { SPECIALTIES } from "@/lib/data/faqs";
 
 const FIELD_BASE =
@@ -54,11 +53,11 @@ function Field({
 
 export function ContactForm() {
   const baseId = useId();
+  const router = useRouter();
   const setScene = useOrbStore((s) => s.setScene);
   const burst = useOrbStore((s) => s.burst);
 
   const [focused, setFocused] = useState<string | null>(null);
-  const [submitted, setSubmitted] = useState(false);
   const [consent, setConsent] = useState(false);
 
   const handleFocus = (name: string) => {
@@ -80,42 +79,11 @@ export function ContactForm() {
     window.setTimeout(() => {
       burst();
       setScene({ mood: "celebrate", scale: 1.08, intensity: 1 });
-      setSubmitted(true);
+      router.push("/thank-you");
     }, 650);
   };
 
   const fid = (name: string) => `${baseId}-${name}`;
-
-  if (submitted) {
-    return (
-      <motion.div
-        initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, ease: ease.glide }}
-        className="glass-tint flex flex-col items-center gap-5 rounded-2xl p-10 text-center"
-        role="status"
-        aria-live="polite"
-      >
-        <motion.span
-          aria-hidden="true"
-          initial={{ scale: 0.4, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 0.7, ease: ease.glide }}
-          className="relative grid h-16 w-16 place-items-center rounded-full bg-[radial-gradient(circle_at_35%_30%,#EAF8FE,#6CBAD9_55%,#1E5C78)] shadow-glow-md motion-safe:animate-glow-breathe"
-        >
-          <svg width="26" height="26" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-            <path d="M3 8.5l3 3 7-7.5" stroke="#06121e" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-        </motion.span>
-        <h3 className="font-display text-h3 text-onDark">
-          Wish <span className="genie-text">received</span>.
-        </h3>
-        <p className="max-w-sm text-lead text-onDark-muted">
-          We&apos;ll be in touch within one business day. In the meantime, the right patients are still searching.
-        </p>
-      </motion.div>
-    );
-  }
 
   return (
     <GlassWrap>
@@ -219,9 +187,9 @@ function GlassWrap({ children }: { children: React.ReactNode }) {
       />
       <div className="relative z-10 flex flex-col gap-6">
         <div className="flex flex-col gap-2">
-          <h2 className="font-display text-h3 text-onDark">Book a strategy call</h2>
+          <h2 className="font-display text-h3 text-onDark">No vague wishes.</h2>
           <p className="text-sm text-onDark-muted">
-            Thirty minutes, no jargon, no hard sell. Tell the genie what you want to grow.
+            Just tell us where your clinic wants to grow.
           </p>
         </div>
         {children}

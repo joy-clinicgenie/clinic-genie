@@ -7,8 +7,10 @@ import { MagneticButton } from "@/components/ui/MagneticButton";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { StatTrio } from "@/components/ui/StatTrio";
 import { Kicker } from "@/components/ui/Kicker";
-import { SparkleField } from "@/components/ui/SparkleField";
+import { LightHero } from "@/components/ui/LightHero";
 import { OrbAnchor } from "@/components/orb/OrbAnchor";
+import { PageFinale } from "@/components/ui/PageFinale";
+import { PageFinaleCTA } from "@/components/ui/PageFinaleCTA";
 import { TEAM, TEAM_STATS } from "@/lib/data/team";
 
 export const metadata: Metadata = {
@@ -39,42 +41,13 @@ const VALUES = [
 export default function MeetUsPage() {
   return (
     <>
-      {/* 1 — Hero (dark, conjuring) */}
-      <Section
-        tone="dark"
-        className="bg-aurora-hero overflow-hidden relative pt-36 pb-20 min-h-[68vh] flex items-center"
-      >
-        <SparkleField density={32} parallax />
-        <OrbAnchor
-          id="team-hero"
-          variant="about"
-          mood="curious"
-          scale={1}
-          intensity={0.85}
-          className="absolute left-1/2 top-[14%] h-px w-px -translate-x-1/2 lg:left-auto lg:right-[12%] lg:top-1/2 lg:translate-x-0"
-        />
-        <Container size="wide" className="relative z-10">
-          <div className="flex max-w-3xl flex-col gap-7">
-            <SectionHeading
-              as="h1"
-              kicker="Meet the team"
-              title="The minds behind the magic."
-              highlight="magic"
-              subtitle="Strategists, writers, designers and developers who only do clinics."
-            />
-            <Reveal delay={0.2}>
-              <MagneticButton href="/contact" size="lg" withMiniOrb>
-                Book a strategy call
-              </MagneticButton>
-            </Reveal>
-          </div>
-        </Container>
-        {/* fade into next (light) section */}
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-b from-transparent to-night-900"
-        />
-      </Section>
+      <LightHero
+        kicker="Meet the team"
+        title="The minds behind the magic."
+        highlight="magic"
+        subtitle="Strategists, writers, designers and developers who only do clinics."
+        primaryCta={{ href: "/contact", label: "Make Your First Wish" }}
+      />
 
       {/* 2 — The team grid (light, clarity) */}
       <Section tone="light">
@@ -166,36 +139,17 @@ export default function MeetUsPage() {
         </Container>
       </Section>
 
-      {/* 5 — Final CTA (dark, celebrate) */}
-      <Section tone="dark" className="overflow-hidden">
-        <OrbAnchor
-          id="meet-cta"
-          mood="celebrate"
-          scale={1.08}
-          intensity={1}
-          className="absolute left-1/2 top-10 h-px w-px -translate-x-1/2"
+      {/* 5 — Final CTA */}
+      <PageFinale>
+        <PageFinaleCTA
+          kicker="Make your first wish"
+          title="Let's make your clinic the one patients trust."
+          highlight="trust"
+          body="Book a free 30-minute strategy call and meet the people who will work on your clinic. We'll map where the right patients are searching — and exactly how to win them."
+          primaryCta={{ href: "/contact", label: "Make Your First Wish" }}
+          footnote="No obligation. No jargon. Just a clear next step."
         />
-        <Container className="flex flex-col items-center gap-7 text-center">
-          <Kicker>Make your first wish</Kicker>
-          <h2 className="text-h2 font-display text-balance text-onDark">
-            Let&apos;s make your clinic the one patients <span className="genie-text">trust</span>.
-          </h2>
-          <Reveal delay={0.1}>
-            <p className="mx-auto max-w-xl text-lead text-onDark-muted">
-              Book a free 30-minute strategy call and meet the people who will work on your clinic.
-              We&apos;ll map where the right patients are searching — and exactly how to win them.
-            </p>
-          </Reveal>
-          <Reveal delay={0.2}>
-            <MagneticButton href="/contact" size="lg" withMiniOrb>
-              Book a strategy call
-            </MagneticButton>
-          </Reveal>
-          <Reveal delay={0.3}>
-            <p className="text-sm text-onDark-faint">No obligation. No jargon. Just a clear next step.</p>
-          </Reveal>
-        </Container>
-      </Section>
+      </PageFinale>
     </>
   );
 }

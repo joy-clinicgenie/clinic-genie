@@ -14,54 +14,31 @@ export function Brandmark({ className }: { className?: string }) {
 
 export function Logo({
   className,
-  showWordmark = true,
   tone = "dark",
 }: {
   className?: string;
   showWordmark?: boolean;
   tone?: "dark" | "light";
 }) {
-  // Light tone: use the real brand logo image (transparent PNG, any background)
-  if (tone === "light") {
-    return (
-      <Link
-        href="/"
-        aria-label="Clinic Genie — home"
-        className={cn("group inline-flex items-center", className)}
-      >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src="/clinic-genie-logo.png"
-          alt="Clinic Genie"
-          width={235}
-          height={50}
-          className="h-9 w-auto object-contain transition-opacity duration-ui group-hover:opacity-80"
-          style={{ background: "transparent" }}
-          fetchPriority="high"
-        />
-      </Link>
-    );
-  }
-
-  // Dark tone: white SVG brandmark + wordmark (for dark section nav)
   return (
     <Link
       href="/"
       aria-label="Clinic Genie — home"
-      className={cn("group inline-flex items-center gap-2.5", className)}
+      className={cn("group inline-flex items-center", className)}
     >
-      <span className="relative inline-grid h-10 w-10 place-items-center">
-        <span
-          aria-hidden="true"
-          className="absolute inset-0 rounded-full bg-orb-bloom opacity-0 blur-md transition-opacity duration-ui group-hover:opacity-100"
-        />
-        <Brandmark className="relative h-10 w-10 text-genie-500 transition-colors duration-ui group-hover:text-genie-300" />
-      </span>
-      {showWordmark && (
-        <span className="font-display text-xl font-bold tracking-tight text-onDark">
-          Clinic <span className="genie-text">Genie</span>
-        </span>
-      )}
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src="/clinic-genie-logo.png"
+        alt="Clinic Genie"
+        width={235}
+        height={50}
+        className={cn(
+          "h-9 w-auto object-contain transition-[opacity,filter] duration-ui group-hover:opacity-80",
+          tone === "dark" && "brightness-0 invert"
+        )}
+        style={{ background: "transparent" }}
+        fetchPriority="high"
+      />
     </Link>
   );
 }

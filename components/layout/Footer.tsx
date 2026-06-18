@@ -26,8 +26,7 @@ function SocialIcon({ href, label, children }: { href: string; label: string; ch
 
 export function Footer() {
   return (
-    <footer className="relative overflow-hidden bg-gradient-to-b from-[#0C323D] to-[#062D36] pb-10 pt-16 text-onDark">
-      <div aria-hidden="true" className="hairline-glow absolute inset-x-0 top-0 h-px opacity-70" />
+    <footer className="relative overflow-hidden surface-footer pb-10 pt-16 text-onDark">
       <Container size="wide" className="flex flex-col gap-14">
         <div className="grid gap-12 lg:grid-cols-[1.5fr_0.8fr_0.9fr_1.2fr]">
           {/* Col 1 — Brand */}
@@ -112,11 +111,8 @@ export function Footer() {
         <div className="flex flex-col gap-4 border-t border-white/10 pt-8 text-xs text-white/60 sm:flex-row sm:items-center sm:justify-between">
           <p className="flex flex-wrap items-center gap-x-5 gap-y-1">
             <span>© 2026 Clinic Genie. All rights reserved</span>
-            <Link href="/privacy" className="hover:text-white">
-              Privacy Policy
-            </Link>
             <Link href="/terms" className="hover:text-white">
-              Terms of Use
+              Terms &amp; Privacy
             </Link>
           </p>
           <p className="max-w-md sm:text-right">

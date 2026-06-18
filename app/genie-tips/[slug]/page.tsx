@@ -7,9 +7,10 @@ import { Kicker } from "@/components/ui/Kicker";
 import { Reveal, RevealGroup, RevealItem } from "@/components/ui/Reveal";
 import { MagneticButton } from "@/components/ui/MagneticButton";
 import { GlassCard } from "@/components/ui/GlassCard";
-import { SparkleField } from "@/components/ui/SparkleField";
+import { LightHero } from "@/components/ui/LightHero";
 import { PostCard } from "@/components/blog/PostCard";
-import { OrbAnchor } from "@/components/orb/OrbAnchor";
+import { PageFinale } from "@/components/ui/PageFinale";
+import { PageFinaleCTA } from "@/components/ui/PageFinaleCTA";
 import { POSTS, getPost } from "@/lib/data/posts";
 
 export function generateStaticParams() {
@@ -59,47 +60,21 @@ export default function GenieTipPage({ params }: { params: { slug: string } }) {
 
   return (
     <>
-      {/* 1 — Reading hero */}
-      <Section tone="dark" className="relative min-h-[68vh] overflow-hidden bg-transparent pb-20 pt-36">
-        <SparkleField density={32} parallax />
-        {/* Companion orb parked in the upper-right margin of the article. */}
-        <OrbAnchor
-          id="post"
-          variant="blog"
-          mood="idle"
-          scale={0.9}
-          intensity={0.85}
-          className="absolute right-[10%] top-[24%] hidden h-px w-px lg:block"
-        />
-
-        <Container size="prose" className="relative z-10 flex flex-col gap-6">
-          <Reveal variant="up">
-            <Link
-              href="/genie-tips"
-              className="inline-flex w-fit items-center gap-1.5 text-sm text-onDark-muted transition-colors hover:text-genie-200"
-            >
-              <span aria-hidden="true">←</span> Genie Tips
-            </Link>
-          </Reveal>
-
-          <Reveal variant="up" delay={0.05}>
-            <span className="inline-flex w-fit items-center rounded-pill bg-genie-500/15 px-3 py-1 font-mono text-xs uppercase tracking-wider text-genie-300">
-              {post.category}
-            </span>
-          </Reveal>
-
-          <Reveal variant="up" delay={0.1} className="overflow-hidden">
-            <h1 className="text-h1 font-display text-balance text-onDark">{post.title}</h1>
-          </Reveal>
-
-          <Reveal variant="up" delay={0.18}>
-            <p className="text-sm text-onDark-faint">
-              By the Clinic Genie team · {post.readingTime} · {post.updated}
-            </p>
-          </Reveal>
-        </Container>
-
-      </Section>
+      <LightHero showOrb={false} containerSize="prose">
+        <Link
+          href="/genie-tips"
+          className="inline-flex w-fit items-center gap-1.5 text-sm text-ink-700 transition-colors hover:text-genie-700"
+        >
+          <span aria-hidden="true">←</span> Genie Tips
+        </Link>
+        <span className="inline-flex w-fit items-center rounded-pill bg-genie-600/10 px-3 py-1 font-mono text-xs uppercase tracking-wider text-genie-700">
+          {post.category}
+        </span>
+        <h1 className="text-h1 font-display text-balance text-ink-900">{post.title}</h1>
+        <p className="text-sm text-ink-500">
+          By the Clinic Genie team · {post.readingTime} · {post.updated}
+        </p>
+      </LightHero>
 
       {/* 2 — Reading body */}
       <Section tone="dark" className="bg-transparent">
@@ -153,7 +128,7 @@ export default function GenieTipPage({ params }: { params: { slug: string } }) {
                 make your clinic the one they trust.
               </p>
               <MagneticButton href="/contact" size="lg" withMiniOrb>
-                Book a strategy call
+                Make Your First Wish
               </MagneticButton>
             </GlassCard>
           </Reveal>
@@ -172,34 +147,37 @@ export default function GenieTipPage({ params }: { params: { slug: string } }) {
         </Container>
       </Section>
 
-      {/* 3 — Related posts */}
-      <Section tone="dark" className="bg-transparent">
-        <OrbAnchor
-          id="post-related"
-          mood="curious"
-          scale={0.85}
-          className="absolute left-1/2 top-20 hidden h-px w-px -translate-x-1/2 lg:block"
+      {/* 3 — Related posts + finale CTA */}
+      <PageFinale>
+        <section className="py-24">
+          <Container className="flex flex-col gap-10">
+            <Reveal variant="up">
+              <h2 className="text-h2 font-display text-balance text-onDark">
+                More <span className="genie-text">wishes</span> worth granting.
+              </h2>
+            </Reveal>
+            <RevealGroup className="grid gap-5 md:grid-cols-3">
+              {related.map((p) => (
+                <RevealItem key={p.slug} className="h-full">
+                  <PostCard post={p} tone="dark" />
+                </RevealItem>
+              ))}
+            </RevealGroup>
+            <Reveal className="flex">
+              <MagneticButton href="/genie-tips" variant="ghost" tone="light">
+                All Genie Tips
+              </MagneticButton>
+            </Reveal>
+          </Container>
+        </section>
+        <PageFinaleCTA
+          kicker="Make your first wish"
+          title="Want this done for you? Book a free strategy call."
+          highlight="strategy call"
+          body="Thirty minutes, no obligation. We'll map where the right patients are searching — and exactly how to make your clinic the one they trust."
+          primaryCta={{ href: "/contact", label: "Make Your First Wish" }}
         />
-        <Container className="flex flex-col gap-10">
-          <Reveal variant="up">
-            <h2 className="text-h2 font-display text-balance text-onDark">
-              More <span className="genie-text">wishes</span> worth granting.
-            </h2>
-          </Reveal>
-          <RevealGroup className="grid gap-5 md:grid-cols-3">
-            {related.map((p) => (
-              <RevealItem key={p.slug} className="h-full">
-                <PostCard post={p} tone="dark" />
-              </RevealItem>
-            ))}
-          </RevealGroup>
-          <Reveal className="flex">
-            <MagneticButton href="/genie-tips" variant="secondary">
-              All Genie Tips
-            </MagneticButton>
-          </Reveal>
-        </Container>
-      </Section>
+      </PageFinale>
     </>
   );
 }

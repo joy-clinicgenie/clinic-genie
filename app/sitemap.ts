@@ -17,7 +17,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/genie-tips",
     "/meet-us",
     "/contact",
-    "/privacy",
     "/terms",
   ];
 

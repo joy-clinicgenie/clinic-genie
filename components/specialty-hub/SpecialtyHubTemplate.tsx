@@ -11,8 +11,10 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal, RevealGroup, RevealItem } from "@/components/ui/Reveal";
 import { MagneticButton } from "@/components/ui/MagneticButton";
 import { GlassCard } from "@/components/ui/GlassCard";
-import { SparkleField } from "@/components/ui/SparkleField";
+import { LightHero } from "@/components/ui/LightHero";
 import { OrbAnchor } from "@/components/orb/OrbAnchor";
+import { PageFinale } from "@/components/ui/PageFinale";
+import { PageFinaleCTA } from "@/components/ui/PageFinaleCTA";
 import { cn } from "@/lib/cn";
 import type { SpecialtyHubDetail } from "@/lib/data/specialty-hubs";
 import { useOrbStore } from "@/components/orb/store";
@@ -89,51 +91,22 @@ function HubFaqAccordion({ items }: { items: SpecialtyHubDetail["faqs"] }) {
 export function SpecialtyHubTemplate({ hub }: { hub: SpecialtyHubDetail }) {
   return (
     <>
-      {/* 1 — Hero */}
-      <section className="relative flex min-h-[64vh] items-center overflow-hidden bg-aurora-hero pb-20 pt-36">
-        <SparkleField density={34} parallax />
-        <OrbAnchor
-          id="specialty-hub-hero"
-          variant="services"
-          mood="idle"
-          scale={0.95}
-          intensity={0.85}
-          className="absolute left-1/2 top-[14%] h-px w-px -translate-x-1/2 lg:left-auto lg:right-[12%] lg:top-1/2 lg:translate-x-0"
-        />
-        <Container size="wide" className="relative z-10">
-          <div className="flex max-w-3xl flex-col gap-7 pt-16 lg:pt-0">
-            <Reveal variant="up">
-              <Link
-                href="/specialty-hub"
-                className="inline-flex w-fit items-center gap-2 font-display text-kicker uppercase text-genie-300 transition-colors hover:text-white"
-              >
-                <span aria-hidden="true">←</span> Specialty Hub
-              </Link>
-            </Reveal>
-            <Reveal variant="up" delay={0.04}>
-              <Kicker>{hub.heroEyebrow}</Kicker>
-            </Reveal>
-            <SectionHeading
-              as="h1"
-              title={hub.heroTitle}
-              highlight={hub.heroHighlight}
-              className="gap-0"
-            />
-            <Reveal variant="up" delay={0.12}>
-              <p className="max-w-xl text-lead text-onDark-muted">{hub.heroBody}</p>
-            </Reveal>
-            <Reveal variant="up" delay={0.2}>
-              <MagneticButton href={hub.heroCta.href} size="lg" withMiniOrb>
-                {hub.heroCta.label}
-              </MagneticButton>
-            </Reveal>
-          </div>
-        </Container>
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-b from-transparent to-night-900"
-        />
-      </section>
+      <LightHero
+        leading={
+          <Link
+            href="/specialty-hub"
+            className="inline-flex w-fit items-center gap-2 font-display text-kicker uppercase text-genie-700 transition-colors hover:text-genie-900"
+          >
+            <span aria-hidden="true">←</span> Specialty Hub
+          </Link>
+        }
+        kicker={hub.heroEyebrow}
+        title={hub.heroTitle}
+        highlight={hub.heroHighlight}
+        subtitle={hub.heroBody}
+        primaryCta={{ href: hub.heroCta.href, label: hub.heroCta.label }}
+        minHeight="min-h-[64vh]"
+      />
 
       {/* 2 — What makes patients different */}
       <Section tone="light">
@@ -338,31 +311,14 @@ export function SpecialtyHubTemplate({ hub }: { hub: SpecialtyHubDetail }) {
       </Section>
 
       {/* 8 — Final CTA */}
-      <Section tone="light" className="overflow-hidden">
-        <OrbAnchor
-          id="specialty-hub-cta"
-          mood="celebrate"
-          scale={1.08}
-          intensity={1}
-          className="absolute left-1/2 top-10 h-px w-px -translate-x-1/2"
+      <PageFinale>
+        <PageFinaleCTA
+          kicker={hub.finalCta.subtitle}
+          title={hub.finalCta.title}
+          body={hub.finalCta.body}
+          primaryCta={{ href: hub.finalCta.cta.href, label: hub.finalCta.cta.label }}
         />
-        <Container className="flex flex-col items-center gap-7 text-center">
-          <SectionHeading
-            kicker={hub.finalCta.subtitle}
-            title={hub.finalCta.title}
-            tone="light"
-            align="center"
-          />
-          <Reveal variant="up" delay={0.1}>
-            <p className="mx-auto max-w-xl text-lead text-ink-700">{hub.finalCta.body}</p>
-          </Reveal>
-          <Reveal variant="up" delay={0.2}>
-            <MagneticButton href={hub.finalCta.cta.href} size="lg" withMiniOrb>
-              {hub.finalCta.cta.label}
-            </MagneticButton>
-          </Reveal>
-        </Container>
-      </Section>
+      </PageFinale>
     </>
   );
 }

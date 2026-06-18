@@ -7,8 +7,9 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal, RevealGroup, RevealItem } from "@/components/ui/Reveal";
 import { MagneticButton } from "@/components/ui/MagneticButton";
 import { GlassCard } from "@/components/ui/GlassCard";
-import { SparkleField } from "@/components/ui/SparkleField";
-import { OrbAnchor } from "@/components/orb/OrbAnchor";
+import { LightHero } from "@/components/ui/LightHero";
+import { PageFinale } from "@/components/ui/PageFinale";
+import { PageFinaleCTA } from "@/components/ui/PageFinaleCTA";
 import { CORE_PILLARS } from "@/lib/data/pillars";
 
 export const metadata: Metadata = {
@@ -20,54 +21,22 @@ export const metadata: Metadata = {
 export default function CorePillarsPage() {
   return (
     <>
-      {/* 1 — Hero */}
-      <section className="relative flex min-h-[60vh] items-center overflow-hidden bg-aurora-hero pb-20 pt-36">
-        <SparkleField density={38} parallax />
-        <OrbAnchor
-          id="pillars-hero"
-          variant="services"
-          mood="idle"
-          scale={1}
-          intensity={0.85}
-          className="absolute left-1/2 top-[14%] h-px w-px -translate-x-1/2 lg:left-auto lg:right-[12%] lg:top-1/2 lg:translate-x-0"
-        />
-        <Container size="wide" className="relative z-10">
-          <div className="flex max-w-3xl flex-col gap-7 pt-12 lg:pt-0">
-            <Reveal variant="up">
-              <Link
-                href="/services"
-                className="inline-flex w-fit items-center gap-2 font-display text-kicker uppercase text-genie-300 transition-colors hover:text-white"
-              >
-                <span aria-hidden="true">←</span> Services
-              </Link>
-            </Reveal>
-            <Reveal variant="up" delay={0.04}>
-              <Kicker>Core service pillars</Kicker>
-            </Reveal>
-            <SectionHeading
-              as="h1"
-              title="Eight pillars. One growth engine."
-              highlight="growth engine"
-              className="gap-0"
-            />
-            <Reveal variant="up" delay={0.12}>
-              <p className="max-w-xl text-lead text-onDark-muted">
-                Every core service we offer, built to work together. Explore each pillar to see exactly how it helps your
-                clinic get discovered, understood, and trusted by the right patients.
-              </p>
-            </Reveal>
-            <Reveal variant="up" delay={0.2}>
-              <MagneticButton href="/contact" size="lg" withMiniOrb>
-                Book a strategy call
-              </MagneticButton>
-            </Reveal>
-          </div>
-        </Container>
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-b from-transparent to-night-900"
-        />
-      </section>
+      <LightHero
+        leading={
+          <Link
+            href="/services"
+            className="inline-flex w-fit items-center gap-2 font-display text-kicker uppercase text-genie-700 transition-colors hover:text-genie-900"
+          >
+            <span aria-hidden="true">←</span> Services
+          </Link>
+        }
+        kicker="Core service pillars"
+        title="Eight pillars. One growth engine."
+        highlight="growth engine"
+        subtitle="Every core service we offer, built to work together. Explore each pillar to see exactly how it helps your clinic get discovered, understood, and trusted by the right patients."
+        primaryCta={{ href: "/contact", label: "Make Your First Wish" }}
+        minHeight="min-h-[60vh]"
+      />
 
       {/* 2 — Pillar grid */}
       <Section tone="dark">
@@ -114,34 +83,15 @@ export default function CorePillarsPage() {
       </Section>
 
       {/* 3 — Final CTA */}
-      <Section tone="light" className="overflow-hidden">
-        <OrbAnchor
-          id="pillars-cta"
-          mood="celebrate"
-          scale={1.08}
-          intensity={1}
-          className="absolute left-1/2 top-10 h-px w-px -translate-x-1/2"
+      <PageFinale>
+        <PageFinaleCTA
+          kicker="Not sure where to start?"
+          title="Tell us your wish."
+          highlight="wish"
+          body="Book a free strategy call and we'll recommend the right mix of pillars for your clinic — no hard sell."
+          primaryCta={{ href: "/contact", label: "Make Your First Wish" }}
         />
-        <Container className="flex flex-col items-center gap-7 text-center">
-          <SectionHeading
-            kicker="Not sure where to start?"
-            title="Tell us your wish."
-            highlight="wish"
-            tone="light"
-            align="center"
-          />
-          <Reveal variant="up" delay={0.1}>
-            <p className="mx-auto max-w-xl text-lead text-ink-700">
-              Book a free strategy call and we&apos;ll recommend the right mix of pillars for your clinic — no hard sell.
-            </p>
-          </Reveal>
-          <Reveal variant="up" delay={0.2}>
-            <MagneticButton href="/contact" size="lg" withMiniOrb>
-              Book a strategy call
-            </MagneticButton>
-          </Reveal>
-        </Container>
-      </Section>
+      </PageFinale>
     </>
   );
 }

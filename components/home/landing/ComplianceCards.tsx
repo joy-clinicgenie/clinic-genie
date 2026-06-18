@@ -1,15 +1,32 @@
+"use client";
+
 import Image from "next/image";
+import { motion } from "framer-motion";
 import { COMPLIANCE_CARDS } from "@/lib/data/compliance-cards";
 import { cn } from "@/lib/cn";
+import { ease } from "@/lib/motion";
 
 export function ComplianceCards({ tone = "light" }: { tone?: "light" | "dark" }) {
   const isDark = tone === "dark";
 
   return (
-    <div className="grid grid-cols-5 gap-2 sm:gap-3">
+    <motion.div
+      className="grid grid-cols-5 gap-2 sm:gap-3"
+      initial="hidden"
+      whileInView="show"
+      viewport={{ once: true, margin: "-10% 0px" }}
+      variants={{
+        hidden: {},
+        show: { transition: { staggerChildren: 0.1 } },
+      }}
+    >
       {COMPLIANCE_CARDS.map((card) => (
-        <div
+        <motion.div
           key={card.title}
+          variants={{
+            hidden: { opacity: 0 },
+            show: { opacity: 1, transition: { duration: 0.6, ease: ease.glide } },
+          }}
           className={cn(
             "flex h-full min-w-0 flex-col items-center rounded-xl px-2 py-4 text-center sm:rounded-2xl sm:px-3 sm:py-5",
             isDark ? "glass" : "glass-light"
@@ -38,8 +55,8 @@ export function ComplianceCards({ tone = "light" }: { tone?: "light" | "dark" })
           >
             {card.body}
           </p>
-        </div>
+        </motion.div>
       ))}
-    </div>
+    </motion.div>
   );
 }

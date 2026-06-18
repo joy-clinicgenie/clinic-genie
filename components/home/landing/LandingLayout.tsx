@@ -44,17 +44,8 @@ export function LandingSection({
   );
 }
 
-/** Dark gradient block with rounded top — Genie Insights + final CTA */
-export function LandingFinale({ children }: { children: ReactNode }) {
-  return (
-    <div
-      data-nav-theme="dark"
-      className="relative overflow-hidden rounded-t-[44px] bg-gradient-to-b from-[#2A6B77] via-[#1A4F5D] to-[#0C323D] text-onDark"
-    >
-      {children}
-    </div>
-  );
-}
+/** @deprecated Use PageFinale from @/components/ui/PageFinale */
+export { PageFinale as LandingFinale } from "@/components/ui/PageFinale";
 
 /* ─── Typography (PDF hierarchy) ───────────────────────────────────────────── */
 
@@ -160,7 +151,7 @@ export function LandingIntro({
   kicker: string;
   title: string;
   highlight?: string;
-  subtitle?: string;
+  subtitle?: ReactNode;
   light?: boolean;
 }) {
   return (

@@ -12,7 +12,7 @@ export const NAV_ITEMS: NavItem[] = [
   { label: "Meet Us", href: "/meet-us" },
 ];
 
-export const PRIMARY_CTA = { label: "Make you First Wish", href: "/contact" };
+export const PRIMARY_CTA = { label: "Make Your First Wish", href: "/contact" };
 
 export const SITE = {
   name: "Clinic Genie",

@@ -10,8 +10,10 @@ import { MagneticButton } from "@/components/ui/MagneticButton";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { ProcessSteps } from "@/components/ui/ProcessSteps";
 import { FaqAccordion } from "@/components/ui/FaqAccordion";
-import { SparkleField } from "@/components/ui/SparkleField";
+import { LightHero } from "@/components/ui/LightHero";
 import { OrbAnchor } from "@/components/orb/OrbAnchor";
+import { PageFinale } from "@/components/ui/PageFinale";
+import { PageFinaleCTA } from "@/components/ui/PageFinaleCTA";
 import { CORE_PILLARS, PILLAR_SPECIALTIES, getPillar } from "@/lib/data/pillars";
 
 export function generateStaticParams() {
@@ -42,55 +44,29 @@ export default function PillarPage({ params }: { params: { slug: string } }) {
 
   return (
     <>
-      {/* 1 — Hero */}
-      <section className="relative flex min-h-[64vh] items-center overflow-hidden bg-aurora-hero pb-20 pt-36">
-        <SparkleField density={34} parallax />
-        <OrbAnchor
-          id="pillar-hero"
-          variant="services"
-          mood="idle"
-          scale={0.95}
-          intensity={0.85}
-          className="absolute left-1/2 top-[14%] h-px w-px -translate-x-1/2 lg:left-auto lg:right-[12%] lg:top-1/2 lg:translate-x-0"
-        />
-        <Container size="wide" className="relative z-10">
-          <div className="flex max-w-3xl flex-col gap-7 pt-16 lg:pt-0">
-            <Reveal variant="up">
-              <Link
-                href="/services/core-pillars"
-                className="inline-flex w-fit items-center gap-2 font-display text-kicker uppercase text-genie-300 transition-colors hover:text-white"
-              >
-                <span aria-hidden="true">←</span> Core service pillars
-              </Link>
-            </Reveal>
-            <Reveal variant="up" delay={0.04}>
-              <Kicker>{pillar.heroSubtitle}</Kicker>
-            </Reveal>
-            <SectionHeading as="h1" title={pillar.heroTitle} className="gap-0" />
-            <div className="flex flex-col gap-4">
-              {pillar.heroParagraph.map((para, i) => (
-                <Reveal key={i} variant="up" delay={0.12 + i * 0.06}>
-                  <p className="max-w-xl text-lead text-onDark-muted">{para}</p>
-                </Reveal>
-              ))}
-            </div>
-            <Reveal variant="up" delay={0.26}>
-              <div className="flex flex-wrap items-center gap-3">
-                <MagneticButton href={pillar.heroPrimaryCta.href} size="lg" withMiniOrb>
-                  {pillar.heroPrimaryCta.label}
-                </MagneticButton>
-                <MagneticButton href={pillar.heroSecondaryCta.href} size="lg" variant="secondary">
-                  {pillar.heroSecondaryCta.label}
-                </MagneticButton>
-              </div>
-            </Reveal>
-          </div>
-        </Container>
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-b from-transparent to-night-900"
-        />
-      </section>
+      <LightHero
+        leading={
+          <Link
+            href="/services/core-pillars"
+            className="inline-flex w-fit items-center gap-2 font-display text-kicker uppercase text-genie-700 transition-colors hover:text-genie-900"
+          >
+            <span aria-hidden="true">←</span> Core service pillars
+          </Link>
+        }
+        kicker={pillar.heroSubtitle}
+        title={pillar.heroTitle}
+        primaryCta={{ href: pillar.heroPrimaryCta.href, label: pillar.heroPrimaryCta.label }}
+        secondaryCta={{ href: pillar.heroSecondaryCta.href, label: pillar.heroSecondaryCta.label }}
+        minHeight="min-h-[64vh]"
+      >
+        <div className="flex flex-col gap-4">
+          {pillar.heroParagraph.map((para, i) => (
+            <p key={i} className="max-w-xl text-lead text-ink-700">
+              {para}
+            </p>
+          ))}
+        </div>
+      </LightHero>
 
       {/* 2 — Why it matters */}
       <Section tone="light">
@@ -301,41 +277,15 @@ export default function PillarPage({ params }: { params: { slug: string } }) {
       </Section>
 
       {/* 8 — Final CTA */}
-      <Section tone="light" className="overflow-hidden">
-        <OrbAnchor
-          id="pillar-cta"
-          mood="celebrate"
-          scale={1.08}
-          intensity={1}
-          className="absolute left-1/2 top-10 h-px w-px -translate-x-1/2"
+      <PageFinale>
+        <PageFinaleCTA
+          kicker={pillar.finalSubtitle}
+          title={pillar.finalTitle}
+          body={pillar.finalParagraph}
+          primaryCta={{ href: pillar.heroPrimaryCta.href, label: pillar.heroPrimaryCta.label }}
+          secondaryCta={{ href: pillar.finalSecondaryCta.href, label: pillar.finalSecondaryCta.label }}
         />
-        <Container className="flex flex-col items-center gap-7 text-center">
-          <SectionHeading
-            kicker={pillar.finalSubtitle}
-            title={pillar.finalTitle}
-            tone="light"
-            align="center"
-          />
-          <Reveal variant="up" delay={0.1}>
-            <p className="mx-auto max-w-xl text-lead text-ink-700">{pillar.finalParagraph}</p>
-          </Reveal>
-          <Reveal variant="up" delay={0.2}>
-            <div className="flex flex-wrap items-center justify-center gap-3">
-              <MagneticButton href={pillar.heroPrimaryCta.href} size="lg" withMiniOrb>
-                {pillar.heroPrimaryCta.label}
-              </MagneticButton>
-              <MagneticButton
-                href={pillar.finalSecondaryCta.href}
-                size="lg"
-                variant="ghost"
-                className="text-genie-700 hover:text-genie-900"
-              >
-                {pillar.finalSecondaryCta.label}
-              </MagneticButton>
-            </div>
-          </Reveal>
-        </Container>
-      </Section>
+      </PageFinale>
     </>
   );
 }

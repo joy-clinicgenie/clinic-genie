@@ -80,13 +80,7 @@ export function SpecialistClinicsOrb() {
       <div className={styles.orbCenter}>
         <div className={styles.orbShell}>
           <div className={cn(styles.orbVisual, "motion-safe:animate-orb-bob")} aria-hidden="true">
-            <Orb
-              hue={0}
-              hoverIntensity={0}
-              rotateOnHover={false}
-              forceHoverState={false}
-              backgroundColor="transparent"
-            />
+            <Orb hue={0} hoverIntensity={0.12} rotateOnHover={false} forceHoverState={false} />
             <div className={styles.sparkLayer}>
               {AMBIENT_SPARKLES.map((spark) => (
                 <span
@@ -177,7 +171,8 @@ export function SpecialistClinicsOrb() {
         </div>
       </div>
 
-      <div className={styles.specialistGrid} aria-label="Specialist clinic categories">
+      <div className={styles.contentBand}>
+        <div className={styles.specialistGrid} aria-label="Specialist clinic categories">
         {SPECIALISTS.map((specialist) => (
           <Link
             key={specialist.id}
@@ -204,6 +199,7 @@ export function SpecialistClinicsOrb() {
         <MagneticButton href="/portfolio" size="lg" withMiniOrb className={styles.cta}>
           See Our Granted Wishes
         </MagneticButton>
+      </div>
       </div>
     </div>
   );

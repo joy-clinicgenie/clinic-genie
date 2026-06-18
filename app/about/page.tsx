@@ -8,8 +8,10 @@ import { Reveal, RevealGroup, RevealItem } from "@/components/ui/Reveal";
 import { MagneticButton } from "@/components/ui/MagneticButton";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { LogoMarquee } from "@/components/home/LogoMarquee";
-import { SparkleField } from "@/components/ui/SparkleField";
+import { LightHero } from "@/components/ui/LightHero";
 import { OrbAnchor } from "@/components/orb/OrbAnchor";
+import { PageFinale } from "@/components/ui/PageFinale";
+import { PageFinaleCTA } from "@/components/ui/PageFinaleCTA";
 import { CLIENT_LOGOS } from "@/lib/data/client-logos";
 import {
   ABOUT_APPROACH_STEPS,
@@ -28,41 +30,14 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <>
-      {/* 1 — Hero */}
-      <Section tone="dark" className="bg-aurora-hero overflow-hidden pt-36 pb-20 min-h-[68vh] flex items-center">
-        <SparkleField density={40} parallax />
-        <OrbAnchor
-          id="about-hero"
-          variant="about"
-          mood="idle"
-          scale={1}
-          intensity={0.85}
-          className="absolute left-1/2 top-[14%] h-px w-px -translate-x-1/2 lg:left-auto lg:right-[12%] lg:top-1/2 lg:translate-x-0"
-        />
-        <Container size="wide" className="relative z-10">
-          <div className="flex max-w-3xl flex-col gap-7 pt-20 lg:pt-0">
-            <SectionHeading
-              as="h1"
-              kicker="About Clinic Genie"
-              title="The genie behind better clinic growth."
-              highlight="genie"
-              subtitle="Behind every clinic is a wish: to be found by the patients who need it most. Clinic Genie grants it. A medical marketing agency for specialist clinics in Singapore, helping good doctors get found, trusted, and chosen, while you focus on the magic only you can do."
-            />
-            <Reveal delay={0.15} className="flex flex-wrap items-center gap-4">
-              <MagneticButton href="/contact" size="lg" withMiniOrb>
-                Make Your First Wish
-              </MagneticButton>
-              <MagneticButton href="/services" size="lg" variant="secondary">
-                See the Magic We&apos;ve Made
-              </MagneticButton>
-            </Reveal>
-          </div>
-        </Container>
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-b from-transparent to-night-900"
-        />
-      </Section>
+      <LightHero
+        kicker="About Clinic Genie"
+        title="The genie behind better clinic growth."
+        highlight="genie"
+        subtitle="Behind every clinic is a wish: to be found by the patients who need it most. Clinic Genie grants it. A medical marketing agency for specialist clinics in Singapore, helping good doctors get found, trusted, and chosen, while you focus on the magic only you can do."
+        primaryCta={{ href: "/contact", label: "Make Your First Wish" }}
+        secondaryCta={{ href: "/services", label: "See the Magic We've Made" }}
+      />
 
       {/* 2 — Why we exist */}
       <Section tone="light">
@@ -285,38 +260,16 @@ export default function AboutPage() {
       </Section>
 
       {/* 8 — Final CTA */}
-      <Section tone="dark" className="overflow-hidden">
-        <OrbAnchor
-          id="about-cta"
-          mood="celebrate"
-          scale={1.1}
-          intensity={1}
-          className="absolute left-1/2 top-10 h-px w-px -translate-x-1/2"
+      <PageFinale>
+        <PageFinaleCTA
+          kicker="Make your first wish"
+          title="What is your clinic's growth wish?"
+          highlight="wish"
+          body="Tell us about your clinic, your specialty, and the enquiries you want to attract. No vague wishes. No confusing jargon. Just a clearer path to responsible clinic marketing."
+          primaryCta={{ href: "/contact", label: "Make Your First Wish" }}
+          secondaryCta={{ href: "/contact", label: "Send Your Wish to the Genie" }}
         />
-        <Container className="flex flex-col items-center gap-7 text-center">
-          <SectionHeading
-            as="h2"
-            kicker="Make your first wish"
-            title="What is your clinic's growth wish?"
-            highlight="wish"
-            align="center"
-          />
-          <Reveal delay={0.1}>
-            <p className="mx-auto max-w-xl text-lead text-onDark-muted">
-              Tell us about your clinic, your specialty, and the enquiries you want to attract. No vague wishes. No
-              confusing jargon. Just a clearer path to responsible clinic marketing.
-            </p>
-          </Reveal>
-          <Reveal delay={0.2} className="flex flex-wrap items-center justify-center gap-4">
-            <MagneticButton href="/contact" size="lg" withMiniOrb>
-              Make Your Clinic Wish Come True
-            </MagneticButton>
-            <MagneticButton href="/contact" size="lg" variant="secondary">
-              Send Your Wish to the Genie
-            </MagneticButton>
-          </Reveal>
-        </Container>
-      </Section>
+      </PageFinale>
     </>
   );
 }

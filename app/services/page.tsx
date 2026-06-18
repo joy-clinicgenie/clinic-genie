@@ -8,10 +8,12 @@ import { Reveal, RevealGroup, RevealItem } from "@/components/ui/Reveal";
 import { MagneticButton } from "@/components/ui/MagneticButton";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { ProcessSteps } from "@/components/ui/ProcessSteps";
-import { SparkleField } from "@/components/ui/SparkleField";
+import { LightHero } from "@/components/ui/LightHero";
 import { OrbAnchor } from "@/components/orb/OrbAnchor";
 import { PILLARS, PROCESS_STEPS } from "@/lib/data/services";
 import { CORE_PILLARS } from "@/lib/data/pillars";
+import { PageFinale } from "@/components/ui/PageFinale";
+import { PageFinaleCTA } from "@/components/ui/PageFinaleCTA";
 import { ComplianceCards } from "@/components/home/landing/ComplianceCards";
 
 export const metadata: Metadata = {
@@ -35,52 +37,14 @@ const SPECIALTIES = [
 export default function ServicesPage() {
   return (
     <>
-      {/* 1 — Hero (dark, sets orb variant) */}
-      <section className="relative flex min-h-[68vh] items-center overflow-hidden bg-aurora-hero pb-20 pt-36">
-        <SparkleField density={38} parallax />
-        <OrbAnchor
-          id="services-hero"
-          variant="services"
-          mood="idle"
-          scale={1}
-          intensity={0.85}
-          className="absolute left-1/2 top-[14%] h-px w-px -translate-x-1/2 lg:left-auto lg:right-[12%] lg:top-1/2 lg:translate-x-0"
-        />
-        <Container size="wide" className="relative z-10">
-          <div className="flex max-w-3xl flex-col gap-7 pt-16 lg:pt-0">
-            <Reveal variant="up">
-              <Kicker>What we do</Kicker>
-            </Reveal>
-            <SectionHeading
-              as="h1"
-              title="Everything your clinic needs to grow — under one lamp."
-              highlight="grow"
-              className="gap-0"
-            />
-            <Reveal variant="up" delay={0.12}>
-              <p className="max-w-xl text-lead text-onDark-muted">
-                Strategy, digital growth and brand design, woven into one engine. Healthcare SEO, medical SEM, clinic
-                websites, content, AI search and compliance-aware strategy — delivered by a team that only works with
-                clinics.
-              </p>
-            </Reveal>
-            <Reveal variant="up" delay={0.2}>
-              <div className="flex flex-wrap items-center gap-3">
-                <MagneticButton href="/contact" size="lg" withMiniOrb>
-                  Book a strategy call
-                </MagneticButton>
-                <MagneticButton href="/services/core-pillars" size="lg" variant="secondary">
-                  Explore core service pillars
-                </MagneticButton>
-              </div>
-            </Reveal>
-          </div>
-        </Container>
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-b from-transparent to-night-900"
-        />
-      </section>
+      <LightHero
+        kicker="What we do"
+        title="Everything your clinic needs to grow — under one lamp."
+        highlight="grow"
+        subtitle="Strategy, digital growth and brand design, woven into one engine. Healthcare SEO, medical SEM, clinic websites, content, AI search and compliance-aware strategy — delivered by a team that only works with clinics."
+        primaryCta={{ href: "/contact", label: "Make Your First Wish" }}
+        secondaryCta={{ href: "/services/core-pillars", label: "Explore core service pillars" }}
+      />
 
       {/* 2,3,4 — One detailed section per pillar (the three wishes) */}
       {PILLARS.map((pillar, i) => {
@@ -313,44 +277,21 @@ export default function ServicesPage() {
               </p>
             </Reveal>
           </div>
-          <Reveal variant="up" delay={0.15}>
-            <ComplianceCards tone="dark" />
-          </Reveal>
+          <ComplianceCards tone="dark" />
         </Container>
       </Section>
 
       {/* 8 — Final CTA */}
-      <Section tone="light" className="overflow-hidden">
-        <OrbAnchor
-          id="services-cta"
-          mood="celebrate"
-          scale={1.08}
-          intensity={1}
-          className="absolute left-1/2 top-10 h-px w-px -translate-x-1/2"
+      <PageFinale>
+        <PageFinaleCTA
+          kicker="Make your first wish"
+          title="Tell us your wish."
+          highlight="wish"
+          body="Book a free strategy call and we'll recommend the right mix for your clinic — no hard sell."
+          primaryCta={{ href: "/contact", label: "Make Your First Wish" }}
+          footnote="No obligation. No jargon. Just a clear next step."
         />
-        <Container className="flex flex-col items-center gap-7 text-center">
-          <SectionHeading
-            kicker="Make your first wish"
-            title="Tell us your wish."
-            highlight="wish"
-            tone="light"
-            align="center"
-          />
-          <Reveal variant="up" delay={0.1}>
-            <p className="mx-auto max-w-xl text-lead text-ink-700">
-              Book a free strategy call and we&apos;ll recommend the right mix for your clinic — no hard sell.
-            </p>
-          </Reveal>
-          <Reveal variant="up" delay={0.2}>
-            <MagneticButton href="/contact" size="lg" withMiniOrb>
-              Book a strategy call
-            </MagneticButton>
-          </Reveal>
-          <Reveal variant="up" delay={0.3}>
-            <p className="text-sm text-ink-500">No obligation. No jargon. Just a clear next step.</p>
-          </Reveal>
-        </Container>
-      </Section>
+      </PageFinale>
     </>
   );
 }
