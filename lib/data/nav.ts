@@ -22,8 +22,8 @@ export const SITE = {
   email: "hello@clinic-genie.com",
   address: "164 Bukit Merah Central, #03-3625, Singapore 150164",
   socials: {
-    facebook: "https://www.facebook.com/clinicgenie",
-    instagram: "https://www.instagram.com/clinicgenie",
+    facebook: "https://www.facebook.com/people/Clinic-Genie/61552138754085/",
+    instagram: "https://www.instagram.com/clinicgeniesg",
     linkedin: "https://www.linkedin.com/company/clinicgenie",
   },
   url: "https://www.clinic-genie.com",
