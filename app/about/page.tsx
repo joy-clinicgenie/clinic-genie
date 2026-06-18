@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { Section } from "@/components/ui/Section";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
@@ -6,43 +7,23 @@ import { Kicker } from "@/components/ui/Kicker";
 import { Reveal, RevealGroup, RevealItem } from "@/components/ui/Reveal";
 import { MagneticButton } from "@/components/ui/MagneticButton";
 import { GlassCard } from "@/components/ui/GlassCard";
-import { StatTrio } from "@/components/ui/StatTrio";
-import { ProcessSteps } from "@/components/ui/ProcessSteps";
-import { PartnerStrip } from "@/components/ui/PartnerStrip";
+import { LogoMarquee } from "@/components/home/LogoMarquee";
 import { SparkleField } from "@/components/ui/SparkleField";
 import { OrbAnchor } from "@/components/orb/OrbAnchor";
-import { PROCESS_STEPS } from "@/lib/data/services";
-import { PARTNERS } from "@/lib/data/partners";
-import { TEAM_STATS } from "@/lib/data/team";
+import { CLIENT_LOGOS } from "@/lib/data/client-logos";
+import {
+  ABOUT_APPROACH_STEPS,
+  ABOUT_TEAM_ROLES,
+  ABOUT_TRUSTED_CLIENTS,
+  ABOUT_VALUES,
+  ABOUT_WISH_POINTS,
+} from "@/lib/data/about";
 
 export const metadata: Metadata = {
-  title: "About Clinic Genie | The Marketing Agency Built Only for Clinics",
+  title: "About Clinic Genie | The Genie Behind Better Clinic Growth",
   description:
-    "Clinic Genie is a Singapore creative and marketing agency built for one thing only — helping private and specialist medical clinics grow with strategy, data and a little magic.",
+    "Clinic Genie is a medical marketing agency for specialist clinics in Singapore — helping good doctors get found, trusted, and chosen while you focus on the magic only you can do.",
 };
-
-const VALUES = [
-  {
-    title: "Evidence over ego",
-    body: "We don't guess what works. We research your market and let the data lead — just like good medicine.",
-    accent: "#6CBAD9",
-  },
-  {
-    title: "Compliance as craft",
-    body: "Bold growth and clean advertising aren't a trade-off. We design for both, aligned to Singapore's healthcare advertising guidelines.",
-    accent: "#8E7BE8",
-  },
-  {
-    title: "Specialist focus",
-    body: "We speak clinic. Aesthetics, dermatology, dental, fertility, orthopaedics — we know the patient journey behind each.",
-    accent: "#7FE9F0",
-  },
-  {
-    title: "Transparent partnership",
-    body: "Clear reporting, plain language, no vanity metrics. You always know what's working and why.",
-    accent: "#FFD79A",
-  },
-];
 
 export default function AboutPage() {
   return (
@@ -63,10 +44,18 @@ export default function AboutPage() {
             <SectionHeading
               as="h1"
               kicker="About Clinic Genie"
-              title="We're the genie behind Singapore's growing clinics."
+              title="The genie behind better clinic growth."
               highlight="genie"
-              subtitle="A creative and marketing agency built for one thing only — helping private and specialist medical clinics grow with strategy, data and a little magic."
+              subtitle="Behind every clinic is a wish: to be found by the patients who need it most. Clinic Genie grants it. A medical marketing agency for specialist clinics in Singapore, helping good doctors get found, trusted, and chosen, while you focus on the magic only you can do."
             />
+            <Reveal delay={0.15} className="flex flex-wrap items-center gap-4">
+              <MagneticButton href="/contact" size="lg" withMiniOrb>
+                Make Your First Wish
+              </MagneticButton>
+              <MagneticButton href="/services" size="lg" variant="secondary">
+                See the Magic We&apos;ve Made
+              </MagneticButton>
+            </Reveal>
           </div>
         </Container>
         <div
@@ -75,41 +64,41 @@ export default function AboutPage() {
         />
       </Section>
 
-      {/* 2 — Origin story */}
+      {/* 2 — Why we exist */}
       <Section tone="light">
-        <Container size="prose" className="flex flex-col gap-10">
+        <Container size="wide" className="flex flex-col gap-12">
           <SectionHeading
             as="h2"
-            kicker="Our origin"
-            title="Why a clinic-only agency?"
-            highlight="clinic-only"
+            kicker="Why we exist"
+            title="Every genie has an origin."
+            highlight="origin"
             tone="light"
+            subtitle="Ours began in the gap between great care and getting found. Too many brilliant healthcare specialists stayed invisible online, so we built a medical marketing agency made just for them."
           />
-          <Reveal delay={0.1}>
-            <p className="text-lead text-ink-700">
-              We kept meeting brilliant doctors with quiet websites. Clinics doing world-class work that patients simply
-              couldn&apos;t find — or worse, marketing that risked their licence. So we made a choice most agencies
-              won&apos;t: we&apos;d serve clinics, and only clinics. That focus means we understand your patients, your
-              specialty, and the advertising rules you live by. Clinic Genie was born to be the partner that turns
-              specialist expertise into specialist growth.
-            </p>
-          </Reveal>
-          <Reveal delay={0.15}>
-            <figure className="glass-light relative overflow-hidden rounded-2xl p-8 sm:p-10">
-              <span
-                aria-hidden="true"
-                className="absolute left-0 top-0 h-full w-1 bg-gradient-to-b from-genie-400 to-spark-violet"
-              />
-              <blockquote className="font-display text-h4 text-balance text-ink-900">
-                &ldquo;The right patients are searching. Our job is to make sure your clinic is the one they{" "}
-                <span className="text-genie-700">trust</span>.&rdquo;
-              </blockquote>
-            </figure>
-          </Reveal>
+          <RevealGroup className="grid gap-5 md:grid-cols-3">
+            {ABOUT_WISH_POINTS.map((point) => (
+              <RevealItem key={point.title} className="h-full">
+                <Link href={point.href} className="group block h-full">
+                  <GlassCard tone="light" radius="xl" hover className="flex h-full flex-col gap-3 p-7">
+                    <h3 className="font-display text-h4 text-ink-900 transition-colors group-hover:text-genie-700">
+                      {point.title}
+                    </h3>
+                    <p className="text-sm leading-relaxed text-ink-700">{point.body}</p>
+                    <span className="mt-auto inline-flex items-center gap-1.5 text-sm font-semibold text-genie-700 transition-colors group-hover:text-genie-900">
+                      Learn more
+                      <span aria-hidden="true" className="transition-transform group-hover:translate-x-0.5">
+                        →
+                      </span>
+                    </span>
+                  </GlassCard>
+                </Link>
+              </RevealItem>
+            ))}
+          </RevealGroup>
         </Container>
       </Section>
 
-      {/* 3 — What we stand for (values) */}
+      {/* 3 — What we stand for */}
       <Section tone="dark">
         <OrbAnchor
           id="about-values"
@@ -122,54 +111,73 @@ export default function AboutPage() {
           <SectionHeading
             as="h2"
             kicker="What we stand for"
-            title="Research. Data. Results."
-            highlight="Results"
-            subtitle="Three words we hold ourselves to — and the principles behind them."
+            title="Magic has rules."
+            highlight="rules"
+            subtitle="The values behind our clinic marketing strategy."
             align="center"
           />
           <RevealGroup className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {VALUES.map((v) => (
-              <RevealItem key={v.title} className="h-full">
+            {ABOUT_VALUES.map((value) => (
+              <RevealItem key={value.title} className="h-full">
                 <GlassCard tone="dark" radius="xl" hover className="flex h-full flex-col gap-4 p-7">
                   <span
                     aria-hidden="true"
                     className="h-2.5 w-2.5 rounded-full"
-                    style={{ background: v.accent, boxShadow: `0 0 12px 1px ${v.accent}` }}
+                    style={{ background: value.accent, boxShadow: `0 0 12px 1px ${value.accent}` }}
                   />
-                  <h3 className="font-display text-h4 text-onDark">{v.title}</h3>
-                  <p className="text-sm leading-relaxed text-onDark-muted">{v.body}</p>
+                  <h3 className="font-display text-h4 text-onDark">{value.title}</h3>
+                  <p className="text-sm leading-relaxed text-onDark-muted">{value.body}</p>
                 </GlassCard>
               </RevealItem>
             ))}
           </RevealGroup>
+          <Reveal delay={0.1} className="text-center">
+            <p className="mx-auto max-w-2xl font-display text-h5 text-balance text-onDark-muted">
+              Ethical in practice. Emotional in craft. Logical in strategy.{" "}
+              <span className="genie-text">That is the magic.</span>
+            </p>
+          </Reveal>
         </Container>
       </Section>
 
-      {/* 4 — Our approach (mini process) */}
+      {/* 4 — Our approach */}
       <Section tone="light">
         <Container className="flex flex-col gap-12">
           <SectionHeading
             as="h2"
             kicker="Our approach"
-            title="Strategy first, magic second."
-            highlight="magic"
+            title="Clear thinking before clearer growth."
+            highlight="growth"
             tone="light"
-            subtitle="Every engagement starts the same way: we listen, then we research. Strategy & Research, then Implementation & Design, then Results & Optimisation. The flourish patients see is built on a foundation they don't."
+            subtitle="Every good wish needs a plan. This is our healthcare growth framework — clear, connected, and strictly accountable."
           />
-          <ProcessSteps steps={PROCESS_STEPS} tone="light" />
-          <Reveal className="flex justify-center">
-            <MagneticButton href="/services#process" variant="secondary">
-              See how we work
+          <RevealGroup className="grid gap-5 sm:grid-cols-2 lg:grid-cols-5">
+            {ABOUT_APPROACH_STEPS.map((step) => (
+              <RevealItem key={step.n} className="h-full">
+                <GlassCard tone="light" radius="xl" className="flex h-full flex-col gap-3 p-6">
+                  <span className="font-display text-sm font-semibold text-genie-700">{step.n}.</span>
+                  <h3 className="font-display text-lg font-semibold text-ink-900">{step.title}</h3>
+                  <p className="text-sm leading-relaxed text-ink-700">{step.body}</p>
+                </GlassCard>
+              </RevealItem>
+            ))}
+          </RevealGroup>
+          <Reveal delay={0.08} className="flex flex-col items-center gap-6 text-center">
+            <p className="max-w-2xl text-sm leading-relaxed text-ink-700">
+              One growth engine, built within Singapore&apos;s HCSA, PHMC, and SMC guidelines.
+            </p>
+            <MagneticButton href="/services" variant="secondary">
+              See How the Magic Happens
             </MagneticButton>
           </Reveal>
         </Container>
       </Section>
 
-      {/* 5 — By the numbers */}
+      {/* 5 — Trusted by specialist clinics */}
       <Section tone="dark">
         <OrbAnchor
-          id="about-numbers"
-          mood="focus"
+          id="about-clients"
+          mood="celebrate"
           scale={0.9}
           intensity={1}
           className="absolute left-1/2 top-16 h-px w-px -translate-x-1/2"
@@ -177,67 +185,102 @@ export default function AboutPage() {
         <Container className="flex flex-col gap-12">
           <SectionHeading
             as="h2"
-            kicker="By the numbers"
-            title="A focused practice, measured plainly."
-            highlight="focused"
+            kicker="Trusted by specialist clinics"
+            title="The clinics who made a wish."
+            highlight="wish"
             align="center"
+            subtitle="Specialist clinics across Singapore trust Clinic Genie with their branding, websites, search, and growth."
           />
-          <StatTrio stats={TEAM_STATS} tone="dark" />
+          <Reveal delay={0.05}>
+            <LogoMarquee logos={CLIENT_LOGOS} className="opacity-90" />
+          </Reveal>
+          <RevealGroup className="grid gap-4 sm:grid-cols-2">
+            {ABOUT_TRUSTED_CLIENTS.map((client) => {
+              const isExternal = client.href.startsWith("http");
+              const card = (
+                <GlassCard tone="dark" radius="xl" hover className="flex h-full flex-col gap-2 p-6">
+                  <h3 className="font-display text-base font-semibold text-onDark">{client.name}</h3>
+                  <p className="text-sm leading-relaxed text-onDark-muted">{client.services}</p>
+                </GlassCard>
+              );
+
+              return (
+                <RevealItem key={client.name} className="h-full">
+                  {isExternal ? (
+                    <a
+                      href={client.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group block h-full"
+                      aria-label={`${client.name} — ${client.services}`}
+                    >
+                      {card}
+                    </a>
+                  ) : (
+                    <Link href={client.href} className="group block h-full">
+                      {card}
+                    </Link>
+                  )}
+                </RevealItem>
+              );
+            })}
+          </RevealGroup>
         </Container>
       </Section>
 
-      {/* 6 — Partner ecosystem */}
+      {/* 6 — Clinic Genie ecosystem */}
+      <Section tone="light">
+        <Container size="prose" className="flex flex-col gap-8">
+          <SectionHeading
+            as="h2"
+            kicker="Clinic Genie ecosystem"
+            title="Two genies, one wish."
+            highlight="wish"
+            tone="light"
+            align="center"
+            subtitle="Clinic Genie builds the visibility. FindClinic.sg extends it, through clinic profiles, doctor-led content, healthcare articles, and patient-facing education. Two parts of the same wish: helping the right patients find the right care."
+          />
+          <Reveal className="flex justify-center">
+            <MagneticButton href="/services/core-pillars/findclinic" withMiniOrb>
+              Discover FindClinic.sg
+            </MagneticButton>
+          </Reveal>
+        </Container>
+      </Section>
+
+      {/* 7 — People behind it */}
       <Section tone="dark">
         <OrbAnchor
-          id="about-partners"
+          id="about-team"
           mood="curious"
           scale={0.85}
           className="absolute left-1/2 top-20 h-px w-px -translate-x-1/2"
         />
-        <Container className="flex flex-col gap-10">
-          <SectionHeading
-            as="h2"
-            kicker="Allies in the lamp"
-            title="Specialists, supported by specialists."
-            highlight="Specialists"
-            subtitle="When your wish needs more than marketing, we bring trusted partners into the room."
-            align="center"
-          />
-          <PartnerStrip partners={PARTNERS} layout="satellite" />
-        </Container>
-      </Section>
-
-      {/* 7 — Meet the team teaser */}
-      <Section tone="light">
-        <Container size="wide">
-          <div className="grid items-center gap-10 lg:grid-cols-2">
-            <div className="flex flex-col gap-5">
-              <Kicker tone="light">The people behind it</Kicker>
-              <h2 className="font-display text-h2 text-ink-900">
-                There are real people behind the <span className="text-genie-700">lamp</span>.
+        <Container size="wide" className="flex flex-col gap-12">
+          <div className="flex flex-col items-start justify-between gap-6 lg:flex-row lg:items-end">
+            <div className="flex max-w-2xl flex-col gap-4">
+              <Kicker>Meet the Genies Behind the Magic</Kicker>
+              <h2 className="font-display text-h2 text-balance text-onDark">
+                A boutique band of medical marketing experts.
               </h2>
-              <p className="text-lead text-ink-700">
-                Strategists, writers, designers and developers who only do clinics.
+              <p className="text-lead text-onDark-muted">
+                Daring, innovative, and built for specialist clinics. Different crafts, one growth engine.
               </p>
-              <div>
-                <MagneticButton href="/meet-us">Meet us</MagneticButton>
-              </div>
             </div>
-            <RevealGroup className="grid gap-4 sm:grid-cols-2">
-              {[
-                "Growth strategists who live in SERPs",
-                "Writers fluent in compliant clinical copy",
-                "Designers who make clinics look as good as their outcomes",
-                "Developers who treat three seconds as two too many",
-              ].map((chip) => (
-                <RevealItem key={chip}>
-                  <div className="glass-light flex h-full items-center rounded-xl p-5">
-                    <span className="text-sm font-medium text-ink-900">{chip}</span>
-                  </div>
-                </RevealItem>
-              ))}
-            </RevealGroup>
+            <MagneticButton href="/meet-us" variant="secondary">
+              Meet us
+            </MagneticButton>
           </div>
+          <RevealGroup className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {ABOUT_TEAM_ROLES.map((role) => (
+              <RevealItem key={role.title} className="h-full">
+                <GlassCard tone="dark" radius="xl" hover className="flex h-full flex-col gap-3 p-6">
+                  <h3 className="font-display text-base font-semibold text-onDark">{role.title}</h3>
+                  <p className="text-sm leading-relaxed text-onDark-muted">{role.body}</p>
+                </GlassCard>
+              </RevealItem>
+            ))}
+          </RevealGroup>
         </Container>
       </Section>
 
@@ -254,23 +297,23 @@ export default function AboutPage() {
           <SectionHeading
             as="h2"
             kicker="Make your first wish"
-            title="Let's make your clinic the one patients trust."
-            highlight="trust"
+            title="What is your clinic's growth wish?"
+            highlight="wish"
             align="center"
           />
           <Reveal delay={0.1}>
             <p className="mx-auto max-w-xl text-lead text-onDark-muted">
-              Book a free 30-minute strategy call. We&apos;ll map where the right patients are searching — and exactly
-              how to make your clinic the one they choose.
+              Tell us about your clinic, your specialty, and the enquiries you want to attract. No vague wishes. No
+              confusing jargon. Just a clearer path to responsible clinic marketing.
             </p>
           </Reveal>
-          <Reveal delay={0.2}>
+          <Reveal delay={0.2} className="flex flex-wrap items-center justify-center gap-4">
             <MagneticButton href="/contact" size="lg" withMiniOrb>
-              Book a strategy call
+              Make Your Clinic Wish Come True
             </MagneticButton>
-          </Reveal>
-          <Reveal delay={0.3}>
-            <p className="text-sm text-onDark-faint">No obligation. No jargon. Just a clear next step.</p>
+            <MagneticButton href="/contact" size="lg" variant="secondary">
+              Send Your Wish to the Genie
+            </MagneticButton>
           </Reveal>
         </Container>
       </Section>

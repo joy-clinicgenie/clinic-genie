@@ -1,18 +1,30 @@
 .wrap {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 0;
   width: 100%;
+  padding-bottom: 1.5rem;
 }
 
-.orbRow {
+.wrap::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  z-index: 0;
+  width: 100vw;
+  height: clamp(4rem, 10vh, 6rem);
+  transform: translateX(-50%);
+  pointer-events: none;
+  background: linear-gradient(180deg, transparent 0%, rgba(234, 251, 251, 0.45) 55%, rgba(234, 251, 251, 0.92) 100%);
+}
+
+.orbCenter {
   display: flex;
-  align-items: stretch;
   justify-content: center;
-  gap: 1.25rem;
   width: 100%;
-  max-width: min(1080px, 100%);
 }
 
 .orbShell {
@@ -99,29 +111,11 @@
   animation: spark-twinkle 3.2s ease-in-out infinite;
 }
 
-.sparkleCluster {
-  display: block;
-  width: 100%;
-  height: 100%;
-  background-color: currentColor;
-  -webkit-mask-image: url("/brand/sparkle-cluster.png");
-  mask-image: url("/brand/sparkle-cluster.png");
-  -webkit-mask-size: contain;
-  mask-size: contain;
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
-  -webkit-mask-position: center;
-  mask-position: center;
-}
-
-.sparkDim.sparkleCluster {
-  background-color: #78e2dd;
-}
-
 .hotspots {
   position: absolute;
   inset: 0;
   z-index: 3;
+  overflow: visible;
   border-radius: 50%;
 }
 
@@ -129,6 +123,60 @@
   position: absolute;
   transform: translate(-50%, -50%);
   z-index: 2;
+  overflow: visible;
+}
+
+.hotspotHighlightWrap {
+  position: absolute;
+  z-index: 4;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.hotspotHighlight {
+  display: block;
+  width: max-content;
+  max-width: min(16rem, 42vw);
+  padding: 0.4rem 0.75rem;
+  border-radius: 0.5rem;
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow:
+    0 4px 16px rgba(6, 45, 54, 0.12),
+    0 0 0 1px rgba(120, 226, 221, 0.2);
+  font-family: var(--font-sora), Sora, ui-sans-serif, system-ui, sans-serif;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  line-height: 1.35;
+  color: #217b8e;
+  text-align: center;
+  white-space: normal;
+  animation: highlight-swipe 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.highlightBelow {
+  top: calc(100% + 0.5rem);
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.highlightAbove {
+  bottom: calc(100% + 0.5rem);
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.highlightRight {
+  top: 50%;
+  left: calc(100% + 0.5rem);
+  transform: translateY(-50%);
+  text-align: left;
+}
+
+.highlightLeft {
+  top: 50%;
+  right: calc(100% + 0.5rem);
+  transform: translateY(-50%);
+  text-align: right;
 }
 
 .hotspot {
@@ -152,10 +200,6 @@
   color: #18c4d9;
   filter: drop-shadow(0 0 4px rgba(24, 196, 217, 0.85)) drop-shadow(0 0 10px rgba(84, 185, 206, 0.45));
   transition: transform 0.2s ease, color 0.2s ease, filter 0.2s ease;
-}
-
-.hotspotSparkle .sparkleCluster {
-  filter: none;
 }
 
 .hotspotGlow {
@@ -186,171 +230,139 @@
     drop-shadow(0 0 14px rgba(24, 196, 217, 0.85));
 }
 
-.specialistPanel {
-  flex: 0 0 auto;
-  align-self: center;
-  width: min(20rem, 30vw);
-}
-
-.specialistPanelRevealed {
-  opacity: 1;
-}
-
-.testimonialPanel {
-  position: absolute;
-  z-index: 10;
-  width: max(15rem, 28vw);
-  max-width: 17rem;
-  padding: 1rem 1.1rem;
-  border-radius: 0.85rem;
-  pointer-events: none;
-  opacity: 0;
-  transform: translate(calc(-50% + var(--offset-x, 0rem)), calc(-50% + var(--offset-y, 0rem))) scale(0.96);
-  background: rgba(255, 255, 255, 0.98);
-  box-shadow:
-    0 16px 40px rgba(6, 45, 54, 0.12),
-    0 4px 12px rgba(6, 45, 54, 0.06);
-  transition:
-    opacity 0.28s ease,
-    transform 0.28s ease,
-    left 0.25s ease,
-    top 0.25s ease;
-}
-
-.testimonialPanelOpen {
-  opacity: 1;
-  transform: translate(calc(-50% + var(--offset-x, 0rem)), calc(-50% + var(--offset-y, 0rem))) scale(1);
-}
-
-.testimonialQuote {
-  margin: 0 0 0.75rem;
-}
-
-.testimonialQuote p {
-  margin: 0;
-  font-family: var(--font-sora), Sora, ui-sans-serif, system-ui, sans-serif;
-  font-size: 0.875rem;
-  font-weight: 600;
-  line-height: 1.55;
-  color: #217b8e;
-}
-
-.testimonialMeta {
-  display: flex;
-  flex-direction: column;
-  gap: 0.2rem;
-}
-
-.testimonialAuthor {
-  font-style: normal;
-  font-size: 0.8125rem;
-  font-weight: 700;
-  color: #3a8093;
-}
-
-.testimonialClinic {
-  font-size: 0.8125rem;
-  line-height: 1.45;
-  color: #7e8c92;
-}
-
-.specialistList {
-  list-style: none;
-  margin: 0;
-  padding: 0.35rem;
+.hotspotIcon {
+  position: relative;
+  z-index: 2;
   display: grid;
-  gap: 0.45rem;
-  max-height: min(504px, 94vw);
-  overflow-y: auto;
-  border-radius: 1rem;
-  background: rgba(255, 255, 255, 0.98);
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.95);
   box-shadow:
-    0 16px 40px rgba(6, 45, 54, 0.12),
-    0 4px 12px rgba(6, 45, 54, 0.06);
+    0 0 0 1px rgba(24, 196, 217, 0.22),
+    0 4px 12px rgba(6, 45, 54, 0.12);
 }
 
-.specialistItem {
+.specialistGrid {
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  gap: 0.65rem;
+  width: 100%;
+  max-width: min(1080px, 100%);
+  margin-top: 2rem;
+}
+
+@media (min-width: 640px) {
+  .specialistGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .specialistGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.specialistBox {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 0.75rem;
   width: 100%;
-  padding: 0.7rem 0.8rem;
-  border: 1px solid transparent;
-  border-radius: 0.75rem;
-  background: transparent;
+  padding: 0.85rem 1rem;
+  border: 1px solid rgba(230, 238, 241, 0.95);
+  border-radius: 0.85rem;
+  background: rgba(255, 255, 255, 0.98);
+  box-shadow:
+    0 8px 24px rgba(6, 45, 54, 0.08),
+    0 2px 6px rgba(6, 45, 54, 0.04);
   text-align: left;
-  cursor: pointer;
+  text-decoration: none;
   transition:
     background 0.2s ease,
     border-color 0.2s ease,
-    box-shadow 0.2s ease;
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
 }
 
-.specialistItemActive {
+.specialistBox:hover,
+.specialistBox:focus-visible {
+  border-color: rgba(24, 196, 217, 0.28);
+  box-shadow:
+    0 12px 28px rgba(6, 45, 54, 0.1),
+    0 0 0 1px rgba(120, 226, 221, 0.12);
+  transform: translateY(-1px);
+}
+
+.specialistBoxActive {
   border-color: rgba(24, 196, 217, 0.28);
   background: rgba(227, 246, 250, 0.85);
-  box-shadow: inset 0 0 0 1px rgba(120, 226, 221, 0.12);
+  box-shadow:
+    inset 0 0 0 1px rgba(120, 226, 221, 0.12),
+    0 8px 24px rgba(6, 45, 54, 0.08);
 }
 
-.specialistSparkle {
+.specialistBox:focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 3px rgba(24, 196, 217, 0.35),
+    0 8px 24px rgba(6, 45, 54, 0.08);
+}
+
+.specialistIconWell {
+  display: grid;
   flex-shrink: 0;
-  width: 16px;
-  height: 16px;
-  margin-top: 0.1rem;
-  color: #18c4d9;
-  filter: drop-shadow(0 0 3px rgba(24, 196, 217, 0.55));
-  transition: color 0.2s ease, transform 0.2s ease;
-}
-
-.specialistSparkle .sparkleCluster {
-  filter: none;
-}
-
-.specialistItemActive .specialistSparkle {
-  color: #217b8e;
-  transform: rotate(12deg) scale(1.08);
-}
-
-.specialistCopy {
-  display: flex;
-  flex-direction: column;
-  gap: 0.2rem;
-  min-width: 0;
+  place-items: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 0.75rem;
+  background: linear-gradient(135deg, rgba(234, 251, 251, 0.95) 0%, rgba(255, 255, 255, 0.98) 100%);
+  box-shadow: inset 0 0 0 1px rgba(156, 200, 210, 0.35);
 }
 
 .specialistName {
+  min-width: 0;
+  flex: 1;
   font-family: var(--font-sora), Sora, ui-sans-serif, system-ui, sans-serif;
-  font-size: 0.9rem;
+  font-size: var(--text-body);
   font-weight: 700;
   color: #217b8e;
   line-height: 1.35;
 }
 
-.specialistDesc {
-  font-size: 0.8125rem;
-  line-height: 1.5;
-  color: #7e8c92;
-}
-
 .ctaBlock {
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 1.25rem;
-  max-width: 22.4rem;
+  width: min(100%, 34rem);
   margin-top: 2.5rem;
   text-align: center;
 }
 
 .ctaNote {
-  max-width: 75%;
-  font-size: 1rem;
+  max-width: 100%;
+  font-size: var(--text-body);
   line-height: 1.65;
   color: #7e8c92;
 }
 
 .cta {
   margin-top: 0;
+}
+
+@keyframes highlight-swipe {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 @keyframes spark-orbit {
@@ -386,35 +398,19 @@
   }
 }
 
-@media (max-width: 900px) {
-  .orbRow {
-    flex-direction: column;
-    align-items: center;
-    gap: 1.25rem;
-  }
-
-  .testimonialPanel {
-    max-width: min(17rem, 72vw);
-  }
-
-  .specialistPanel {
-    width: min(504px, 94vw);
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
   .orbVisual {
     animation: none !important;
   }
 
-  .specialistPanel,
-  .testimonialPanel {
+  .specialistBox {
     transition: none;
   }
 
   .sparkOrbit,
   .sparkDim,
-  .hotspotGlow {
+  .hotspotGlow,
+  .hotspotHighlight {
     animation: none;
   }
 }

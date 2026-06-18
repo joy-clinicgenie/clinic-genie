@@ -6,12 +6,13 @@ export interface NavItem {
 export const NAV_ITEMS: NavItem[] = [
   { label: "About Us", href: "/about" },
   { label: "Services", href: "/services" },
+  { label: "Specialty Hub", href: "/specialty-hub" },
   { label: "Our Works", href: "/portfolio" },
   { label: "Genie Tips", href: "/genie-tips" },
   { label: "Meet Us", href: "/meet-us" },
 ];
 
-export const PRIMARY_CTA = { label: "Book a strategy call", href: "/contact" };
+export const PRIMARY_CTA = { label: "Make you First Wish", href: "/contact" };
 
 export const SITE = {
   name: "Clinic Genie",

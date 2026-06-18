@@ -58,7 +58,7 @@ export default function PillarPage({ params }: { params: { slug: string } }) {
             <Reveal variant="up">
               <Link
                 href="/services/core-pillars"
-                className="inline-flex w-fit items-center gap-2 font-mono text-kicker uppercase text-genie-300 transition-colors hover:text-white"
+                className="inline-flex w-fit items-center gap-2 font-display text-kicker uppercase text-genie-300 transition-colors hover:text-white"
               >
                 <span aria-hidden="true">←</span> Core service pillars
               </Link>
@@ -157,7 +157,7 @@ export default function PillarPage({ params }: { params: { slug: string } }) {
 
           {related.length > 0 && (
             <div className="flex flex-col gap-5 border-t border-hairline-dark pt-10">
-              <p className="font-mono text-kicker uppercase text-genie-300">Works well with</p>
+              <p className="font-display text-kicker uppercase text-genie-300">Works well with</p>
               <RevealGroup className="flex flex-wrap gap-3">
                 {related.map((rel) => (
                   <RevealItem key={rel.slug}>

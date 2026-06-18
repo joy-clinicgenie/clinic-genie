@@ -56,7 +56,7 @@ export default function CaseStudyPage({ params }: { params: { slug: string } }) 
             <Reveal variant="up">
               <Link
                 href="/portfolio"
-                className="inline-flex w-fit items-center gap-2 font-mono text-kicker uppercase text-genie-300 transition-colors hover:text-white"
+                className="inline-flex w-fit items-center gap-2 font-display text-kicker uppercase text-genie-300 transition-colors hover:text-white"
               >
                 <span aria-hidden="true">←</span> Our works
               </Link>
@@ -226,7 +226,7 @@ export default function CaseStudyPage({ params }: { params: { slug: string } }) 
               <blockquote className="-mt-8 font-display text-h3 text-balance text-ink-900">
                 {cs.quote.text}
               </blockquote>
-              <figcaption className="font-mono text-kicker uppercase text-genie-700">
+              <figcaption className="font-display text-kicker uppercase text-genie-700">
                 {cs.quote.author}
               </figcaption>
             </figure>
@@ -290,7 +290,7 @@ export default function CaseStudyPage({ params }: { params: { slug: string } }) 
                       className="h-1 w-10 rounded-full"
                       style={{ background: o.accent }}
                     />
-                    <p className="font-mono text-kicker uppercase text-genie-700">{o.specialty}</p>
+                    <p className="font-display text-kicker uppercase text-genie-700">{o.specialty}</p>
                     <h3 className="font-display text-h3 text-ink-900">{o.name}</h3>
                     <p className="text-sm text-ink-700">{o.line}</p>
                     <span className="mt-auto inline-flex items-center gap-1.5 text-sm font-semibold text-genie-700 transition-colors group-hover:text-genie-900">

@@ -17,7 +17,7 @@ export function Nav() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
-    const NAV_Y = 44; // vertical midpoint of the nav pill
+    const NAV_Y = 48; // vertical midpoint of the nav pill
     const onScroll = () => {
       setScrolled(window.scrollY > 80);
       // Find which section is behind the nav and read its theme
@@ -42,7 +42,7 @@ export function Nav() {
       <header className="fixed inset-x-0 top-0 z-50 flex justify-center px-[var(--page-pad)] pt-3 sm:pt-4">
         <motion.nav
           className={cn(
-            "flex w-full max-w-wide items-center justify-between gap-4 rounded-pill border px-4 py-2.5 transition-all duration-ui sm:px-5",
+            "flex w-full max-w-wide items-center justify-between gap-4 rounded-pill border px-5 py-3 transition-all duration-ui sm:px-6",
             light ? "border-ink-900/10" : "border-white/10",
             scrolled
               ? light ? "glass-light shadow-glass-light" : "glass shadow-glass-dark"
@@ -59,7 +59,7 @@ export function Nav() {
                   <Link
                     href={item.href}
                     className={cn(
-                      "relative inline-block rounded-md px-3.5 py-2 text-sm font-medium transition-colors duration-ui",
+                      "relative inline-block rounded-md px-4 py-2.5 text-[0.9375rem] font-medium transition-colors duration-ui",
                       light
                         ? active ? "text-ink-900" : "text-ink-700 hover:text-ink-900"
                         : active ? "text-onDark" : "text-onDark-muted hover:text-onDark"

@@ -1,0 +1,129 @@
+.ring {
+  --sparkle-ring-size: 4.75rem;
+  --sparkle-grain-scale: 1;
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: var(--sparkle-ring-size);
+  height: var(--sparkle-ring-size);
+  flex-shrink: 0;
+}
+
+.sizeSm {
+  --sparkle-ring-size: 3.35rem;
+  --sparkle-grain-scale: 0.72;
+}
+
+.sizeLg {
+  --sparkle-ring-size: 3rem;
+  --sparkle-grain-scale: 0.68;
+}
+
+.core {
+  position: relative;
+  z-index: 10;
+  transition:
+    box-shadow 0.35s ease,
+    border-color 0.35s ease,
+    transform 0.35s ease;
+}
+
+.ring.intensify:hover .core,
+.ring.intensify:focus-within .core,
+:global(.group):hover .ringIntensify .core,
+:global(.group):focus-within .ringIntensify .core {
+  transform: scale(1.05);
+}
+
+.ringGlow .core {
+  box-shadow: 0 0 0 6px rgba(227, 246, 250, 0.65);
+}
+
+.ringGlow.intensify:hover .core,
+.ringGlow.intensify:focus-within .core,
+:global(.group):hover .ringIntensify.ringGlow .core,
+:global(.group):focus-within .ringIntensify.ringGlow .core {
+  box-shadow:
+    0 0 0 6px rgba(84, 185, 206, 0.32),
+    0 0 16px rgba(84, 185, 206, 0.85),
+    0 0 32px rgba(33, 123, 142, 0.55),
+    0 0 48px rgba(24, 196, 217, 0.35);
+  border-color: rgba(159, 220, 232, 0.95);
+}
+
+.orbit {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.ambient .orbitSlow,
+.active .orbitSlow {
+  opacity: 0.42;
+  animation: sparkle-orbit 18s linear infinite;
+}
+
+.intensify:hover .orbitSlow,
+.intensify:focus-within .orbitSlow,
+:global(.group):hover .ringIntensify .orbitSlow,
+:global(.group):focus-within .ringIntensify .orbitSlow,
+.intensified .orbitSlow,
+.active.intensify:hover .orbitSlow,
+.active.intensify:focus-within .orbitSlow {
+  opacity: 1;
+  animation: sparkle-orbit 14s linear infinite;
+}
+
+.active .orbitFast {
+  opacity: 0.65;
+  animation: sparkle-orbit 11s linear infinite reverse;
+}
+
+.intensify:hover .orbitFast,
+.intensify:focus-within .orbitFast,
+:global(.group):hover .ringIntensify .orbitFast,
+:global(.group):focus-within .ringIntensify .orbitFast,
+.intensified .orbitFast {
+  opacity: 0.85;
+  animation: sparkle-orbit 9s linear infinite reverse;
+}
+
+.grain {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  border-radius: 999px;
+  transform-origin: 0 0;
+}
+
+.grainDot {
+  background: #54b9ce;
+  box-shadow: 0 0 6px rgba(84, 185, 206, 0.55);
+}
+
+.grainSpeck {
+  background: #9cc8d2;
+  opacity: 0.65;
+}
+
+@keyframes sparkle-orbit {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .orbitSlow,
+  .orbitFast {
+    animation: none !important;
+    opacity: 0 !important;
+  }
+
+  .ring.intensify:hover .core,
+  .ring.intensify:focus-within .core,
+  :global(.group):hover .ringIntensify .core,
+  :global(.group):focus-within .ringIntensify .core {
+    transform: none;
+  }
+}

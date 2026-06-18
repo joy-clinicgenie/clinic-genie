@@ -35,7 +35,7 @@ export function Logo({
           alt="Clinic Genie"
           width={235}
           height={50}
-          className="h-8 w-auto object-contain transition-opacity duration-ui group-hover:opacity-80"
+          className="h-9 w-auto object-contain transition-opacity duration-ui group-hover:opacity-80"
           style={{ background: "transparent" }}
           fetchPriority="high"
         />
@@ -50,15 +50,15 @@ export function Logo({
       aria-label="Clinic Genie — home"
       className={cn("group inline-flex items-center gap-2.5", className)}
     >
-      <span className="relative inline-grid h-9 w-9 place-items-center">
+      <span className="relative inline-grid h-10 w-10 place-items-center">
         <span
           aria-hidden="true"
           className="absolute inset-0 rounded-full bg-orb-bloom opacity-0 blur-md transition-opacity duration-ui group-hover:opacity-100"
         />
-        <Brandmark className="relative h-9 w-9 text-genie-500 transition-colors duration-ui group-hover:text-genie-300" />
+        <Brandmark className="relative h-10 w-10 text-genie-500 transition-colors duration-ui group-hover:text-genie-300" />
       </span>
       {showWordmark && (
-        <span className="font-display text-lg font-bold tracking-tight text-onDark">
+        <span className="font-display text-xl font-bold tracking-tight text-onDark">
           Clinic <span className="genie-text">Genie</span>
         </span>
       )}

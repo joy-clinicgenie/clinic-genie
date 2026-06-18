@@ -1,71 +1,85 @@
+import Image from "next/image";
 import { MagneticButton } from "@/components/ui/MagneticButton";
+import { SparkleCluster } from "@/components/ui/SparkleCluster";
 import { Reveal } from "@/components/ui/Reveal";
-import { LandingKicker } from "@/components/home/landing/LandingLayout";
+import { LandingHeading, LandingKicker } from "@/components/home/landing/LandingLayout";
+import { cn } from "@/lib/cn";
 import styles from "./ClinicGenieGap.module.css";
 
 const ROWS = [
   {
     title: "Built for specialists",
+    highlight: "specialists",
     body: "Marketing shaped around your specialty, never generic.",
-    graphic: "specialists" as const,
+    image: "/about/specialist.svg",
   },
   {
     title: "Found everywhere patients look",
+    highlight: "patients look",
     body: "Clear visibility across Google, AI search, and reviews.",
-    graphic: "visibility" as const,
+    image: "/about/found-everywhere.svg",
   },
   {
     title: "Magic with mechanics",
+    highlight: "mechanics",
     body: "Creative spark, backed by real search data.",
-    graphic: "mechanics" as const,
+    image: "/about/statistic.svg",
   },
-];
+] as const;
 
-function RowGraphic({ type }: { type: (typeof ROWS)[number]["graphic"] }) {
-  const stroke = "#062D36";
-  const muted = "#B8C5CA";
+const CARD_TILT = [styles.cardTiltLeft, styles.cardTiltCenter, styles.cardTiltRight] as const;
 
-  if (type === "specialists") {
-    return (
-      <svg viewBox="0 0 96 96" fill="none" aria-hidden="true">
-        <rect x="18" y="22" width="60" height="52" rx="8" stroke={stroke} strokeWidth="1.5" />
-        <circle cx="48" cy="40" r="10" stroke={stroke} strokeWidth="1.5" />
-        <path d="M34 62c4-8 24-8 28 0" stroke={stroke} strokeWidth="1.5" strokeLinecap="round" />
-        <path d="M30 34h8M58 34h8" stroke={muted} strokeWidth="1.5" strokeLinecap="round" />
-      </svg>
-    );
+function cardSparkleRng(seed: number) {
+  const x = Math.sin(seed * 99.13) * 43758.5453;
+  return x - Math.floor(x);
+}
+
+function shuffleSeeded<T>(items: T[], seed: number) {
+  const next = [...items];
+  for (let i = next.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(cardSparkleRng(seed + i * 1.7) * (i + 1));
+    [next[i], next[j]] = [next[j], next[i]];
+  }
+  return next;
+}
+
+function buildCardSparkles(cardIndex: number) {
+  const count = 4 + Math.floor(cardSparkleRng(cardIndex + 11.3) * 4);
+  const sparkles = Array.from({ length: count }, (_, i) => {
+    const angle = cardSparkleRng(cardIndex * 17 + i * 4.1) * Math.PI * 2;
+    const radius = 44 + cardSparkleRng(cardIndex * 9 + i * 2.9) * 16;
+    const xPct = 50 + Math.cos(angle) * radius;
+    const yPct = 50 + Math.sin(angle) * radius;
+
+    return {
+      id: `${cardIndex}-${i}`,
+      x: `${xPct.toFixed(2)}%`,
+      y: `${yPct.toFixed(2)}%`,
+      size: `${(9 + Math.floor(cardSparkleRng(cardIndex + i * 1.3) * 4)).toFixed(0)}px`,
+      delay: `${(cardSparkleRng(cardIndex * 23 + i * 3.1) * 3.6).toFixed(2)}s`,
+      duration: `${(2.6 + cardSparkleRng(cardIndex + i * 5.7) * 1.8).toFixed(2)}s`,
+    };
+  });
+
+  return shuffleSeeded(sparkles, cardIndex * 31.7);
+}
+
+const CARD_SPARKLE_SETS = ROWS.map((_, index) => buildCardSparkles(index));
+
+function CardTitle({ title, highlight }: { title: string; highlight: string }) {
+  if (!title.includes(highlight)) {
+    return title;
   }
 
-  if (type === "visibility") {
-    return (
-      <svg viewBox="0 0 96 96" fill="none" aria-hidden="true">
-        <circle cx="48" cy="48" r="24" stroke={muted} strokeWidth="1.5" />
-        <circle cx="48" cy="48" r="8" fill={stroke} />
-        <path
-          d="M48 24v8M48 64v8M24 48h8M64 48h8M30 30l6 6M60 60l6 6M66 30l-6 6M36 60l-6 6"
-          stroke={stroke}
-          strokeWidth="1.5"
-          strokeLinecap="round"
-        />
-      </svg>
-    );
-  }
+  const [before, ...rest] = title.split(highlight);
+  const after = rest.join(highlight);
 
   return (
-    <svg viewBox="0 0 96 96" fill="none" aria-hidden="true">
-      <rect x="22" y="54" width="10" height="18" rx="2" stroke={muted} strokeWidth="1.5" />
-      <rect x="38" y="44" width="10" height="28" rx="2" stroke={stroke} strokeWidth="1.5" />
-      <rect x="54" y="36" width="10" height="36" rx="2" stroke={stroke} strokeWidth="1.5" />
-      <rect x="70" y="48" width="10" height="24" rx="2" stroke={muted} strokeWidth="1.5" />
-      <path
-        d="M28 28l8-8 8 4 10-10 6 6"
-        stroke={stroke}
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <circle cx="28" cy="28" r="3" fill={stroke} />
-    </svg>
+    <>
+      {before}
+      <span className="genie-text">{highlight}</span>
+      {after}
+    </>
   );
 }
 
@@ -75,26 +89,53 @@ export function ClinicGenieGap() {
       <div className="mx-auto w-full max-w-wide px-[var(--page-pad)]">
         <Reveal>
           <header className={styles.header}>
-            <LandingKicker align="left">Meet your Clinic Genie</LandingKicker>
-            <h2 className={styles.title}>
-              A Singapore clinic marketing agency
-              <br />
-              <span className={styles.titleMuted}>built for specialists.</span>
-            </h2>
+            <LandingKicker>Meet your Clinic Genie</LandingKicker>
+            <LandingHeading highlight="specialists" className="text-center">
+              A Singapore clinic marketing agency built for specialists.
+            </LandingHeading>
           </header>
         </Reveal>
 
-        <ul className={styles.list}>
+        <ul className={styles.cardGrid}>
           {ROWS.map((row, index) => (
-            <Reveal key={row.title} as="li" className={styles.row} delay={index * 0.05}>
-              <span className={styles.index}>{String(index + 1).padStart(2, "0")}</span>
-              <div className={styles.copy}>
-                <h3 className={styles.rowTitle}>{row.title}</h3>
-                <p className={styles.rowBody}>{row.body}</p>
-              </div>
-              <div className={styles.graphic}>
-                <RowGraphic type={row.graphic} />
-              </div>
+            <Reveal key={row.title} as="li" className={styles.cardItem} delay={index * 0.05}>
+              <article className={cn("group", styles.card, CARD_TILT[index])}>
+                <h3 className={styles.cardTitle}>
+                  <CardTitle title={row.title} highlight={row.highlight} />
+                </h3>
+                <div className={styles.cardFooter}>
+                  <p className={styles.cardBody}>{row.body}</p>
+                  <div className={styles.cardGraphic}>
+                    <div className={styles.cardGraphicCore}>
+                      <Image
+                        src={row.image}
+                        alt=""
+                        width={48}
+                        height={48}
+                        className={styles.cardIcon}
+                      />
+                    </div>
+                    <div className={styles.cardSparkles} aria-hidden="true">
+                      {CARD_SPARKLE_SETS[index].map((spark) => (
+                        <span
+                          key={spark.id}
+                          className={styles.cardSparkle}
+                          style={{
+                            left: spark.x,
+                            top: spark.y,
+                            width: spark.size,
+                            height: spark.size,
+                            animationDelay: spark.delay,
+                            animationDuration: spark.duration,
+                          }}
+                        >
+                          <SparkleCluster glow className="h-full w-full" />
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </article>
             </Reveal>
           ))}
         </ul>

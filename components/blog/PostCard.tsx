@@ -286,14 +286,14 @@ export function PostCard({
       >
         {post.category}
       </span>
-      <h3
+      <h5
         className={cn(
-          "font-display text-h4 leading-snug transition-colors",
+          "font-display text-h5 leading-snug transition-colors",
           tone === "dark" ? "text-onDark group-hover:text-genie-200" : "text-ink-900 group-hover:text-genie-700"
         )}
       >
         {post.title}
-      </h3>
+      </h5>
       <p className={cn("text-sm leading-relaxed", tone === "dark" ? "text-onDark-muted" : "text-ink-500")}>
         {post.dek}
       </p>

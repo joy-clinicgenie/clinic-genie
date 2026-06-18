@@ -4,9 +4,13 @@
   width: 100vw;
   margin-left: calc(50% - 50vw);
   overflow: hidden;
-  -webkit-mask-image: linear-gradient(to right, transparent, #000 3%, #000 97%, transparent);
-  mask-image: linear-gradient(to right, transparent, #000 3%, #000 97%, transparent);
-  touch-action: pan-y;
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 14%, #000 86%, transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0%, #000 14%, #000 86%, transparent 100%);
+  touch-action: pan-x pinch-zoom;
+}
+
+.viewport[data-lenis-prevent-wheel] {
+  overscroll-behavior: contain;
 }
 
 .stage {
@@ -29,6 +33,11 @@
 
 .trackDragging {
   cursor: grabbing;
+  touch-action: none;
+}
+
+.trackDragging .card {
+  pointer-events: none;
 }
 
 .slide {
@@ -40,6 +49,10 @@
 }
 
 .card {
+  display: block;
+  width: 100%;
+  text-decoration: none;
+  color: inherit;
   position: relative;
   aspect-ratio: 3 / 4;
   overflow: hidden;
@@ -53,6 +66,31 @@
 .card:focus-visible {
   outline: 2px solid #54b9ce;
   outline-offset: 3px;
+}
+
+.sparkleBadge {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.sparkleBadgeCore {
+  display: grid;
+  place-items: center;
+  width: 0.65rem;
+  height: 0.65rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 0 10px rgba(120, 226, 221, 0.75);
+}
+
+.sparkleBadgeDot {
+  width: 0.35rem;
+  height: 0.35rem;
+  border-radius: 999px;
+  background: #54b9ce;
 }
 
 .cardInner {
@@ -75,7 +113,7 @@
 
 .cardPlaceholderLabel {
   font-family: var(--font-sora), Sora, ui-sans-serif, system-ui, sans-serif;
-  font-size: 0.8rem;
+  font-size: var(--text-xs);
   font-weight: 600;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -93,14 +131,18 @@
 
 .cardTitle {
   font-family: var(--font-sora), Sora, ui-sans-serif, system-ui, sans-serif;
-  font-size: 0.95rem;
+  font-size: var(--text-h6);
   font-weight: 700;
-  line-height: 1.3;
+  line-height: 1.25;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
 }
 
 .cardCategory {
   margin-top: 0.2rem;
-  font-size: 0.75rem;
+  font-size: var(--text-kicker);
   letter-spacing: 0.04em;
   text-transform: uppercase;
   color: rgba(255, 255, 255, 0.82);
@@ -109,22 +151,123 @@
 .band {
   position: relative;
   isolation: isolate;
+  display: flex;
+  flex-direction: column;
   width: 100vw;
   margin-left: calc(50% - 50vw);
-  margin-top: -2.5rem;
-  padding: 3.5rem 0 3.5rem;
+  margin-top: clamp(-4rem, -8vh, -2.5rem);
+  min-height: 100vh;
+  min-height: 100svh;
+  padding: clamp(6.5rem, 14vh, 9rem) 0 clamp(1rem, 2vh, 1.5rem);
   overflow: hidden;
   background: linear-gradient(
     180deg,
-    #ffffff 0%,
-    #ffffff 4%,
-    #fafefe 10%,
-    #f2fbfc 16%,
-    #eafbfb 24%,
-    #e3f6fa 36%,
-    #c5eef4 58%,
-    #b9e2e5 100%
+    #eafbfb 0%,
+    #eafbfb 6%,
+    #c5eef4 14%,
+    #7eb8c6 22%,
+    #3d6570 30%,
+    #1a424c 36%,
+    #041f27 44%,
+    #041f27 52%,
+    #062d36 62%,
+    #1a4f5d 72%,
+    #4a8494 82%,
+    #8ecbd6 91%,
+    #cceff2 97%,
+    #eef8f9 100%
   );
+}
+
+.bandBackdrop {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(0, 0, 0, 0.2) 18%,
+    rgba(0, 0, 0, 0.75) 38%,
+    #000 48%,
+    #000 58%,
+    rgba(0, 0, 0, 0.75) 72%,
+    rgba(0, 0, 0, 0.15) 88%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(0, 0, 0, 0.2) 18%,
+    rgba(0, 0, 0, 0.75) 38%,
+    #000 48%,
+    #000 58%,
+    rgba(0, 0, 0, 0.75) 72%,
+    rgba(0, 0, 0, 0.15) 88%,
+    transparent 100%
+  );
+}
+
+.bandStars {
+  position: absolute;
+  inset: 0;
+  opacity: 0.55;
+  background-image:
+    radial-gradient(1px 1px at 8% 14%, rgba(204, 244, 246, 0.35), transparent),
+    radial-gradient(1px 1px at 16% 42%, rgba(120, 226, 221, 0.28), transparent),
+    radial-gradient(1px 1px at 22% 78%, rgba(125, 175, 227, 0.22), transparent),
+    radial-gradient(1px 1px at 31% 26%, rgba(204, 244, 246, 0.3), transparent),
+    radial-gradient(1px 1px at 38% 58%, rgba(120, 226, 221, 0.25), transparent),
+    radial-gradient(1px 1px at 44% 88%, rgba(125, 175, 227, 0.2), transparent),
+    radial-gradient(1px 1px at 52% 18%, rgba(204, 244, 246, 0.32), transparent),
+    radial-gradient(1px 1px at 57% 46%, rgba(120, 226, 221, 0.24), transparent),
+    radial-gradient(1px 1px at 63% 72%, rgba(125, 175, 227, 0.26), transparent),
+    radial-gradient(1px 1px at 69% 34%, rgba(204, 244, 246, 0.28), transparent),
+    radial-gradient(1px 1px at 74% 62%, rgba(120, 226, 221, 0.22), transparent),
+    radial-gradient(1px 1px at 79% 12%, rgba(125, 175, 227, 0.24), transparent),
+    radial-gradient(1px 1px at 84% 84%, rgba(204, 244, 246, 0.26), transparent),
+    radial-gradient(1px 1px at 11% 66%, rgba(120, 226, 221, 0.2), transparent),
+    radial-gradient(1px 1px at 19% 92%, rgba(125, 175, 227, 0.18), transparent),
+    radial-gradient(1px 1px at 27% 38%, rgba(204, 244, 246, 0.24), transparent),
+    radial-gradient(1px 1px at 35% 8%, rgba(120, 226, 221, 0.22), transparent),
+    radial-gradient(1px 1px at 47% 94%, rgba(125, 175, 227, 0.2), transparent),
+    radial-gradient(1px 1px at 55% 52%, rgba(204, 244, 246, 0.22), transparent),
+    radial-gradient(1px 1px at 61% 22%, rgba(120, 226, 221, 0.26), transparent),
+    radial-gradient(1px 1px at 71% 48%, rgba(125, 175, 227, 0.22), transparent),
+    radial-gradient(1px 1px at 88% 36%, rgba(204, 244, 246, 0.24), transparent),
+    radial-gradient(1px 1px at 92% 68%, rgba(120, 226, 221, 0.2), transparent),
+    radial-gradient(1px 1px at 96% 18%, rgba(125, 175, 227, 0.22), transparent),
+    radial-gradient(1.5px 1.5px at 14% 28%, rgba(120, 226, 221, 0.18), transparent),
+    radial-gradient(1.5px 1.5px at 42% 74%, rgba(125, 175, 227, 0.16), transparent),
+    radial-gradient(1.5px 1.5px at 66% 16%, rgba(204, 244, 246, 0.2), transparent),
+    radial-gradient(1.5px 1.5px at 86% 52%, rgba(120, 226, 221, 0.16), transparent);
+}
+
+.bandSparkle {
+  position: absolute;
+  left: var(--spark-x, 50%);
+  top: var(--spark-y, 50%);
+  width: var(--spark-size, 2px);
+  height: var(--spark-size, 2px);
+  border-radius: 999px;
+  background: var(--spark-color, #78e2dd);
+  opacity: var(--spark-base, 0.2);
+  box-shadow: 0 0 6px 1px var(--spark-glow, rgba(120, 226, 221, 0.35));
+  animation: works-spark-twinkle var(--spark-dur, 5s) ease-in-out infinite;
+  animation-delay: var(--spark-delay, 0s);
+}
+
+@keyframes works-spark-twinkle {
+  0%,
+  100% {
+    opacity: 0.12;
+    transform: scale(0.85);
+  }
+  50% {
+    opacity: 0.38;
+    transform: scale(1.05);
+  }
 }
 
 .band::before {
@@ -134,28 +277,16 @@
   pointer-events: none;
   z-index: 0;
   background:
-    linear-gradient(
-      180deg,
-      rgba(255, 255, 255, 0.98) 0%,
-      rgba(255, 255, 255, 0.72) 10%,
-      rgba(255, 255, 255, 0.2) 20%,
-      transparent 34%
-    ),
     radial-gradient(
-      ellipse 80% 55% at 50% 48%,
-      rgba(84, 185, 206, 0.35) 0%,
-      rgba(84, 185, 206, 0.12) 38%,
+      ellipse 90% 38% at 50% 52%,
+      rgba(4, 31, 39, 0.28) 0%,
+      rgba(6, 45, 54, 0.12) 45%,
       transparent 72%
     ),
     radial-gradient(
-      ellipse 45% 40% at 18% 58%,
-      rgba(84, 185, 206, 0.14) 0%,
-      transparent 70%
-    ),
-    radial-gradient(
-      ellipse 45% 40% at 82% 58%,
-      rgba(33, 123, 142, 0.12) 0%,
-      transparent 70%
+      ellipse 55% 28% at 50% 52%,
+      rgba(120, 226, 221, 0.1) 0%,
+      transparent 68%
     );
 }
 
@@ -166,31 +297,124 @@
   pointer-events: none;
   z-index: 0;
   background: linear-gradient(
-    to right,
-    rgba(185, 226, 229, 0.95) 0%,
-    transparent 12%,
-    transparent 88%,
-    rgba(185, 226, 229, 0.95) 100%
+    180deg,
+    transparent 58%,
+    rgba(4, 31, 39, 0.22) 68%,
+    rgba(4, 31, 39, 0.08) 78%,
+    rgba(204, 244, 246, 0.1) 90%,
+    rgba(234, 251, 251, 0.28) 100%
   );
+}
+
+.carouselShell {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 100%;
+  min-height: 0;
+  padding-bottom: 0.25rem;
+}
+
+.carouselReflection {
+  position: absolute;
+  left: 50%;
+  top: calc(var(--carousel-card-width) * 4 / 3 - 2rem);
+  z-index: 0;
+  width: 100vw;
+  height: clamp(4.5rem, 14vw, 7rem);
+  transform: translateX(-50%);
+  margin-left: calc(50% - 50vw);
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* Soft ambient lift above the arc */
+.horizonGlow {
+  position: absolute;
+  left: 50%;
+  top: -10%;
+  width: min(72vw, 760px);
+  height: 115%;
+  transform: translateX(-50%);
+  background: radial-gradient(
+    ellipse 100% 72% at 50% 100%,
+    rgba(24, 196, 217, 0.32) 0%,
+    rgba(120, 226, 221, 0.14) 38%,
+    rgba(125, 175, 227, 0.05) 58%,
+    transparent 72%
+  );
+  filter: blur(14px);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 14%, #000 86%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0%, #000 14%, #000 86%, transparent 100%);
+}
+
+/* Planet-horizon arc — top rim of a large circle */
+.horizonArc {
+  position: absolute;
+  left: 50%;
+  top: 68%;
+  width: 138%;
+  height: min(48vw, 560px);
+  transform: translateX(-50%);
+  border-radius: 50%;
+  border: 1.5px solid rgba(234, 251, 251, 0.92);
+  box-shadow:
+    0 0 4px 1px rgba(255, 255, 255, 0.65),
+    0 0 14px 3px rgba(24, 196, 217, 0.75),
+    0 0 36px 10px rgba(24, 196, 217, 0.45),
+    0 0 72px 24px rgba(120, 226, 221, 0.22),
+    0 0 120px 40px rgba(125, 175, 227, 0.1);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 6%, #000 94%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0%, #000 6%, #000 94%, transparent 100%);
+}
+
+/* Extra center bloom on the line */
+.horizonBloom {
+  position: absolute;
+  left: 50%;
+  top: 66%;
+  width: min(28vw, 220px);
+  height: 3px;
+  transform: translateX(-50%);
+  border-radius: 999px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(204, 244, 246, 0.55) 20%,
+    rgba(255, 255, 255, 0.95) 50%,
+    rgba(204, 244, 246, 0.55) 80%,
+    transparent 100%
+  );
+  box-shadow:
+    0 0 10px 3px rgba(24, 196, 217, 0.7),
+    0 0 28px 8px rgba(120, 226, 221, 0.35);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 18%, #000 82%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 18%, #000 82%, transparent);
 }
 
 .ctaBlock {
   position: relative;
   z-index: 1;
+  flex-shrink: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 1.25rem;
-  padding: 1.25rem 0 0;
+  padding: 0.35rem 0 0;
 }
 
 .navControls {
   position: relative;
   z-index: 1;
+  flex-shrink: 0;
   display: flex;
   justify-content: center;
   gap: 0.75rem;
-  padding: 0.75rem 0 0;
+  margin-top: -0.35rem;
+  padding: 0;
 }
 
 .navButton {
@@ -230,10 +454,11 @@
   position: relative;
   z-index: 1;
   display: flex;
+  flex-shrink: 0;
   flex-direction: column;
   align-items: center;
   gap: 1rem;
-  padding: 0 1.5rem 1.5rem;
+  padding: clamp(0.5rem, 1.5vh, 1rem) 1.5rem clamp(0.75rem, 2vh, 1.25rem);
   text-align: center;
 }
 
@@ -280,5 +505,10 @@
 @media (prefers-reduced-motion: reduce) {
   .track {
     cursor: default;
+  }
+
+  .bandSparkle {
+    animation: none;
+    opacity: 0.18;
   }
 }

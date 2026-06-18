@@ -13,6 +13,7 @@ import {
 import type { ProcessStep } from "@/lib/data/services";
 import { LandingIntro } from "@/components/home/landing/LandingLayout";
 import { MagneticButton } from "@/components/ui/MagneticButton";
+import { SparkleRing } from "@/components/ui/SparkleRing";
 import { cn } from "@/lib/cn";
 import styles from "./MagicProcess.module.css";
 
@@ -25,38 +26,32 @@ export type MagicProcessIntro = {
   highlight?: string;
 };
 
-const GRAIN_DOTS = [
-  { radius: 36, size: 3, kind: "dot" as const, angle: 0 },
-  { radius: 36, size: 2, kind: "speck" as const, angle: 36 },
-  { radius: 36, size: 2.5, kind: "dot" as const, angle: 72 },
-  { radius: 36, size: 2, kind: "speck" as const, angle: 108 },
-  { radius: 36, size: 3, kind: "dot" as const, angle: 144 },
-  { radius: 36, size: 2, kind: "speck" as const, angle: 180 },
-  { radius: 36, size: 2.5, kind: "dot" as const, angle: 216 },
-  { radius: 36, size: 2, kind: "speck" as const, angle: 252 },
-  { radius: 36, size: 3, kind: "dot" as const, angle: 288 },
-  { radius: 36, size: 2, kind: "speck" as const, angle: 324 },
-  { radius: 42, size: 2, kind: "speck" as const, angle: 18 },
-  { radius: 42, size: 2.5, kind: "dot" as const, angle: 90 },
-  { radius: 42, size: 2, kind: "speck" as const, angle: 162 },
-  { radius: 42, size: 2.5, kind: "dot" as const, angle: 234 },
-  { radius: 42, size: 2, kind: "speck" as const, angle: 306 },
-];
-
-function buildMagicPath(points: Point[], vertical: boolean) {
+function buildMagicPath(points: Point[]) {
   if (points.length < 2) return "";
 
   let path = `M ${points[0].x} ${points[0].y}`;
-  for (let i = 0; i < points.length - 1; i++) {
-    const p0 = points[i];
-    const p1 = points[i + 1];
-    const mid = { x: (p0.x + p1.x) / 2, y: (p0.y + p1.y) / 2 };
-    const ctrl = vertical
-      ? { x: mid.x + 28, y: mid.y }
-      : { x: mid.x, y: mid.y - 22 };
-    path += ` Q ${ctrl.x} ${ctrl.y} ${p1.x} ${p1.y}`;
+  for (let i = 1; i < points.length; i++) {
+    path += ` L ${points[i].x} ${points[i].y}`;
   }
   return path;
+}
+
+function pathLayoutMode() {
+  if (window.matchMedia("(min-width: 1280px)").matches) return "horizontal";
+  if (window.matchMedia("(max-width: 639px)").matches) return "vertical";
+  return "free";
+}
+
+function alignPathPoints(points: Point[], layout: "horizontal" | "vertical" | "free") {
+  if (points.length < 2 || layout === "free") return points;
+
+  if (layout === "horizontal") {
+    const y = points.reduce((sum, point) => sum + point.y, 0) / points.length;
+    return points.map((point) => ({ x: point.x, y }));
+  }
+
+  const x = points.reduce((sum, point) => sum + point.x, 0) / points.length;
+  return points.map((point) => ({ x, y: point.y }));
 }
 
 function stepThresholds(count: number, index: number) {
@@ -84,50 +79,22 @@ function MagicNumber({
   circleRef?: (el: HTMLSpanElement | null) => void;
 }) {
   const reduced = useReducedMotion();
-  const grainsActive = active && !reduced;
 
   return (
-    <div className={styles.grainRing}>
-      {!reduced && (
-        <>
-          <div className={cn(styles.grainOrbit, grainsActive && styles.grainOrbitSlow)}>
-            {GRAIN_DOTS.slice(0, 10).map((grain) => (
-              <span
-                key={`a-${grain.angle}`}
-                className={cn(styles.grain, grain.kind === "dot" ? styles.grainDot : styles.grainSpeck)}
-                style={{
-                  width: grain.size,
-                  height: grain.size,
-                  transform: `rotate(${grain.angle}deg) translate(${grain.radius}px, -50%)`,
-                }}
-              />
-            ))}
-          </div>
-          <div className={cn(styles.grainOrbit, grainsActive && styles.grainOrbitFast)}>
-            {GRAIN_DOTS.slice(10).map((grain) => (
-              <span
-                key={`b-${grain.angle}`}
-                className={cn(styles.grain, grain.kind === "dot" ? styles.grainDot : styles.grainSpeck)}
-                style={{
-                  width: grain.size,
-                  height: grain.size,
-                  transform: `rotate(${grain.angle}deg) translate(${grain.radius}px, -50%)`,
-                }}
-              />
-            ))}
-          </div>
-        </>
+    <SparkleRing
+      size="md"
+      ambient={false}
+      active={active && !reduced}
+      glow
+      intensifyOnHover
+      coreRef={circleRef}
+      coreClassName={cn(
+        styles.numberCircle,
+        "grid h-16 w-16 place-items-center rounded-full border border-[#9CC8D2]/80 bg-white/75 font-display text-h4 text-ink-900 backdrop-blur-glass-light"
       )}
-      <span
-        ref={circleRef}
-        className={cn(
-          styles.numberCircle,
-          "relative z-10 grid h-16 w-16 place-items-center rounded-full border border-[#9CC8D2]/80 bg-white/75 font-display text-h4 text-ink-900 backdrop-blur-glass-light"
-        )}
-      >
-        {n}
-      </span>
-    </div>
+    >
+      {n}
+    </SparkleRing>
   );
 }
 
@@ -157,12 +124,12 @@ function ProcessCard({
   const y = useTransform(progress, isFirst ? [0, 1] : [start, end], isFirst ? [0, 0] : [24, 0]);
 
   return (
-    <motion.article
-      className={cn("flex flex-col items-center gap-4 text-center", className)}
-      style={reduced ? undefined : { opacity, y }}
-    >
+    <article className={cn("flex flex-col items-center gap-4 text-center", className)}>
       <MagicNumber n={step.n} active={active} circleRef={circleRef} />
-      <div className="flex flex-col gap-2">
+      <motion.div
+        className="flex flex-col gap-2"
+        style={reduced ? undefined : { opacity, y }}
+      >
         <h3 className={cn("font-display text-h4", dark ? "text-white" : "text-ink-900")}>{step.title}</h3>
         <p
           className={cn(
@@ -178,8 +145,8 @@ function ProcessCard({
             <p className={cn("mt-1 text-sm", dark ? "text-[#C9E4EA]" : "text-[#7E8C92]")}>{step.deliverable}</p>
           </div>
         )}
-      </div>
-    </motion.article>
+      </motion.div>
+    </article>
   );
 }
 
@@ -201,6 +168,7 @@ export function MagicProcess({
   const reduced = useReducedMotion();
   const [pathD, setPathD] = useState("");
   const [pathLength, setPathLength] = useState(1);
+  const [lineAxis, setLineAxis] = useState({ x1: 0, y1: 0, x2: 1, y2: 0 });
   const [activeSteps, setActiveSteps] = useState(() => steps.map((_, index) => index === 0));
 
   const { scrollYProgress } = useScroll({
@@ -227,7 +195,6 @@ export function MagicProcess({
     const svg = svgRef.current;
     if (!svg) return;
 
-    const isVertical = window.matchMedia("(max-width: 1023px)").matches;
     const svgRect = svg.getBoundingClientRect();
     const points = circleRefs.current
       .slice(0, steps.length)
@@ -243,7 +210,11 @@ export function MagicProcess({
 
     if (points.length < 2) return;
 
-    setPathD(buildMagicPath(points, isVertical));
+    const aligned = alignPathPoints(points, pathLayoutMode());
+    const first = aligned[0];
+    const last = aligned[aligned.length - 1];
+    setLineAxis({ x1: first.x, y1: first.y, x2: last.x, y2: last.y });
+    setPathD(buildMagicPath(aligned));
 
     requestAnimationFrame(() => {
       if (pathRef.current) {
@@ -312,30 +283,66 @@ export function MagicProcess({
             style={{ opacity: reduced ? 1 : lineReveal }}
           >
             <defs>
-              <linearGradient id="magic-process-line" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stopColor="#54B9CE" />
-                <stop offset="55%" stopColor="#217B8E" />
-                <stop offset="100%" stopColor="#9CC8D2" />
+              <linearGradient
+                id="magic-process-line"
+                gradientUnits="userSpaceOnUse"
+                x1={lineAxis.x1}
+                y1={lineAxis.y1}
+                x2={lineAxis.x2}
+                y2={lineAxis.y2}
+              >
+                <stop offset="0%" stopColor="#78E2DD" stopOpacity="0" />
+                <stop offset="7%" stopColor="#78E2DD" stopOpacity="0.35" />
+                <stop offset="16%" stopColor="#CCF4F6" stopOpacity="0.9" />
+                <stop offset="50%" stopColor="#EAFBFB" stopOpacity="1" />
+                <stop offset="84%" stopColor="#CCF4F6" stopOpacity="0.9" />
+                <stop offset="93%" stopColor="#78E2DD" stopOpacity="0.35" />
+                <stop offset="100%" stopColor="#78E2DD" stopOpacity="0" />
               </linearGradient>
+
+              <filter id="magic-process-glow" x="-40%" y="-40%" width="180%" height="180%">
+                <feGaussianBlur in="SourceGraphic" stdDeviation="5" result="blur" />
+                <feMerge>
+                  <feMergeNode in="blur" />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
+              </filter>
             </defs>
             {pathD && (
-              <motion.path
-                ref={pathRef}
-                d={pathD}
-                fill="none"
-                stroke="url(#magic-process-line)"
-                strokeWidth="2.5"
-                strokeLinecap="round"
-                className={styles.lineGlow}
-                strokeDasharray={pathLength}
-                style={{
-                  strokeDashoffset: reduced ? 0 : dashOffset,
-                }}
-              />
+              <>
+                <motion.path
+                  d={pathD}
+                  fill="none"
+                  stroke="url(#magic-process-line)"
+                  strokeWidth="7"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  filter="url(#magic-process-glow)"
+                  strokeDasharray={pathLength}
+                  style={{
+                    strokeDashoffset: reduced ? 0 : dashOffset,
+                    opacity: 0.55,
+                  }}
+                />
+                <motion.path
+                  ref={pathRef}
+                  d={pathD}
+                  fill="none"
+                  stroke="url(#magic-process-line)"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className={styles.lineGlow}
+                  strokeDasharray={pathLength}
+                  style={{
+                    strokeDashoffset: reduced ? 0 : dashOffset,
+                  }}
+                />
+              </>
             )}
           </motion.svg>
 
-          <div className={cn("relative grid grid-cols-1 gap-8 sm:grid-cols-2 xl:grid-cols-5 xl:gap-4", styles.stepsGrid)}>
+          <div className={cn("relative grid grid-cols-1 items-start gap-8 sm:grid-cols-2 xl:grid-cols-5 xl:gap-4", styles.stepsGrid)}>
             {steps.map((step, index) => (
               <ProcessCard
                 key={step.n}

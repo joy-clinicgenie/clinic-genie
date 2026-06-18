@@ -15,7 +15,7 @@ export function Kicker({
   return (
     <Tag
       className={cn(
-        "inline-flex items-center gap-2 font-mono text-kicker uppercase",
+        "inline-flex items-center gap-2 font-display text-kicker uppercase",
         tone === "dark" ? "text-genie-300" : "text-genie-700",
         className
       )}

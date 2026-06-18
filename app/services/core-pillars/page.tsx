@@ -36,7 +36,7 @@ export default function CorePillarsPage() {
             <Reveal variant="up">
               <Link
                 href="/services"
-                className="inline-flex w-fit items-center gap-2 font-mono text-kicker uppercase text-genie-300 transition-colors hover:text-white"
+                className="inline-flex w-fit items-center gap-2 font-display text-kicker uppercase text-genie-300 transition-colors hover:text-white"
               >
                 <span aria-hidden="true">←</span> Services
               </Link>

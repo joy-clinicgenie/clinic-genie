@@ -6,50 +6,38 @@ export function ComplianceCards({ tone = "light" }: { tone?: "light" | "dark" })
   const isDark = tone === "dark";
 
   return (
-    <div className="grid grid-cols-1 gap-4 md:grid-cols-3 md:items-stretch">
+    <div className="grid grid-cols-5 gap-2 sm:gap-3">
       {COMPLIANCE_CARDS.map((card) => (
         <div
           key={card.title}
           className={cn(
-            "flex h-full flex-col overflow-hidden rounded-2xl",
+            "flex h-full min-w-0 flex-col items-center rounded-xl px-2 py-4 text-center sm:rounded-2xl sm:px-3 sm:py-5",
             isDark ? "glass" : "glass-light"
           )}
         >
-          <div
-            aria-hidden="true"
+          <Image
+            src={card.image}
+            alt={card.alt}
+            width={48}
+            height={48}
+            className="mb-2 h-8 w-8 shrink-0 object-contain sm:mb-3 sm:h-10 sm:w-10"
+          />
+          <h3
             className={cn(
-              "relative flex h-56 items-center justify-center",
-              isDark
-                ? "bg-gradient-to-br from-[#0F3A44] via-[#062D36] to-[#1A4F5D]"
-                : "bg-gradient-to-br from-[#F7FAFB] via-white to-[#EAFBFB]"
+              "font-display text-[0.6875rem] font-semibold leading-snug sm:text-xs",
+              isDark ? "text-white" : "text-ink-900"
             )}
           >
-            <Image
-              src={card.image}
-              alt=""
-              width={80}
-              height={80}
-              className="h-[6.4rem] w-[6.4rem] object-contain sm:h-[7.2rem] sm:w-[7.2rem]"
-            />
-          </div>
-          <div className="flex flex-col gap-2 px-8 pb-8 pt-2 text-center">
-            <h3
-              className={cn(
-                "font-display text-base font-semibold",
-                isDark ? "text-white" : "text-ink-900"
-              )}
-            >
-              {card.title}
-            </h3>
-            <p
-              className={cn(
-                "mx-auto max-w-[75%] text-sm leading-relaxed text-pretty",
-                isDark ? "text-[#C9E4EA]" : "text-[#7E8C92]"
-              )}
-            >
-              {card.body}
-            </p>
-          </div>
+            {card.title}
+          </h3>
+          <p
+            className={cn(
+              "mt-1.5 text-[0.625rem] leading-snug text-pretty sm:mt-2 sm:text-[0.6875rem] sm:leading-relaxed",
+              isDark ? "text-[#C9E4EA]" : "text-[#7E8C92]"
+            )}
+          >
+            {card.body}
+          </p>
         </div>
       ))}
     </div>

@@ -249,6 +249,7 @@ const config: Config = {
         kicker: ["0.75rem", { lineHeight: "1.4", letterSpacing: "0.18em", fontWeight: "600" }],
         lead: ["1.25rem", { lineHeight: "1.6" }],
         body: ["1.0625rem", { lineHeight: "1.7" }],
+        h5: ["1rem", { lineHeight: "1.1", letterSpacing: "-0.005em", fontWeight: "500" }],
         h4: ["1.25rem", { lineHeight: "1.3", letterSpacing: "-0.005em", fontWeight: "600" }],
         h3: ["clamp(1.375rem,1.1rem + 1.1vw,1.75rem)", { lineHeight: "1.2", letterSpacing: "-0.01em", fontWeight: "600" }],
         h2: ["clamp(2rem,1.4rem + 2.6vw,3rem)", { lineHeight: "1.12", letterSpacing: "-0.015em", fontWeight: "700" }],

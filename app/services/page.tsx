@@ -105,7 +105,7 @@ export default function ServicesPage() {
             <Container className="flex flex-col gap-12">
               <div className="flex flex-col gap-4">
                 <Reveal variant="up">
-                  <p className="flex items-center gap-3 font-mono text-kicker uppercase">
+                  <p className="flex items-center gap-3 font-display text-kicker uppercase">
                     <span
                       className="inline-grid h-7 w-7 shrink-0 place-items-center rounded-full text-xs font-bold text-night-950"
                       style={{ backgroundColor: pillar.accent }}

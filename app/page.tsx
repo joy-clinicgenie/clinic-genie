@@ -15,7 +15,7 @@ import {
   LandingKicker,
   LandingHeading,
   LandingBody,
-  MetricsGrid,
+  MetricsRowStats,
   MetricCell,
 } from "@/components/home/landing/LandingLayout";
 import { ClinicGenieGap } from "@/components/home/landing/ClinicGenieGap";
@@ -53,21 +53,46 @@ export default function HomePage() {
       <Hero />
 
       {/* 2 — Trust: client logos */}
-      <LandingSection tone="white" className="py-16" containerClassName="flex flex-col gap-10">
+      <LandingSection
+        tone="white"
+        className="border-y border-[#E6EEF1] bg-white py-14 shadow-[0_8px_32px_rgba(6,45,54,0.05)]"
+        containerClassName="flex flex-col gap-8"
+      >
         <Reveal>
-          <p className="text-center font-mono text-kicker uppercase tracking-[0.3em] text-[#217B8E]">
-            Clinics we&apos;ve helped grow
-          </p>
+          <LandingKicker>Clinics we&apos;ve helped grow</LandingKicker>
         </Reveal>
-        <Reveal className="-mx-[var(--page-pad)] w-[calc(100%+2*var(--page-pad))]">
+        <Reveal className="-mx-[var(--page-pad)] w-[calc(100%+2*var(--page-pad))] bg-white">
           <LogoMarquee logos={CLIENT_LOGOS} />
         </Reveal>
       </LandingSection>
 
-      {/* 3 — Meet your Clinic Genie: capabilities-style rows */}
+      {/* 3 — Marketing metrics */}
+      <LandingSection tone="white" className="py-24" containerClassName="flex flex-col">
+        <Reveal>
+          <div className="flex flex-col items-center gap-10 text-center">
+            <LandingKicker>Marketing metrics</LandingKicker>
+
+            <MetricsRowStats>
+              {METRICS.map((metric, i) => (
+                <MetricCell key={metric.label} value={metric.value} label={metric.label} index={i} />
+              ))}
+            </MetricsRowStats>
+
+            <LandingBody className="text-sm">
+              Figures are illustrative estimates only. Actual results vary by specialty, clinic fees, competition, budget, patient journey, and conversion performance.
+            </LandingBody>
+
+            <MagneticButton href="/portfolio" size="md" withMiniOrb>
+              See the Numbers
+            </MagneticButton>
+          </div>
+        </Reveal>
+      </LandingSection>
+
+      {/* 4 — Meet your Clinic Genie: capabilities-style rows */}
       <ClinicGenieGap />
 
-      {/* 4 — Eight Wishes: cyan band, sticky stacked cards */}
+      {/* 5 — Eight Wishes: cyan band, sticky stacked cards */}
       <LandingSection id="wishes" tone="cyan" className="py-24" containerClassName="flex flex-col">
         <WishStack
           pillars={CORE_PILLARS}
@@ -82,7 +107,7 @@ export default function HomePage() {
         />
       </LandingSection>
 
-      {/* 5 — How the magic works: sticky scroll + 5 steps */}
+      {/* 6 — How the magic works: sticky scroll + 5 steps */}
       <LandingSection
         tone="white"
         navTheme="dark"
@@ -101,39 +126,13 @@ export default function HomePage() {
         />
       </LandingSection>
 
-      {/* 6 — Marketing metrics: left-aligned header + 2×2 grid */}
-      <LandingSection tone="white" className="py-24" containerClassName="flex flex-col gap-12">
-        <div className="flex flex-col gap-4">
-          <Reveal>
-            <LandingKicker align="left">Marketing metrics</LandingKicker>
-          </Reveal>
-        </div>
-        <Reveal>
-          <MetricsGrid>
-            {METRICS.map((metric, i) => (
-              <MetricCell key={metric.label} value={metric.value} label={metric.label} index={i} />
-            ))}
-          </MetricsGrid>
-        </Reveal>
-        <Reveal delay={0.08}>
-          <div className="flex flex-col items-start gap-5">
-            <LandingBody center={false} className="text-sm">
-              Figures are illustrative estimates only. Actual results vary by specialty, clinic fees, competition,
-              budget, patient journey, and conversion performance.
-            </LandingBody>
-            <MagneticButton href="/portfolio" size="md" withMiniOrb>
-              See the Numbers
-            </MagneticButton>
-          </div>
-        </Reveal>
-      </LandingSection>
-
       {/* 7 — Compliance: three cards in one row, CTA below */}
       <LandingSection tone="white" className="py-24" containerClassName="flex flex-col gap-12">
         <Reveal>
           <LandingIntro
-            kicker="Stay visible, stay compliant."
-            title="Our medical clinic marketing is built around Singapore's HCSA, PHMC, and SMC guidelines"
+            kicker="Magic with a Conscience"
+            title="Stay visible. Stay credible. Stay within the rules."
+            subtitle="We build Singapore’s healthcare advertising standards into every draft, page, and campaign from the start. Nothing is bolted on after."
           />
         </Reveal>
         <Reveal>
@@ -188,14 +187,18 @@ export default function HomePage() {
           ))}
         </RevealGroup>
         <Reveal delay={0.04}>
-          <p className="text-center font-display text-lg font-bold italic leading-snug text-[#9FDCE8]">
+          <p className="text-center font-display text-h6 font-regular italic leading-snug text-[#9FDCE8]">
             Stronger partners. Better support. Clearer growth for your clinic.
           </p>
         </Reveal>
       </LandingSection>
 
       {/* 8b — Specialist clinics & works: interactive grey orb */}
-      <LandingSection tone="white" className="bg-white pt-24 pb-0" containerClassName="flex flex-col gap-16">
+      <LandingSection
+        tone="white"
+        className="bg-gradient-to-b from-white via-[#f4fcfc] to-[#eafbfb] pt-24 pb-16"
+        containerClassName="flex flex-col gap-16"
+      >
         <Reveal>
           <LandingIntro
             kicker="Specialist clinics & works"
@@ -206,10 +209,11 @@ export default function HomePage() {
         <Reveal delay={0.08}>
           <SpecialistClinicsOrb />
         </Reveal>
-        <Reveal delay={0.12}>
-          <PortfolioWorksCarousel />
-        </Reveal>
       </LandingSection>
+
+      <Reveal delay={0.12} className="w-full overflow-visible">
+        <PortfolioWorksCarousel />
+      </Reveal>
 
       {/* 10 — Dark finale: Genie Tips + final CTA */}
       <LandingFinale>

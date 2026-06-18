@@ -105,7 +105,7 @@ export default function ContactPage() {
                 <div className="flex items-center gap-4">
                   <MagicOrb variant="contact" className="h-14 w-14 shrink-0" />
                   <div className="flex flex-col">
-                    <span className="font-mono text-kicker uppercase text-genie-300">Find the genie</span>
+                    <span className="font-display text-kicker uppercase text-genie-300">Find the genie</span>
                     <span className="font-display text-h4 text-onDark">{SITE.name}</span>
                   </div>
                 </div>
@@ -197,7 +197,7 @@ export default function ContactPage() {
         />
         <Container className="flex flex-col items-center gap-4 text-center">
           <Reveal variant="up">
-            <p className="font-mono text-kicker uppercase text-genie-300">A last word from the genie</p>
+            <p className="font-display text-kicker uppercase text-genie-300">A last word from the genie</p>
           </Reveal>
           <Reveal variant="up" delay={0.08}>
             <p className="mx-auto max-w-2xl text-balance font-display text-h3 text-onDark">

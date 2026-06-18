@@ -15,6 +15,21 @@
   --soft-grey:   #E6EEF1;
   --clean-white: #FFFFFF;
 
+  /* Clinic Genie brand gradient — shared by heading accent + primary CTAs */
+  --genie-grad: linear-gradient(92deg, #18C4D9, #78E2DD 60%, #7DAFE3);
+  --genie-grad-glass: linear-gradient(
+    92deg,
+    rgba(24, 196, 217, 0.9),
+    rgba(120, 226, 221, 0.84) 60%,
+    rgba(125, 175, 227, 0.9)
+  );
+
+  /* Primary gradient CTA — shared padding across all btn-cta buttons (lg / wide) */
+  --btn-cta-py: 1rem;
+  --btn-cta-px: 2rem;
+  --btn-cta-gap: 0.5rem;
+  --btn-cta-size: 1rem;
+
   --container:  75rem;
   --prose:      45rem;
   --page-pad:   clamp(1.25rem, 5vw, 2.5rem);
@@ -24,11 +39,28 @@
   --dur-ui:     300ms;
   --dur-reveal: 700ms;
   --orb-size:   clamp(200px, 35vw, 480px);
+
+  /* Minor third type scale (ratio 1.200), base 16px */
+  --text-kicker: 0.694rem;    /* 11.11px */
+  --text-xs:     0.833rem;    /* 13.33px */
+  --text-sm:     0.833rem;    /* 13.33px */
+  --text-body:   1rem;        /* 16px */
+  --text-h6:     1.2rem;      /* 19.2px */
+  --text-h5:     1.44rem;     /* 23.04px */
+  --text-h4:     1.728rem;    /* 27.65px */
+  --text-h3:     2.07375rem;  /* 33.18px */
+  --text-h2:     2.488125rem; /* 39.81px */
+  --text-h1:     2.98625rem;  /* 47.78px */
+  --text-lead:   var(--text-h6);
+  --text-display: 3.583rem;   /* 57.33px */
 }
 
 @layer base {
-  html { scroll-behavior: smooth;
-    @apply font-sans; }
+  html {
+    scroll-behavior: smooth;
+    font-size: 16px;
+    @apply font-sans;
+  }
 
   body {
     /* Strategic Teal dark (#062D36) as the base dark background */
@@ -136,7 +168,7 @@
 
   /* Genie Cyan gradient text (dark surfaces only) */
   .genie-text {
-    background-image: linear-gradient(92deg, #18C4D9, #78E2DD 60%, #7DAFE3);
+    background-image: var(--genie-grad);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
@@ -157,25 +189,57 @@
 
   .prose-reading { max-width: var(--prose); }
 
-  /* Primary CTA — cyan → teal → navy (left to right) */
+  /* Primary CTA — Clinic Genie heading gradient + glass */
   .btn-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--btn-cta-gap);
+    padding: var(--btn-cta-py) var(--btn-cta-px);
+    font-size: var(--btn-cta-size);
+    line-height: 1.25;
     color: #fff;
-    background-color: #217b8e;
-    background-image: linear-gradient(90deg, #54b9ce 0%, #217b8e 48%, #041f27 100%);
+    text-shadow: 0 1px 6px rgba(6, 45, 54, 0.32);
+    background-color: rgba(24, 196, 217, 0.35);
+    background-image: var(--genie-grad-glass);
+    backdrop-filter: blur(20px) saturate(140%);
+    -webkit-backdrop-filter: blur(20px) saturate(140%);
+    border: 1px solid rgba(255, 255, 255, 0.38);
     box-shadow:
-      0 8px 24px rgba(11, 70, 82, 0.35),
-      inset 0 0 0 1px rgba(24, 196, 217, 0.35);
+      inset 0 1px 0 rgba(255, 255, 255, 0.48),
+      inset 0 -1px 0 rgba(6, 45, 54, 0.08),
+      0 8px 24px rgba(24, 196, 217, 0.22),
+      0 0 28px rgba(120, 226, 221, 0.28);
     transition:
       transform var(--dur-ui) var(--ease-out-soft),
       box-shadow var(--dur-ui) var(--ease-out-soft),
-      filter var(--dur-ui) var(--ease-out-soft);
+      filter var(--dur-ui) var(--ease-out-soft),
+      border-color var(--dur-ui) var(--ease-out-soft);
   }
 
   .btn-cta:hover {
-    filter: brightness(1.06);
+    filter: brightness(1.05);
+    border-color: rgba(255, 255, 255, 0.55);
     box-shadow:
-      0 10px 30px rgba(11, 70, 82, 0.45),
-      0 0 36px rgba(24, 196, 217, 0.55);
+      inset 0 1px 0 rgba(255, 255, 255, 0.58),
+      inset 0 -1px 0 rgba(6, 45, 54, 0.06),
+      0 10px 32px rgba(24, 196, 217, 0.3),
+      0 0 40px rgba(125, 175, 227, 0.38);
+  }
+
+  /* Compact primary CTA — nav, inline forms */
+  .btn-cta.btn-cta-sm {
+    --btn-cta-py: 0.625rem;
+    --btn-cta-px: 1.125rem;
+    --btn-cta-gap: 0.375rem;
+    --btn-cta-size: 0.8125rem;
+  }
+
+  .btn-cta.btn-cta-md {
+    --btn-cta-py: 0.75rem;
+    --btn-cta-px: 1.5rem;
+    --btn-cta-gap: 0.4375rem;
+    --btn-cta-size: 0.9375rem;
   }
 }
 
@@ -183,6 +247,9 @@
   .glass       { background: rgba(11, 70, 82, 0.85); }
   .glass-tint  { background: rgba(14, 95, 107, 0.85); }
   .glass-light { background: rgba(255, 255, 255, 0.94); }
+  .btn-cta {
+    background-image: var(--genie-grad);
+  }
 }
 
 @media (pointer: fine) {

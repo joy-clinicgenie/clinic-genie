@@ -6,8 +6,7 @@ function renderHighlight(title: string, highlight?: string, tone: "dark" | "ligh
   if (!highlight || !title.includes(highlight)) return title;
   const [before, ...rest] = title.split(highlight);
   const after = rest.join(highlight);
-  // genie-text gradient fails AA on white; use a solid, AA-safe accent on light.
-  const cls = tone === "dark" ? "genie-text" : "text-genie-700";
+  const cls = "genie-text";
   return (
     <>
       {before}

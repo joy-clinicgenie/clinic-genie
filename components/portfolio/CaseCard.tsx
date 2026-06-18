@@ -21,7 +21,7 @@ export function CaseCard({ study }: { study: CaseStudy }) {
       />
 
       <span
-        className="font-mono text-kicker uppercase tracking-wider text-genie-300"
+        className="font-display text-kicker uppercase tracking-wider text-genie-300"
         style={{ color: study.accent }}
       >
         {study.specialty}

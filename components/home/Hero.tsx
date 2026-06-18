@@ -22,9 +22,9 @@ export function Hero() {
       id="hero"
       data-nav-theme="light"
       aria-labelledby="hero-title"
-      className="relative flex min-h-[88vh] items-center overflow-hidden pb-20 pt-28 lg:pt-32"
+      className="relative flex h-svh max-h-svh min-h-0 flex-col overflow-hidden pt-[calc(4.75rem+env(safe-area-inset-top,0px))] pb-10 lg:pt-[calc(5.25rem+env(safe-area-inset-top,0px))] lg:pb-12"
     >
-      <SparkleField density={28} parallax className="opacity-60" />
+      <SparkleField density={28} parallax variant="cluster" className="opacity-60" />
 
       {/* Decorative dashed arcs — bottom-left per mockup */}
       <svg
@@ -38,17 +38,10 @@ export function Hero() {
         <circle cx="190" cy="190" r="70" stroke="#9CC8D2" strokeWidth="0.6" />
       </svg>
 
-      <Container size="wide" className="relative z-10">
-        <div className="grid items-center gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:gap-10">
+      <Container size="wide" className="relative z-10 flex min-h-0 w-full flex-1 items-center">
+        <div className="grid w-full min-w-0 items-center gap-5 sm:gap-6 lg:grid-cols-[1.05fr_0.95fr] lg:gap-8">
           {/* Copy — PDF line breaks */}
-          <div className="flex max-w-3xl flex-col gap-7 text-center lg:text-left">
-            <motion.div
-              initial={reduceMotion ? false : { opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, ease: ease.glide }}
-            >
-            </motion.div>
-
+          <div className="flex max-w-3xl flex-col gap-4 text-center sm:gap-5 lg:gap-6 lg:text-left">
             <motion.h1
               id="hero-title"
               className="font-display text-h1 text-balance text-ink-900"
@@ -60,7 +53,7 @@ export function Hero() {
             </motion.h1>
 
             <motion.p
-              className="font-display text-h3 font-normal text-ink-700"
+              className="font-display text-h4 font-normal text-ink-700"
               initial={reduceMotion ? false : { opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, ease: ease.glide, delay: 0.08 }}
@@ -69,12 +62,12 @@ export function Hero() {
             </motion.p>
 
             <motion.p
-              className="mx-auto max-w-[75%] text-lead leading-relaxed text-pretty text-ink-700 lg:mx-0"
+              className="mx-auto max-w-[75%] text-body leading-relaxed text-pretty text-[#7E8C92] lg:mx-0"
               initial={reduceMotion ? false : { opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, ease: ease.glide, delay: 0.12 }}
             >
-              Skilled care deserves to be found. But online, the clinic that ranks first and looks trustworthy often wins the booking. Clinic Genie is the clinic marketing that closes that gap, helping patients find you, trust you, and book you.
+              Skilled care deserves to be found. Online, the clinic that ranks first often wins the booking. Clinic Genie closes that gap, so patients find you, trust you, and choose you.
             </motion.p>
 
             <motion.div
@@ -95,7 +88,7 @@ export function Hero() {
 
           {/* Grey orb — floating orb per mockup */}
           <motion.div
-            className="flex justify-center lg:justify-end"
+            className="flex min-h-0 min-w-0 w-full justify-center lg:justify-end"
             initial={reduceMotion ? false : { opacity: 0, scale: 0.96 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, ease: ease.glide, delay: 0.15 }}
@@ -108,7 +101,7 @@ export function Hero() {
       <Link
         href="#gap"
         aria-label="Scroll to The Gap"
-        className="absolute bottom-8 left-1/2 z-10 grid h-[42px] w-[26px] -translate-x-1/2 place-items-start rounded-[14px] border border-[#D8DEE1] pt-2 transition-colors hover:border-[#54B9CE] focus-visible:shadow-focus"
+        className="absolute bottom-5 left-1/2 z-10 grid h-[42px] w-[26px] -translate-x-1/2 place-items-start rounded-[14px] border border-[#D8DEE1] pt-2 transition-colors hover:border-[#54B9CE] focus-visible:shadow-focus"
       >
         <span
           aria-hidden="true"

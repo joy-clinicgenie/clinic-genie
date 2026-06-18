@@ -70,7 +70,7 @@ export function LandingKicker({
   return (
     <p
       className={cn(
-        "flex items-center gap-2 font-mono text-kicker uppercase tracking-[0.22em]",
+        "flex items-center gap-2 font-display text-kicker uppercase tracking-[0.22em]",
         align === "center" ? "justify-center" : "justify-start",
         light ? "text-[#9FDCE8]" : "text-[#217B8E]"
       )}
@@ -88,28 +88,36 @@ export function LandingHeading({
   children,
   highlight,
   light = false,
+  as = "h2",
   className,
 }: {
   children: ReactNode;
   highlight?: string;
   light?: boolean;
+  as?: "h2" | "h3";
   className?: string;
 }) {
-  const base = cn("font-display text-h3 text-balance", light ? "text-white" : "text-[#217B8E]", className);
+  const Tag = as;
+  const base = cn(
+    "font-display text-balance",
+    as === "h2" ? "text-h2" : "text-h3",
+    light ? "text-white" : "text-[#217B8E]",
+    className
+  );
 
   if (typeof children === "string" && highlight && children.includes(highlight)) {
     const [before, ...rest] = children.split(highlight);
     const after = rest.join(highlight);
     return (
-      <h3 className={base}>
+      <Tag className={base}>
         {before}
-        <span className={light ? "text-[#9FDCE8]" : "text-[#54B9CE]"}>{highlight}</span>
+        <span className="genie-text">{highlight}</span>
         {after}
-      </h3>
+      </Tag>
     );
   }
 
-  return <h3 className={base}>{children}</h3>;
+  return <Tag className={base}>{children}</Tag>;
 }
 
 /** Shared max width for section body paragraphs */
@@ -130,7 +138,7 @@ export function LandingBody({
     <p
       className={cn(
         landingParagraphWidth,
-        "text-base leading-relaxed text-pretty",
+        "text-body leading-relaxed text-pretty",
         light ? "text-[#C9E4EA]" : "text-[#7E8C92]",
         center && "mx-auto text-center",
         className
@@ -194,7 +202,7 @@ export function StatsPanel({ children }: { children: ReactNode }) {
 export function StatCell({ value, label }: { value: string; label: string }) {
   return (
     <div className="flex flex-col items-center gap-2 text-center">
-      <span className="font-display text-2xl font-semibold text-[#217B8E]">{value}</span>
+      <span className="font-display text-h4 font-semibold text-[#217B8E]">{value}</span>
       <p className="text-sm leading-relaxed text-[#7E8C92]">{label}</p>
     </div>
   );
@@ -214,9 +222,13 @@ export function CardGridShell({ children }: { children: ReactNode }) {
   return <div className="surface-panel p-4 sm:p-6">{children}</div>;
 }
 
-/** 2×2 marketing metrics grid with dividers */
-export function MetricsGrid({ children }: { children: ReactNode }) {
-  return <div className="grid sm:grid-cols-2">{children}</div>;
+/** Marketing metrics — four stats in one row */
+export function MetricsRowStats({ children }: { children: ReactNode }) {
+  return (
+    <div className="grid w-full grid-cols-2 divide-[#E5EAEC] max-lg:gap-x-4 max-lg:gap-y-8 lg:grid-cols-4 lg:divide-x">
+      {children}
+    </div>
+  );
 }
 
 export function MetricCell({
@@ -229,19 +241,13 @@ export function MetricCell({
   index: number;
 }) {
   return (
-    <div
-      className={cn(
-        "flex flex-col gap-2 px-2 py-10 sm:px-12",
-        index < 2 && "border-b border-[#E5EAEC]",
-        index % 2 === 1 && "sm:border-l sm:border-[#E5EAEC]"
-      )}
-    >
+    <div className="flex flex-col items-center gap-2 px-2 py-2 text-center sm:px-4 lg:px-8 lg:py-4">
       <SplitFlapText
         text={value}
         startDelay={index * 180}
-        className="font-display text-[clamp(3rem,2.2rem+2.6vw,4.5rem)] font-semibold leading-none text-[#3A8093]"
+        className="font-display text-h3 font-semibold leading-none text-[#3A8093]"
       />
-      <p className="text-sm text-[#7E8C92]">{label}</p>
+      <p className="text-sm leading-relaxed text-[#7E8C92]">{label}</p>
     </div>
   );
 }

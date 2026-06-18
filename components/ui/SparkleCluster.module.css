@@ -1,0 +1,35 @@
+.cluster {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-color: currentColor;
+  -webkit-mask-image: url("/brand/sparkle-cluster.png");
+  mask-image: url("/brand/sparkle-cluster.png");
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+}
+
+.sizeSm {
+  width: 12px;
+  height: 12px;
+}
+
+.sizeMd {
+  width: 14px;
+  height: 14px;
+}
+
+.sizeLg {
+  width: 16px;
+  height: 16px;
+}
+
+.glow {
+  filter:
+    drop-shadow(0 0 3px rgba(24, 196, 217, 0.75))
+    drop-shadow(0 0 7px rgba(84, 185, 206, 0.4));
+}

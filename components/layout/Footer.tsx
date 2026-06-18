@@ -48,7 +48,7 @@ export function Footer() {
 
           {/* Col 2 — Explore */}
           <div className="flex flex-col gap-4">
-            <h3 className="font-mono text-kicker uppercase tracking-[0.22em] text-[#9FDCE8]">Explore</h3>
+            <h3 className="font-display text-kicker uppercase tracking-[0.22em] text-[#9FDCE8]">Explore</h3>
             <ul className="flex flex-col gap-2.5">
               {exploreLinks.map((l) => (
                 <li key={l.href}>
@@ -62,7 +62,7 @@ export function Footer() {
 
           {/* Col 3 — What we do */}
           <div className="flex flex-col gap-4">
-            <h3 className="font-mono text-kicker uppercase tracking-[0.22em] text-[#9FDCE8]">What we do</h3>
+            <h3 className="font-display text-kicker uppercase tracking-[0.22em] text-[#9FDCE8]">What we do</h3>
             <ul className="flex flex-col gap-2.5">
               {whatWeDoLinks.map((l) => (
                 <li key={l.label}>
@@ -76,7 +76,7 @@ export function Footer() {
 
           {/* Col 4 — Get in touch */}
           <div className="flex flex-col gap-4">
-            <h3 className="font-mono text-kicker uppercase tracking-[0.22em] text-[#9FDCE8]">Get in touch</h3>
+            <h3 className="font-display text-kicker uppercase tracking-[0.22em] text-[#9FDCE8]">Get in touch</h3>
             <address className="flex flex-col gap-2 text-sm not-italic text-white/80">
               <span>{SITE.address}</span>
               <a href={`mailto:${SITE.email}`} className="link-underline w-fit text-[#9FDCE8] hover:text-white">

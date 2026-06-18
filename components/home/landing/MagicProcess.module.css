@@ -36,93 +36,12 @@
   margin-top: clamp(2.5rem, 6vh, 4rem);
 }
 
-.grainRing {
-  position: relative;
-  display: grid;
-  place-items: center;
-  width: 4.75rem;
-  height: 4.75rem;
-  cursor: default;
-}
-
 .numberCircle {
   box-shadow: 0 0 0 6px rgba(227, 246, 250, 0.65);
-  transition:
-    box-shadow 0.35s ease,
-    border-color 0.35s ease,
-    transform 0.35s ease;
-}
-
-.grainRing:hover .numberCircle,
-.grainRing:focus-within .numberCircle {
-  border-color: rgba(159, 220, 232, 0.95);
-  transform: scale(1.05);
-  box-shadow:
-    0 0 0 6px rgba(84, 185, 206, 0.32),
-    0 0 16px rgba(84, 185, 206, 0.85),
-    0 0 32px rgba(33, 123, 142, 0.55),
-    0 0 48px rgba(24, 196, 217, 0.35);
-}
-
-.grainRing:hover .grainOrbitSlow {
-  animation: grain-orbit 14s linear infinite;
-}
-
-.grainRing:hover .grainOrbitFast {
-  animation: grain-orbit 9s linear infinite reverse;
-}
-
-.grainOrbit {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-}
-
-.grainOrbitSlow {
-  animation: grain-orbit 18s linear infinite;
-}
-
-.grainOrbitFast {
-  animation: grain-orbit 11s linear infinite reverse;
-}
-
-.grain {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  border-radius: 999px;
-  transform-origin: 0 0;
-}
-
-.grainDot {
-  background: #54b9ce;
-  box-shadow: 0 0 6px rgba(84, 185, 206, 0.55);
-}
-
-.grainSpeck {
-  background: #9cc8d2;
-  opacity: 0.65;
-}
-
-@keyframes grain-orbit {
-  to {
-    transform: rotate(360deg);
-  }
 }
 
 .lineGlow {
-  filter: drop-shadow(0 0 6px rgba(84, 185, 206, 0.65))
-    drop-shadow(0 0 14px rgba(33, 123, 142, 0.35));
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .grainOrbitSlow,
-  .grainOrbitFast {
-    animation: none;
-  }
-
-  .grainRing:hover .numberCircle,
-  .grainRing:focus-within .numberCircle {
-    transform: none;
-  }
+  filter: drop-shadow(0 0 4px rgba(204, 244, 246, 0.95))
+    drop-shadow(0 0 12px rgba(120, 226, 221, 0.75))
+    drop-shadow(0 0 24px rgba(84, 185, 206, 0.45));
 }

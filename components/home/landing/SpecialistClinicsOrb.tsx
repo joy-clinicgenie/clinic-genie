@@ -1,80 +1,26 @@
 "use client";
 
-import { useId, useState } from "react";
+import Link from "next/link";
+import { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import Orb from "@/components/Orb";
 import { MagneticButton } from "@/components/ui/MagneticButton";
+import { SparkleCluster } from "@/components/ui/SparkleCluster";
 import { cn } from "@/lib/cn";
+import { ease } from "@/lib/motion";
+import { SpecialistIcon } from "@/components/home/landing/SpecialistIcons";
+import { SPECIALTY_HUBS, getSpecialtyHubHref } from "@/lib/data/specialty-hubs";
 import styles from "./SpecialistClinicsOrb.module.css";
 
 export interface SpecialistSpot {
   id: string;
   name: string;
-  description: string;
+  highlight: string;
+  href: string;
   /** Position inside orb, 0–100% */
   x: number;
   y: number;
 }
-
-interface ClientTestimonial {
-  quote: string;
-  author: string;
-  clinic: string;
-}
-
-const CLIENT_TESTIMONIALS: Record<string, ClientTestimonial> = {
-  endocrinology: {
-    quote:
-      "Patients searching for thyroid and diabetes care now find us first. The strategy felt clinical, not salesy.",
-    author: "Medical Director",
-    clinic: "Cedar Endocrine Clinic",
-  },
-  cardiology: {
-    quote:
-      "Our cardiac clinic finally shows up where anxious patients are comparing specialists. Enquiries are warmer and better qualified.",
-    author: "Clinic Manager",
-    clinic: "Sunrise Heart Clinic",
-  },
-  dermatology: {
-    quote: "Our website finally feels as considered as our care. Patients notice.",
-    author: "Medical Director",
-    clinic: "The Aesthetics Clinic",
-  },
-  dental: {
-    quote: "For the first time, I know exactly what every marketing dollar brings back.",
-    author: "Principal Dentist",
-    clinic: "Lumière Dental",
-  },
-  ophthalmology: {
-    quote:
-      "LASIK and retina patients compare clinics closely online. Clinic Genie helped us look trustworthy before the first consult.",
-    author: "Founder",
-    clinic: "Straits Eye Centre",
-  },
-  paediatrics: {
-    quote:
-      "Parents need reassurance fast. Our content and search presence now answer their questions before they call.",
-    author: "Practice Lead",
-    clinic: "Clementi Family & Aesthetic Clinic",
-  },
-  acne: {
-    quote:
-      "Clinic Genie made us look like we'd been around for years — in months. The bookings speak for themselves.",
-    author: "Founder",
-    clinic: "The Acne Clinic",
-  },
-  neurology: {
-    quote:
-      "Patients arrive already informed and confident. That changes the whole consultation.",
-    author: "Consultant Surgeon",
-    clinic: "Orchard Orthopaedics",
-  },
-  "aquatic-physio": {
-    quote:
-      "A niche rehab specialty needs clear positioning. We now rank for the searches that actually convert.",
-    author: "Clinical Director",
-    clinic: "Aquatic Physiotherapy Centre",
-  },
-};
 
 const GOLDEN_RAD = (137.508 * Math.PI) / 180;
 
@@ -90,76 +36,17 @@ function specialistPosition(index: number, total: number): { x: number; y: numbe
   };
 }
 
-const SPECIALIST_DATA: Omit<SpecialistSpot, "x" | "y">[] = [
-  {
-    id: "endocrinology",
-    name: "Endocrinology",
-    description: "For diabetes, thyroid, hormonal, and metabolic care clinics.",
-  },
-  {
-    id: "cardiology",
-    name: "Cardiology",
-    description: "For heart specialists and cardiac clinics.",
-  },
-  {
-    id: "dermatology",
-    name: "Aesthetic and Dermatology",
-    description: "For skin, aesthetic, laser, and procedure-led clinics.",
-  },
-  {
-    id: "dental",
-    name: "Dental and Orthodontics",
-    description: "For dental, implant, oral surgery, and orthodontic practices.",
-  },
-  {
-    id: "ophthalmology",
-    name: "Ophthalmology",
-    description: "For eye care, LASIK, and retina clinics where patients compare specialists closely.",
-  },
-  {
-    id: "paediatrics",
-    name: "Paediatrics",
-    description: "For children's clinics and parent-focused care.",
-  },
-  {
-    id: "acne",
-    name: "Acne Specialist",
-    description: "For acne-focused clinics and skin confidence journeys.",
-  },
-  {
-    id: "neurology",
-    name: "Neurology and Neurosurgery",
-    description: "For brain, spine, nerve, and pain-related specialist care.",
-  },
-  {
-    id: "aquatic-physio",
-    name: "Aquatic Physiotherapy",
-    description: "For aquatic physiotherapy and rehabilitation clinics.",
-  },
-];
+const SPECIALIST_DATA: Omit<SpecialistSpot, "x" | "y">[] = SPECIALTY_HUBS.map((hub) => ({
+  id: hub.id,
+  name: hub.name,
+  highlight: hub.highlight,
+  href: getSpecialtyHubHref(hub),
+}));
 
 const SPECIALISTS: SpecialistSpot[] = SPECIALIST_DATA.map((specialist, index) => ({
   ...specialist,
   ...specialistPosition(index, SPECIALIST_DATA.length),
 }));
-
-function SparkleCluster({ className }: { className?: string }) {
-  return <span className={cn(styles.sparkleCluster, className)} aria-hidden="true" />;
-}
-
-function getTestimonialAnchor(x: number, y: number) {
-  const dx = x - 50;
-  const dy = y - 50;
-  const length = Math.hypot(dx, dy) || 1;
-  const nx = dx / length;
-  const ny = dy / length;
-  return {
-    left: `${x}%`,
-    top: `${y}%`,
-    ["--offset-x" as string]: `${nx * 6.5}rem`,
-    ["--offset-y" as string]: `${ny * 6.5}rem`,
-  };
-}
 
 /** Seeded ambient sparkles — dimmer, non-interactive, drift inside inner orb */
 const AMBIENT_SPARKLES = Array.from({ length: 28 }, (_, i) => {
@@ -177,140 +64,142 @@ const AMBIENT_SPARKLES = Array.from({ length: 28 }, (_, i) => {
   };
 });
 
+function getHighlightPlacement(x: number, y: number) {
+  if (y < 44) return styles.highlightBelow;
+  if (y > 56) return styles.highlightAbove;
+  if (x < 44) return styles.highlightRight;
+  if (x > 56) return styles.highlightLeft;
+  return styles.highlightBelow;
+}
+
 export function SpecialistClinicsOrb() {
-  const [activeId, setActiveId] = useState<string>(SPECIALISTS[0].id);
-  const [orbHovered, setOrbHovered] = useState(false);
-  const testimonialId = useId();
-  const activeSpecialist = SPECIALISTS.find((specialist) => specialist.id === activeId) ?? SPECIALISTS[0];
-  const activeTestimonial = CLIENT_TESTIMONIALS[activeId];
-  const testimonialAnchor = getTestimonialAnchor(activeSpecialist.x, activeSpecialist.y);
+  const [orbActiveId, setOrbActiveId] = useState<string | null>(null);
 
   return (
     <div className={styles.wrap}>
-      <div className={styles.orbRow}>
-        <div
-          className={styles.orbShell}
-          onMouseEnter={() => setOrbHovered(true)}
-          onMouseLeave={() => setOrbHovered(false)}
-          onBlur={(event) => {
-            if (!event.currentTarget.contains(event.relatedTarget as Node | null)) {
-              setOrbHovered(false);
-            }
-          }}
-        >
-        <div className={cn(styles.orbVisual, "motion-safe:animate-orb-bob")} aria-hidden="true">
-          <Orb
-            hue={0}
-            hoverIntensity={0}
-            rotateOnHover={false}
-            forceHoverState={false}
-            backgroundColor="transparent"
-          />
-          <div className={styles.sparkLayer}>
-            {AMBIENT_SPARKLES.map((spark) => (
-              <span
-                key={spark.id}
-                className={cn(styles.sparkOrbit, spark.reverse && styles.sparkOrbitReverse)}
-                style={{
-                  ["--orbit-start" as string]: spark.startAngle,
-                  ["--orbit-r" as string]: spark.orbitRadius,
-                  animationDuration: spark.duration,
-                  animationDelay: spark.delay,
-                }}
-              >
+      <div className={styles.orbCenter}>
+        <div className={styles.orbShell}>
+          <div className={cn(styles.orbVisual, "motion-safe:animate-orb-bob")} aria-hidden="true">
+            <Orb
+              hue={0}
+              hoverIntensity={0}
+              rotateOnHover={false}
+              forceHoverState={false}
+              backgroundColor="transparent"
+            />
+            <div className={styles.sparkLayer}>
+              {AMBIENT_SPARKLES.map((spark) => (
                 <span
-                  className={cn(styles.sparkDim, styles.sparkleCluster)}
+                  key={spark.id}
+                  className={cn(styles.sparkOrbit, spark.reverse && styles.sparkOrbitReverse)}
                   style={{
-                    width: spark.size,
-                    height: spark.size,
-                    animationDelay: spark.twinkleDelay,
+                    ["--orbit-start" as string]: spark.startAngle,
+                    ["--orbit-r" as string]: spark.orbitRadius,
+                    animationDuration: spark.duration,
+                    animationDelay: spark.delay,
                   }}
-                />
-              </span>
-            ))}
+                >
+                  <span
+                    className={styles.sparkDim}
+                    style={{
+                      width: spark.size,
+                      height: spark.size,
+                      animationDelay: spark.twinkleDelay,
+                    }}
+                  >
+                    <SparkleCluster glow className="h-full w-full text-[#78e2dd]" />
+                  </span>
+                </span>
+              ))}
+            </div>
+          </div>
+
+          <div
+            className={styles.hotspots}
+            role="presentation"
+            onMouseLeave={() => setOrbActiveId(null)}
+            onBlur={(e) => {
+              if (!e.currentTarget.contains(e.relatedTarget as Node)) {
+                setOrbActiveId(null);
+              }
+            }}
+          >
+            {SPECIALISTS.map((specialist) => {
+              const isActive = orbActiveId === specialist.id;
+              return (
+                <div
+                  key={specialist.id}
+                  className={styles.hotspotWrap}
+                  style={{ left: `${specialist.x}%`, top: `${specialist.y}%` }}
+                >
+                  <button
+                    type="button"
+                    className={cn(styles.hotspot, isActive && styles.hotspotActive)}
+                    aria-pressed={isActive}
+                    onMouseEnter={() => setOrbActiveId(specialist.id)}
+                    onFocus={() => setOrbActiveId(specialist.id)}
+                  >
+                    {isActive ? (
+                      <span className={styles.hotspotIcon}>
+                        <SpecialistIcon id={specialist.id} className="h-5 w-5" />
+                      </span>
+                    ) : (
+                      <span className={styles.hotspotSparkle}>
+                        <SparkleCluster glow className="h-full w-full" />
+                      </span>
+                    )}
+                    <span className={styles.hotspotGlow} aria-hidden="true" />
+                    <span className="sr-only">
+                      {specialist.name}. {specialist.highlight}
+                    </span>
+                  </button>
+                  <AnimatePresence initial={false}>
+                    {isActive && (
+                      <motion.span
+                        key="highlight"
+                        className={cn(
+                          styles.hotspotHighlightWrap,
+                          getHighlightPlacement(specialist.x, specialist.y),
+                        )}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0, transition: { duration: 0.18, ease: ease.outSoft } }}
+                        transition={{ duration: 0.2, ease: ease.glide }}
+                      >
+                        <span className={styles.hotspotHighlight}>{specialist.highlight}</span>
+                      </motion.span>
+                    )}
+                  </AnimatePresence>
+                </div>
+              );
+            })}
           </div>
         </div>
-
-        <div className={styles.hotspots} role="presentation">
-          {SPECIALISTS.map((specialist) => {
-            const isActive = activeId === specialist.id;
-            return (
-              <div
-                key={specialist.id}
-                className={styles.hotspotWrap}
-                style={{ left: `${specialist.x}%`, top: `${specialist.y}%` }}
-              >
-                <button
-                  type="button"
-                  className={cn(styles.hotspot, isActive && styles.hotspotActive)}
-                  aria-expanded={isActive}
-                  aria-describedby={orbHovered ? testimonialId : undefined}
-                  onMouseEnter={() => setActiveId(specialist.id)}
-                  onFocus={() => {
-                    setOrbHovered(true);
-                    setActiveId(specialist.id);
-                  }}
-                >
-                  <span className={styles.hotspotSparkle}>
-                    <SparkleCluster />
-                  </span>
-                  <span className={styles.hotspotGlow} aria-hidden="true" />
-                  <span className="sr-only">{specialist.name}</span>
-                </button>
-              </div>
-            );
-          })}
-        </div>
-
-        {orbHovered && (
-          <aside
-            id={testimonialId}
-            className={cn(styles.testimonialPanel, styles.testimonialPanelOpen)}
-            style={testimonialAnchor}
-            aria-live="polite"
-            aria-atomic="true"
-          >
-            <blockquote className={styles.testimonialQuote}>
-              <p>&ldquo;{activeTestimonial.quote}&rdquo;</p>
-            </blockquote>
-            <footer className={styles.testimonialMeta}>
-              <cite className={styles.testimonialAuthor}>{activeTestimonial.author}</cite>
-              <span className={styles.testimonialClinic}>{activeTestimonial.clinic}</span>
-            </footer>
-          </aside>
-        )}
       </div>
 
-      <aside className={cn(styles.specialistPanel, styles.specialistPanelRevealed)} aria-label="Specialist clinic categories">
-        <ul className={styles.specialistList}>
-          {SPECIALISTS.map((specialist) => {
-            const isActive = activeId === specialist.id;
-            return (
-              <li key={specialist.id}>
-                <button
-                  type="button"
-                  className={cn(styles.specialistItem, isActive && styles.specialistItemActive)}
-                  onMouseEnter={() => setActiveId(specialist.id)}
-                  onFocus={() => setActiveId(specialist.id)}
-                >
-                  <span className={styles.specialistSparkle}>
-                    <SparkleCluster />
-                  </span>
-                  <span className={styles.specialistCopy}>
-                    <span className={styles.specialistName}>{specialist.name}</span>
-                    <span className={styles.specialistDesc}>{specialist.description}</span>
-                  </span>
-                </button>
-              </li>
-            );
-          })}
-        </ul>
-      </aside>
+      <div className={styles.specialistGrid} aria-label="Specialist clinic categories">
+        {SPECIALISTS.map((specialist) => (
+          <Link
+            key={specialist.id}
+            href={specialist.href}
+            className={cn(
+              styles.specialistBox,
+              orbActiveId === specialist.id && styles.specialistBoxActive,
+            )}
+          >
+            <span className={styles.specialistIconWell} aria-hidden="true">
+              <SpecialistIcon id={specialist.id} />
+            </span>
+            <span className={styles.specialistName}>{specialist.name}</span>
+          </Link>
+        ))}
       </div>
 
       <div className={styles.ctaBlock}>
         <p className={styles.ctaNote}>
-          Your specialty not listed? The magic still works. If patients search for it, we can help them find you.
+          Your specialty not listed? The magic still works.
+          <br />
+          If patients search for it, we can help them find you.
         </p>
         <MagneticButton href="/portfolio" size="lg" withMiniOrb className={styles.cta}>
           See Our Granted Wishes

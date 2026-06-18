@@ -139,7 +139,7 @@ export default function MeetUsPage() {
             {VALUES.map((value, i) => (
               <RevealItem key={value.title} className="h-full">
                 <GlassCard tone="dark" radius="2xl" className="flex h-full flex-col gap-4 p-7">
-                  <span className="font-mono text-kicker uppercase tracking-[0.18em] text-genie-300">
+                  <span className="font-display text-kicker uppercase tracking-[0.18em] text-genie-300">
                     {String(i + 1).padStart(2, "0")}
                   </span>
                   <h3 className="font-display text-h3 text-onDark">{value.title}</h3>

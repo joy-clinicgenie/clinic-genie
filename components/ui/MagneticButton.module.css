@@ -1,0 +1,91 @@
+.magicButton {
+  overflow: visible;
+}
+
+.magicWord {
+  transition: color var(--dur-ui) var(--ease-out-soft);
+}
+
+.magicButton:global(.group:hover) .magicWord,
+.magicButton:global(.group:focus-visible) .magicWord {
+  color: #78e2dd;
+}
+
+.buttonSparkles {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  pointer-events: none;
+}
+
+.buttonSparkle {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+}
+
+.group:hover .buttonSparkle,
+.group:focus-visible .buttonSparkle {
+  animation: magic-button-sparkle-blink 2.8s ease-in-out infinite;
+}
+
+.group:hover .buttonSparkle:nth-child(1),
+.group:focus-visible .buttonSparkle:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.group:hover .buttonSparkle:nth-child(2),
+.group:focus-visible .buttonSparkle:nth-child(2) {
+  animation-delay: 0.35s;
+}
+
+.group:hover .buttonSparkle:nth-child(3),
+.group:focus-visible .buttonSparkle:nth-child(3) {
+  animation-delay: 0.7s;
+}
+
+.group:hover .buttonSparkle:nth-child(4),
+.group:focus-visible .buttonSparkle:nth-child(4) {
+  animation-delay: 1.05s;
+}
+
+.group:hover .buttonSparkle:nth-child(5),
+.group:focus-visible .buttonSparkle:nth-child(5) {
+  animation-delay: 1.4s;
+}
+
+.group:hover .buttonSparkle:nth-child(6),
+.group:focus-visible .buttonSparkle:nth-child(6) {
+  animation-delay: 1.75s;
+}
+
+.group:hover .buttonSparkle:nth-child(7),
+.group:focus-visible .buttonSparkle:nth-child(7) {
+  animation-delay: 2.1s;
+}
+
+.group:hover .buttonSparkle:nth-child(8),
+.group:focus-visible .buttonSparkle:nth-child(8) {
+  animation-delay: 2.45s;
+}
+
+@keyframes magic-button-sparkle-blink {
+  0%,
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.75);
+  }
+  50% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .group:hover .buttonSparkle,
+  .group:focus-visible .buttonSparkle {
+    animation: none;
+    opacity: 0.55;
+    transform: translate(-50%, -50%);
+  }
+}

@@ -17,6 +17,7 @@ export function LenisProvider({ children }: { children: React.ReactNode }) {
       smoothWheel: true,
       wheelMultiplier: 1,
       touchMultiplier: 1.5,
+      prevent: (node) => node instanceof Element && node.closest("[data-lenis-prevent-wheel]") !== null,
     });
 
     let raf = 0;

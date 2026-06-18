@@ -2,8 +2,9 @@
 
 import { useState } from "react";
 import { MagneticButton } from "@/components/ui/MagneticButton";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { cn } from "@/lib/cn";
+import { ease } from "@/lib/motion";
 import { useOrbStore } from "@/components/orb/store";
 
 interface Wish {
@@ -68,6 +69,7 @@ const FALLBACK: Wish = {
 };
 
 const CHIPS = ["More patients", "Rank #1 on Google", "A new website", "Trust & compliance"];
+const PLACEHOLDER = "What's your clinic's wish?";
 
 function resolveWish(input: string): Wish {
   const q = input.toLowerCase();
@@ -87,18 +89,24 @@ export function MakeAWish({
   submitLabel = "Ask",
   className,
   chipLayout = "wrap",
+  showChips = true,
 }: {
   tone?: "dark" | "light";
   submitLabel?: string;
   className?: string;
   chipLayout?: "wrap" | "grid";
+  showChips?: boolean;
 }) {
   const [value, setValue] = useState("");
+  const [focused, setFocused] = useState(false);
+  const [hovered, setHovered] = useState(false);
   const [answer, setAnswer] = useState<Wish | null>(null);
   const [thinking, setThinking] = useState(false);
+  const reduceMotion = useReducedMotion();
   const setScene = useOrbStore((s) => s.setScene);
   const burst = useOrbStore((s) => s.burst);
   const isLight = tone === "light";
+  const showSparkle = hovered || focused;
 
   const ask = (text: string) => {
     if (!text.trim()) return;
@@ -126,51 +134,104 @@ export function MakeAWish({
           e.preventDefault();
           ask(value);
         }}
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
         className={cn(
-          "flex items-center gap-2 rounded-pill p-1.5 pl-4",
+          "group flex items-center gap-0 overflow-hidden rounded-pill p-2 pl-5 transition-[gap] duration-200 hover:gap-2 focus-within:gap-2",
           isLight
             ? "border border-[#E6EEF1] bg-white shadow-sm"
             : "glass pl-5"
         )}
       >
-        <StarIcon className={isLight ? "shrink-0 text-[#54B9CE]" : "text-genie-300"} />
-        <input
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
-          placeholder="Tell the orb what your clinic needs…"
-          aria-label="Tell the orb what your clinic needs"
-          className={cn(
-            "min-w-0 flex-1 bg-transparent py-2 text-sm focus:outline-none",
-            isLight
-              ? "text-ink-900 placeholder:text-[#A8B4B8]"
-              : "text-onDark placeholder:text-onDark-faint"
-          )}
-        />
-        <MagneticButton type="submit" size="sm" withMiniOrb className="shrink-0">
+        <div className="shrink-0 overflow-hidden">
+          <AnimatePresence initial={false}>
+            {showSparkle && (
+              <motion.span
+                key="sparkle"
+                aria-hidden="true"
+                className="block"
+                initial={
+                  reduceMotion
+                    ? false
+                    : { opacity: 0, x: -18, clipPath: "inset(0 100% 0 0)", filter: "blur(6px)" }
+                }
+                animate={{ opacity: 1, x: 0, clipPath: "inset(0 0% 0 0)", filter: "blur(0px)" }}
+                exit={{
+                  opacity: 0,
+                  x: -12,
+                  clipPath: "inset(0 100% 0 0)",
+                  filter: "blur(4px)",
+                  transition: { duration: 0.28, ease: ease.outSoft },
+                }}
+                transition={{ duration: 0.45, ease: ease.glide }}
+              >
+                <StarIcon className={cn(isLight ? "text-[#54B9CE]" : "text-genie-300")} />
+              </motion.span>
+            )}
+          </AnimatePresence>
+        </div>
+        <div className="relative min-w-0 flex-1">
+          <AnimatePresence>
+            {!value && !focused && (
+              <motion.span
+                key="placeholder"
+                aria-hidden="true"
+                className={cn(
+                  "pointer-events-none absolute inset-y-0 left-0 flex items-center truncate py-2.5 text-[0.9375rem]",
+                  isLight ? "text-[#A8B4B8]" : "text-onDark-faint"
+                )}
+                initial={
+                  reduceMotion
+                    ? false
+                    : { opacity: 0, x: -22, clipPath: "inset(0 100% 0 0)", filter: "blur(4px)" }
+                }
+                animate={{ opacity: 1, x: 0, clipPath: "inset(0 0% 0 0)", filter: "blur(0px)" }}
+                exit={{ opacity: 0, x: -10, transition: { duration: 0.2, ease: ease.outSoft } }}
+                transition={{ duration: 0.7, ease: ease.glide, delay: 0.28 }}
+              >
+                {PLACEHOLDER}
+              </motion.span>
+            )}
+          </AnimatePresence>
+          <input
+            value={value}
+            onChange={(e) => setValue(e.target.value)}
+            onFocus={() => setFocused(true)}
+            onBlur={() => setFocused(false)}
+            aria-label={PLACEHOLDER}
+            className={cn(
+              "w-full min-w-0 bg-transparent py-2.5 text-[0.9375rem] focus:outline-none",
+              isLight ? "text-ink-900" : "text-onDark"
+            )}
+          />
+        </div>
+        <MagneticButton type="submit" size="md" withMiniOrb className="shrink-0">
           {submitLabel}
         </MagneticButton>
       </form>
 
-      <div className={cn(chipLayout === "grid" ? "grid grid-cols-2 gap-2" : "flex flex-wrap gap-2")}>
-        {CHIPS.map((chip) => (
-          <button
-            key={chip}
-            type="button"
-            onClick={() => {
-              setValue(chip);
-              ask(chip);
-            }}
-            className={cn(
-              "rounded-pill px-3.5 py-2 text-xs transition-colors",
-              isLight
-                ? "border border-[#E6EEF1] bg-white text-[#395D66] hover:border-[#54B9CE]/50 hover:text-[#217B8E]"
-                : "border border-white/15 bg-white/5 text-onDark-muted hover:border-genie-400/50 hover:text-onDark"
-            )}
-          >
-            {chip}
-          </button>
-        ))}
-      </div>
+      {showChips && (
+        <div className={cn(chipLayout === "grid" ? "grid grid-cols-2 gap-2" : "flex flex-wrap gap-2")}>
+          {CHIPS.map((chip) => (
+            <button
+              key={chip}
+              type="button"
+              onClick={() => {
+                setValue(chip);
+                ask(chip);
+              }}
+              className={cn(
+                "rounded-pill px-3.5 py-2 text-xs transition-colors",
+                isLight
+                  ? "border border-[#E6EEF1] bg-white text-[#395D66] hover:border-[#54B9CE]/50 hover:text-[#217B8E]"
+                  : "border border-white/15 bg-white/5 text-onDark-muted hover:border-genie-400/50 hover:text-onDark"
+              )}
+            >
+              {chip}
+            </button>
+          ))}
+        </div>
+      )}
 
       <div role="status" aria-live="polite">
         <AnimatePresence mode="wait">
