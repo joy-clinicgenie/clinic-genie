@@ -90,12 +90,14 @@ export function MakeAWish({
   className,
   chipLayout = "wrap",
   showChips = true,
+  layout = "inline",
 }: {
   tone?: "dark" | "light";
   submitLabel?: string;
   className?: string;
   chipLayout?: "wrap" | "grid";
   showChips?: boolean;
+  layout?: "inline" | "stacked";
 }) {
   const [value, setValue] = useState("");
   const [focused, setFocused] = useState(false);
@@ -106,7 +108,100 @@ export function MakeAWish({
   const setScene = useOrbStore((s) => s.setScene);
   const burst = useOrbStore((s) => s.burst);
   const isLight = tone === "light";
-  const showSparkle = hovered || focused;
+  const isStacked = layout === "stacked";
+  const showSparkleIcon = isStacked || hovered || focused;
+
+  const fieldShellClass = cn(
+    "group flex w-full min-w-0 items-center gap-0 overflow-hidden rounded-pill transition-[gap,box-shadow,border-color] duration-200 hover:gap-2 focus-within:gap-2",
+    isStacked ? "gap-1.5 py-2 pl-3 pr-3" : "p-2 pl-5",
+    isLight
+      ? cn(
+          "glass-light focus-within:border-[#54B9CE]/45",
+          !isStacked && "shadow-glass-light"
+        )
+      : "glass pl-5"
+  );
+
+  const inputBlock = (
+    <>
+      <div className="shrink-0 overflow-hidden">
+        <AnimatePresence initial={false}>
+          {showSparkleIcon && (
+            <motion.span
+              key="sparkle"
+              aria-hidden="true"
+              className="block"
+              initial={
+                reduceMotion
+                  ? false
+                  : { opacity: 0, x: -18, clipPath: "inset(0 100% 0 0)", filter: "blur(6px)" }
+              }
+              animate={{ opacity: 1, x: 0, clipPath: "inset(0 0% 0 0)", filter: "blur(0px)" }}
+              exit={{
+                opacity: 0,
+                x: -12,
+                clipPath: "inset(0 100% 0 0)",
+                filter: "blur(4px)",
+                transition: { duration: 0.28, ease: ease.outSoft },
+              }}
+              transition={{ duration: 0.45, ease: ease.glide }}
+            >
+              <StarIcon className={cn(isLight ? "text-[#54B9CE]" : "text-genie-300")} />
+            </motion.span>
+          )}
+        </AnimatePresence>
+      </div>
+      <div className="relative min-w-0 flex-1">
+        <AnimatePresence>
+          {!value && !focused && (
+            <motion.span
+              key="placeholder"
+              aria-hidden="true"
+              className={cn(
+                "pointer-events-none absolute inset-y-0 left-0 flex items-center py-2 text-[0.8125rem]",
+                isStacked ? "whitespace-nowrap pr-1" : "truncate py-2.5 text-[0.9375rem]",
+                isLight ? "text-[#A8B4B8]" : "text-onDark-faint"
+              )}
+              initial={
+                reduceMotion
+                  ? false
+                  : { opacity: 0, x: -22, clipPath: "inset(0 100% 0 0)", filter: "blur(4px)" }
+              }
+              animate={{ opacity: 1, x: 0, clipPath: "inset(0 0% 0 0)", filter: "blur(0px)" }}
+              exit={{ opacity: 0, x: -10, transition: { duration: 0.2, ease: ease.outSoft } }}
+              transition={{ duration: 0.7, ease: ease.glide, delay: 0.28 }}
+            >
+              {PLACEHOLDER}
+            </motion.span>
+          )}
+        </AnimatePresence>
+        <input
+          value={value}
+          onChange={(e) => setValue(e.target.value)}
+          onFocus={() => setFocused(true)}
+          onBlur={() => setFocused(false)}
+          aria-label={PLACEHOLDER}
+          className={cn(
+            "w-full min-w-0 bg-transparent focus:outline-none",
+            isStacked ? "py-2 text-[0.8125rem]" : "py-2.5 text-[0.9375rem]",
+            isLight ? "text-ink-900" : "text-onDark"
+          )}
+        />
+      </div>
+    </>
+  );
+
+  const submitButton = (
+    <MagneticButton
+      type="submit"
+      size={isStacked ? "sm" : "md"}
+      withMiniOrb
+      className={cn(isStacked && "wishSubmit shrink-0", !isStacked && "shrink-0")}
+      magnetic={!isStacked}
+    >
+      {submitLabel}
+    </MagneticButton>
+  );
 
   const ask = (text: string) => {
     if (!text.trim()) return;
@@ -128,7 +223,7 @@ export function MakeAWish({
   };
 
   return (
-    <div className={cn("flex w-full flex-col gap-3", className)}>
+    <div className={cn("flex w-full min-w-0 flex-col", isStacked ? "gap-0" : "gap-3", className)}>
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -137,77 +232,20 @@ export function MakeAWish({
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
         className={cn(
-          "group flex items-center gap-0 overflow-hidden rounded-pill p-2 pl-5 transition-[gap,box-shadow,border-color] duration-200 hover:gap-2 focus-within:gap-2",
-          isLight
-            ? "glass-light shadow-glass-light focus-within:border-[#54B9CE]/45"
-            : "glass pl-5"
+          isStacked ? "flex w-full flex-col items-center gap-2.5" : fieldShellClass
         )}
       >
-        <div className="shrink-0 overflow-hidden">
-          <AnimatePresence initial={false}>
-            {showSparkle && (
-              <motion.span
-                key="sparkle"
-                aria-hidden="true"
-                className="block"
-                initial={
-                  reduceMotion
-                    ? false
-                    : { opacity: 0, x: -18, clipPath: "inset(0 100% 0 0)", filter: "blur(6px)" }
-                }
-                animate={{ opacity: 1, x: 0, clipPath: "inset(0 0% 0 0)", filter: "blur(0px)" }}
-                exit={{
-                  opacity: 0,
-                  x: -12,
-                  clipPath: "inset(0 100% 0 0)",
-                  filter: "blur(4px)",
-                  transition: { duration: 0.28, ease: ease.outSoft },
-                }}
-                transition={{ duration: 0.45, ease: ease.glide }}
-              >
-                <StarIcon className={cn(isLight ? "text-[#54B9CE]" : "text-genie-300")} />
-              </motion.span>
-            )}
-          </AnimatePresence>
-        </div>
-        <div className="relative min-w-0 flex-1">
-          <AnimatePresence>
-            {!value && !focused && (
-              <motion.span
-                key="placeholder"
-                aria-hidden="true"
-                className={cn(
-                  "pointer-events-none absolute inset-y-0 left-0 flex items-center truncate py-2.5 text-[0.9375rem]",
-                  isLight ? "text-[#A8B4B8]" : "text-onDark-faint"
-                )}
-                initial={
-                  reduceMotion
-                    ? false
-                    : { opacity: 0, x: -22, clipPath: "inset(0 100% 0 0)", filter: "blur(4px)" }
-                }
-                animate={{ opacity: 1, x: 0, clipPath: "inset(0 0% 0 0)", filter: "blur(0px)" }}
-                exit={{ opacity: 0, x: -10, transition: { duration: 0.2, ease: ease.outSoft } }}
-                transition={{ duration: 0.7, ease: ease.glide, delay: 0.28 }}
-              >
-                {PLACEHOLDER}
-              </motion.span>
-            )}
-          </AnimatePresence>
-          <input
-            value={value}
-            onChange={(e) => setValue(e.target.value)}
-            onFocus={() => setFocused(true)}
-            onBlur={() => setFocused(false)}
-            aria-label={PLACEHOLDER}
-            className={cn(
-              "w-full min-w-0 bg-transparent py-2.5 text-[0.9375rem] focus:outline-none",
-              isLight ? "text-ink-900" : "text-onDark"
-            )}
-          />
-        </div>
-        <MagneticButton type="submit" size="md" withMiniOrb className="shrink-0">
-          {submitLabel}
-        </MagneticButton>
+        {isStacked ? (
+          <>
+            <div className={cn(fieldShellClass, "wishField")}>{inputBlock}</div>
+            {submitButton}
+          </>
+        ) : (
+          <>
+            {inputBlock}
+            {submitButton}
+          </>
+        )}
       </form>
 
       {showChips && (

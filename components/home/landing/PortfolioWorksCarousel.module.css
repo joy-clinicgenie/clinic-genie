@@ -1,8 +1,8 @@
 .viewport {
   position: relative;
   z-index: 1;
-  width: 100vw;
-  margin-left: calc(50% - 50vw);
+  width: 100dvw;
+  margin-left: calc(50% - 50dvw);
   overflow: hidden;
   -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 14%, #000 86%, transparent 100%);
   mask-image: linear-gradient(to right, transparent 0%, #000 14%, #000 86%, transparent 100%);
@@ -153,8 +153,8 @@
   isolation: isolate;
   display: flex;
   flex-direction: column;
-  width: 100vw;
-  margin-left: calc(50% - 50vw);
+  width: 100dvw;
+  margin-left: calc(50% - 50dvw);
   margin-top: clamp(-4rem, -8vh, -2.5rem);
   min-height: 100vh;
   min-height: 100svh;
@@ -254,9 +254,9 @@
   left: 50%;
   top: calc(1rem + var(--carousel-card-width) * 2 / 3);
   z-index: 0;
-  width: 100vw;
+  width: 100%;
   aspect-ratio: 543 / 321;
-  transform: translate(-50%, -50%) scale(1.03);
+  transform: translate(-50%, -50%);
   pointer-events: none;
   filter: blur(16px);
   -webkit-mask-image: linear-gradient(
@@ -432,6 +432,24 @@
     --carousel-card-width: 13.75rem;
     --carousel-gap: -24px;
   }
+
+  .band {
+    min-height: auto;
+    padding-top: clamp(4.5rem, 12vh, 6.5rem);
+    padding-bottom: clamp(1.5rem, 4vh, 2rem);
+  }
+
+  .carouselShell {
+    overflow: hidden;
+  }
+
+  .controlsBlock {
+    gap: 1.25rem;
+  }
+
+  .intro {
+    padding-inline: clamp(1rem, 4vw, 1.5rem);
+  }
 }
 
 @media (min-width: 768px) {
@@ -440,6 +458,10 @@
   .carouselShell {
     --carousel-card-width: 17.5rem;
     --carousel-gap: -24px;
+  }
+
+  .carouselReflection {
+    transform: translate(-50%, -50%) scale(1.03);
   }
 }
 

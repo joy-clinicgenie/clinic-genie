@@ -39,14 +39,22 @@ export function Nav() {
 
   return (
     <>
-      <header className="fixed inset-x-0 top-0 z-50 flex justify-center px-[var(--page-pad)] pt-3 sm:pt-4">
+      <header className="fixed inset-x-0 top-0 z-50 lg:flex lg:justify-center lg:px-[var(--page-pad)] lg:pt-4">
         <motion.nav
           className={cn(
-            "flex w-full max-w-wide items-center justify-between gap-4 rounded-pill border px-5 py-3 transition-all duration-ui sm:px-6",
-            light ? "border-ink-900/10" : "border-white/10",
+            "flex w-full items-center justify-between gap-3 transition-all duration-ui",
+            "px-[var(--page-pad)] py-2.5 pt-[calc(0.625rem+env(safe-area-inset-top,0px))]",
+            /* Mobile — no background or border */
+            "max-lg:border-transparent max-lg:bg-transparent max-lg:shadow-none",
+            /* Desktop — floating glass pill */
+            "lg:max-w-wide lg:gap-4 lg:rounded-pill lg:border lg:px-6 lg:py-3 lg:pt-3",
             scrolled
-              ? light ? "glass-light shadow-glass-light" : "glass shadow-glass-dark"
-              : light ? "border border-ink-900/8 bg-white/55 shadow-glass-light backdrop-blur-glass-light" : "border border-white/10 bg-white/5 backdrop-blur-glass"
+              ? light
+                ? "lg:glass-light lg:border-ink-900/10 lg:shadow-glass-light"
+                : "lg:glass lg:border-white/10 lg:shadow-glass-dark"
+              : light
+                ? "lg:border lg:border-ink-900/8 lg:bg-white/55 lg:shadow-glass-light lg:backdrop-blur-glass-light"
+                : "lg:border lg:border-white/10 lg:bg-white/5 lg:backdrop-blur-glass"
           )}
         >
           <Logo tone={light ? "light" : "dark"} />

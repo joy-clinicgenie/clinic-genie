@@ -56,7 +56,7 @@ export function PageFinaleCTA({
         </Reveal>
         {footnote && (
           <Reveal delay={0.3}>
-            <p className="mx-auto max-w-[75%] text-sm text-[#8FB7C2]">{footnote}</p>
+            <p className="mx-auto max-w-full text-sm text-[#8FB7C2] sm:max-w-[75%]">{footnote}</p>
           </Reveal>
         )}
       </div>

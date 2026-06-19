@@ -260,7 +260,7 @@ export default function HomePage() {
               </div>
             </Reveal>
             <Reveal delay={0.3}>
-              <p className="mx-auto max-w-[75%] text-sm text-[#8FB7C2]">No vague wishes. No confusing jargon. Just a clearer path to responsible clinic growth.</p>
+              <p className="mx-auto max-w-full text-sm text-[#8FB7C2] sm:max-w-[75%]">No vague wishes. No confusing jargon. Just a clearer path to responsible clinic growth.</p>
             </Reveal>
           </div>
         </section>

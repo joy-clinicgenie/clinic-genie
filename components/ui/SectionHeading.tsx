@@ -71,7 +71,7 @@ export function SectionHeading({
         <Reveal variant="up" delay={0.12}>
           <p
             className={cn(
-              "text-lead max-w-[75%] text-pretty",
+              "text-lead max-w-full sm:max-w-[75%] text-pretty",
               tone === "dark" ? "text-onDark-muted" : "text-ink-700",
               align === "center" && "mx-auto"
             )}

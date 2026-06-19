@@ -1,0 +1,153 @@
+.heroGrid {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  min-width: 0;
+  gap: 0;
+  text-align: center;
+}
+
+.heroContent {
+  align-items: center;
+  justify-content: center;
+  transform: translateY(-10svh);
+}
+
+.headline,
+.tagline,
+.body {
+  width: 100%;
+  text-align: center;
+}
+
+.headline {
+  margin-top: 0.75rem;
+}
+
+.tagline {
+  margin-top: 0.5rem;
+}
+
+.body {
+  margin-top: 1.125rem;
+}
+
+.orbSlot {
+  display: flex;
+  flex-shrink: 0;
+  justify-content: center;
+  box-sizing: border-box;
+  width: calc(100dvw - 48px);
+  max-width: calc(100dvw - 48px);
+  margin-left: calc(50% - 50dvw + 24px);
+  aspect-ratio: 1;
+  margin-block: 0 0.875rem;
+}
+
+.heroOrb {
+  width: 100%;
+  height: 100%;
+}
+
+.ctaRow {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  width: 100%;
+  margin-top: 1.5rem;
+}
+
+.scrollCue {
+  bottom: 0.625rem;
+  transform: scale(0.88);
+}
+
+@media (min-width: 640px) and (max-width: 1023px) {
+  .headline {
+    margin-top: 1rem;
+  }
+
+  .tagline {
+    margin-top: 0.625rem;
+  }
+
+  .body {
+    margin-top: 1.25rem;
+  }
+
+  .ctaRow {
+    margin-top: 1.75rem;
+    gap: 0.875rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .heroContent {
+    transform: none;
+  }
+
+  .heroGrid {
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    grid-template-rows: auto auto auto auto;
+    column-gap: 2rem;
+    row-gap: 1.5rem;
+    align-items: center;
+    text-align: left;
+  }
+
+  .headline,
+  .tagline,
+  .body {
+    text-align: left;
+  }
+
+  .headline {
+    grid-column: 1;
+    grid-row: 1;
+    margin-top: 0;
+  }
+
+  .tagline {
+    grid-column: 1;
+    grid-row: 2;
+    margin-top: 0;
+  }
+
+  .body {
+    grid-column: 1;
+    grid-row: 3;
+    max-width: 75%;
+    margin-top: 0;
+  }
+
+  .orbSlot {
+    grid-column: 2;
+    grid-row: 1 / span 3;
+    justify-self: end;
+    align-self: center;
+    width: 100%;
+    max-width: none;
+    margin-left: 0;
+    aspect-ratio: auto;
+    margin-block: 0;
+  }
+
+  .ctaRow {
+    grid-column: 1;
+    grid-row: 4;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 1rem;
+    margin-top: 0;
+  }
+
+  .scrollCue {
+    bottom: 1.25rem;
+    transform: none;
+  }
+}

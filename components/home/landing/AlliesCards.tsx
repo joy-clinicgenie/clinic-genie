@@ -48,7 +48,7 @@ export function AlliesCards() {
         <motion.div
           key={ally.name}
           variants={cardVariants}
-          className="glass group relative flex h-full flex-col gap-4 overflow-hidden rounded-2xl p-8 transition-shadow duration-ui hover:shadow-glow-md"
+          className="glass group relative flex h-full flex-col gap-4 overflow-hidden rounded-2xl p-5 transition-shadow duration-ui hover:shadow-glow-md sm:p-8"
         >
           {!reduced && (
             <motion.span aria-hidden="true" className={styles.shine} variants={shineVariants} />

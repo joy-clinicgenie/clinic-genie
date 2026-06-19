@@ -20,5 +20,11 @@
 }
 
 .tagline {
-  margin-top: 4rem;
+  margin-top: 2.5rem;
+}
+
+@media (min-width: 640px) {
+  .tagline {
+    margin-top: 4rem;
+  }
 }

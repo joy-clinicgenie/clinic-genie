@@ -112,7 +112,7 @@ export function LandingHeading({
 }
 
 /** Shared max width for section body paragraphs */
-export const landingParagraphWidth = "max-w-[75%]";
+export const landingParagraphWidth = "max-w-full sm:max-w-[75%]";
 
 export function LandingBody({
   children,
