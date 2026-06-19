@@ -52,9 +52,7 @@ export default function NotFound() {
   return (
     <>
       <LightHero
-        layout="stacked"
         contentOrder="childrenFirst"
-        orbSize="hero"
         title="This wish slipped through the lamp."
         subtitle="The page you were looking for has vanished, moved, or never quite existed. Even a genie can't conjure a page from thin air. But we can point you back to firmer ground."
         primaryCta={{ href: "/", label: "Back to Home" }}

@@ -242,7 +242,7 @@ export const SPECIALTY_HUBS: SpecialtyHub[] = [
     id: "ophthalmology",
     slug: "ophthalmology",
     name: "Ophthalmology",
-    highlight: "Be found when patients search symptoms.",
+    highlight: "A clear, trust-building site.",
     summary: "Search and brand systems for eye care — clear paths from symptoms to your clinic door.",
     iconId: "ophthalmology",
     published: false,

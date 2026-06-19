@@ -56,7 +56,7 @@ export function Hero() {
             id="hero-title"
             className={cn(
               styles.headline,
-              "max-w-3xl font-display text-[clamp(1.5rem,6.4vw,2.25rem)] leading-[1.08] text-balance text-ink-900 lg:text-h1"
+              "max-w-3xl font-display text-h1 text-balance text-ink-900"
             )}
             initial={reduceMotion ? false : { opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -77,7 +77,7 @@ export function Hero() {
           <motion.p
             className={cn(
               styles.body,
-              "mx-auto max-w-full text-xs leading-snug text-pretty text-[#7E8C92] sm:text-sm sm:leading-relaxed lg:mx-0 lg:text-body"
+              "mx-auto max-w-full text-lead text-pretty text-ink-700 sm:max-w-[75%] lg:mx-0"
             )}
             initial={reduceMotion ? false : { opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}

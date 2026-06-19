@@ -1,0 +1,44 @@
+.lightHeroGrid {
+  width: 100%;
+}
+
+.copyBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+  min-width: 0;
+}
+
+@media (max-width: 1023px) {
+  .lightHeroContent {
+    transform: translateY(-10svh);
+  }
+}
+
+@media (min-width: 1024px) {
+  .lightHeroContent {
+    transform: none;
+  }
+
+  .lightHeroGrid {
+    grid-template-rows: auto;
+  }
+
+  .copyBlock {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .orbSlot {
+    grid-column: 2;
+    grid-row: 1;
+    justify-self: end;
+    align-self: center;
+    width: 100%;
+    max-width: none;
+    margin-left: 0;
+    aspect-ratio: auto;
+    margin-block: 0;
+  }
+}
