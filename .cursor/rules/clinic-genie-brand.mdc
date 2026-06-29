@@ -1,0 +1,376 @@
+---
+description: Clinic Genie brand rules, tone of voice, genie motif, visual direction, CTA language, homepage structure, and brand behaviour.
+globs:
+  - "**/*.{ts,tsx,js,jsx}"
+  - "**/*.{css,mdx,md}"
+alwaysApply: true
+---
+
+# Clinic Genie Brand Rules
+
+## Project Identity
+
+Client: Clinic Genie  
+Project Type: Healthcare marketing website  
+Primary Audience: Specialist clinic owners, doctors, clinic managers, and healthcare decision makers in Singapore  
+
+Clinic Genie helps specialist clinics grow through healthcare SEO, medical SEM, clinic websites, content, AI search readiness, and compliance aware digital strategy.
+
+All code, content, layout, animation, and interaction decisions must support:
+
+- Trust
+- Clarity
+- Professional credibility
+- Search visibility
+- AI search readiness
+- Accessibility
+- Responsible healthcare marketing
+- Conversion without pressure
+
+The website should feel premium, calm, intelligent, quietly magical, precise, and medically trustworthy.
+
+Avoid anything that feels generic, gimmicky, overly playful, overly corporate, cluttered, or aggressively sales driven.
+
+## Core Brand Idea
+
+The clinic holds the lamp. Clinic Genie is the genie.
+
+Services are wishes granted, not packages sold.
+
+Clinic Genie should feel like a genie who happens to be a serious growth strategist. The brand may feel magical in promise, but must remain exact in delivery and careful with a doctor's reputation.
+
+The magic is never reckless. It is structured, measurable, and responsible.
+
+## Voice in One Line
+
+A serious growth strategist with a quietly magical edge.
+
+Enchant first. Then prove.
+
+## Tone Pillars
+
+### Confident and quietly magical
+
+Use wonder, but anchor it in evidence, structure, strategy, and measurable work.
+
+The brand can reference wishes, the lamp, magic, and granting, but every magical idea must lead to a clear practical benefit.
+
+### Warm but never soft
+
+Respect doctors, clinic owners, and healthcare decision makers.
+
+Name the problem plainly.
+
+Do not over soften the message.
+
+Do not use hype.
+
+### Benefit led and responsible
+
+Every promise should land on one of these outcomes:
+
+- Be found
+- Be believed
+- Be booked
+- Stay within compliance
+
+Do not promise certainty. Do not guarantee leads, rankings, bookings, patient acquisition, or outcomes.
+
+## Language Rules
+
+Use British English always.
+
+Do not use em dashes.
+
+Use short sentences where impact is needed.
+
+Use the genie motif as a thread, not a costume.
+
+Use one to two genie led moments per section, not repeated magical language everywhere.
+
+Demystify as you enchant.
+
+## Approved Lexicon
+
+Use these words selectively:
+
+- Wishes
+- Grant
+- Granted
+- The lamp
+- Magic
+- Conjure
+- Summon
+- One growth engine
+- Eight wishes
+
+Use these terms with restraint. They should feel like brand signature language, not decoration.
+
+## Signature Lines
+
+Approved signature lines:
+
+- Eight wishes, one growth engine.
+- Granted, not promised.
+- Magic you can measure.
+
+These lines may be used in hero, brand, CTA, service overview, or section transition moments.
+
+Do not overuse them on the same page.
+
+## Motif Dial by Section
+
+### Hero and brand sections
+
+The genie motif may appear at full strength.
+
+Examples:
+
+- The right patients are searching. Make your first wish.
+- Eight wishes, one growth engine.
+- The clinic holds the lamp. We help grant the growth behind it.
+
+### Service pages
+
+Use a magical headline or section hook, then keep the body practical.
+
+Example:
+
+- Wish granted. A clinic website built for trust, search, and action.
+
+The body should explain the actual service clearly.
+
+### CTAs
+
+Make the action feel like a wish.
+
+Preferred CTA examples:
+
+- Make Your First Wish
+- Rub the Lamp
+- Start Your Growth Wish
+- Book a Strategy Call
+- See the Magic at Work
+- Explore the Eight Wishes
+
+Use more practical CTAs where needed.
+
+### Proof, statistics, compliance, and case study sections
+
+Use only a whisper of the motif.
+
+Credibility leads.
+
+Example:
+
+- Magic you can measure.
+- Granted, not promised.
+
+Do not make proof sections feel theatrical.
+
+## Core Build Philosophy
+
+Build with restraint.
+
+Clinic Genie should not feel like a generic agency website. It should feel like a specialist healthcare growth partner with strategic depth, digital fluency, compliance awareness, and a memorable genie led brand system.
+
+Every section should answer one of these questions:
+
+- Why should a clinic trust Clinic Genie?
+- What problem does this section solve?
+- How does this help specialist clinics grow responsibly?
+- How does this improve search visibility, AI clarity, patient trust, or conversion?
+- Is the interface calm and easy to understand?
+- Does the genie motif make the message clearer or just louder?
+
+If a visual element, animation, motif, or component does not improve clarity, trust, usability, memorability, or conversion, simplify it.
+
+## Brand Voice Rules
+
+Clinic Genie’s content should sound:
+
+- Strategic
+- Clear
+- Calm
+- Quietly magical
+- Professional
+- Specialist focused
+- Trust led
+- Responsible
+- Modern
+- Confident without overclaiming
+
+Preferred wording:
+
+- “helps”
+- “supports”
+- “designed to”
+- “structured for”
+- “built around”
+- “makes it easier”
+- “improves clarity”
+- “supports responsible growth”
+- “strengthens search visibility”
+- “helps patients understand”
+- “granted, not promised”
+- “magic you can measure”
+
+Avoid:
+
+- “guarantees”
+- “explodes your growth”
+- “number one”
+- “best in Singapore”
+- “instant results”
+- “foolproof”
+- “dominate the market”
+- “patients will definitely book”
+- “we guarantee leads”
+- “miracle”
+- “spell”
+- “supernatural”
+- “wish fulfilment” when it implies guaranteed outcomes
+
+The copy should connect healthcare marketing to:
+
+- Patient trust
+- Search behaviour
+- Specialist authority
+- Clinic credibility
+- Responsible visibility
+- Conversion clarity
+- AI and search interpretation
+- Compliance awareness
+- Measurable growth work
+
+## Visual Direction
+
+The design should feel:
+
+- Premium
+- Calm
+- Strategic
+- Healthcare appropriate
+- Trustworthy
+- Modern
+- Search and content led
+- Magical in atmosphere, not childish in execution
+
+Avoid:
+
+- Excessive gradients
+- Overly bright colours
+- Generic SaaS visuals
+- Cluttered cards
+- Heavy shadows
+- Cartoonish icons
+- Distracting hover effects
+- Over animated elements
+- Fantasy game aesthetics
+- Genie costume clichés
+- Magic lamp clip art unless intentionally refined and brand appropriate
+
+## Typography Rules
+
+Use the approved font system.
+
+Title font: Outfit  
+Body font: Reddit Sans  
+
+Maintain clear hierarchy between:
+
+- Eyebrow labels
+- Hero headlines
+- Section headlines
+- Supporting paragraphs
+- Card titles
+- Card descriptions
+- CTAs
+- Metadata
+
+Text should be readable on mobile and desktop.
+
+Do not use small text for important information.
+
+Avoid long line lengths on desktop. Keep paragraphs comfortable to read.
+
+## Interaction and Orb Concept Rules
+
+Interactions should support clarity.
+
+Avoid interactions that feel gimmicky.
+
+For the magical orb concept, keep it elegant and brand led.
+
+The orb should feel like a symbol of search intelligence, strategy, and guided growth. It should not feel like fantasy gaming, a toy, or an unrelated decorative object.
+
+The orb may represent:
+
+- The lamp
+- Search intelligence
+- Guided growth
+- Measurable magic
+- Strategy being summoned into action
+
+Do not make the orb feel noisy, childish, overly mystical, or distracting.
+
+## Page Structure Rules
+
+The homepage should follow the approved simplified structure unless instructed otherwise:
+
+1. Hero
+2. Why Clinic Genie
+3. What We Do
+4. Specialist Clinics and Selected Work
+5. How We Work
+6. Genie Insights
+7. Final CTA
+
+Each section should have a clear strategic role.
+
+Avoid adding unnecessary sections.
+
+Use internal links to guide users to About, Services, Work, Insights, and Contact where appropriate.
+
+## CTA Rules
+
+CTAs should feel clear, confident, and brand led, not pushy.
+
+Preferred CTA examples:
+
+- Make Your First Wish
+- Rub the Lamp
+- Book a Strategy Call
+- See Our Work
+- See the Magic at Work
+- Explore the Eight Wishes
+- View Clinic Marketing Insights
+- Start a Conversation
+
+Avoid:
+
+- Get Results Now
+- Dominate Search Today
+- Guarantee My Growth
+- Claim Your Patients
+- Unlock Explosive Growth
+
+CTA placement should feel natural and helpful.
+
+## Non Negotiables
+
+Do not make the site feel gimmicky.
+
+Do not sacrifice readability for animation.
+
+Do not break the approved Clinic Genie brand direction.
+
+Do not use exaggerated or pressure based marketing language.
+
+Do not overuse the genie motif.
+
+Do not use em dashes.
+
+Use British English.
+
+When unsure, choose the option that is clearer, calmer, more premium, more strategic, and more trustworthy.

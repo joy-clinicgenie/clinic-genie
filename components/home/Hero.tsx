@@ -1,31 +1,70 @@
 "use client";
 
 import Link from "next/link";
+import { useEffect, useRef } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { Container } from "@/components/ui/Container";
 import { MagneticButton } from "@/components/ui/MagneticButton";
-import { SparkleField } from "@/components/ui/SparkleField";
+import FluidGlass from "@/components/home/FluidGlass";
+import { useOrbStore } from "@/components/orb/store";
 import { cn } from "@/lib/cn";
-import { HeroOrb } from "@/components/home/HeroOrb";
 import { ease } from "@/lib/motion";
 import styles from "./Hero.module.css";
 
 /**
- * Hero — CG-landing3 layout
- * Mobile: orb first, then copy + CTAs
- * Desktop: copy column left, orb right
+ * Hero — headline, supporting copy, and CTAs
  */
 export function Hero() {
   const reduceMotion = useReducedMotion();
+  const heroRef = useRef<HTMLElement>(null);
+  const setScene = useOrbStore((s) => s.setScene);
+
+  // While hero is visible, hide the global orb companion so the fluid glass
+  // lens is the only cursor-like element in this section.
+  useEffect(() => {
+    const heroEl = heroRef.current;
+    if (!heroEl) return;
+
+    const prevAnchorRef = { current: useOrbStore.getState().anchorId };
+    let suppressed = false;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          if (!suppressed) {
+            prevAnchorRef.current = useOrbStore.getState().anchorId;
+            suppressed = true;
+          }
+          setScene({ anchorId: null });
+          return;
+        }
+
+        if (suppressed) {
+          setScene({ anchorId: prevAnchorRef.current ?? "orb-anchor-hero" });
+          suppressed = false;
+        }
+      },
+      { threshold: 0.35 },
+    );
+
+    observer.observe(heroEl);
+
+    return () => {
+      observer.disconnect();
+      if (suppressed) {
+        setScene({ anchorId: prevAnchorRef.current ?? "orb-anchor-hero" });
+      }
+    };
+  }, [setScene]);
 
   return (
     <section
+      ref={heroRef}
       id="hero"
       data-nav-theme="light"
       aria-labelledby="hero-title"
-      className="relative flex h-svh max-h-svh min-h-0 flex-col overflow-hidden pt-[calc(3.25rem+env(safe-area-inset-top,0px))] pb-3 lg:pt-[calc(5.25rem+env(safe-area-inset-top,0px))] lg:pb-12"
+      className="relative flex h-svh max-h-svh min-h-0 flex-col overflow-visible pt-[calc(3.25rem+env(safe-area-inset-top,0px))] pb-3 lg:pt-[calc(5.25rem+env(safe-area-inset-top,0px))] lg:pb-12"
     >
-      <SparkleField density={28} parallax variant="cluster" className="opacity-60" />
 
       <svg
         aria-hidden="true"
@@ -43,20 +82,11 @@ export function Hero() {
         className={cn(styles.heroContent, "relative z-10 flex min-h-0 w-full flex-1 items-center justify-center")}
       >
         <div className={styles.heroGrid}>
-          <motion.div
-            className={styles.orbSlot}
-            initial={reduceMotion ? false : { opacity: 0, scale: 0.96 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, ease: ease.glide, delay: 0.05 }}
-          >
-            <HeroOrb className={styles.heroOrb} orbWishLayout />
-          </motion.div>
-
           <motion.h1
             id="hero-title"
             className={cn(
               styles.headline,
-              "max-w-3xl font-display text-h1 text-balance text-ink-900"
+              "mx-auto max-w-3xl font-display text-h1 text-balance text-ink-900"
             )}
             initial={reduceMotion ? false : { opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -77,7 +107,7 @@ export function Hero() {
           <motion.p
             className={cn(
               styles.body,
-              "mx-auto max-w-full text-lead text-pretty text-ink-700 sm:max-w-[75%] lg:mx-0"
+              "mx-auto max-w-full text-lead text-pretty text-ink-700 sm:max-w-[75%]"
             )}
             initial={reduceMotion ? false : { opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
@@ -113,7 +143,7 @@ export function Hero() {
         aria-label="Scroll to The Gap"
         className={cn(
           styles.scrollCue,
-          "absolute left-1/2 z-10 grid h-[42px] w-[26px] -translate-x-1/2 place-items-start rounded-[14px] border border-[#D8DEE1] pt-2 transition-colors hover:border-[#54B9CE] focus-visible:shadow-focus"
+          "absolute left-1/2 z-[30] grid h-[42px] w-[26px] -translate-x-1/2 place-items-start rounded-[14px] border border-[#D8DEE1] pt-2 transition-colors hover:border-[#54B9CE] focus-visible:shadow-focus",
         )}
       >
         <span
@@ -121,6 +151,21 @@ export function Hero() {
           className="h-2 w-1 rounded-sm bg-[#217B8E] motion-safe:animate-cue"
         />
       </Link>
+
+      <div className={styles.fluidGlassLayer} aria-hidden="true">
+        <FluidGlass
+          eventSource={heroRef}
+          overlay
+          mode="lens"
+          lensProps={{
+            scale: 0.3,
+            ior: 1.15,
+            thickness: 5,
+            chromaticAberration: 0.1,
+            anisotropy: 0.01,
+          }}
+        />
+      </div>
     </section>
   );
 }

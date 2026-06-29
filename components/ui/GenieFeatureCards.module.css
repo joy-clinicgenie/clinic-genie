@@ -35,6 +35,13 @@
   height: 100%;
 }
 
+.cardLink {
+  display: block;
+  height: 100%;
+  text-decoration: none;
+  color: inherit;
+}
+
 .card {
   display: flex;
   height: 100%;
@@ -44,24 +51,29 @@
   gap: 1.25rem;
   padding: clamp(1.5rem, 2vw, 2rem);
   border-radius: 1.25rem;
-  transition: transform var(--dur-ui) var(--ease-out-soft), box-shadow var(--dur-ui) var(--ease-out-soft);
+  border: 1px solid rgba(230, 238, 241, 0.95);
+  transition:
+    transform var(--dur-ui) var(--ease-out-soft),
+    box-shadow var(--dur-ui) var(--ease-out-soft),
+    border-color var(--dur-ui) var(--ease-out-soft);
 }
 
 .card:hover {
   transform: translateY(-8px);
-  box-shadow: 0 16px 40px rgba(6, 45, 54, 0.08);
+  border-color: rgba(84, 185, 206, 0.4);
+  box-shadow: 0 0 0 1px rgba(84, 185, 206, 0.14);
 }
 
 .cardBgMint {
-  background: #eafbfb;
+  background: #ffffff;
 }
 
 .cardBgGray {
-  background: #f3f5f6;
+  background: #ffffff;
 }
 
 .cardBgCyan {
-  background: #e3f6fa;
+  background: #ffffff;
 }
 
 .cardGraphic {
@@ -81,7 +93,6 @@
   width: 100%;
   height: 100%;
   border-radius: 0.875rem;
-  background: rgba(255, 255, 255, 0.55);
 }
 
 .cardSparkles {
@@ -89,6 +100,13 @@
   inset: 0;
   z-index: 2;
   pointer-events: none;
+  opacity: 0;
+  transition: opacity 180ms ease-out;
+}
+
+.card:hover .cardSparkles,
+.card:focus-within .cardSparkles {
+  opacity: 1;
 }
 
 .cardSparkle {
@@ -103,6 +121,12 @@
   animation-name: genie-card-sparkle-blink;
   animation-timing-function: ease-in-out;
   animation-iteration-count: infinite;
+  animation-play-state: paused;
+}
+
+.card:hover .cardSparkle,
+.card:focus-within .cardSparkle {
+  animation-play-state: running;
 }
 
 @keyframes genie-card-sparkle-blink {

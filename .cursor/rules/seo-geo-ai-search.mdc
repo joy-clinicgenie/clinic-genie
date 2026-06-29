@@ -1,0 +1,311 @@
+---
+description: SEO, GEO, AI search readiness, semantic structure, metadata, internal linking, specialty content, and content structure rules for Clinic Genie.
+globs:
+  - "**/*.{ts,tsx,js,jsx}"
+  - "**/*.{mdx,md}"
+alwaysApply: true
+---
+
+# Clinic Genie SEO, GEO, and AI Search Rules
+
+## Search Strategy Context
+
+Clinic Genie helps specialist clinics grow through healthcare SEO, medical SEM, clinic websites, content, AI search readiness, and compliance aware digital strategy.
+
+The website should clearly communicate:
+
+- Who Clinic Genie serves
+- What Clinic Genie offers
+- Why healthcare marketing requires specialist understanding
+- How Clinic Genie supports search, AI visibility, websites, SEM, content, and compliance aware growth
+- Why specialist clinics need clearer digital structure
+
+## SEO, GEO, and AI Search Readiness Rules
+
+Structure content for both human readers and search systems.
+
+Use:
+
+- Semantic HTML
+- Clear heading hierarchy
+- Descriptive section names
+- Internal links
+- Page metadata
+- Concise service descriptions
+- Structured service and specialty content
+- Descriptive alt text
+- Schema friendly content patterns where relevant
+- Clear FAQs where appropriate
+- Specific specialty and service terminology
+
+Avoid keyword stuffing.
+
+Write naturally while preserving strategic keywords.
+
+The genie motif must not interfere with clarity for search engines, AI systems, or human readers.
+
+A magical headline should always be supported by practical descriptive copy.
+
+## Strategic Keyword Themes
+
+Relevant recurring terms may include:
+
+- Healthcare SEO
+- Medical SEM
+- Clinic websites
+- Specialist clinic marketing
+- AI search readiness
+- GEO
+- Patient search behaviour
+- Search visibility
+- Compliance aware growth
+- Healthcare content strategy
+- Clinic digital strategy
+- Website design and development for clinics
+- One growth engine
+- Eight wishes
+- Magic you can measure
+
+Use keywords naturally in context.
+
+Do not force keywords into every sentence.
+
+Do not create awkward or repetitive phrases.
+
+## Semantic HTML Rules
+
+Use semantic HTML wherever possible.
+
+Preferred elements:
+
+- `header`
+- `main`
+- `section`
+- `article`
+- `nav`
+- `footer`
+- `h1` to `h6`
+- `p`
+- `ul`
+- `ol`
+- `li`
+- `a`
+- `button`
+
+Avoid using generic `div` elements when a semantic element is more appropriate.
+
+Each page should have one clear `h1`.
+
+Use headings in logical order.
+
+Do not skip heading levels for styling purposes.
+
+## Metadata Rules
+
+Each major page should include clear metadata.
+
+Metadata should include:
+
+- Page title
+- Meta description
+- Relevant keywords where appropriate
+- Open Graph title
+- Open Graph description
+- Canonical friendly structure where supported
+
+Metadata should be accurate, concise, and not overclaim.
+
+Avoid clickbait titles.
+
+Avoid guaranteed outcome language in metadata.
+
+Do not overload metadata with genie language if it weakens clarity.
+
+## Internal Linking Rules
+
+Use internal links to guide users clearly.
+
+Important destinations include:
+
+- About
+- Services
+- Work
+- Insights
+- Contact
+- Healthcare SEO
+- Medical SEM
+- Clinic Website Design and Development
+- GEO and AI Search
+- Content Strategy
+
+Internal links should be descriptive.
+
+Avoid vague link text such as:
+
+```txt
+Click here
+```
+
+Use clearer link text such as:
+
+```txt
+Explore Healthcare SEO
+```
+
+```txt
+View Clinic Website Design and Development
+```
+
+```txt
+Read Clinic Marketing Insights
+```
+
+```txt
+Explore the Eight Wishes
+```
+
+## Content Structure Rules
+
+Use structured content blocks that are easy for users, search engines, and AI systems to interpret.
+
+Recommended structures:
+
+- Clear hero statement
+- Short introductory paragraph
+- Benefit led cards
+- Service summaries
+- Specialty specific insight cards
+- Process explanation
+- Case study or selected work summary
+- FAQ where useful
+- Final CTA
+
+Each section should have one clear purpose.
+
+Avoid vague sections that do not add strategic value.
+
+## Specialty Content Rules
+
+When writing or structuring specialty content, include sharper insights under each specialty.
+
+Examples:
+
+Paediatrics may highlight:
+
+- Parent led searches
+- Reassurance
+- Doctor trust
+- Location visibility
+- Clear explanation of services
+
+Cardiology may highlight:
+
+- Symptom led search
+- Urgency
+- Credibility
+- Specialist authority
+- Clear patient pathways
+
+Ophthalmology may highlight:
+
+- Vision concern searches
+- Procedure clarity
+- Doctor credibility
+- Patient trust
+- Location based discovery
+
+Do not write identical descriptions for every specialty.
+
+Each specialty should feel specific, strategic, and search aware.
+
+## AI Search Readiness Rules
+
+Structure information so AI systems can understand relationships between:
+
+- Services
+- Specialties
+- Clinic types
+- Patient search behaviour
+- Search platforms
+- Website content
+- Compliance awareness
+- Clinic growth goals
+- The eight wishes service system
+- The one growth engine positioning
+
+Use clear nouns and specific descriptions.
+
+Avoid vague marketing fluff.
+
+Prefer direct, structured explanations.
+
+## Alt Text and Media SEO Rules
+
+Use meaningful alt text unless the image is decorative.
+
+Alt text should describe the image in context.
+
+Avoid keyword stuffing.
+
+Good example:
+
+```txt
+Clinic website interface showing structured service content for specialist clinic marketing.
+```
+
+Avoid:
+
+```txt
+Best healthcare SEO Singapore clinic marketing medical SEM website design AI search Clinic Genie.
+```
+
+## FAQ Rules
+
+FAQs should be clear, natural, and useful.
+
+They should answer real questions from clinic owners, doctors, clinic managers, and healthcare decision makers.
+
+Avoid using FAQs only for keyword stuffing.
+
+FAQ answers should be concise but helpful.
+
+Use compliance aware language.
+
+Do not use heavy genie language in FAQs. Clarity comes first.
+
+## Review Checklist
+
+Before finalising SEO or AI search related content, check:
+
+- Is there one clear page topic?
+- Is the heading hierarchy logical?
+- Does the copy explain who the page is for?
+- Does the copy explain what Clinic Genie does?
+- Are internal links descriptive?
+- Are keywords used naturally?
+- Does the content avoid overclaiming?
+- Is the content structured for both humans and search systems?
+- Does each specialty have a specific insight?
+- Does the page support patient trust, search visibility, or responsible growth?
+- Does the genie motif improve memorability without reducing clarity?
+- Does the copy avoid em dashes?
+
+## Non Negotiables
+
+Do not keyword stuff.
+
+Do not use vague marketing fluff.
+
+Do not create misleading metadata.
+
+Do not use guaranteed ranking or booking claims.
+
+Do not write identical specialty descriptions.
+
+Do not ignore semantic structure.
+
+Do not let magical language weaken SEO or AI clarity.
+
+Do not use em dashes.
+
+When unsure, choose the structure that is clearer for readers, search engines, and AI systems.

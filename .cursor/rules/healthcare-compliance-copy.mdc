@@ -1,0 +1,297 @@
+---
+description: Healthcare compliance aware copywriting rules for Clinic Genie, including HCSA safe phrasing, genie motif control, claim restrictions, CTA tone, and responsible healthcare marketing language.
+globs:
+  - "**/*.{ts,tsx,js,jsx}"
+  - "**/*.{mdx,md}"
+alwaysApply: true
+---
+
+# Clinic Genie Healthcare Compliance and Copy Rules
+
+## Healthcare Marketing Context
+
+Clinic Genie works in the healthcare marketing space. All copy must be compliance aware and suitable for healthcare related websites in Singapore.
+
+Copy should support trust, clarity, responsible visibility, and professional credibility.
+
+The brand should sound confident, quietly magical, and strategic, but never reckless or exaggerated.
+
+## Core Copy Idea
+
+The clinic holds the lamp. Clinic Genie is the genie.
+
+Services are wishes granted, not packages sold.
+
+The voice is a genie who happens to be a serious growth strategist.
+
+Magical in promise. Exact in delivery. Never reckless with a doctor's reputation.
+
+## Compliance Safe Copy Rules
+
+Do not generate:
+
+- Guaranteed outcomes
+- Exaggerated claims
+- Misleading healthcare statements
+- Patient testimonials
+- Before and after claims
+- Fear based messaging
+- Pressure based calls to action
+- Unverified superiority claims
+- Claims that imply certainty of medical, commercial, or advertising results
+- Statements that may be interpreted as promising patient acquisition
+
+Avoid language that could create unrealistic expectations.
+
+Use responsible alternatives.
+
+Instead of:
+
+```txt
+We guarantee more patients for your clinic.
+```
+
+Use:
+
+```txt
+We help clinics improve how they are found, understood, and considered by the right patients.
+```
+
+Instead of:
+
+```txt
+The best healthcare marketing agency in Singapore.
+```
+
+Use:
+
+```txt
+A healthcare focused marketing partner for specialist clinics in Singapore.
+```
+
+Instead of:
+
+```txt
+Get instant patient bookings.
+```
+
+Use:
+
+```txt
+Create clearer pathways for patients to understand your clinic and take the next step.
+```
+
+Instead of:
+
+```txt
+Your wish is guaranteed.
+```
+
+Use:
+
+```txt
+Granted, not promised.
+```
+
+## Motif Control Rules
+
+Use the genie motif with discipline.
+
+The motif should feel like a thread, not a costume.
+
+Use one to two genie led moments per section.
+
+Do not overload sections with repeated references to wishes, lamps, magic, or granting.
+
+Motif strength by section:
+
+- Hero and brand sections: full strength
+- Service pages: magical headline, practical body
+- CTAs: make the action a wish
+- Proof, statistics, compliance, and case studies: whisper only, credibility leads
+
+## Approved Tone
+
+Clinic Genie’s content should sound:
+
+- Strategic
+- Clear
+- Calm
+- Quietly magical
+- Professional
+- Specialist focused
+- Trust led
+- Responsible
+- Modern
+- Confident without overclaiming
+
+Preferred wording:
+
+- “helps”
+- “supports”
+- “designed to”
+- “structured for”
+- “built around”
+- “makes it easier”
+- “improves clarity”
+- “supports responsible growth”
+- “strengthens search visibility”
+- “helps patients understand”
+- “granted, not promised”
+- “magic you can measure”
+- “make your first wish”
+
+Avoid:
+
+- “guarantees”
+- “explodes your growth”
+- “number one”
+- “best in Singapore”
+- “instant results”
+- “foolproof”
+- “dominate the market”
+- “patients will definitely book”
+- “we guarantee leads”
+- “miracle”
+- “spell”
+- “supernatural”
+- “life changing”
+- “wish fulfilment” when it implies guaranteed outcomes
+
+## Language Rules
+
+Use British English always.
+
+Do not use em dashes.
+
+Use short sentences where emphasis is needed.
+
+Demystify as you enchant.
+
+Every magical phrase must be supported by practical explanation.
+
+## Content Strategy Rules
+
+The copy should connect healthcare marketing to:
+
+- Patient trust
+- Search behaviour
+- Specialist authority
+- Clinic credibility
+- Responsible visibility
+- Conversion clarity
+- AI and search interpretation
+- Compliance awareness
+- Measurable marketing work
+
+Do not write generic agency language.
+
+Do not make Clinic Genie sound like a broad marketing agency.
+
+Position Clinic Genie as a healthcare focused growth partner for specialist clinics.
+
+## CTA Copy Rules
+
+CTAs should feel clear, confident, and brand led, not pushy.
+
+Preferred CTA examples:
+
+- Make Your First Wish
+- Rub the Lamp
+- Book a Strategy Call
+- See Our Work
+- See the Magic at Work
+- Explore the Eight Wishes
+- View Clinic Marketing Insights
+- Start a Conversation
+
+Avoid:
+
+- Get Results Now
+- Dominate Search Today
+- Guarantee My Growth
+- Claim Your Patients
+- Unlock Explosive Growth
+
+CTA placement should feel natural and helpful.
+
+## Healthcare Copy Examples
+
+Use this style:
+
+```txt
+Clinic Genie helps specialist clinics build clearer digital pathways across search, websites, content, and patient discovery platforms.
+```
+
+```txt
+Our approach is designed to support responsible visibility by making clinic information easier for patients, search engines, and AI systems to understand.
+```
+
+```txt
+We help clinics communicate their services with clarity, structure, and compliance awareness.
+```
+
+```txt
+Eight wishes, one growth engine. Each service supports a clearer path from being found to being believed and booked.
+```
+
+```txt
+Magic you can measure. Strategy, content, websites, SEM, and search visibility brought into one accountable system.
+```
+
+Avoid this style:
+
+```txt
+We help clinics dominate Google and get more patients instantly.
+```
+
+```txt
+Our strategy guarantees higher rankings and more appointments.
+```
+
+```txt
+We are Singapore’s best healthcare marketing agency.
+```
+
+```txt
+Your wish is our command, and we guarantee patients will book.
+```
+
+## Review Checklist
+
+Before finalising copy, check:
+
+- Does it avoid guaranteed outcomes?
+- Does it avoid exaggerated claims?
+- Does it avoid unverified superiority claims?
+- Does it avoid patient testimonials?
+- Does it avoid pressure based CTAs?
+- Does it sound calm, strategic, and responsible?
+- Does the genie motif feel controlled?
+- Does the copy demystify as it enchants?
+- Does it support trust and clarity?
+- Does it align with specialist clinic marketing?
+- Does it avoid fear based language?
+- Does it avoid claiming certainty of rankings, leads, bookings, or patient acquisition?
+- Does it use British English?
+- Does it avoid em dashes?
+
+## Non Negotiables
+
+Do not create exaggerated healthcare marketing claims.
+
+Do not use patient testimonials.
+
+Do not guarantee leads, rankings, bookings, or outcomes.
+
+Do not use pressure based calls to action.
+
+Do not imply Clinic Genie can guarantee patient acquisition.
+
+Do not create fear based messaging.
+
+Do not overuse the genie motif.
+
+Do not use em dashes.
+
+When unsure, choose safer, clearer, more responsible wording.

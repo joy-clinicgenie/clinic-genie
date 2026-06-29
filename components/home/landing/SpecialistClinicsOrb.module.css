@@ -1,3 +1,28 @@
+.sectionShell {
+  position: relative;
+  overflow: hidden;
+  background-color: #ffffff;
+}
+
+.sectionShell::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.3;
+  background-image: url("/specialties/healthcare-journey-map-mobile.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+@media (min-width: 768px) {
+  .sectionShell::before {
+    background-image: url("/specialties/healthcare-journey-map.png");
+  }
+}
+
 .wrap {
   position: relative;
   display: flex;
@@ -18,304 +43,152 @@
   padding-bottom: 4rem;
 }
 
-.contentBand::before {
-  content: "";
-  position: absolute;
-  z-index: -1;
-  top: 0;
-  bottom: 0;
-  left: 50%;
-  width: 100dvw;
-  transform: translateX(-50%);
-  pointer-events: none;
-  background: #ffffff;
-}
-
-.orbCenter {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  background: #ffffff;
-}
-
-.orbShell {
-  position: relative;
-  flex-shrink: 0;
-  width: min(504px, 94vw);
-  aspect-ratio: 1;
-  overflow: visible;
-}
-
-.orbVisual {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  border-radius: 50%;
-  overflow: hidden;
-  isolation: isolate;
-}
-
-.orbVisual :global(.orb-container) {
-  position: relative;
-  z-index: 1;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-}
-
-.sparkLayer {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  pointer-events: none;
-  clip-path: circle(46% at 50% 50%);
-}
-
-.sparkOrbit {
-  position: absolute;
-  inset: 0;
-  transform-origin: 50% 50%;
-  animation: spark-orbit linear infinite;
-  pointer-events: none;
-}
-
-.sparkOrbitReverse {
-  animation-direction: reverse;
-}
-
-.sparkDim {
-  position: absolute;
-  left: calc(50% + var(--orbit-r, 12%));
-  top: 50%;
-  width: var(--spark-size, 6px);
-  height: var(--spark-size, 6px);
-  transform: translate(-50%, -50%);
-  background-color: #78e2dd;
-  opacity: 0.4;
-  filter: drop-shadow(0 0 3px rgba(84, 185, 206, 0.55));
-  pointer-events: none;
-  animation: spark-twinkle 3.2s ease-in-out infinite;
-}
-
-.hotspots {
-  position: absolute;
-  inset: 0;
-  z-index: 3;
-  overflow: visible;
-  border-radius: 50%;
-}
-
-.hotspotWrap {
-  position: absolute;
-  transform: translate(-50%, -50%);
-  z-index: 2;
-  overflow: visible;
-}
-
-.hotspotHighlightWrap {
-  position: absolute;
-  z-index: 4;
-  pointer-events: none;
-  overflow: visible;
-}
-
-.hotspotHighlight {
-  display: block;
-  width: max-content;
-  max-width: min(16rem, 42vw);
-  padding: 0.4rem 0.75rem;
-  border-radius: 0.5rem;
-  background: rgba(255, 255, 255, 0.96);
-  box-shadow:
-    0 4px 16px rgba(6, 45, 54, 0.12),
-    0 0 0 1px rgba(120, 226, 221, 0.2);
-  font-family: var(--font-sora), Sora, ui-sans-serif, system-ui, sans-serif;
-  font-size: 0.8125rem;
-  font-weight: 600;
-  line-height: 1.35;
-  color: #217b8e;
-  text-align: center;
-  white-space: normal;
-  animation: highlight-swipe 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-
-.highlightBelow {
-  top: calc(100% + 0.5rem);
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.highlightAbove {
-  bottom: calc(100% + 0.5rem);
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.highlightRight {
-  top: 50%;
-  left: calc(100% + 0.5rem);
-  transform: translateY(-50%);
-  text-align: left;
-}
-
-.highlightLeft {
-  top: 50%;
-  right: calc(100% + 0.5rem);
-  transform: translateY(-50%);
-  text-align: right;
-}
-
-.hotspot {
-  position: relative;
-  display: grid;
-  place-items: center;
-  width: 2.75rem;
-  height: 2.75rem;
-  border: 0;
-  padding: 0;
-  background: transparent;
-  cursor: pointer;
-}
-
-.hotspotSparkle {
-  position: relative;
-  z-index: 2;
-  display: block;
-  width: 18px;
-  height: 18px;
-  color: #18c4d9;
-  filter: drop-shadow(0 0 4px rgba(24, 196, 217, 0.85)) drop-shadow(0 0 10px rgba(84, 185, 206, 0.45));
-  transition: transform 0.2s ease, color 0.2s ease, filter 0.2s ease;
-}
-
-.hotspotGlow {
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(24, 196, 217, 0.35) 0%, transparent 70%);
-  opacity: 0.85;
-  animation: spark-pulse 2.4s ease-in-out infinite;
-}
-
-.hotspot:hover .hotspotSparkle,
-.hotspot:focus-visible .hotspotSparkle,
-.hotspotActive .hotspotSparkle {
-  transform: scale(1.15) rotate(12deg);
-  color: #fff;
-  filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.95)) drop-shadow(0 0 14px rgba(24, 196, 217, 0.85));
-}
-
-.hotspot:focus-visible {
-  outline: none;
-}
-
-.hotspot:focus-visible .hotspotSparkle {
-  filter:
-    drop-shadow(0 0 0 3px rgba(24, 196, 217, 0.45))
-    drop-shadow(0 0 6px rgba(255, 255, 255, 0.95))
-    drop-shadow(0 0 14px rgba(24, 196, 217, 0.85));
-}
-
-.hotspotIcon {
-  position: relative;
-  z-index: 2;
-  display: grid;
-  place-items: center;
-  width: 2rem;
-  height: 2rem;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.95);
-  box-shadow:
-    0 0 0 1px rgba(24, 196, 217, 0.22),
-    0 4px 12px rgba(6, 45, 54, 0.12);
-}
-
-.specialistGrid {
+.categoryGrid {
   display: grid;
   grid-template-columns: repeat(1, minmax(0, 1fr));
-  gap: 0.65rem;
+  gap: 2rem;
   align-self: stretch;
   width: 100%;
   max-width: 100%;
-  margin-top: 2rem;
 }
 
 @media (min-width: 640px) {
-  .specialistGrid {
+  .categoryGrid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 2.25rem 1.5rem;
   }
 }
 
 @media (min-width: 1024px) {
-  .specialistGrid {
+  .categoryGrid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 2.5rem 1.75rem;
   }
 }
 
+.categoryBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  min-width: 0;
+}
+
+.categoryTitle {
+  margin: 0;
+  font-family: var(--font-sora), Sora, ui-sans-serif, system-ui, sans-serif;
+  font-size: var(--text-body);
+  font-weight: 700;
+  line-height: 1.35;
+  color: #062d36;
+  text-align: center;
+}
+
+.categoryEmpty {
+  margin: 0;
+  padding: 0.85rem 1rem;
+  border: 1px dashed rgba(156, 200, 210, 0.55);
+  border-radius: 0.85rem;
+  background: rgba(248, 252, 253, 0.85);
+  font-size: var(--text-sm, 0.875rem);
+  line-height: 1.5;
+  color: #7e8c92;
+}
+
+.specialistList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
 .specialistBox {
+  position: relative;
+  overflow: hidden;
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  justify-content: space-between;
+  gap: 0.85rem;
   width: 100%;
   padding: 0.85rem 1rem;
   border: 1px solid rgba(230, 238, 241, 0.95);
   border-radius: 0.85rem;
   background: rgba(255, 255, 255, 0.98);
-  box-shadow:
-    0 8px 24px rgba(6, 45, 54, 0.08),
-    0 2px 6px rgba(6, 45, 54, 0.04);
   text-align: left;
   text-decoration: none;
   transition:
     background 0.2s ease,
     border-color 0.2s ease,
-    box-shadow 0.2s ease,
-    transform 0.2s ease;
+    color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.specialistBox::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.55) 0%,
+    rgba(24, 196, 217, 0.18) 48%,
+    rgba(255, 255, 255, 0.28) 100%
+  );
+  pointer-events: none;
+  transition: opacity 0.2s ease;
 }
 
 .specialistBox:hover,
 .specialistBox:focus-visible {
-  border-color: rgba(24, 196, 217, 0.28);
-  box-shadow:
-    0 12px 28px rgba(6, 45, 54, 0.1),
-    0 0 0 1px rgba(120, 226, 221, 0.12);
-  transform: translateY(-1px);
+  border-color: rgba(24, 196, 217, 0.55);
+  background: rgba(24, 196, 217, 0.14);
+  backdrop-filter: blur(12px) saturate(130%);
+  -webkit-backdrop-filter: blur(12px) saturate(130%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.75);
 }
 
-.specialistBoxActive {
-  border-color: rgba(24, 196, 217, 0.28);
-  background: rgba(227, 246, 250, 0.85);
-  box-shadow:
-    inset 0 0 0 1px rgba(120, 226, 221, 0.12),
-    0 8px 24px rgba(6, 45, 54, 0.08);
+.specialistBox:hover::before,
+.specialistBox:focus-visible::before {
+  opacity: 1;
 }
 
 .specialistBox:focus-visible {
   outline: none;
-  box-shadow:
-    0 0 0 3px rgba(24, 196, 217, 0.35),
-    0 8px 24px rgba(6, 45, 54, 0.08);
-}
-
-.specialistIconWell {
-  display: grid;
-  flex-shrink: 0;
-  place-items: center;
-  width: 3rem;
-  height: 3rem;
-  border-radius: 0.75rem;
-  background: linear-gradient(135deg, rgba(234, 251, 251, 0.95) 0%, rgba(255, 255, 255, 0.98) 100%);
-  box-shadow: inset 0 0 0 1px rgba(156, 200, 210, 0.35);
+  box-shadow: 0 0 0 3px rgba(24, 196, 217, 0.3);
 }
 
 .specialistName {
-  min-width: 0;
-  flex: 1;
+  position: relative;
+  z-index: 1;
+  display: inline-block;
   font-family: var(--font-sora), Sora, ui-sans-serif, system-ui, sans-serif;
   font-size: var(--text-body);
-  font-weight: 700;
+  font-weight: 400;
   color: #217b8e;
   line-height: 1.35;
+}
+
+.specialistArrow {
+  position: relative;
+  z-index: 1;
+  flex-shrink: 0;
+  font-size: 1rem;
+  line-height: 1;
+  color: #217b8e;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.specialistBox:hover .specialistName,
+.specialistBox:hover .specialistArrow,
+.specialistBox:focus-visible .specialistName,
+.specialistBox:focus-visible .specialistArrow {
+  color: #062d36;
+}
+
+.specialistBox:hover .specialistArrow,
+.specialistBox:focus-visible .specialistArrow {
+  transform: translateX(2px);
 }
 
 .ctaBlock {
@@ -341,63 +214,8 @@
   margin-top: 0;
 }
 
-@keyframes highlight-swipe {
-  from {
-    opacity: 0;
-    transform: translateX(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes spark-orbit {
-  from {
-    transform: rotate(var(--orbit-start, 0deg));
-  }
-  to {
-    transform: rotate(calc(var(--orbit-start, 0deg) + 360deg));
-  }
-}
-
-@keyframes spark-twinkle {
-  0%,
-  100% {
-    opacity: 0.22;
-    transform: translate(-50%, -50%) scale(0.82) rotate(0deg);
-  }
-  50% {
-    opacity: 0.62;
-    transform: translate(-50%, -50%) scale(1.08) rotate(45deg);
-  }
-}
-
-@keyframes spark-pulse {
-  0%,
-  100% {
-    opacity: 0.55;
-    transform: scale(0.92);
-  }
-  50% {
-    opacity: 1;
-    transform: scale(1.08);
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .orbVisual {
-    animation: none !important;
-  }
-
   .specialistBox {
     transition: none;
-  }
-
-  .sparkOrbit,
-  .sparkDim,
-  .hotspotGlow,
-  .hotspotHighlight {
-    animation: none;
   }
 }

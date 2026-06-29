@@ -6,12 +6,11 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Kicker } from "@/components/ui/Kicker";
 import { Reveal, RevealGroup, RevealItem } from "@/components/ui/Reveal";
 import { MagneticButton } from "@/components/ui/MagneticButton";
+import { GenieFeatureCards } from "@/components/ui/GenieFeatureCards";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { LogoMarquee } from "@/components/home/LogoMarquee";
 import { LightHero } from "@/components/ui/LightHero";
 import { OrbAnchor } from "@/components/orb/OrbAnchor";
-import { PageFinale } from "@/components/ui/PageFinale";
-import { PageFinaleCTA } from "@/components/ui/PageFinaleCTA";
 import { CLIENT_LOGOS } from "@/lib/data/client-logos";
 import {
   ABOUT_APPROACH_STEPS,
@@ -29,8 +28,9 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
-    <>
+    <div className="min-h-screen bg-[#ffffff] text-ink-900">
       <LightHero
+        className="bg-[#ffffff]"
         kicker="About Clinic Genie"
         title="The genie behind better clinic growth."
         highlight="genie"
@@ -39,42 +39,17 @@ export default function AboutPage() {
         secondaryCta={{ href: "/services", label: "See the Magic We've Made" }}
       />
 
-      {/* 2 — Why we exist */}
-      <Section tone="light">
-        <Container size="wide" className="flex flex-col gap-12">
-          <SectionHeading
-            as="h2"
-            kicker="Why we exist"
-            title="Every genie has an origin."
-            highlight="origin"
-            tone="light"
-            subtitle="Ours began in the gap between great care and getting found. Too many brilliant healthcare specialists stayed invisible online, so we built a medical marketing agency made just for them."
-          />
-          <RevealGroup className="grid gap-5 md:grid-cols-3">
-            {ABOUT_WISH_POINTS.map((point) => (
-              <RevealItem key={point.title} className="h-full">
-                <Link href={point.href} className="group block h-full">
-                  <GlassCard tone="light" radius="xl" hover className="flex h-full flex-col gap-3 p-7">
-                    <h3 className="font-display text-h4 text-ink-900 transition-colors group-hover:text-genie-700">
-                      {point.title}
-                    </h3>
-                    <p className="text-sm leading-relaxed text-ink-700">{point.body}</p>
-                    <span className="mt-auto inline-flex items-center gap-1.5 text-sm font-semibold text-genie-700 transition-colors group-hover:text-genie-900">
-                      Learn more
-                      <span aria-hidden="true" className="transition-transform group-hover:translate-x-0.5">
-                        →
-                      </span>
-                    </span>
-                  </GlassCard>
-                </Link>
-              </RevealItem>
-            ))}
-          </RevealGroup>
-        </Container>
-      </Section>
+      <GenieFeatureCards
+        id="why-we-exist"
+        kicker="Why we exist"
+        title="Every genie has an origin."
+        highlight="origin"
+        subtitle="Ours began in the gap between great care and getting found. Too many brilliant healthcare specialists stayed invisible online, so we built a medical marketing agency made just for them."
+        cards={ABOUT_WISH_POINTS}
+      />
 
       {/* 3 — What we stand for */}
-      <Section tone="dark">
+      <Section tone="light" className="bg-[#ffffff]">
         <OrbAnchor
           id="about-values"
           mood="thinking"
@@ -90,24 +65,25 @@ export default function AboutPage() {
             highlight="rules"
             subtitle="The values behind our clinic marketing strategy."
             align="center"
+            tone="light"
           />
           <RevealGroup className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {ABOUT_VALUES.map((value) => (
               <RevealItem key={value.title} className="h-full">
-                <GlassCard tone="dark" radius="xl" hover className="flex h-full flex-col gap-4 p-7">
+                <GlassCard tone="light" radius="xl" hover className="flex h-full flex-col gap-4 p-7">
                   <span
                     aria-hidden="true"
                     className="h-2.5 w-2.5 rounded-full"
                     style={{ background: value.accent, boxShadow: `0 0 12px 1px ${value.accent}` }}
                   />
-                  <h3 className="font-display text-h4 text-onDark">{value.title}</h3>
-                  <p className="text-sm leading-relaxed text-onDark-muted">{value.body}</p>
+                  <h3 className="font-display text-h4 text-ink-900">{value.title}</h3>
+                  <p className="text-sm leading-relaxed text-ink-700">{value.body}</p>
                 </GlassCard>
               </RevealItem>
             ))}
           </RevealGroup>
           <Reveal delay={0.1} className="text-center">
-            <p className="mx-auto max-w-2xl font-display text-h5 text-balance text-onDark-muted">
+            <p className="mx-auto max-w-2xl font-display text-h5 text-balance text-ink-700">
               Ethical in practice. Emotional in craft. Logical in strategy.{" "}
               <span className="genie-text">That is the magic.</span>
             </p>
@@ -116,7 +92,7 @@ export default function AboutPage() {
       </Section>
 
       {/* 4 — Our approach */}
-      <Section tone="light">
+      <Section tone="light" className="bg-[#ffffff]">
         <Container className="flex flex-col gap-12">
           <SectionHeading
             as="h2"
@@ -149,7 +125,7 @@ export default function AboutPage() {
       </Section>
 
       {/* 5 — Trusted by specialist clinics */}
-      <Section tone="dark">
+      <Section tone="light" className="bg-[#ffffff]">
         <OrbAnchor
           id="about-clients"
           mood="celebrate"
@@ -164,6 +140,7 @@ export default function AboutPage() {
             title="The clinics who made a wish."
             highlight="wish"
             align="center"
+            tone="light"
             subtitle="Specialist clinics across Singapore trust Clinic Genie with their branding, websites, search, and growth."
           />
           <Reveal delay={0.05}>
@@ -173,9 +150,9 @@ export default function AboutPage() {
             {ABOUT_TRUSTED_CLIENTS.map((client) => {
               const isExternal = client.href.startsWith("http");
               const card = (
-                <GlassCard tone="dark" radius="xl" hover className="flex h-full flex-col gap-2 p-6">
-                  <h3 className="font-display text-base font-semibold text-onDark">{client.name}</h3>
-                  <p className="text-sm leading-relaxed text-onDark-muted">{client.services}</p>
+                <GlassCard tone="light" radius="xl" hover className="flex h-full flex-col gap-2 p-6">
+                  <h3 className="font-display text-base font-semibold text-ink-900">{client.name}</h3>
+                  <p className="text-sm leading-relaxed text-ink-700">{client.services}</p>
                 </GlassCard>
               );
 
@@ -204,7 +181,7 @@ export default function AboutPage() {
       </Section>
 
       {/* 6 — Clinic Genie ecosystem */}
-      <Section tone="light">
+      <Section tone="light" className="bg-[#ffffff]">
         <Container size="prose" className="flex flex-col gap-8">
           <SectionHeading
             as="h2"
@@ -224,7 +201,7 @@ export default function AboutPage() {
       </Section>
 
       {/* 7 — People behind it */}
-      <Section tone="dark">
+      <Section tone="light" className="bg-[#ffffff]">
         <OrbAnchor
           id="about-team"
           mood="curious"
@@ -234,11 +211,11 @@ export default function AboutPage() {
         <Container size="wide" className="flex flex-col gap-12">
           <div className="flex flex-col items-start justify-between gap-6 lg:flex-row lg:items-end">
             <div className="flex max-w-2xl flex-col gap-4">
-              <Kicker>Meet the Genies Behind the Magic</Kicker>
-              <h2 className="font-display text-h2 text-balance text-onDark">
+              <Kicker tone="light">Meet the Genies Behind the Magic</Kicker>
+              <h2 className="font-display text-h2 text-balance text-ink-900">
                 A boutique band of medical marketing experts.
               </h2>
-              <p className="text-lead text-onDark-muted">
+              <p className="text-lead text-ink-700">
                 Daring, innovative, and built for specialist clinics. Different crafts, one growth engine.
               </p>
             </div>
@@ -249,9 +226,9 @@ export default function AboutPage() {
           <RevealGroup className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {ABOUT_TEAM_ROLES.map((role) => (
               <RevealItem key={role.title} className="h-full">
-                <GlassCard tone="dark" radius="xl" hover className="flex h-full flex-col gap-3 p-6">
-                  <h3 className="font-display text-base font-semibold text-onDark">{role.title}</h3>
-                  <p className="text-sm leading-relaxed text-onDark-muted">{role.body}</p>
+                <GlassCard tone="light" radius="xl" hover className="flex h-full flex-col gap-3 p-6">
+                  <h3 className="font-display text-base font-semibold text-ink-900">{role.title}</h3>
+                  <p className="text-sm leading-relaxed text-ink-700">{role.body}</p>
                 </GlassCard>
               </RevealItem>
             ))}
@@ -260,16 +237,35 @@ export default function AboutPage() {
       </Section>
 
       {/* 8 — Final CTA */}
-      <PageFinale>
-        <PageFinaleCTA
-          kicker="Make your first wish"
-          title="What is your clinic's growth wish?"
-          highlight="wish"
-          body="Tell us about your clinic, your specialty, and the enquiries you want to attract. No vague wishes. No confusing jargon. Just a clearer path to responsible clinic marketing."
-          primaryCta={{ href: "/contact", label: "Make Your First Wish" }}
-          secondaryCta={{ href: "/contact", label: "Send Your Wish to the Genie" }}
-        />
-      </PageFinale>
-    </>
+      <Section tone="light" className="bg-[#ffffff] pb-32">
+        <Container className="flex flex-col items-center gap-7 text-center">
+          <Reveal>
+            <Kicker tone="light">Make your first wish</Kicker>
+          </Reveal>
+          <Reveal delay={0.05}>
+            <h2 className="font-display text-h2 text-balance text-ink-900">
+              What is your clinic&apos;s growth{" "}
+              <span className="genie-text">wish?</span>
+            </h2>
+          </Reveal>
+          <Reveal delay={0.1}>
+            <p className="mx-auto max-w-full text-lead text-pretty text-ink-700 sm:max-w-[75%]">
+              Tell us about your clinic, your specialty, and the enquiries you want to attract. No vague
+              wishes. No confusing jargon. Just a clearer path to responsible clinic marketing.
+            </p>
+          </Reveal>
+          <Reveal delay={0.2}>
+            <div className="flex flex-wrap items-center justify-center gap-4">
+              <MagneticButton href="/contact" size="lg" withMiniOrb>
+                Make Your First Wish
+              </MagneticButton>
+              <MagneticButton href="/contact" size="lg" variant="secondary">
+                Send Your Wish to the Genie
+              </MagneticButton>
+            </div>
+          </Reveal>
+        </Container>
+      </Section>
+    </div>
   );
 }

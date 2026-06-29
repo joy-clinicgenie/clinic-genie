@@ -286,6 +286,51 @@ export const SPECIALTY_HUBS: SpecialtyHub[] = [
   },
 ];
 
+export interface SpecialtyCategory {
+  id: string;
+  name: string;
+  slugs: string[];
+}
+
+export const SPECIALTY_CATEGORIES: SpecialtyCategory[] = [
+  {
+    id: "medical",
+    name: "Medical Specialties",
+    slugs: ["cardiology", "endocrinology", "neurology", "ophthalmology"],
+  },
+  {
+    id: "skin",
+    name: "Skin + Aesthetics",
+    slugs: ["dermatology", "acne"],
+  },
+  {
+    id: "family",
+    name: "Family + Children",
+    slugs: ["paediatrics"],
+  },
+  {
+    id: "dental",
+    name: "Dental + Oral Health",
+    slugs: ["dental"],
+  },
+  {
+    id: "rehab",
+    name: "Rehabilitation + Allied Health",
+    slugs: ["aquatic-physio"],
+  },
+  {
+    id: "surgical",
+    name: "Surgical Specialties",
+    slugs: [],
+  },
+];
+
+export function getSpecialtyCategoryItems(category: SpecialtyCategory): SpecialtyHubCard[] {
+  return category.slugs
+    .map((slug) => SPECIALTY_HUBS.find((hub) => hub.slug === slug))
+    .filter((hub): hub is SpecialtyHubCard => Boolean(hub));
+}
+
 export function getSpecialtyHub(slug: string): SpecialtyHub | undefined {
   return SPECIALTY_HUBS.find((hub) => hub.slug === slug);
 }

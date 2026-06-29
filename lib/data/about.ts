@@ -6,8 +6,10 @@ export interface AboutValue {
 
 export interface AboutWishPoint {
   title: string;
+  highlight: string;
   body: string;
   href: string;
+  image: string;
 }
 
 export interface AboutTrustedClient {
@@ -47,18 +49,24 @@ export const ABOUT_VALUES: AboutValue[] = [
 export const ABOUT_WISH_POINTS: AboutWishPoint[] = [
   {
     title: "Be found",
+    highlight: "found",
     body: "Show up where patient decisions begin.",
     href: "/services/core-pillars/healthcare-seo",
+    image: "/about/found-everywhere.svg",
   },
   {
     title: "Be trusted",
-    body: "Communicate clearly and credibly, within Singapore's HCSA, PHMC, and SMC guidelines.",
+    highlight: "trusted",
+    body: "Communicate clearly and credibly, within Singapore's Healthcare Services Act (HCSA) guidelines.",
     href: "/services#compliance",
+    image: "/compliance/compliance-aware.svg",
   },
   {
     title: "Be chosen",
+    highlight: "chosen",
     body: "Turn search intent into qualified clinic enquiries.",
     href: "/contact",
+    image: "/about/statistic.svg",
   },
 ];
 

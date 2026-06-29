@@ -283,6 +283,28 @@
     --btn-cta-gap: 0.4375rem;
     --btn-cta-size: 0.9375rem;
   }
+
+  /* Ghost / secondary — same padding scale as gradient CTAs */
+  .btn-shell {
+    gap: var(--btn-cta-gap);
+    padding: var(--btn-cta-py) var(--btn-cta-px);
+    font-size: var(--btn-cta-size);
+    line-height: 1.25;
+  }
+
+  .btn-shell.btn-shell-sm {
+    --btn-cta-py: 0.625rem;
+    --btn-cta-px: 1.125rem;
+    --btn-cta-gap: 0.375rem;
+    --btn-cta-size: 0.8125rem;
+  }
+
+  .btn-shell.btn-shell-md {
+    --btn-cta-py: 0.75rem;
+    --btn-cta-px: 1.5rem;
+    --btn-cta-gap: 0.4375rem;
+    --btn-cta-size: 0.9375rem;
+  }
 }
 
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {

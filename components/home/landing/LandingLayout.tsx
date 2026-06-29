@@ -231,13 +231,35 @@ export function MetricCell({
   label: string;
   index: number;
 }) {
+  const prefix = value.startsWith("$") ? "$" : "";
+  const unsigned = prefix ? value.slice(1) : value;
+  const hasKPlus = unsigned.endsWith("K+");
+  const core = hasKPlus ? unsigned.slice(0, -2) : unsigned;
+  const suffix = hasKPlus ? "K+" : "";
+
   return (
     <div className="flex flex-col items-center gap-2 px-2 py-2 text-center sm:px-4 lg:px-8 lg:py-4">
-      <SplitFlapText
-        text={value}
-        startDelay={index * 180}
-        className="font-display text-h3 font-semibold leading-none text-[#3A8093]"
-      />
+      <span className="inline-flex items-start font-display font-semibold leading-none text-[#3A8093]">
+        {prefix ? (
+          <SplitFlapText
+            text={prefix}
+            startDelay={index * 180}
+            className="mr-0.5 pt-1 text-[1.3em]"
+          />
+        ) : null}
+        <SplitFlapText
+          text={core}
+          startDelay={index * 180}
+          className="text-h3"
+        />
+        {suffix ? (
+          <SplitFlapText
+            text={suffix}
+            startDelay={index * 180}
+            className="ml-0.5 pt-1 text-[1.3em]"
+          />
+        ) : null}
+      </span>
       <p className="text-sm leading-relaxed text-[#7E8C92]">{label}</p>
     </div>
   );

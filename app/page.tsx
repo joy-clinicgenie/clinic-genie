@@ -21,10 +21,12 @@ import { ClinicGenieGap } from "@/components/home/landing/ClinicGenieGap";
 import { WishStack } from "@/components/home/landing/WishStack";
 import { MagicProcess } from "@/components/home/landing/MagicProcess";
 import { SpecialistClinicsOrb } from "@/components/home/landing/SpecialistClinicsOrb";
+import specialistSectionStyles from "@/components/home/landing/SpecialistClinicsOrb.module.css";
 import { PortfolioWorksCarousel } from "@/components/home/landing/PortfolioWorksCarousel";
 import { AlliesCards, AlliesTagline } from "@/components/home/landing/AlliesCards";
 import { ComplianceCards } from "@/components/home/landing/ComplianceCards";
 import { CLIENT_LOGOS } from "@/lib/data/client-logos";
+import { cn } from "@/lib/cn";
 
 const WISH_CHIPS: Record<string, string> = {
   findclinic: "PLATFORM",
@@ -38,10 +40,10 @@ const WISH_CHIPS: Record<string, string> = {
 };
 
 const METRICS = [
-  { value: "20+", label: "Added enquiries / month" },
-  { value: "8-12", label: "Potential consultations" },
-  { value: "$33.6K+", label: "Annual revenue opportunity" },
-  { value: "5 channels", label: "Working as one engine" },
+  { value: "367K+", label: "Search impressions tracked" },
+  { value: "21K+", label: "Paid site sessions tracked" },
+  { value: "1.7K+", label: "Call and form actions tracked" },
+  { value: "$9.88", label: "Avergae cost per action" },
 ];
 
 export default function HomePage() {
@@ -77,7 +79,7 @@ export default function HomePage() {
             </MetricsRowStats>
 
             <LandingBody className="text-sm">
-              Figures are illustrative estimates only. Actual results vary by specialty, clinic fees, competition, budget, patient journey, and conversion performance.
+              Figures are based on aggregated campaign data across clients. Results vary by specialty, budget, competition, and patient journey.
             </LandingBody>
 
             <MagneticButton href="/portfolio" size="md" withMiniOrb>
@@ -100,7 +102,7 @@ export default function HomePage() {
             title: "Eight kinds of magic, one growth engine.",
             highlight: "magic",
             subtitle:
-              "Clinic marketing should never work in silos. We connect search, content, design, and campaigns into one engine, so your digital presence is clearer, stronger, and easier to measure.",
+              "Clinic marketing shouldn't live in silos. We conjure it into one growth engine.",
           }}
         />
       </LandingSection>
@@ -173,11 +175,11 @@ export default function HomePage() {
         </div>
       </LandingSection>
 
-      {/* 8b — Specialist clinics & works: interactive grey orb */}
+      {/* 8b — Specialist clinics & works: category groups */}
       <LandingSection
         tone="white"
-        className="bg-white pt-24 pb-0"
-        containerClassName="flex flex-col gap-16"
+        className={cn("pt-24 pb-0", specialistSectionStyles.sectionShell)}
+        containerClassName="relative z-10 flex flex-col gap-16"
       >
         <Reveal>
           <LandingIntro

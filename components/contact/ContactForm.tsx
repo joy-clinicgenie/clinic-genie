@@ -59,6 +59,8 @@ export function ContactForm() {
 
   const [focused, setFocused] = useState<string | null>(null);
   const [consent, setConsent] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handleFocus = (name: string) => {
     setFocused(name);
@@ -71,16 +73,51 @@ export function ContactForm() {
     setScene({ mood: "curious", intensity: 0.85 });
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // gather the wish: orb compresses to a bright point of focus...
+    if (submitting) return;
+
+    setError(null);
+    setSubmitting(true);
     setScene({ mood: "thinking", scale: 0.9, intensity: 1 });
-    // ...then flares and sends it upward in celebration
-    window.setTimeout(() => {
+
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: formData.get("name"),
+          clinic: formData.get("clinic"),
+          email: formData.get("email"),
+          phone: formData.get("phone"),
+          specialty: formData.get("specialty"),
+          message: formData.get("message"),
+          consent: formData.get("consent") === "on",
+        }),
+      });
+
+      const payload = (await response.json()) as { error?: string };
+
+      if (!response.ok) {
+        throw new Error(payload.error ?? "We could not send your enquiry right now.");
+      }
+
       burst();
       setScene({ mood: "celebrate", scale: 1.08, intensity: 1 });
       router.push("/thank-you");
-    }, 650);
+    } catch (submitError) {
+      setScene({ mood: "curious", scale: 1, intensity: 0.85 });
+      setError(
+        submitError instanceof Error
+          ? submitError.message
+          : "We could not send your enquiry right now. Please try again."
+      );
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const fid = (name: string) => `${baseId}-${name}`;
@@ -167,9 +204,15 @@ export function ContactForm() {
           <span>I&apos;d like Clinic Genie to contact me about my enquiry.</span>
         </label>
 
+        {error && (
+          <p role="alert" className="rounded-md border border-red-400/30 bg-red-500/10 px-4 py-3 text-sm text-red-100">
+            {error}
+          </p>
+        )}
+
         <div className="flex flex-wrap items-center gap-4 pt-1">
-          <MagneticButton type="submit" size="lg" withMiniOrb>
-            Send my wish
+          <MagneticButton type="submit" size="lg" withMiniOrb disabled={submitting}>
+            {submitting ? "Sending your wish..." : "Send my wish"}
           </MagneticButton>
           <p className="text-sm text-onDark-faint">No obligation. We reply within one business day.</p>
         </div>

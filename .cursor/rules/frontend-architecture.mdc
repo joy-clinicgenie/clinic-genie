@@ -1,0 +1,350 @@
+---
+description: Frontend architecture rules for Clinic Genie using Next.js, TypeScript, Tailwind CSS, Framer Motion, component structure, data handling, and deployment safety.
+globs:
+  - "**/*.{ts,tsx,js,jsx}"
+  - "**/*.{css,mdx,md}"
+alwaysApply: true
+---
+
+# Clinic Genie Frontend Architecture Rules
+
+## Tech Stack
+
+Client: Clinic Genie  
+Tech Stack: Next.js, TypeScript, Tailwind CSS, Framer Motion  
+Deployment: Vercel  
+
+Use this stack consistently unless explicitly instructed otherwise.
+
+## Tailwind CSS and Design System Rules
+
+Strictly follow the Tailwind configuration.
+
+Use design tokens from the Tailwind config for colours, spacing, typography, radius, shadows, and layout.
+
+Do not use arbitrary values unless absolutely necessary and justified by an existing design limitation.
+
+Correct:
+
+```tsx
+className="text-clinic-primary bg-clinic-soft rounded-clinic"
+```
+
+Avoid:
+
+```tsx
+className="text-[#0052CC] bg-[#F7FAFF] rounded-[18px]"
+```
+
+Use consistent spacing across sections.
+
+Avoid random one off spacing values.
+
+Use a clean visual hierarchy with generous whitespace, strong typographic rhythm, and clear section separation.
+
+## Next.js Rules
+
+Use Next.js App Router conventions unless the existing project structure requires otherwise.
+
+Prefer server components by default.
+
+Use client components only when needed for:
+
+- Framer Motion animation
+- Browser APIs
+- Local state
+- Interactive forms
+- Event handlers
+- Hooks that require the client
+
+Add `"use client"` only when necessary.
+
+Use `next/link` for internal navigation.
+
+Use `next/image` for images unless there is a specific technical reason not to.
+
+Always define image dimensions or use a layout that prevents Cumulative Layout Shift.
+
+Use metadata appropriately for SEO.
+
+Keep route level files clean and delegate UI to reusable sections and components.
+
+Avoid unnecessary client side JavaScript.
+
+## TypeScript and React Rules
+
+Use strict TypeScript.
+
+Do not use `any`.
+
+If a type is genuinely unknown, use `unknown` and narrow it safely.
+
+Use functional React components.
+
+Define clear prop interfaces or types.
+
+Example:
+
+```tsx
+interface ServiceCardProps {
+  title: string;
+  description: string;
+  href: string;
+  icon?: React.ReactNode;
+}
+```
+
+Define rigorous types for:
+
+- Navigation items
+- Service data
+- Specialty cards
+- Case studies
+- Blog articles
+- CTA blocks
+- Form values
+- API responses
+- Animation variants
+- SEO metadata
+- Clinic related content structures
+- Genie motif content blocks where relevant
+
+Use explicit return types where they improve clarity.
+
+Keep components small and single responsibility.
+
+Avoid large monolithic components.
+
+Prefer composition over deeply nested conditional UI.
+
+## File and Folder Structure Rules
+
+Use a clear modular structure.
+
+Reusable UI primitives:
+
+```txt
+/components/ui
+```
+
+Examples:
+
+```txt
+Button.tsx
+Card.tsx
+Input.tsx
+Textarea.tsx
+Modal.tsx
+Badge.tsx
+SectionWrapper.tsx
+Container.tsx
+```
+
+Page sections:
+
+```txt
+/components/sections
+```
+
+Examples:
+
+```txt
+HeroSection.tsx
+WhyClinicGenieSection.tsx
+ServicesSection.tsx
+SpecialtiesSection.tsx
+ClinicGenieAdvantageSection.tsx
+SelectedWorkSection.tsx
+HowWeWorkSection.tsx
+InsightsSection.tsx
+FinalCTASection.tsx
+```
+
+Feature specific components:
+
+```txt
+/components/features
+```
+
+Examples:
+
+```txt
+orb
+case-studies
+insights
+specialties
+contact
+genie-motif
+```
+
+Shared data:
+
+```txt
+/data
+```
+
+Examples:
+
+```txt
+navigation.ts
+services.ts
+specialties.ts
+case-studies.ts
+insights.ts
+brand-copy.ts
+```
+
+Shared utilities:
+
+```txt
+/lib
+```
+
+Examples:
+
+```txt
+utils.ts
+seo.ts
+constants.ts
+schema.ts
+```
+
+Hooks:
+
+```txt
+/hooks
+```
+
+Examples:
+
+```txt
+useReducedMotionPreference.ts
+useIsMobile.ts
+```
+
+Do not duplicate data across components.
+
+If content is reused, move it into a typed data file.
+
+## Component Quality Rules
+
+Before creating a new component, check whether an existing reusable component can be used or extended.
+
+Components should be:
+
+- Small
+- Typed
+- Reusable where practical
+- Easy to scan
+- Accessible
+- Responsive
+- Aligned with the design system
+
+Avoid deeply nested JSX.
+
+Avoid mixing unrelated concerns in one component.
+
+Keep presentation, data, and logic reasonably separated.
+
+Use clear prop names.
+
+Avoid vague names such as `Box`, `Thing`, `ContentBlock2`, or `NewSection`.
+
+## Forms and Data Handling Rules
+
+Treat all submitted form data carefully.
+
+Validate form inputs on both client and server.
+
+Do not rely only on frontend sanitisation.
+
+Use clear loading, success, and error states.
+
+Do not log sensitive user submitted information to the console.
+
+Do not expose private information in client components.
+
+Do not store sensitive information unnecessarily in local state, local storage, or session storage.
+
+Use accessible error messages.
+
+Ensure form fields have:
+
+- Visible labels
+- Clear placeholders where helpful
+- Error messages
+- Valid input types
+- Autocomplete attributes where appropriate
+
+For contact or strategy call forms, keep the experience simple, trustworthy, and low friction.
+
+## Environment Variable and Security Rules
+
+This project deploys to Vercel.
+
+Use environment variables through `process.env`.
+
+Never expose API keys, private endpoints, tokens, or secrets to the browser.
+
+Only use `NEXT_PUBLIC_` variables for values that are intentionally safe to expose publicly.
+
+Do not hardcode credentials.
+
+Do not commit secret keys.
+
+Do not print environment variables in logs.
+
+When adding integrations, keep server side logic server side.
+
+## Error Handling Rules
+
+Handle errors clearly and calmly.
+
+Use user friendly error messages.
+
+Avoid exposing technical details to users.
+
+For forms, explain what went wrong and what the user can do next.
+
+Do not silently fail.
+
+## AI Behaviour Rules
+
+When generating new code:
+
+- Follow the existing project structure
+- Use TypeScript
+- Use Tailwind design tokens
+- Use Framer Motion for animation
+- Avoid `any`
+- Avoid arbitrary Tailwind values
+- Avoid unnecessary dependencies
+- Keep components modular
+- Use semantic HTML
+- Preserve the Clinic Genie tone and motif rules
+- Use British English
+- Do not use em dashes
+
+When editing existing code:
+
+- Preserve existing naming conventions where sensible
+- Preserve existing design tokens
+- Preserve the approved layout direction
+- Refactor only when it improves clarity, maintainability, accessibility, or performance
+- Do not introduce unrelated changes
+- Do not rewrite entire files unnecessarily
+- Explain meaningful structural changes through clear code organisation
+
+## Non Negotiables
+
+Do not use `any`.
+
+Do not leak environment variables.
+
+Do not use arbitrary Tailwind values unless absolutely necessary.
+
+Do not add dependencies without a clear reason.
+
+Do not ignore mobile behaviour.
+
+Do not use em dashes.

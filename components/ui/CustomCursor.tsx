@@ -11,6 +11,7 @@ export function CustomCursor() {
   const [enabled, setEnabled] = useState(false);
   const [hovering, setHovering] = useState(false);
   const [down, setDown] = useState(false);
+  const [inHero, setInHero] = useState(false);
 
   const dotX = useMotionValue(-100);
   const dotY = useMotionValue(-100);
@@ -28,6 +29,8 @@ export function CustomCursor() {
       dotX.set(e.clientX);
       dotY.set(e.clientY);
       const el = e.target as HTMLElement | null;
+      const heroHit = !!el?.closest("#hero");
+      setInHero(heroHit);
       setHovering(!!el?.closest('a, button, [data-cursor="link"], input, textarea, select'));
     };
     const onDown = () => setDown(true);
@@ -44,7 +47,7 @@ export function CustomCursor() {
     };
   }, [dotX, dotY]);
 
-  if (!enabled) return null;
+  if (!enabled || inHero) return null;
 
   return (
     <>

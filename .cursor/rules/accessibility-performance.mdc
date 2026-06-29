@@ -1,0 +1,201 @@
+---
+description: Accessibility, responsive behaviour, motion, image, media, and performance rules for Clinic Genie.
+globs:
+  - "**/*.{ts,tsx,js,jsx}"
+  - "**/*.{css,mdx,md}"
+alwaysApply: true
+---
+
+# Clinic Genie Accessibility and Performance Rules
+
+## Accessibility Rules
+
+WCAG AA compliance is required.
+
+Every component must be accessible by default.
+
+Ensure:
+
+- Semantic HTML
+- Logical heading hierarchy
+- Strong colour contrast
+- Readable font sizes
+- Descriptive links
+- Proper button elements
+- Proper form labels
+- Keyboard navigability
+- Visible focus states
+- Screen reader friendly content
+- Meaningful image alt text
+- Reduced motion support where relevant
+- No essential information hidden behind hover only interactions
+
+Do not use clickable `div` or `span` elements when `button` or `a` is semantically correct.
+
+Do not remove focus outlines unless replacing them with a clearly visible accessible focus state.
+
+Interactive cards must be keyboard accessible.
+
+Hover reveal interactions must also work for keyboard and touch users.
+
+Forms must have associated labels, clear error states, helper text where needed, and accessible validation messaging.
+
+## Responsive Design Rules
+
+Use a mobile first approach.
+
+Every page and section must work across:
+
+- Small mobile screens
+- Large mobile screens
+- Tablets
+- Laptops
+- Desktop screens
+- Large displays
+
+Avoid fixed heights that may crop or break content.
+
+Use responsive grids, flexible spacing, and fluid type where appropriate.
+
+Ensure CTAs are easy to tap on mobile.
+
+Avoid placing key content inside complex desktop only interactions.
+
+If a section has a horizontal scroll, hover reveal, or advanced interaction on desktop, provide a simple accessible mobile version.
+
+## Animation Rules
+
+Use Framer Motion for all UI animations.
+
+Animations must feel fluid, premium, and understated.
+
+Preferred animation types:
+
+- Gentle fade in
+- Soft upward reveal
+- Subtle stagger
+- Smooth layout transition
+- Calm hover lift
+- Slow ambient orb movement where relevant
+
+Avoid:
+
+- Bouncy transitions
+- Elastic effects
+- Spinning elements
+- Fast flashing
+- Excessive parallax
+- Overly dramatic page transitions
+- Animations that distract from reading
+- Animations that create layout instability
+- Fantasy game effects
+- Overly magical sparkle effects
+- Animations that make the genie motif feel childish
+
+Recommended default transition:
+
+```tsx
+transition={{ duration: 0.45, ease: "easeOut" }}
+```
+
+Use `useReducedMotion` where motion may affect accessibility.
+
+Do not animate large blocks of text in a way that delays readability.
+
+Do not use animation as decoration only. Animation should support flow, hierarchy, or interaction feedback.
+
+## Interaction Rules
+
+Interactions should support clarity.
+
+Desktop hover interactions must not hide essential content from mobile or keyboard users.
+
+If using hover reveal effects, provide equivalent focus and tap states.
+
+Avoid interactions that feel gimmicky.
+
+Do not use interaction patterns that require hover to understand the content.
+
+Do not use carousels, scroll jacking, or horizontal scroll unless they clearly improve the section and remain accessible.
+
+The genie motif can be supported through subtle glow, reveal, or orb interactions. It must not reduce clarity or performance.
+
+## Performance Rules
+
+Optimise for fast loading, especially on mobile.
+
+Prioritise:
+
+- Image optimisation
+- Minimal JavaScript
+- Server components where possible
+- Lazy loading non critical assets
+- Stable layouts
+- Reduced Cumulative Layout Shift
+- Efficient animation
+- Clean data structures
+- Reusable components
+
+Avoid:
+
+- Heavy animation libraries beyond Framer Motion
+- Unnecessary dependencies
+- Large client components
+- Repeated data fetching
+- Unoptimised images
+- Excessive background videos
+- Over complex visual effects
+
+Performance should support trust. A slow healthcare website feels less credible.
+
+## Image and Media Rules
+
+Use `next/image` for images.
+
+Always provide meaningful alt text unless the image is purely decorative.
+
+Alt text should describe the image in context.
+
+Avoid stuffing alt text with keywords.
+
+For decorative visuals, use empty alt text where appropriate.
+
+Ensure image dimensions prevent layout shift.
+
+Optimise visual assets for web.
+
+Do not use generic stock imagery where a more strategic visual, abstract brand visual, case study preview, or interface inspired visual would communicate better.
+
+## Code Review Checklist
+
+Before finalising any generated or edited code, check:
+
+- Is it responsive?
+- Is it accessible?
+- Is the heading hierarchy logical?
+- Does it preserve keyboard navigation?
+- Are focus states visible?
+- Does it avoid hover only content?
+- Does it use `next/image` and `next/link` correctly?
+- Does it prevent layout shift?
+- Does the animation feel calm and professional?
+- Does the motif feel premium rather than gimmicky?
+- Does it avoid unnecessary client side JavaScript?
+- Does it avoid unnecessary dependencies?
+- Does it work properly on mobile?
+
+## Non Negotiables
+
+Do not create inaccessible interactions.
+
+Do not hide important content behind hover only behaviour.
+
+Do not sacrifice readability for animation.
+
+Do not ignore mobile behaviour.
+
+Do not add heavy dependencies without a clear reason.
+
+Do not use em dashes in visible copy.
+
+When unsure, choose the option that is more accessible, faster, simpler, and easier to use.

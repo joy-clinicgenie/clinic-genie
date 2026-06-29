@@ -39,11 +39,11 @@ const GHOST: Record<Tone, string> = {
   light: "border border-[#D8DEE1] bg-white text-ink-900 hover:border-[#9FB6BD] hover:-translate-y-0.5",
 };
 
-/** Padding for secondary/ghost only — primary uses `.btn-cta` tokens in globals.css */
-const SIZES: Record<Size, string> = {
-  sm: "gap-2 px-4 py-2 text-sm",
-  md: "gap-2 px-6 py-3 text-[0.9375rem]",
-  lg: "gap-2 px-8 py-4 text-base",
+/** Padding for secondary/ghost — matches `.btn-cta` via `.btn-shell` tokens in globals.css */
+const SHELL: Record<Size, string> = {
+  sm: "btn-shell btn-shell-sm",
+  md: "btn-shell btn-shell-md",
+  lg: "btn-shell",
 };
 
 const BRANDMARK_SIZES: Record<Size, string> = {
@@ -122,6 +122,7 @@ export function MagneticButton({
   withMiniOrb = false,
   withSparkle,
   magnetic = true,
+  disabled = false,
   className,
   children,
   ariaLabel,
@@ -135,6 +136,7 @@ export function MagneticButton({
   withMiniOrb?: boolean;
   withSparkle?: boolean;
   magnetic?: boolean;
+  disabled?: boolean;
   className?: string;
   children: ReactNode;
   ariaLabel?: string;
@@ -192,7 +194,7 @@ export function MagneticButton({
   const classes = cn(
     BASE,
     variantClass,
-    variant !== "primary" && SIZES[size],
+    variant !== "primary" && SHELL[size],
     showMagicSparkle && styles.magicButton,
     className
   );
@@ -232,7 +234,9 @@ export function MagneticButton({
     <motion.button
       ref={ref as React.RefObject<HTMLButtonElement>}
       type={type}
+      disabled={disabled}
       onClick={() => {
+        if (disabled) return;
         pulse();
         onClick?.();
       }}

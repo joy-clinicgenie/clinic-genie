@@ -1,4 +1,4 @@
-export type WorkTag = "Branding" | "Web Design" | "SEO" | "SEM" | "Content" | "Video" | "Strategy" | "Lead Gen" | "AI Search";
+export type WorkTag = "Branding" | "Photography" | "Web Design" | "SEO" | "SEM" | "Content" | "Video" | "Social Media" | "Strategy" | "Lead Gen" | "AI Search";
 
 export interface CaseStudy {
   slug: string;
@@ -21,7 +21,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     slug: "the-acne-clinic",
     name: "The Acne Clinic",
     tagline: "Face it. Fix it.",
-    specialty: "Aesthetics / Acne & Scarring",
+    specialty: "Skin + Aesthetics",
     line: "A bold new aesthetics brand that owns acne search in Singapore.",
     tags: ["Branding", "Web Design", "SEO", "SEM"],
     result: "+118% organic traffic · 2.1× consult bookings",
@@ -47,9 +47,9 @@ export const CASE_STUDIES: CaseStudy[] = [
     next: "PLACEHOLDER",
   },
   {
-    slug: "the-aesthetics-clinic",
+    slug: "pilotpulse",
     name: "PilotPulse",
-    specialty: "Aesthetics / Dermatology",
+    specialty: "Other",
     line: "Premium rebrand + content engine for chemical peels, fractional laser and skin boosters.",
     tags: ["Web Design", "SEO", "Content"],
     result: "Page 1 for 6 priority treatment keywords",
@@ -72,11 +72,11 @@ export const CASE_STUDIES: CaseStudy[] = [
     },
   },
   {
-    slug: "stellaris-fertility",
-    name: "Stellaris Fertility",
-    specialty: "Fertility & Women's Health",
+    slug: "stellaris",
+    name: "Stellaris",
+    specialty: "Other",
     line: "A reassuring, compliant brand for a sensitive specialty.",
-    tags: ["Branding", "Web Design", "Strategy"],
+    tags: ["Branding", "Social Media", "Strategy"],
     result: "+64% qualified enquiries in 5 months",
     accent: "#8E7BE8",
     challenge:
@@ -97,11 +97,11 @@ export const CASE_STUDIES: CaseStudy[] = [
     },
   },
   {
-    slug: "lumiere-dental",
-    name: "Lumière Dental",
+    slug: "cedar-endocrine-clinic",
+    name: "CEDAR Endocrine Clinic",
     specialty: "Dental",
-    line: "Implant and Invisalign demand, captured with tightly targeted SEM.",
-    tags: ["Web Design", "SEM", "Lead Gen"],
+    line: "Your Health Nurtured",
+    tags: ["Branding", "Photography", "Web Design", "SEM", "Lead Gen"],
     result: "38% lower cost-per-enquiry",
     accent: "#6CBAD9",
     challenge:
@@ -122,13 +122,13 @@ export const CASE_STUDIES: CaseStudy[] = [
     },
   },
   {
-    slug: "orchard-orthopaedics",
-    name: "Orchard Orthopaedics",
-    specialty: "Orthopaedics & Sports Medicine",
-    line: "Owning \"knee replacement Singapore\" through doctor-reviewed content.",
-    tags: ["SEO", "Content", "AI Search"],
+    slug: "joyful-seeds",
+    name: "Joyful Seeds Paediatrics",
+    specialty: "Paediatrics",
+    line: "Planting Joy. Harvesting Potential.",
+    tags: ["Branding", "Web Design", "SEO", "Content", "AI Search"],
     result: "Featured snippet + 3× organic leads",
-    accent: "#7FE9F0",
+    accent: "#FF6A88",
     challenge:
       "An orthopaedic specialist had deep expertise but almost no organic visibility for the procedures that mattered most to their practice.",
     approach: [

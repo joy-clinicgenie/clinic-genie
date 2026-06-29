@@ -21,7 +21,7 @@ import { PORTFOLIO_WORKS, type PortfolioWorkSlide } from "@/lib/data/portfolio-w
 import { cn } from "@/lib/cn";
 import styles from "./PortfolioWorksCarousel.module.css";
 
-const CARD_GAP = -24;
+const CARD_GAP = -32;
 const CARD_WIDTH_MOBILE = 220;
 const CARD_WIDTH_DESKTOP = 280;
 const ANGLE_PER_SLOT = 24;
