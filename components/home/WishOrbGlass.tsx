@@ -18,7 +18,6 @@ import {
 } from "react";
 import { Canvas, createPortal, useFrame, useThree } from "@react-three/fiber";
 import { Preload, useFBO } from "@react-three/drei";
-import { easing } from "maath";
 import { HERO_WISHES, type HeroWishEntry } from "@/lib/data/hero-wishes";
 import { HeroSparkleScene, HERO_SPARKLE_COLORS } from "@/components/home/HeroSparkleBackground";
 import styles from "./WishOrbGlass.module.css";
@@ -134,21 +133,6 @@ function anchorCenterToWorld(
   };
 }
 
-function setHeroOrbCursor(mode: "" | "grab" | "grabbing") {
-  if (mode) {
-    document.body.dataset.heroOrbCursor = mode;
-    delete document.body.dataset.customCursor;
-  } else {
-    delete document.body.dataset.heroOrbCursor;
-    if (
-      window.matchMedia("(pointer: fine)").matches &&
-      !window.matchMedia("(prefers-reduced-motion: reduce)").matches
-    ) {
-      document.body.dataset.customCursor = "on";
-    }
-  }
-}
-
 function updateOrbiters(
   orbitersEl: HTMLElement | null,
   wrapEl: HTMLElement | null,
@@ -202,7 +186,6 @@ export default function WishOrbGlass({
     return () => {
       io.disconnect();
       document.removeEventListener("visibilitychange", onVis);
-      delete document.body.dataset.heroOrbCursor;
     };
   }, []);
 
@@ -262,18 +245,11 @@ function Orb({
   const [bufferScene] = useState(() => new THREE.Scene());
   const [orbScene] = useState(() => new THREE.Scene());
   const { viewport, gl, size, camera } = useThree();
-  const lastMove = useRef(0);
-  const prevPointer = useRef(new THREE.Vector2(99, 99));
-  const cursorActive = useRef(false);
   const projectVec = useRef(new THREE.Vector3());
   const wishWorld = useRef(new THREE.Vector3());
 
   const vAtOrbDepth = useRef({ width: viewport.width, height: viewport.height });
-  const dragging = useRef(false);
-  const returning = useRef(false);
   const phrasePaused = useRef(false);
-  const dragOffset = useRef({ x: 0, y: 0 });
-  const vel = useRef({ x: 0, y: 0 });
   const home = useRef({ x: 0, y: 0 });
 
   const orbUniforms = useMemo(
@@ -313,77 +289,8 @@ function Orb({
     };
   }, [orbScene, orbUniforms]);
 
-  useEffect(() => {
-    if (reducedMotion) return;
-
-    const dom = gl.domElement;
-    dom.style.touchAction = "none";
-
-    const toWorld = (e: PointerEvent) => {
-      const rect = dom.getBoundingClientRect();
-      const ndcX = ((e.clientX - rect.left) / rect.width) * 2 - 1;
-      const ndcY = -(((e.clientY - rect.top) / rect.height) * 2 - 1);
-      const { width, height } = vAtOrbDepth.current;
-      return { x: (ndcX * width) / 2, y: (ndcY * height) / 2 };
-    };
-
-    const overOrb = (p: { x: number; y: number }) => {
-      const o = orbRef.current;
-      if (!o) return false;
-      return Math.hypot(p.x - o.position.x, p.y - o.position.y) <= metricsRef.current.worldRadius * 1.1;
-    };
-
-    const onDown = (e: PointerEvent) => {
-      const p = toWorld(e);
-      if (!overOrb(p)) return;
-      dragging.current = true;
-      returning.current = false;
-      vel.current.x = 0;
-      vel.current.y = 0;
-      if (orbRef.current) {
-        dragOffset.current.x = orbRef.current.position.x - p.x;
-        dragOffset.current.y = orbRef.current.position.y - p.y;
-      }
-      dom.setPointerCapture(e.pointerId);
-      setHeroOrbCursor("grabbing");
-      e.preventDefault();
-    };
-
-    const onMove = (e: PointerEvent) => {
-      const p = toWorld(e);
-      if (dragging.current && orbRef.current) {
-        orbRef.current.position.x = p.x + dragOffset.current.x;
-        orbRef.current.position.y = p.y + dragOffset.current.y;
-        setHeroOrbCursor("grabbing");
-      } else {
-        setHeroOrbCursor(overOrb(p) ? "grab" : "");
-      }
-    };
-
-    const onUp = () => {
-      if (!dragging.current) return;
-      dragging.current = false;
-      returning.current = true;
-      setHeroOrbCursor("");
-    };
-
-    dom.addEventListener("pointerdown", onDown);
-    dom.addEventListener("pointermove", onMove);
-    dom.addEventListener("pointerup", onUp);
-    dom.addEventListener("pointercancel", onUp);
-
-    return () => {
-      dom.removeEventListener("pointerdown", onDown);
-      dom.removeEventListener("pointermove", onMove);
-      dom.removeEventListener("pointerup", onUp);
-      dom.removeEventListener("pointercancel", onUp);
-      setHeroOrbCursor("");
-    };
-  }, [gl, reducedMotion, metricsRef]);
-
-  useFrame((state, delta) => {
-    const { gl: renderer, pointer, clock } = state;
-    const t = clock.elapsedTime;
+  useFrame((state) => {
+    const { gl: renderer } = state;
     const cam = state.camera;
     const v = state.viewport.getCurrentViewport(cam, [0, 0, ORB_Z]);
     vAtOrbDepth.current.width = v.width;
@@ -392,21 +299,9 @@ function Orb({
     const dpr = renderer.getPixelRatio();
     const pxRadius = computeOrbPxRadius(size.width, size.height);
     const worldRadius = pxRadiusToWorld(pxRadius, size.width, v.width);
-    const safeMargin = worldRadius * 0.12;
 
     metricsRef.current = { worldRadius, pxRadius };
-
-    if (!reducedMotion && !pointer.equals(prevPointer.current)) {
-      lastMove.current = t;
-      prevPointer.current.copy(pointer);
-    }
-    cursorActive.current = !reducedMotion && t - lastMove.current < 2;
-    phrasePaused.current = dragging.current || returning.current;
-
-    const halfW = v.width / 2;
-    const limX = halfW - worldRadius - 0.05;
-    const limY = Math.max(0, v.height / 2 - worldRadius - 0.05);
-    const safeMinX = -halfW + worldRadius + safeMargin;
+    phrasePaused.current = false;
 
     if (anchorRef?.current) {
       home.current = anchorCenterToWorld(anchorRef.current, gl.domElement, v.width, v.height);
@@ -417,46 +312,7 @@ function Orb({
 
     if (!orbRef.current) return;
 
-    if (reducedMotion) {
-      orbRef.current.position.set(homeX, homeY, ORB_Z);
-    } else if (dragging.current) {
-      const margin = worldRadius + 0.08;
-      orbRef.current.position.x = THREE.MathUtils.clamp(orbRef.current.position.x, -halfW + margin, halfW - margin);
-      orbRef.current.position.y = THREE.MathUtils.clamp(
-        orbRef.current.position.y,
-        -v.height / 2 + margin,
-        v.height / 2 - margin
-      );
-      orbRef.current.position.z = ORB_Z;
-    } else if (returning.current) {
-      const dx = orbRef.current.position.x - homeX;
-      const dy = orbRef.current.position.y - homeY;
-      const ax = -220 * dx - 20 * vel.current.x;
-      const ay = -220 * dy - 20 * vel.current.y;
-      vel.current.x += ax * delta;
-      vel.current.y += ay * delta;
-      orbRef.current.position.x += vel.current.x * delta;
-      orbRef.current.position.y += vel.current.y * delta;
-      orbRef.current.position.z = ORB_Z;
-      if (Math.hypot(dx, dy) < 0.02 && Math.hypot(vel.current.x, vel.current.y) < 0.05) {
-        returning.current = false;
-        orbRef.current.position.set(homeX, homeY, ORB_Z);
-        vel.current.x = 0;
-        vel.current.y = 0;
-      }
-    } else {
-      const wanderX = cursorActive.current
-        ? pointer.x * v.width * 0.13
-        : Math.sin(t * 0.19) * v.width * 0.11;
-      const destX = homeX + wanderX;
-      const destY = cursorActive.current
-        ? (pointer.y * v.height) / 2
-        : homeY + Math.cos(t * 0.23) * limY * 0.75;
-      const bob = Math.sin(t * 0.9) * 0.04;
-      const x = THREE.MathUtils.clamp(destX, safeMinX, limX);
-      const y = THREE.MathUtils.clamp(destY, homeY - limY, homeY + limY) + bob;
-      easing.damp3(orbRef.current.position, [x, y, ORB_Z], 0.25, delta);
-    }
+    orbRef.current.position.set(homeX, homeY, ORB_Z);
 
     if (wishRigRef.current) {
       worldAtDepthMatchingScreen(orbRef.current.position, WISH_PLANE_Z, cam, wishWorld.current);

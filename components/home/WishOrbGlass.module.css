@@ -26,7 +26,6 @@
   pointer-events: none;
   width: 0;
   height: 0;
-  animation: orbSpin 30s linear infinite;
 }
 
 .orbiters b {
@@ -34,18 +33,4 @@
   font-weight: 400;
   color: #2fc4d1;
   text-shadow: 0 0 12px rgba(120, 235, 245, 0.95);
-  animation: orbSpin 30s linear infinite reverse;
-}
-
-@keyframes orbSpin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .orbiters,
-  .orbiters b {
-    animation: none;
-  }
 }
