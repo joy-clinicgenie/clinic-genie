@@ -1,4 +1,4 @@
-import { SPECIALTIES } from "@/lib/data/faqs";
+import { CONTACT_SPECIALTIES } from "@/lib/data/contact";
 
 export interface ContactSubmissionInput {
   name: string;
@@ -20,7 +20,7 @@ export type ContactValidationResult =
   | { ok: false; error: string };
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const SPECIALTY_SET = new Set<string>(SPECIALTIES);
+const SPECIALTY_SET = new Set<string>(CONTACT_SPECIALTIES);
 
 function trim(value: unknown): string {
   return typeof value === "string" ? value.trim() : "";

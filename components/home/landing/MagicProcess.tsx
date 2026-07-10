@@ -141,9 +141,9 @@ function ProcessCard({
           {step.body}
         </p>
         {step.deliverable && (
-          <div className={cn("mt-2 w-full rounded-xl p-5 text-left", dark ? "glass" : "glass-light")}>
-            <p className={cn("text-sm font-semibold", dark ? "text-white" : "text-ink-900")}>Deliverable</p>
-            <p className={cn("mt-1 text-sm", dark ? "text-[#C9E4EA]" : "text-[#7E8C92]")}>{step.deliverable}</p>
+          <div className={cn("mt-2 w-full rounded-2xl p-5 text-left", dark ? "glass" : "border border-[#E6EEF1] bg-white shadow-card")}>
+            <p className={cn("text-sm font-semibold", dark ? "text-onDark" : "text-ink-900")}>Deliverable</p>
+            <p className={cn("mt-1 text-sm", dark ? "text-onDark-muted" : "text-ink-700")}>{step.deliverable}</p>
           </div>
         )}
       </motion.div>

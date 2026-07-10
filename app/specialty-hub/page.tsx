@@ -26,6 +26,8 @@ export default function SpecialtyHubPage() {
         subtitle="Every specialty searches differently. Parents, patients, and families each need a different kind of trust. Explore the growth systems Clinic Genie has built — and is building — for specialist clinics like yours."
         primaryCta={{ href: "/contact", label: "Make Your First Wish" }}
         minHeight="min-h-[60vh]"
+        showOrb={false}
+        showWishForm={false}
       />
 
       <Section tone="light">

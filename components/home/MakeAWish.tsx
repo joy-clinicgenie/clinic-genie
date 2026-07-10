@@ -292,14 +292,26 @@ export function MakeAWish({
               exit={{ opacity: 0, y: -8 }}
               transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
               className={cn(
-                "flex flex-col gap-2 rounded-xl p-5 text-left",
-                isLight ? "glass-light" : "glass-tint"
+                "flex flex-col gap-2 rounded-2xl p-5 text-left",
+                isLight
+                  ? "border border-[#E6EEF1] bg-white shadow-card"
+                  : "glass"
               )}
             >
-              <h3 className={cn("font-display text-base font-semibold", isLight ? "text-ink-900" : "text-onDark")}>
+              <h3
+                className={cn(
+                  "font-display text-base font-semibold",
+                  isLight ? "text-ink-900" : "text-onDark"
+                )}
+              >
                 {answer.title}
               </h3>
-              <p className={cn("text-sm leading-relaxed", isLight ? "text-[#7E8C92]" : "text-onDark-muted")}>
+              <p
+                className={cn(
+                  "text-sm leading-relaxed",
+                  isLight ? "text-ink-700" : "text-onDark-muted"
+                )}
+              >
                 {answer.body}
               </p>
               <MagneticButton
@@ -310,7 +322,7 @@ export function MakeAWish({
                 magnetic={false}
                 className={cn(
                   "mt-1 w-fit border-0 bg-transparent px-0 py-0 text-sm font-medium shadow-none hover:-translate-y-0",
-                  isLight ? "text-[#217B8E]" : "text-genie-300"
+                  isLight ? "text-genie-700" : "text-genie-300"
                 )}
               >
                 {answer.cta}

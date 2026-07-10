@@ -53,23 +53,22 @@ export function LandingKicker({
   children,
   light = false,
   align = "center",
+  className,
 }: {
   children: ReactNode;
   light?: boolean;
   align?: "left" | "center";
+  className?: string;
 }) {
   return (
     <p
       className={cn(
-        "flex items-center gap-2 font-display text-kicker uppercase tracking-[0.22em]",
-        align === "center" ? "justify-center" : "justify-start",
-        light ? "text-[#9FDCE8]" : "text-[#217B8E]"
+        "inline-flex w-fit items-center rounded-pill border bg-transparent px-3 py-1 font-mono text-xs font-bold uppercase tracking-wider",
+        light ? "border-genie-400 text-genie-300" : "border-genie-600 text-genie-700",
+        align === "center" ? "mx-auto" : undefined,
+        className
       )}
     >
-      <span
-        aria-hidden="true"
-        className={cn("h-1.5 w-1.5 rounded-full", light ? "bg-[#9FDCE8]" : "bg-[#217B8E]")}
-      />
       {children}
     </p>
   );

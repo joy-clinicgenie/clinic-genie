@@ -6,9 +6,7 @@ import { COMPLIANCE_CARDS } from "@/lib/data/compliance-cards";
 import { cn } from "@/lib/cn";
 import { ease } from "@/lib/motion";
 
-export function ComplianceCards({ tone = "light" }: { tone?: "light" | "dark" }) {
-  const isDark = tone === "dark";
-
+export function ComplianceCards(_props: { tone?: "light" | "dark" } = {}) {
   return (
     <motion.div
       className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5 lg:gap-3"
@@ -27,34 +25,29 @@ export function ComplianceCards({ tone = "light" }: { tone?: "light" | "dark" })
             hidden: { opacity: 0 },
             show: { opacity: 1, transition: { duration: 0.6, ease: ease.glide } },
           }}
-          className={cn(
-            "flex h-full min-w-0 flex-col items-center rounded-xl px-4 py-5 text-center sm:rounded-2xl sm:px-3 sm:py-5",
-            isDark ? "glass" : "glass-light"
-          )}
+          className="flex h-full min-w-0 flex-col overflow-hidden rounded-2xl border border-[#E6EEF1] bg-white text-left shadow-card"
         >
-          <Image
-            src={card.image}
-            alt={card.alt}
-            width={48}
-            height={48}
-            className="mb-2 h-8 w-8 shrink-0 object-contain sm:mb-3 sm:h-10 sm:w-10"
-          />
-          <h3
-            className={cn(
-              "font-display text-sm font-semibold leading-snug sm:text-xs",
-              isDark ? "text-white" : "text-ink-900"
-            )}
-          >
-            {card.title}
-          </h3>
-          <p
-            className={cn(
-              "mt-1.5 text-xs leading-relaxed text-pretty sm:mt-2 sm:text-[0.6875rem]",
-              isDark ? "text-[#C9E4EA]" : "text-[#7E8C92]"
-            )}
-          >
-            {card.body}
-          </p>
+          <div className="flex items-center justify-center bg-genie-50 px-5 pt-6 sm:px-6 sm:pt-7">
+            <Image
+              src={card.image}
+              alt={card.alt}
+              width={134}
+              height={134}
+              className="h-28 w-28 shrink-0 object-contain sm:h-[8.4rem] sm:w-[8.4rem]"
+            />
+          </div>
+          <div className="flex flex-1 flex-col gap-1.5 px-5 py-6 sm:gap-2 sm:px-6 sm:py-7">
+            <h3 className="font-display text-sm font-semibold leading-snug text-ink-900 sm:text-xs">
+              {card.title}
+            </h3>
+            <p
+              className={cn(
+                "text-xs leading-relaxed text-pretty text-ink-700 sm:text-[0.6875rem]"
+              )}
+            >
+              {card.body}
+            </p>
+          </div>
         </motion.div>
       ))}
     </motion.div>

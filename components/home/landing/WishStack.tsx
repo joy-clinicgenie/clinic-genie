@@ -115,7 +115,7 @@ export function WishStack({
             <Link
               href={`/services/core-pillars/${pillar.slug}`}
               className={cn(
-                "group block overflow-hidden rounded-[20px] border border-[#E6EEF1]/90 bg-white/95 shadow-none transition-[transform,box-shadow,border-color] duration-ui hover:-translate-y-0.5 hover:border-[#C5DDE3] hover:shadow-[0_8px_24px_rgba(6,45,54,0.08)] motion-reduce:hover:translate-y-0",
+                "group block overflow-hidden rounded-2xl border border-[#E6EEF1] bg-white shadow-card transition-[transform,box-shadow,border-color] duration-ui hover:-translate-y-0.5 hover:border-[#C5DDE3] hover:shadow-lg motion-reduce:hover:translate-y-0",
                 index < pillars.length - 1 ? "mb-[min(11vh,6.5rem)]" : "mb-0"
               )}
               aria-label={`Explore ${pillar.name}`}

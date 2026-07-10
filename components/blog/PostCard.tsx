@@ -246,10 +246,12 @@ const CATEGORY_ILLUSTRATIONS: Record<string, React.ReactNode> = {
 function PostCardImage({ category }: { category: PostCategory }) {
   const illustration = CATEGORY_ILLUSTRATIONS[category];
   return (
-    <div className="relative mb-1 overflow-hidden rounded-lg" style={{ aspectRatio: "16/8" }}>
-      {illustration ?? (
-        <div className="h-full w-full bg-gradient-to-br from-night-700 to-night-800" />
-      )}
+    <div className="h-56 w-full overflow-hidden">
+      <div className="h-full w-full [&>svg]:h-full [&>svg]:w-full [&>svg]:object-cover">
+        {illustration ?? (
+          <div className="h-full w-full bg-gradient-to-br from-night-700 to-night-800" />
+        )}
+      </div>
     </div>
   );
 }
@@ -259,47 +261,65 @@ function PostCardImage({ category }: { category: PostCategory }) {
 export function PostCard({
   post,
   tone = "dark",
-  showImage = true,
   className,
 }: {
   post: Post;
   tone?: "dark" | "light";
+  /** @deprecated Media band is always shown to match the article card layout. */
   showImage?: boolean;
   className?: string;
 }) {
+  const dark = tone === "dark";
+
   return (
     <Link
       href={`/genie-tips/${post.slug}`}
+      aria-label={`Read: ${post.title}`}
       className={cn(
-        "group flex h-full flex-col gap-3 rounded-xl p-6 transition-[transform,box-shadow] duration-ui ease-out-soft hover:-translate-y-1.5 motion-reduce:hover:translate-y-0",
-        tone === "dark" ? "glass hover:shadow-glow-sm" : "glass-light hover:shadow-card",
+        "group block h-full overflow-hidden rounded-2xl shadow-sm transition-[transform,box-shadow] duration-ui ease-out-soft hover:-translate-y-1 hover:shadow-lg motion-reduce:hover:translate-y-0",
+        dark ? "glass hover:shadow-glow-sm" : "bg-white",
         className
       )}
     >
-      {showImage && <PostCardImage category={post.category} />}
+      <article className="flex h-full flex-col overflow-hidden">
+        <PostCardImage category={post.category} />
 
-      <span
-        className={cn(
-          "inline-flex w-fit items-center rounded-pill px-3 py-1 font-mono text-xs uppercase tracking-wider",
-          tone === "dark" ? "bg-genie-500/15 text-genie-300" : "bg-genie-100 text-genie-700"
-        )}
-      >
-        {post.category}
-      </span>
-      <h5
-        className={cn(
-          "font-display text-h5 leading-snug transition-colors",
-          tone === "dark" ? "text-onDark group-hover:text-genie-200" : "text-ink-900 group-hover:text-genie-700"
-        )}
-      >
-        {post.title}
-      </h5>
-      <p className={cn("text-sm leading-relaxed", tone === "dark" ? "text-onDark-muted" : "text-ink-500")}>
-        {post.dek}
-      </p>
-      <span className={cn("mt-auto pt-2 text-xs", tone === "dark" ? "text-onDark-faint" : "text-ink-500")}>
-        {post.readingTime}
-      </span>
+        <div
+          className={cn(
+            "flex flex-1 flex-col p-4 sm:p-6",
+            dark ? "bg-transparent" : "bg-white"
+          )}
+        >
+          <time
+            className={cn(
+              "block text-xs",
+              dark ? "text-onDark-faint" : "text-ink-500"
+            )}
+          >
+            {post.updated}
+          </time>
+
+          <h3
+            className={cn(
+              "mt-0.5 font-display text-lg leading-snug transition-colors",
+              dark
+                ? "text-onDark group-hover:text-genie-200"
+                : "text-ink-900 group-hover:text-genie-700"
+            )}
+          >
+            {post.title}
+          </h3>
+
+          <p
+            className={cn(
+              "mt-2 line-clamp-3 text-sm leading-relaxed",
+              dark ? "text-onDark-muted" : "text-ink-500"
+            )}
+          >
+            {post.dek}
+          </p>
+        </div>
+      </article>
     </Link>
   );
 }

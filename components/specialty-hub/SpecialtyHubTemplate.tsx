@@ -30,7 +30,13 @@ function HubFaqAccordion({ items }: { items: SpecialtyHubDetail["faqs"] }) {
         const panelId = `hub-faq-panel-${i}`;
         const btnId = `hub-faq-trigger-${i}`;
         return (
-          <div key={i} className={cn("glass overflow-hidden rounded-xl", isOpen && "shadow-glow-sm")}>
+          <div
+            key={i}
+            className={cn(
+              "glass overflow-hidden rounded-2xl",
+              isOpen && "shadow-glow-sm"
+            )}
+          >
             <button
               id={btnId}
               type="button"
@@ -71,7 +77,7 @@ function HubFaqAccordion({ items }: { items: SpecialtyHubDetail["faqs"] }) {
                     {item.link && (
                       <Link
                         href={item.link.href}
-                        className="inline-flex w-fit items-center gap-1.5 text-sm font-semibold text-genie-300 transition-colors hover:text-white"
+                        className="inline-flex w-fit items-center gap-1.5 text-sm font-semibold text-genie-700 transition-colors hover:text-genie-900"
                       >
                         {item.link.label}
                         <span aria-hidden="true">→</span>
@@ -162,7 +168,9 @@ export function SpecialtyHubTemplate({ hub }: { hub: SpecialtyHubDetail }) {
             </RevealItem>
           </RevealGroup>
           <Reveal variant="up">
-            <p className="mx-auto max-w-2xl text-center text-base text-onDark-muted">{hub.searchCompare.closing}</p>
+            <p className="mx-auto max-w-2xl text-center text-base text-onDark-muted">
+              {hub.searchCompare.closing}
+            </p>
           </Reveal>
         </Container>
       </Section>
@@ -197,7 +205,7 @@ export function SpecialtyHubTemplate({ hub }: { hub: SpecialtyHubDetail }) {
               </Reveal>
               <Reveal variant="up" delay={0.1}>
                 <div className="flex flex-col gap-3">
-                  <p className="font-display text-kicker uppercase text-genie-700">The engine around it</p>
+                  <Kicker>The engine around it</Kicker>
                   <ul className="flex flex-col gap-2">
                     {hub.transformation.engine.map((item) => (
                       <li key={item.label} className="flex gap-2 text-sm leading-relaxed text-ink-700">
@@ -215,7 +223,7 @@ export function SpecialtyHubTemplate({ hub }: { hub: SpecialtyHubDetail }) {
           <Reveal variant="up" delay={0.14}>
             <div className="flex flex-col gap-6 rounded-2xl border border-ink-200 bg-genie-50/60 p-8">
               <div>
-                <p className="font-display text-kicker uppercase text-genie-700">Measurable magic</p>
+                <Kicker>Measurable magic</Kicker>
                 <p className="mt-2 max-w-3xl text-sm leading-relaxed text-ink-700">{hub.transformation.metricsIntro}</p>
               </div>
               <ul className="grid gap-3 sm:grid-cols-2">
@@ -256,7 +264,7 @@ export function SpecialtyHubTemplate({ hub }: { hub: SpecialtyHubDetail }) {
               <RevealItem key={link.href}>
                 <Link
                   href={link.href}
-                  className="glass inline-flex items-center gap-2 rounded-pill border border-white/10 px-5 py-2.5 text-sm font-medium text-onDark transition-colors hover:border-genie-400/50 hover:text-white"
+                  className="inline-flex items-center gap-2 rounded-pill border border-[#E6EEF1] bg-white px-5 py-2.5 text-sm font-medium text-ink-900 shadow-card transition-colors hover:border-genie-400/50 hover:text-genie-900"
                 >
                   {link.label}
                   <span aria-hidden="true">→</span>

@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { cn } from "@/lib/cn";
 import { Kicker } from "./Kicker";
 import { Reveal } from "./Reveal";
@@ -33,7 +34,7 @@ export function SectionHeading({
   className,
 }: {
   kicker?: string;
-  title: string;
+  title: ReactNode;
   highlight?: string;
   subtitle?: string;
   align?: "left" | "center";
@@ -42,6 +43,9 @@ export function SectionHeading({
   className?: string;
 }) {
   const Tag = as;
+  const titleContent =
+    typeof title === "string" ? renderHighlight(title, highlight, tone) : title;
+
   return (
     <div
       className={cn(
@@ -59,12 +63,12 @@ export function SectionHeading({
         <Tag
           className={cn(
             SIZE[as],
-            "text-balance",
+            "whitespace-pre-line text-balance",
             tone === "dark" ? "text-onDark" : "text-ink-900",
             align === "center" && "mx-auto max-w-3xl"
           )}
         >
-          {renderHighlight(title, highlight, tone)}
+          {titleContent}
         </Tag>
       </Reveal>
       {subtitle && (

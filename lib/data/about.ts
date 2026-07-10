@@ -1,7 +1,8 @@
 export interface AboutValue {
   title: string;
   body: string;
-  accent: string;
+  image: string;
+  alt: string;
 }
 
 export interface AboutWishPoint {
@@ -23,26 +24,58 @@ export interface AboutTeamRole {
   body: string;
 }
 
+export interface AboutExpertRole {
+  title: string;
+  body: string;
+}
+
 export const ABOUT_VALUES: AboutValue[] = [
   {
-    title: "Doctor and clinic-focused",
+    title: "Doctor + clinic-focused",
     body: "Our values shape everything, from how we treat you and your clinic to the work we produce.",
-    accent: "#18C4D9",
+    image: "/about/doctor-clinic-focused.png",
+    alt: "Doctor and clinic-focused icon",
   },
   {
     title: "Strong values",
     body: "We put clients first, listening closely and tailoring every wish to your goals.",
-    accent: "#78E2DD",
+    image: "/about/strong-values.png",
+    alt: "Strong values icon",
   },
   {
     title: "Solution-oriented",
     body: "We thrive on conjuring creative answers to complex clinic marketing challenges.",
-    accent: "#7DAFE3",
+    image: "/about/solution-oriented.png",
+    alt: "Solution-oriented icon",
   },
   {
     title: "Data-driven",
     body: "We believe in measurable magic, efficient, accountable, and built to last.",
-    accent: "#0E5F6B",
+    image: "/about/data-driven.png",
+    alt: "Data-driven icon",
+  },
+];
+
+export const ABOUT_EXPERT_ROLES: AboutExpertRole[] = [
+  {
+    title: "The Growth Strategists",
+    body: "Shape the clinic marketing roadmap with research, positioning, and clear growth direction.",
+  },
+  {
+    title: "The SEO Specialists",
+    body: "Build keyword-led SEO plans that help high-intent patients find your specialist clinic online.",
+  },
+  {
+    title: "The Campaign Experts",
+    body: "Run search and paid campaigns that connect clinics with the right patients at the right moment.",
+  },
+  {
+    title: "The Creative Makers",
+    body: "Craft medical content, brand visuals, websites, and patient-facing stories that build trust.",
+  },
+  {
+    title: "The Tech Builders",
+    body: "Create fast clinic websites, smoother workflows, and smart automation that keep the magic moving.",
   },
 ];
 

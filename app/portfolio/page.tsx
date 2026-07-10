@@ -1,16 +1,14 @@
 import type { Metadata } from "next";
 import { Section } from "@/components/ui/Section";
 import { Container } from "@/components/ui/Container";
-import { Kicker } from "@/components/ui/Kicker";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { Reveal } from "@/components/ui/Reveal";
-import { MagneticButton } from "@/components/ui/MagneticButton";
 import { StatTrio } from "@/components/ui/StatTrio";
 import { LightHero } from "@/components/ui/LightHero";
 import { OrbAnchor } from "@/components/orb/OrbAnchor";
 import { PageFinale } from "@/components/ui/PageFinale";
 import { PageFinaleCTA } from "@/components/ui/PageFinaleCTA";
 import { FilterGrid } from "@/components/portfolio/FilterGrid";
+import { RealFlipHeadline } from "@/components/portfolio/RealFlipHeadline";
 
 export const metadata: Metadata = {
   title: "Our Works — Real Clinic Marketing Results | Clinic Genie",
@@ -29,9 +27,10 @@ export default function PortfolioPage() {
     <>
       <LightHero
         kicker="Our works"
-        title="Real clinics. Real rankings. Real bookings."
-        highlight="bookings"
+        title={<RealFlipHeadline />}
         subtitle="A look at the brands, websites and campaigns we've conjured for specialist clinics across Singapore — and the results that followed."
+        showOrb={false}
+        showWishForm={false}
       />
 
       {/* 2 — Filter + grid */}

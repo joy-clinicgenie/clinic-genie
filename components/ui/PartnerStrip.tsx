@@ -23,15 +23,15 @@ export function PartnerStrip({
         {partners.map((p) => (
           <RevealItem
             key={p.name}
-            className="glass group relative flex flex-col gap-3 rounded-xl p-6 transition-transform duration-ui hover:-translate-y-1 motion-reduce:hover:translate-y-0"
+            className="group relative flex flex-col gap-3 rounded-2xl border border-[#E6EEF1] bg-white p-6 shadow-card transition-transform duration-ui hover:-translate-y-1 motion-reduce:hover:translate-y-0"
           >
             <span
               aria-hidden="true"
               className="h-2.5 w-2.5 rounded-full transition-shadow duration-ui"
               style={{ background: p.accent, boxShadow: `0 0 12px 1px ${p.accent}` }}
             />
-            <h3 className="font-display text-base font-semibold text-onDark">{p.name}</h3>
-            <p className="text-sm leading-relaxed text-onDark-muted">{p.blurb}</p>
+            <h3 className="font-display text-base font-semibold text-ink-900">{p.name}</h3>
+            <p className="text-sm leading-relaxed text-ink-700">{p.blurb}</p>
           </RevealItem>
         ))}
       </RevealGroup>

@@ -37,7 +37,7 @@ export const PORTFOLIO_WORKS: PortfolioWorkSlide[] = [
   },
   {
     id: "sbsn",
-    title: "SBSN",
+    title: "Singapore Brain & Spine Nerves Centre",
     category: "Brain & Spine",
     image: "/works/sbsn.png",
     href: "/portfolio/sbsn",

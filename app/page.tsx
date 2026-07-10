@@ -226,7 +226,7 @@ export default function HomePage() {
               <RevealGroup className="grid gap-5 md:grid-cols-3">
                 {POSTS.slice(0, 3).map((post) => (
                   <RevealItem key={post.slug} className="h-full">
-                    <PostCard post={post} tone="dark" showImage={false} />
+                    <PostCard post={post} tone="dark" />
                   </RevealItem>
                 ))}
               </RevealGroup>

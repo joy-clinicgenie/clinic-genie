@@ -1,23 +1,28 @@
 import type { Faq } from "@/lib/data/faqs";
+import { getSpecialtyHub, getSpecialtyHubHref } from "@/lib/data/specialty-hubs";
 
 export interface CtaLink {
   label: string;
   href: string;
 }
 
-export interface KeyPoint {
-  title: string;
-  body: string;
-}
-
 export interface PillarCard {
   title: string;
   body: string;
+  /** Optional cross-link shown under the card */
+  link?: CtaLink;
 }
 
-export interface PillarStep {
+export interface SpecialtyCard {
   title: string;
   body: string;
+  link: CtaLink;
+}
+
+export interface GrantedWish {
+  name: string;
+  summary: string;
+  href: string;
 }
 
 export interface CorePillar {
@@ -33,54 +38,90 @@ export interface CorePillar {
   heroPrimaryCta: CtaLink;
   heroSecondaryCta: CtaLink;
 
-  // 2 — Why it matters
-  whyTitle: string;
-  whyParagraph: string[];
-  keyPoints: KeyPoint[];
+  // 2 — Wishes / ecosystem intro
+  wishesSubtitle: string;
+  /** Optional section title (FindClinic ecosystem) */
+  wishesTitle?: string;
+  wishesIntro?: string[];
+  wishes: PillarCard[];
 
-  // 3 — What it helps clinics build
-  buildSubtitle: string;
-  buildTitle: string;
-  buildParagraph: string;
-  cards: PillarCard[];
-  /** Sibling pillar slugs to surface in the related-services strip */
-  relatedServices: string[];
+  // 3 — Mechanics / offers
+  mechanicsId: "mechanics" | "offers";
+  mechanicsSubtitle: string;
+  mechanicsTitle: string;
+  mechanicsLead: string;
+  mechanicsIntro: string;
+  mechanicsItems: PillarCard[];
 
-  // 4 — The Clinic Genie approach
-  approachSubtitle: string;
-  approachTitle: string;
-  approachParagraph: string[];
-  steps: PillarStep[];
-  trustNote: string;
+  // 4 — Why clinics join (FindClinic only)
+  whyJoin?: {
+    subtitle: string;
+    title: string;
+    paragraph: string;
+    points: PillarCard[];
+  };
 
-  // 5 — Built for specialist clinics
+  // 5 — Specialty matrix
+  specialtySubtitle: string;
   specialtyTitle: string;
-  specialtyParagraph: string;
+  specialtyLead: string;
+  specialties: SpecialtyCard[];
 
-  // 6 — Related insights + FAQs
-  insights: CtaLink[];
-  faqs: Faq[];
+  // 6 — Granted wishes
+  grantedSubtitle: string;
+  grantedTitle: string;
+  grantedIntro: string;
+  grantedWishes: GrantedWish[];
+  grantedCta: CtaLink;
 
-  // 7 — Final CTA
+  // 7 — Compliance
+  complianceTitle: string;
+  complianceBody: string;
+  complianceCta: CtaLink;
+  complianceTrustNote?: string;
+
+  // 8 — FAQs (omit for FindClinic)
+  faqs?: Faq[];
+
+  // 9 — Final CTA
   finalSubtitle: string;
   finalTitle: string;
   finalParagraph: string;
-  finalSecondaryCta: CtaLink;
+  finalPrimaryCta: CtaLink;
+  finalSecondaryCta?: CtaLink;
 }
 
-/** Shared specialty cards — the patient journeys every pillar is built around. */
-export const PILLAR_SPECIALTIES: KeyPoint[] = [
-  { title: "Endocrinology", body: "For diabetes, thyroid, hormonal, and metabolic care clinics." },
-  { title: "Aesthetic & Dermatology", body: "For skin, aesthetic, laser, and procedure-led clinics." },
-  { title: "Dental & Orthodontics", body: "For dental, implant, oral surgery, and orthodontic practices." },
-  { title: "Cardiology", body: "For heart specialists and cardiac clinics." },
-  { title: "Paediatrics", body: "For children's clinics and parent-focused care." },
-  { title: "Acne Specialist", body: "For acne-focused clinics and skin confidence journeys." },
-  { title: "Neurology & Neurosurgery", body: "For brain, spine, nerve, and pain-related specialist care." },
-  { title: "Aqua Physiotherapy", body: "For aquatic physiotherapy and rehabilitation clinics." },
-];
+function specialtyHref(slug: string): string {
+  const hub = getSpecialtyHub(slug);
+  return hub ? getSpecialtyHubHref(hub) : "/specialty-hub";
+}
 
-const CONTACT_CTA: CtaLink = { label: "Make Your First Wish", href: "/contact" };
+const CONTACT = "/contact";
+const PORTFOLIO = "/portfolio";
+const COMPLIANCE = "/services#compliance";
+const FINDCLINIC_URL = "https://findclinic.sg";
+
+const CONTACT_CTA: CtaLink = { label: "Make Your First Wish", href: CONTACT };
+const FINAL_PRIMARY_CTA: CtaLink = {
+  label: "Make Your Clinic Wish Come True",
+  href: CONTACT,
+};
+const COMPLIANCE_CTA: CtaLink = {
+  label: "How We Keep You Compliant",
+  href: COMPLIANCE,
+};
+const PORTFOLIO_CTA: CtaLink = {
+  label: "See Our Granted Wishes",
+  href: PORTFOLIO,
+};
+
+const AESTHETIC_HREF = specialtyHref("dermatology");
+const DENTAL_HREF = specialtyHref("dental");
+const MEDICAL_HREF = "/specialty-hub";
+
+const CEDAR = "/portfolio/cedar-endocrine-clinic";
+const JOYFUL = "/portfolio/joyful-seeds";
+const ACNE = "/portfolio/the-acne-clinic";
 
 export const CORE_PILLARS: CorePillar[] = [
   // ───────────────────────────── 1. FindClinic.sg ─────────────────────────────
@@ -89,88 +130,139 @@ export const CORE_PILLARS: CorePillar[] = [
     name: "FindClinic.sg",
     accent: "#6CBAD9",
     heroSubtitle: "FindClinic.sg",
-    heroTitle: "Helping patients find care with more clarity.",
+    heroTitle: "Where patients discover the right care, with clarity.",
     heroParagraph: [
-      "Choosing a clinic can feel overwhelming. Patients search, compare, read, and look for signs that they are making the right decision.",
-      "FindClinic.sg helps clinics become easier to discover, understand, and trust through clear clinic profiles, doctor-led content, healthcare articles, and patient-friendly information.",
+      "The Clinic Genie wish does not stop at your website. FindClinic.sg is a healthcare discovery platform that connects patients with specialist clinics across Singapore, through verified listings, doctor profiles, and real conversations with local doctors.",
+      "One more way for the right patients to find you.",
     ],
-    
-    heroPrimaryCta: { label: "Join FindClinic.sg", href: "/contact" },
-    heroSecondaryCta: { label: "Explore Clinic Listings", href: "/contact" },
-    whyTitle: "Patients are searching for more than a clinic name.",
-    whyParagraph: [
-      "They want to know who the doctor is, what the clinic offers, where it is located, and whether the information feels clear enough to take the next step.",
-      "FindClinic.sg gives clinics a clearer way to be present while patients are still learning, comparing, and deciding who to contact.",
+    heroPrimaryCta: { label: "Join FindClinic.sg", href: CONTACT },
+    heroSecondaryCta: { label: "Explore the Platform", href: FINDCLINIC_URL },
+    wishesSubtitle: "The Clinic Genie ecosystem",
+    wishesTitle: "Clinic Genie builds your visibility. FindClinic.sg extends it.",
+    wishesIntro: [
+      "Clinic Genie grows your clinic's presence through SEO, websites, content, and campaigns.",
+      "FindClinic.sg carries that visibility further, onto a dedicated clinic discovery network where patients are already searching, comparing, and deciding. Two parts of the same wish: helping the right patients find the right care.",
     ],
-    keyPoints: [
-      { title: "Clarity", body: "Help patients understand your clinic, doctors, services, and areas of care." },
-      { title: "Confidence", body: "Give patients useful information before they make an enquiry." },
-      { title: "Discovery", body: "Support your clinic's visibility across healthcare search and patient research journeys." },
-    ],
-    buildSubtitle: "What it supports",
-    buildTitle: "A clearer path from search to enquiry.",
-    buildParagraph:
-      "FindClinic.sg supports clinic discovery by giving patients structured, useful information in one place. Each profile and content piece is built to make your clinic easier to understand.",
-    cards: [
-      { title: "Clinic Profiles", body: "Show your clinic's services, location, specialties, and contact details clearly." },
-      { title: "Doctor Profiles", body: "Help patients understand the people behind the care, including specialist focus and clinical interests." },
-      { title: "Doctor Interviews", body: "Answer common patient questions in a clear, human way through doctor-led insights." },
-      { title: "Healthcare Articles", body: "Support patient education with useful content around conditions, services, and care options." },
-      { title: "Search-Friendly Structure", body: "Make clinic information easier for Google and AI search tools to understand." },
-      { title: "Enquiry Pathways", body: "Guide interested patients from discovery to the right next step." },
-    ],
-    relatedServices: ["healthcare-seo", "branding-copywriting", "geo-ai-search", "web-design-development"],
-    approachSubtitle: "How we build it",
-    approachTitle: "Clear information. Responsible content. Better discovery.",
-    approachParagraph: [
-      "FindClinic.sg is part of the Clinic Genie ecosystem. It is built with the same thinking we bring to healthcare SEO, clinic websites, content, and AI search.",
-      "Research shows where patients search. Data shows what works. Results show what to improve.",
-    ],
-    steps: [
-      { title: "Understand the clinic", body: "We look at your specialty, doctors, services, location, and patient audience." },
-      { title: "Shape the profile", body: "We organise clinic and doctor information so patients can understand it quickly." },
-      { title: "Create useful content", body: "We develop interviews and articles that answer real patient questions." },
-      { title: "Connect the journey", body: "We link profiles, articles, services, and enquiry paths so patients can move with less friction." },
-      { title: "Improve over time", body: "We review visibility, engagement, and content opportunities as the platform grows." },
-    ],
-    trustNote:
-      "FindClinic.sg content supports patient education. It does not replace medical consultation or clinical advice.",
-    specialtyTitle: "Every specialty has a different patient journey.",
-    specialtyParagraph:
-      "A parent looking for a paediatrician may need warmth and reassurance. A patient comparing dental implants may need clarity and trust. FindClinic.sg helps clinics present information in a way that matches how patients search, compare, and choose.",
-    insights: [
-      { label: "Why Clinic Listings Matter for Healthcare Visibility in Singapore", href: "/genie-tips" },
-      { label: "What Makes a Clinic Profile More Useful for Patients", href: "/genie-tips" },
-      { label: "How Patients Use Clinic Directory Platforms to Compare Providers", href: "/genie-tips" },
-      { label: "What Information Should Every Clinic Listing Include", href: "/genie-tips" },
-    ],
-    faqs: [
+    wishes: [],
+    mechanicsId: "offers",
+    mechanicsSubtitle: "What's on the platform",
+    mechanicsTitle: "A clearer path from search to the right clinic.",
+    mechanicsLead: "What FindClinic.sg offers",
+    mechanicsIntro:
+      "FindClinic.sg brings the information patients look for into one trusted Singapore healthcare directory.",
+    mechanicsItems: [
       {
-        q: "What is FindClinic.sg?",
-        a: "FindClinic.sg is a healthcare discovery platform by Clinic Genie. It helps patients explore clinic profiles, doctor-led content, healthcare articles, and specialist information in Singapore.",
+        title: "Verified Doctor Profiles",
+        body: "Each profile features qualifications, clinic details, and insights straight from the doctor.",
       },
       {
-        q: "How does FindClinic.sg help clinics?",
-        a: "It gives clinics another way to be discovered, understood, and considered by patients who are searching for healthcare information.",
+        title: "Medical Clinic Listings",
+        body: "Clear, verified medical clinic listings that help patients understand and compare specialist care.",
       },
       {
-        q: "Can FindClinic.sg replace my clinic website?",
-        a: "No. Your clinic website remains your main digital home. FindClinic.sg supports discovery by extending your visibility through profiles, interviews, and educational content.",
+        title: "Specialist Media Interviews",
+        body: "Real health advice from local specialists, the doctor-led content patients trust most.",
       },
       {
-        q: "Is FindClinic.sg suitable for specialist clinics?",
-        a: "Yes. It is especially useful for specialist clinics that need to explain services, doctors, conditions, and patient journeys clearly.",
+        title: "Healthcare Article Publishing",
+        body: "Patient-friendly medical education that answers real questions and builds health literacy.",
       },
       {
-        q: "Does FindClinic.sg provide medical advice?",
-        a: "No. FindClinic.sg content is for general information and patient education only. It should not replace consultation with a qualified healthcare professional.",
+        title: "Search and AI Visibility",
+        body: "Patient-facing healthcare information is structured so Google and AI tools surface it clearly.",
+      },
+      {
+        title: "High-Authority Local Citations",
+        body: "A presence that strengthens your clinic's high-authority local citations and search credibility.",
       },
     ],
-    finalSubtitle: "Ready to be easier to discover?",
-    finalTitle: "Help patients understand your clinic before they enquire.",
+    whyJoin: {
+      subtitle: "The clinic advantage",
+      title: "Be discovered, understood, and chosen.",
+      paragraph:
+        "A listing on FindClinic.sg is more than a directory entry. It is doctor-led content marketing that builds trust before a patient ever enquires.",
+      points: [
+        {
+          title: "Specialist Practice Amplification",
+          body: "Extend your reach through specialist practice amplification across the platform and its channels.",
+        },
+        {
+          title: "Ethical Patient Acquisition",
+          body: "Ethical patient acquisition pathways that guide interested patients toward the right next step.",
+        },
+        {
+          title: "Trusted Discovery",
+          body: "A credible, SMC-compliant presence patients can rely on while they compare and decide.",
+        },
+      ],
+    },
+    specialtySubtitle: "Specialist discovery",
+    specialtyTitle: "Built for Your Specialty",
+    specialtyLead:
+      "Every specialty is searched differently. FindClinic.sg already features specialists across oncology, neurosurgery, dermatology, geriatrics, and dental care, with room for more.",
+    specialties: [
+      {
+        title: "Aesthetic and Dermatology",
+        body: "Aesthetic specialist listings for skin, aesthetic, and procedure-led clinics.",
+        link: { label: "Explore aesthetic listings", href: FINDCLINIC_URL },
+      },
+      {
+        title: "Dental and Orthodontics",
+        body: "Dental clinic search networks for implant, oral surgery, and orthodontic practices.",
+        link: { label: "Explore dental listings", href: FINDCLINIC_URL },
+      },
+      {
+        title: "Medical and Specialist Clinics",
+        body: "Verified profiles for oncology, neurosurgery, geriatrics, and other specialist care.",
+        link: { label: "Explore specialist listings", href: FINDCLINIC_URL },
+      },
+    ],
+    grantedSubtitle: "Clinics on the platform",
+    grantedTitle: "Specialists patients are already finding.",
+    grantedIntro: "Clinics already discovered through FindClinic.sg include:",
+    grantedWishes: [
+      {
+        name: "Parkway Cancer Centre",
+        summary: "Oncology, Gleneagles Hospital.",
+        href: FINDCLINIC_URL,
+      },
+      {
+        name: "Singapore Brain Spine Nerves Centre",
+        summary: "Neurosurgery, Camden Medical.",
+        href: FINDCLINIC_URL,
+      },
+      {
+        name: "Medical and Surgical Dermatology Centre",
+        summary: "Dermatology, Novena Medical Centre.",
+        href: FINDCLINIC_URL,
+      },
+      {
+        name: "The Straits Geriatrics Centre",
+        summary: "Geriatrics, Gleneagles Medical Centre.",
+        href: FINDCLINIC_URL,
+      },
+      {
+        name: "Singapore Dental Implant Centre",
+        summary: "Dental and implants.",
+        href: FINDCLINIC_URL,
+      },
+    ],
+    grantedCta: { label: "Explore Clinic Listings", href: FINDCLINIC_URL },
+    complianceTitle: "Magic with a conscience.",
+    complianceBody:
+      "A healthcare discovery platform carries a duty of care. FindClinic.sg maintains SMC-compliant clinic profiles and follows HCSA guidelines for medical directories, so every profile, interview, and article supports patients responsibly.",
+    complianceCta: COMPLIANCE_CTA,
+    complianceTrustNote:
+      "All content on FindClinic.sg is for general information only. It is not intended as medical advice and should not replace consultation with a qualified healthcare professional.",
+    finalSubtitle: "Ready to be discovered?",
+    finalTitle: "Make your clinic easier to find, understand, and trust.",
     finalParagraph:
-      "If your clinic wants to be found with clearer profiles, doctor-led content, and patient-friendly healthcare information, start a conversation about joining FindClinic.sg.",
-    finalSecondaryCta: { label: "Explore Healthcare SEO", href: "/services/core-pillars/healthcare-seo" },
+      "If you want verified profiles, doctor-led content, and patient-friendly information working for your clinic, let's grant that wish together. Start a conversation about joining FindClinic.sg.",
+    finalPrimaryCta: { label: "Join FindClinic.sg", href: CONTACT },
+    finalSecondaryCta: {
+      label: "Explore Healthcare SEO",
+      href: "/services/core-pillars/healthcare-seo",
+    },
   },
 
   // ───────────────────────────── 2. Healthcare SEO ─────────────────────────────
@@ -179,83 +271,146 @@ export const CORE_PILLARS: CorePillar[] = [
     name: "Healthcare SEO",
     accent: "#7FE9F0",
     heroSubtitle: "Healthcare SEO",
-    heroTitle: "Be the clinic patients find first.",
+    heroTitle: "Make your clinic the answer patients are searching for.",
     heroParagraph: [
-      "Patients rarely search for your clinic by name. They search by problem — a treatment, a symptom, a question they need answered before they book.",
-      "Healthcare SEO helps your clinic rank for the high-intent searches that lead to real enquiries, with compliance-aware, doctor-reviewed content built for how patients actually search in Singapore.",
+      "Patients search Google long before they call. Healthcare SEO makes sure your clinic is the answer they find, and the one they trust.",
+      "Clinic Genie is a healthcare SEO agency for specialist clinics, blending search data, proven tools, and AI to turn quiet searches into real enquiries, all within HCSA and SMC guidelines.",
     ],
     heroPrimaryCta: CONTACT_CTA,
-    heroSecondaryCta: { label: "Explore the SEO playbook", href: "/genie-tips/healthcare-seo-singapore-2026" },
-    whyTitle: "Ranking is where the booking journey begins.",
-    whyParagraph: [
-      "When a patient searches for a treatment, the clinic that ranks first, loads fast, and reads as trustworthy usually wins the click — not always the best doctor.",
-      "Healthcare SEO closes that gap. It puts your expertise in front of patients at the exact moment they're looking, and earns the trust that turns a search into an enquiry.",
+    heroSecondaryCta: { label: "See How It Works", href: "#mechanics" },
+    wishesSubtitle: "What healthcare SEO grants your clinic",
+    wishes: [
+      {
+        title: "To Be Found",
+        body: "Appear the moment patients search. We target the exact terms patients type, then build the pages that rank.",
+      },
+      {
+        title: "To Be Trusted",
+        body: "Show up with credibility. Compliant, patient-focused content that earns confidence, within SMC guidelines.",
+      },
+      {
+        title: "To Be Chosen",
+        body: "Turn searches into bookings. Clear journeys and local SEO that drive organic patient acquisition.",
+      },
     ],
-    keyPoints: [
-      { title: "Intent", body: "Rank for the treatment and symptom searches patients actually type." },
-      { title: "Trust", body: "Doctor-reviewed, compliance-aware content that reads as credible." },
-      { title: "Compounding", body: "Organic visibility that keeps working long after the work is done." },
+    mechanicsId: "mechanics",
+    mechanicsSubtitle: "What healthcare SEO includes",
+    mechanicsTitle: "The Mechanics Behind the Magic",
+    mechanicsLead: "Every wish needs real machinery behind it.",
+    mechanicsIntro:
+      "Our medical SEO services bring together everything a specialist clinic needs to rank and grow, powered by the same tools and AI the best search teams trust.",
+    mechanicsItems: [
+      {
+        title: "Medical Keyword Research",
+        body: "With SEMrush and AnswerThePublic, we map the conditions, treatments, and real questions your patients search for.",
+      },
+      {
+        title: "On-Page SEO",
+        body: "Titles, structure, and content are shaped so every page ranks for the terms that matter.",
+      },
+      {
+        title: "Content Strategy",
+        body: "Authoritative, compliant content built around patient search intent, with AI-assisted research, always human-reviewed.",
+        link: {
+          label: "See our Branding and Copywriting",
+          href: "/services/core-pillars/branding-copywriting",
+        },
+      },
+      {
+        title: "Technical SEO",
+        body: "A fast, clean, well-structured site that search engines and AI tools understand at a glance.",
+        link: {
+          label: "See our Web Design and Development",
+          href: "/services/core-pillars/web-design-development",
+        },
+      },
+      {
+        title: "Local SEO for Clinics",
+        body: "Visibility for patients searching nearby, from Google Maps to local results.",
+      },
+      {
+        title: "Tracking and Reporting",
+        body: "We measure every result through Google Search Console and Google Analytics, tying rankings to real enquiries.",
+      },
     ],
-    buildSubtitle: "What it supports",
-    buildTitle: "Visibility that turns into enquiries.",
-    buildParagraph:
-      "Healthcare SEO is more than keywords. We build the structure, content, and authority that help your clinic rank — and convert — for the searches that matter most.",
-    cards: [
-      { title: "Keyword & Intent Research", body: "Map the treatment, symptom, and question searches that signal real patient demand." },
-      { title: "Treatment Pages", body: "Doctor-reviewed pages that explain the problem, the treatment, and what to expect." },
-      { title: "Technical SEO", body: "Fast, crawlable, mobile-first foundations that Google and patients both reward." },
-      { title: "Local SEO", body: "Google Business Profile and local signals that win nearby, high-intent patients." },
-      { title: "Content Strategy", body: "Supporting articles that build topical authority around your specialty." },
-      { title: "E-E-A-T Signals", body: "Named specialists, credentials, and reviews that prove medical trustworthiness." },
+    specialtySubtitle: "Specialist clinic SEO",
+    specialtyTitle: "Built for Your Specialty",
+    specialtyLead: "Every specialty is searched differently.",
+    specialties: [
+      {
+        title: "Aesthetic + Dermatology",
+        body: "SEO for skin, aesthetic, and procedure-led clinics.",
+        link: { label: "Explore aesthetic clinic SEO", href: AESTHETIC_HREF },
+      },
+      {
+        title: "Dental + Orthodontics",
+        body: "SEO for dental, implant, and orthodontic practices.",
+        link: { label: "Explore dental clinic SEO", href: DENTAL_HREF },
+      },
+      {
+        title: "Medical + Specialist Clinics",
+        body: "SEO for endocrine, cardiology, neurology, and other specialist care.",
+        link: { label: "Explore specialist clinic SEO", href: MEDICAL_HREF },
+      },
     ],
-    relatedServices: ["medical-sem", "geo-ai-search", "branding-copywriting", "findclinic"],
-    approachSubtitle: "How we build it",
-    approachTitle: "Research-led, compliance-aware, built to last.",
-    approachParagraph: [
-      "Healthcare SEO sits at the centre of the Clinic Genie growth engine. Every page is built with search intent and advertising compliance in mind, never one at the cost of the other.",
-      "Research shows where patients search. Data shows what works. Results show what to improve.",
+    grantedSubtitle: "Our work",
+    grantedTitle: "Clinics we have helped patients find.",
+    grantedIntro:
+      "Specialist clinics across Singapore trust Clinic Genie with their search visibility.",
+    grantedWishes: [
+      {
+        name: "Cedar Endocrine Clinic",
+        summary: "Healthcare SEO, content, and SEM.",
+        href: CEDAR,
+      },
+      {
+        name: "The Heart Specialist Clinic",
+        summary: "SEO across cardiology search terms.",
+        href: PORTFOLIO,
+      },
+      {
+        name: "Medical and Surgical Dermatology Clinic",
+        summary: "SEO and content for dermatology.",
+        href: PORTFOLIO,
+      },
+      {
+        name: "Singapore Dental Implant Centre",
+        summary: "SEO for a procedure-led dental practice.",
+        href: PORTFOLIO,
+      },
     ],
-    steps: [
-      { title: "Audit & research", body: "We assess your current visibility and map the searches your patients use." },
-      { title: "Plan the architecture", body: "We structure treatments, conditions, and content so search engines understand them." },
-      { title: "Create the content", body: "We write doctor-reviewed, compliant pages that explain and reassure." },
-      { title: "Build authority", body: "We strengthen technical health, local signals, and topical depth." },
-      { title: "Measure & refine", body: "We track rankings and enquiries, then improve what moves the needle." },
-    ],
-    trustNote:
-      "All SEO content is written with Singapore's PHMC/HCSA advertising guidelines in mind, and reviewed with your team.",
-    specialtyTitle: "Every specialty ranks differently.",
-    specialtyParagraph:
-      "Acne searches behave nothing like cardiology or dental implant searches. We tailor SEO to how patients in your specialty actually search, compare, and decide.",
-    insights: [
-      { label: "Healthcare SEO in Singapore: How Specialist Clinics Actually Rank in 2026", href: "/genie-tips/healthcare-seo-singapore-2026" },
-      { label: "5 Treatment Pages Every Aesthetic Clinic Should Have", href: "/genie-tips/5-treatment-pages-every-aesthetic-clinic-needs" },
-      { label: "Google Business Profile for Clinics: The 20-Minute Setup", href: "/genie-tips/google-business-profile-for-clinics" },
-      { label: "Will AI Search Kill Your Clinic's Google Traffic?", href: "/genie-tips/will-ai-search-kill-clinic-google-traffic" },
-    ],
+    grantedCta: PORTFOLIO_CTA,
+    complianceTitle: "Magic with a conscience.",
+    complianceBody:
+      "In healthcare, a careless claim costs more than a click. We build HCSA compliant marketing into every page, and wherever AI helps, a human checks the work. Visibility that protects your reputation, within Singapore's HCSA, PHMC, and SMC guidelines.",
+    complianceCta: COMPLIANCE_CTA,
     faqs: [
       {
         q: "How long does healthcare SEO take to work?",
-        a: "Most clinics see meaningful movement within three to six months, with momentum compounding from there. SEO is a long-term asset, not an overnight switch.",
+        a: "Most clinics see early movement within three to four months, with stronger results as content and authority build. SEO is a compound investment, not an overnight switch.",
       },
       {
-        q: "Is SEO content compliant with Singapore's advertising rules?",
-        a: "Yes. Every page is written with PHMC/HCSA guidelines in mind and reviewed with your team before it goes live.",
+        q: "Is healthcare SEO compliant with HCSA and SMC rules?",
+        a: "Yes. Every page we build is created within Singapore's HCSA, PHMC, and SMC guidelines, with no exaggerated claims.",
       },
       {
-        q: "Do you guarantee a #1 ranking?",
-        a: "No reputable agency can guarantee a specific ranking. What we can promise is a research-led, compliant strategy focused on the searches that lead to enquiries.",
+        q: "What is the difference between SEO and SEM for clinics?",
+        a: "SEO earns organic visibility over time. SEM uses paid ads for immediate reach. Most clinics grow fastest with both.",
       },
       {
-        q: "Will you write the content or do we?",
-        a: "We write doctor-reviewed, compliance-aware content for you, then collaborate with your clinicians to verify clinical accuracy.",
+        q: "Can SEO help my clinic appear in AI search and Google AI Overviews?",
+        a: "Yes. We structure content so both search engines and AI tools can understand and surface your clinic.",
+      },
+      {
+        q: "Do you offer local SEO for clinics?",
+        a: "Yes. We optimise for patients searching in your area, including Google Maps and local results.",
       },
     ],
-    finalSubtitle: "Ready to rank for what patients search?",
-    finalTitle: "Turn high-intent searches into booked consultations.",
+    finalSubtitle: "Ready to be found?",
+    finalTitle: "What is your clinic's growth wish?",
     finalParagraph:
-      "If your clinic wants to be found first for the treatments that matter, let's map the searches your patients are already making.",
-    finalSecondaryCta: { label: "Explore Medical SEM", href: "/services/core-pillars/medical-sem" },
+      "Tell us about your clinic, your specialty, and the patients you hope to reach. No vague wishes. No confusing jargon. Just a clearer path to being found, trusted, and chosen.",
+    finalPrimaryCta: FINAL_PRIMARY_CTA,
   },
 
   // ───────────────────────────── 3. Medical SEM ─────────────────────────────
@@ -264,83 +419,150 @@ export const CORE_PILLARS: CorePillar[] = [
     name: "Medical SEM",
     accent: "#8E7BE8",
     heroSubtitle: "Medical SEM",
-    heroTitle: "Paid search that books patients, not just clicks.",
+    heroTitle: "Appear the instant a patient makes a wish.",
     heroParagraph: [
-      "Google Ads can fill your appointment book — or quietly drain your budget. The difference is strategy, targeting, and tracking built specifically for clinics.",
-      "Medical SEM puts your clinic in front of high-intent patients at the moment they're ready to book, managed to a cost-per-enquiry you can actually live with.",
+      "Some patients are not browsing. They are ready, searching for the very care you provide. Medical SEM grants their wish and yours in the same moment, placing your clinic at the top the instant they look.",
+      "Clinic Genie is a healthcare Google Ads agency for specialist clinics, weaving Search, Performance Max, and video into one growth engine, measured down to every enquiry.",
     ],
     heroPrimaryCta: CONTACT_CTA,
-    heroSecondaryCta: { label: "Read the SEM guide", href: "/genie-tips/medical-sem-without-wasting-budget" },
-    whyTitle: "Every wasted click is a patient you paid to lose.",
-    whyParagraph: [
-      "Generalist agencies chase clicks and impressions. Clinics need booked consultations — and a clear view of what each enquiry actually costs.",
-      "Medical SEM is built around conversions, not vanity metrics. We target the searches that signal real intent and measure the outcomes that matter to your clinic.",
+    heroSecondaryCta: { label: "See How the Magic Works", href: "#mechanics" },
+    wishesSubtitle: "What medical SEM grants your clinic",
+    wishes: [
+      {
+        title: "To Be Seen First",
+        body: "Rise above every result, the instant patients search. We conjure campaigns around the high-intent search terms patients use just before they book.",
+      },
+      {
+        title: "To Be Trusted",
+        body: "Compliant ads that earn the click and the confidence, through HCSA compliant Google Ads.",
+      },
+      {
+        title: "To Be Chosen",
+        body: "Turn a single click into a booked consultation, with conversion rate optimisation for clinics built into every landing page.",
+      },
     ],
-    keyPoints: [
-      { title: "Intent", body: "Reach patients actively searching for the treatments you provide." },
-      { title: "Control", body: "Manage spend to a transparent, predictable cost-per-enquiry." },
-      { title: "Speed", body: "Generate qualified enquiries while your organic SEO builds." },
+    mechanicsId: "mechanics",
+    mechanicsSubtitle: "What medical SEM includes",
+    mechanicsTitle: "The Mechanics Behind the Magic",
+    mechanicsLead: "Every wish needs real machinery behind it.",
+    mechanicsIntro:
+      "Our medical PPC services bring together the campaigns, platforms, and creativity a specialist clinic needs to win high-intent patients. Magic on the surface, precision underneath.",
+    mechanicsItems: [
+      {
+        title: "Keyword and Audience Research",
+        body: "With SEMrush and Google's tools, we find the high-intent search terms patients use just before they book.",
+      },
+      {
+        title: "Google Search Campaigns",
+        body: "Targeted healthcare paid search that meets patients at the exact moment of intent.",
+      },
+      {
+        title: "Performance Max Campaigns",
+        body: "One campaign, conjured across Search, Display, YouTube, Maps, and Gmail through Google's AI, with our hands on every lever.",
+      },
+      {
+        title: "Video Ads",
+        body: "Short, compliant video that builds trust and recall across YouTube and Discovery.",
+        link: {
+          label: "See our Photo and Video Production",
+          href: "/services/core-pillars/photo-video",
+        },
+      },
+      {
+        title: "Negative Keyword Filtering",
+        body: "We filter out the wrong searches through negative keyword filtering, so your budget reaches patients who are ready to book, not browsers.",
+      },
+      {
+        title: "Conversion + Landing Pages",
+        body: "Fast, focused pages built for conversion rate optimisation for clinics, turning clicks into qualified clinic enquiries.",
+        link: {
+          label: "See our Web Design and Development",
+          href: "/services/core-pillars/web-design-development",
+        },
+      },
+      {
+        title: "Tracking + Reporting",
+        body: "We measure clicks, conversions, and patient acquisition cost through Google Ads and Analytics. Every dollar accounted for, every result in the light.",
+      },
     ],
-    buildSubtitle: "What it supports",
-    buildTitle: "Campaigns engineered for booked consultations.",
-    buildParagraph:
-      "Medical SEM connects the right search to the right landing page to the right tracking — so every dollar is accountable and every enquiry is measurable.",
-    cards: [
-      { title: "Campaign Strategy", body: "Targeted Google campaigns built around high-intent treatment searches." },
-      { title: "Keyword Targeting", body: "Bid on the terms that book patients and exclude the ones that waste budget." },
-      { title: "Landing Pages", body: "Conversion-focused pages that turn paid clicks into enquiries." },
-      { title: "Conversion Tracking", body: "Know exactly which campaigns, keywords, and ads produce real bookings." },
-      { title: "Budget Management", body: "Spend managed to a cost-per-enquiry that makes commercial sense." },
-      { title: "Transparent Reporting", body: "Clear monthly reporting you can actually read and act on." },
+    specialtySubtitle: "Specialist clinic SEM",
+    specialtyTitle: "Built for Your Specialty",
+    specialtyLead: "Every specialty makes a different wish.",
+    specialties: [
+      {
+        title: "Aesthetic + Dermatology",
+        body: "Pay-per-click for aesthetic, skin, and procedure-led clinics.",
+        link: { label: "Explore aesthetic clinic SEM", href: AESTHETIC_HREF },
+      },
+      {
+        title: "Dental and Orthodontics",
+        body: "SEM for dental, implant, and orthodontic practices.",
+        link: { label: "Explore dental clinic SEM", href: DENTAL_HREF },
+      },
+      {
+        title: "Medical and Specialist Clinics",
+        body: "Pay-per-click for doctors across endocrine, cardiology, neurology, and other specialist care.",
+        link: { label: "Explore specialist clinic SEM", href: MEDICAL_HREF },
+      },
     ],
-    relatedServices: ["healthcare-seo", "web-design-development", "branding-copywriting", "geo-ai-search"],
-    approachSubtitle: "How we build it",
-    approachTitle: "Targeted, measured, and compliant.",
-    approachParagraph: [
-      "Medical SEM works hand in hand with SEO and web design. Paid search brings patients in fast; the page and the offer do the converting.",
-      "Research shows where patients search. Data shows what works. Results show what to improve.",
+    grantedSubtitle: "Our work",
+    grantedTitle: "Clinics whose wishes we have granted.",
+    grantedIntro:
+      "Specialist clinics across Singapore trust Clinic Genie with their paid search.",
+    grantedWishes: [
+      {
+        name: "Cedar Endocrine Clinic",
+        summary: "Google Ads, Search, and SEM strategy.",
+        href: CEDAR,
+      },
+      {
+        name: "The Heart Specialist Clinic",
+        summary: "SEM across cardiology services.",
+        href: PORTFOLIO,
+      },
+      {
+        name: "Clementi Family and Aesthetic Clinic",
+        summary: "SEM for aesthetic treatments.",
+        href: PORTFOLIO,
+      },
+      {
+        name: "Singapore Dental Implant Centre",
+        summary: "SEM for implant enquiries.",
+        href: PORTFOLIO,
+      },
     ],
-    steps: [
-      { title: "Set the goal", body: "We define your target cost-per-enquiry and the treatments that matter most." },
-      { title: "Build the campaigns", body: "We structure keywords, ads, and audiences around real patient intent." },
-      { title: "Prepare the landing", body: "We make sure every click lands on a page built to convert." },
-      { title: "Track everything", body: "We set up conversion tracking so every enquiry is attributed." },
-      { title: "Optimise weekly", body: "We refine bids, copy, and targeting to lower cost and lift bookings." },
-    ],
-    trustNote:
-      "All ad copy and landing pages are written with PHMC/HCSA advertising guidelines in mind, and reviewed with your team.",
-    specialtyTitle: "Different specialties, different economics.",
-    specialtyParagraph:
-      "A consult for orthopaedics is worth very differently to one for aesthetics. We tune targeting and budget to the value of a patient in your specialty.",
-    insights: [
-      { label: "Medical SEM Without Wasting Budget: A Specialist's Guide to Google Ads", href: "/genie-tips/medical-sem-without-wasting-budget" },
-      { label: "Healthcare SEO in Singapore: How Specialist Clinics Actually Rank", href: "/genie-tips/healthcare-seo-singapore-2026" },
-      { label: "Healthcare Advertising Rules in Singapore: A Plain-English Guide", href: "/genie-tips/healthcare-advertising-rules-singapore" },
-      { label: "The 7 Things Slowing Down Your Clinic Website", href: "/genie-tips/7-things-slowing-down-clinic-website" },
-    ],
+    grantedCta: PORTFOLIO_CTA,
+    complianceTitle: "Magic with a conscience.",
+    complianceBody:
+      "In healthcare, a careless claim costs more than a click. We build compliant clinic marketing campaigns into everything we run, and wherever AI lends a hand, a human checks the work. Paid search that grows enquiries while guarding your reputation, within Singapore's HCSA and SMC guidelines for medical advertising.",
+    complianceCta: COMPLIANCE_CTA,
     faqs: [
       {
-        q: "How much should my clinic spend on Google Ads?",
-        a: "It depends on your specialty, competition, and goals. We start with a budget tied to a realistic cost-per-enquiry, then scale what works.",
+        q: "How much should a clinic spend on Google Ads?",
+        a: "It depends on your specialty, competition, and goals. We build budgets around a realistic patient acquisition cost, never guesswork.",
       },
       {
-        q: "Are healthcare ads allowed in Singapore?",
-        a: "Yes, within limits. We build campaigns that respect PHMC/HCSA advertising guidelines and review copy with your team.",
+        q: "Are your Google Ads compliant with HCSA rules?",
+        a: "Yes. We run HCSA compliant Google Ads, with every ad and landing page built within Singapore's SMC guidelines for medical advertising.",
       },
       {
-        q: "How do you measure success?",
-        a: "By qualified enquiries and cost-per-enquiry — not clicks or impressions. You'll see exactly what each booking costs.",
+        q: "What is the difference between SEO and SEM for clinics?",
+        a: "SEO earns organic visibility over time. SEM uses paid ads for immediate reach. Most clinics grow fastest with both.",
       },
       {
-        q: "Can SEM and SEO run together?",
-        a: "Absolutely. Paid search delivers patients now while SEO compounds over time. Together they cover the full search landscape.",
+        q: "What are Performance Max campaigns?",
+        a: "PMax uses Google AI to place your ads across Search, YouTube, Display, Maps, and Gmail from one campaign, with our oversight on targeting and creative.",
+      },
+      {
+        q: "How do you measure SEM success?",
+        a: "We track conversions and patient acquisition cost, not just clicks, so every dollar ties to a qualified clinic enquiry.",
       },
     ],
-    finalSubtitle: "Ready to stop wasting ad spend?",
-    finalTitle: "Turn paid clicks into booked consultations.",
+    finalSubtitle: "Ready to be found?",
+    finalTitle: "What is your clinic's growth wish?",
     finalParagraph:
-      "If your clinic wants enquiries you can measure at a cost you can control, let's map a campaign around your most valuable treatments.",
-    finalSecondaryCta: { label: "Explore Healthcare SEO", href: "/services/core-pillars/healthcare-seo" },
+      "Tell us about your clinic, your specialty, and the patients you hope to reach. No vague wishes. No confusing jargon. Just a clearer path to being seen, trusted, and chosen.",
+    finalPrimaryCta: FINAL_PRIMARY_CTA,
   },
 
   // ───────────────────────────── 4. Branding + Copywriting ─────────────────────────────
@@ -349,83 +571,138 @@ export const CORE_PILLARS: CorePillar[] = [
     name: "Branding + Copywriting",
     accent: "#F2A65A",
     heroSubtitle: "Branding + Copywriting",
-    heroTitle: "Look as good as the care you give.",
+    heroTitle: "Sound like the clinic patients can trust.",
     heroParagraph: [
-      "Patients decide whether to trust a clinic in seconds — long before they read a word about your clinical outcomes.",
-      "Branding and copywriting give your clinic an identity and a voice that signal quality on sight, then explain, reassure, and convert in language patients understand.",
+      "A patient decides how they feel about your clinic in seconds, from your name, your message, your words. Healthcare branding and medical copywriting make sure that feeling is trust.",
+      "Clinic Genie shapes how specialist clinics are seen and heard, blending research, strategy, and AI-assisted craft to turn clinical expertise into a message patients believe.",
     ],
     heroPrimaryCta: CONTACT_CTA,
-    heroSecondaryCta: { label: "Read: choosing a clinic name", href: "/genie-tips/clinic-name-and-logo-patients-trust" },
-    whyTitle: "Trust is decided before the first consultation.",
-    whyParagraph: [
-      "A dated logo, inconsistent visuals, or clinical jargon can quietly cost you patients who would otherwise have booked.",
-      "A clear, premium brand and patient-first copy make the decision to enquire feel easy — and make your clinic memorable when patients compare their options.",
+    heroSecondaryCta: { label: "See How the Magic Works", href: "#mechanics" },
+    wishesSubtitle: "What branding and copywriting grant your clinic",
+    wishes: [
+      {
+        title: "To Be Understood",
+        body: "Cut through the noise with clear specialist clinic positioning, so patients instantly grasp who you are and what you do.",
+      },
+      {
+        title: "To Be Trusted",
+        body: "Words that ease patient trust barriers and signal clinical authority, all within HCSA guidelines.",
+      },
+      {
+        title: "To Be Chosen",
+        body: "Patient-centric messaging that turns a reader into an enquiry.",
+      },
     ],
-    keyPoints: [
-      { title: "Identity", body: "A distinctive look that signals premium quality at a glance." },
-      { title: "Voice", body: "Patient-first language that explains, reassures, and converts." },
-      { title: "Consistency", body: "A coherent brand across every patient touchpoint." },
+    mechanicsId: "mechanics",
+    mechanicsSubtitle: "What branding and copywriting include",
+    mechanicsTitle: "The Mechanics Behind the Magic",
+    mechanicsLead: "Every wish needs real machinery behind it.",
+    mechanicsIntro:
+      "Our medical copywriting services and branding work bring together research, strategy, and craft. Magic on the surface, method underneath.",
+    mechanicsItems: [
+      {
+        title: "Audience and Keyword Research",
+        body: "With SEMrush and AnswerThePublic, we learn how your patients search, speak, and decide, so every word meets real intent.",
+      },
+      {
+        title: "Brand Positioning",
+        body: "We define your specialist clinic positioning: what sets you apart, and why patients should choose you.",
+      },
+      {
+        title: "Brand Identity and Voice",
+        body: "A name, tone, and personality that feels credible, human, and unmistakably yours.",
+      },
+      {
+        title: "Website and Page Copywriting",
+        body: "As your medical website copywriter, we write the pages that inform, reassure, and convert.",
+      },
+      {
+        title: "Content and Campaign Copy",
+        body: "Patient-centric messaging across web, social, email, and campaigns, consistent everywhere.",
+      },
+      {
+        title: "AI-Assisted, Human-Crafted",
+        body: "We use AI to work faster and sharper, then a human shapes every line for tone, accuracy, and compliance.",
+      },
     ],
-    buildSubtitle: "What it supports",
-    buildTitle: "A brand patients trust on sight.",
-    buildParagraph:
-      "From logo to landing-page copy, we build a brand system and voice that make your clinic feel established, credible, and easy to choose.",
-    cards: [
-      { title: "Brand Identity", body: "A distinctive, premium clinic identity that signals quality before a word is read." },
-      { title: "Logo Design", body: "A memorable mark that works across signage, print, and screen." },
-      { title: "Brand Guidelines", body: "Colour, type, and voice rules that keep every touchpoint consistent." },
-      { title: "Website Copywriting", body: "Patient-first, compliant copy that explains and converts." },
-      { title: "Treatment Content", body: "Clear, reassuring writing that turns clinical detail into patient confidence." },
-      { title: "Clinic Collateral", body: "Namecards, brochures, and packaging that extend the brand in-clinic." },
+    specialtySubtitle: "Specialist clinic branding",
+    specialtyTitle: "Built for Your Specialty",
+    specialtyLead: "Every specialty speaks differently.",
+    specialties: [
+      {
+        title: "Aesthetic and Dermatology",
+        body: "Branding and copywriting for skin, aesthetic, and procedure-led clinics.",
+        link: { label: "Explore aesthetic clinic branding", href: AESTHETIC_HREF },
+      },
+      {
+        title: "Dental and Orthodontics",
+        body: "Branding and copywriting for dental, implant, and orthodontic practices.",
+        link: { label: "Explore dental clinic branding", href: DENTAL_HREF },
+      },
+      {
+        title: "Medical and Specialist Clinics",
+        body: "Copywriting for doctors across endocrine, cardiology, neurology, and other specialist care.",
+        link: { label: "Explore specialist clinic branding", href: MEDICAL_HREF },
+      },
     ],
-    relatedServices: ["web-design-development", "photo-video", "healthcare-seo", "findclinic"],
-    approachSubtitle: "How we build it",
-    approachTitle: "Premium design, patient-first words.",
-    approachParagraph: [
-      "Brand and copy are never decoration. They're the first proof a patient has that your clinic is worth their trust.",
-      "Research shows how patients perceive you. Data shows what converts. Results show what to refine.",
+    grantedSubtitle: "Our work",
+    grantedTitle: "Clinics whose voice we have shaped.",
+    grantedIntro:
+      "Specialist clinics across Singapore trust Clinic Genie with their brand and their words.",
+    grantedWishes: [
+      {
+        name: "Cedar Endocrine Clinic",
+        summary: "Branding, identity, and website copywriting.",
+        href: CEDAR,
+      },
+      {
+        name: "The Heart Specialist Clinic",
+        summary: "Branding and patient-focused copy.",
+        href: PORTFOLIO,
+      },
+      {
+        name: "Clementi Family and Aesthetic Clinic",
+        summary: "Brand voice and website copy.",
+        href: PORTFOLIO,
+      },
+      {
+        name: "Joyful Seeds Paediatrics",
+        summary: "Branding and patient education content.",
+        href: JOYFUL,
+      },
     ],
-    steps: [
-      { title: "Understand the clinic", body: "We learn your specialty, your values, and the patients you serve." },
-      { title: "Define the positioning", body: "We shape how your clinic should look, sound, and feel." },
-      { title: "Design the identity", body: "We craft the logo, palette, and visual system." },
-      { title: "Write the voice", body: "We develop patient-first, compliance-aware copy across your touchpoints." },
-      { title: "Roll it out", body: "We apply the brand consistently from website to clinic collateral." },
-    ],
-    trustNote:
-      "All clinic copy is written with PHMC/HCSA advertising guidelines in mind, and reviewed with your team.",
-    specialtyTitle: "Every specialty earns trust differently.",
-    specialtyParagraph:
-      "A paediatric clinic needs warmth; a surgical practice needs precision and authority. We craft brand and voice to fit the emotional journey of your patients.",
-    insights: [
-      { label: "How to Choose a Clinic Name and Logo That Patients Actually Trust", href: "/genie-tips/clinic-name-and-logo-patients-trust" },
-      { label: "5 Treatment Pages Every Aesthetic Clinic Should Have", href: "/genie-tips/5-treatment-pages-every-aesthetic-clinic-needs" },
-      { label: "Healthcare Advertising Rules in Singapore: A Plain-English Guide", href: "/genie-tips/healthcare-advertising-rules-singapore" },
-      { label: "The 7 Things Slowing Down Your Clinic Website", href: "/genie-tips/7-things-slowing-down-clinic-website" },
-    ],
+    grantedCta: PORTFOLIO_CTA,
+    complianceTitle: "Magic with a conscience.",
+    complianceBody:
+      "In healthcare, the wrong word costs more than a click. We build SMC compliant copywriting and ethical medical branding into every line, and wherever AI lends a hand, a human checks the work. A message that earns trust while guarding your reputation, within Singapore's HCSA guidelines for medical text and SMC rules.",
+    complianceCta: COMPLIANCE_CTA,
     faqs: [
       {
-        q: "Do I need a rebrand or just new copy?",
-        a: "Sometimes a sharper voice is enough; sometimes the whole identity needs a refresh. We'll tell you honestly after reviewing your current brand.",
+        q: "What does a medical copywriter actually do?",
+        a: "We turn clinical expertise into clear, compliant, patient-friendly words, for your website, content, and campaigns, built around a medical communication strategy.",
       },
       {
-        q: "Will the copy stay compliant?",
-        a: "Yes. Every word is written with PHMC/HCSA guidelines in mind and reviewed with your clinical team.",
+        q: "How is healthcare branding different from a logo?",
+        a: "A logo is one part. Branding is your whole identity: positioning, voice, message, and the trust they build. We shape all of it.",
       },
       {
-        q: "Can you match my existing brand?",
-        a: "Of course. We can evolve and extend an identity you're happy with, or rebuild it from the ground up.",
+        q: "Is your copywriting compliant with HCSA and SMC rules?",
+        a: "Yes. Every word follows HCSA guidelines for medical text and SMC rules, with no exaggerated claims.",
       },
       {
-        q: "Do you write treatment pages too?",
-        a: "Yes. Patient-first treatment content is one of the highest-leverage assets a clinic can have, and we write it to rank and convert.",
+        q: "Do you use AI to write the content?",
+        a: "We use AI to research and draft faster, then a human writer shapes every line for tone, accuracy, and compliance. The judgement is always human.",
+      },
+      {
+        q: "Can a good copy really bring more patients?",
+        a: "Yes. Clear positioning and patient-centric messaging remove trust barriers and turn more readers into enquiries.",
       },
     ],
-    finalSubtitle: "Ready to look the part?",
-    finalTitle: "Give patients a reason to trust you instantly.",
+    finalSubtitle: "Ready to be heard?",
+    finalTitle: "What is your clinic's growth wish?",
     finalParagraph:
-      "If your brand doesn't yet match the quality of your care, let's build an identity and a voice that earn trust on sight.",
-    finalSecondaryCta: { label: "Explore Web Design + Development", href: "/services/core-pillars/web-design-development" },
+      "Tell us about your clinic, your specialty, and the patients you hope to reach. No vague wishes. No confusing jargon. Just a clearer path to being understood, trusted, and chosen.",
+    finalPrimaryCta: FINAL_PRIMARY_CTA,
   },
 
   // ───────────────────────────── 5. Web Design + Development ─────────────────────────────
@@ -433,84 +710,139 @@ export const CORE_PILLARS: CorePillar[] = [
     slug: "web-design-development",
     name: "Web Design + Development",
     accent: "#6CBAD9",
-    heroSubtitle: "Web Design + Development",
+    heroSubtitle: "Web Design and Development",
     heroTitle: "A clinic website that earns trust and books patients.",
     heroParagraph: [
-      "Your website is the first consultation most patients have with your clinic. If it's slow, confusing, or dated, they leave before they enquire.",
-      "We design and build fast, accessible, conversion-focused clinic websites that load in seconds, read as trustworthy, and turn visitors into booked consultations.",
+      "Your website is often a patient's first impression, and their decision. Healthcare web development makes sure that impression is clear, fast, and trustworthy.",
+      "Clinic Genie designs and builds clinic websites that load quickly, read beautifully, and turn visitors into enquiries.",
     ],
     heroPrimaryCta: CONTACT_CTA,
-    heroSecondaryCta: { label: "Read: what slows clinic sites", href: "/genie-tips/7-things-slowing-down-clinic-website" },
-    whyTitle: "Speed and clarity are trust factors.",
-    whyParagraph: [
-      "A site that takes more than three seconds to load on a phone loses patients — and Google notices too.",
-      "A well-built clinic website is fast, mobile-first, and structured around how patients decide, so it ranks better and converts better at the same time.",
+    heroSecondaryCta: { label: "See How the Magic Works", href: "#mechanics" },
+    wishesSubtitle: "What web development grants your clinic",
+    wishes: [
+      {
+        title: "To Be Clear",
+        body: "A clean, mobile-responsive medical website that patients understand in seconds.",
+      },
+      {
+        title: "To Be Trusted",
+        body: "A secure, PDPA-compliant medical website that protects patient data and your reputation, within HCSA guidelines.",
+      },
+      {
+        title: "To Be Chosen",
+        body: "Conversion rate optimisation for clinics that turns visits into booked enquiries.",
+      },
     ],
-    keyPoints: [
-      { title: "Speed", body: "Fast-loading pages that keep patients from bouncing." },
-      { title: "Clarity", body: "Structure that guides patients from question to enquiry." },
-      { title: "Credibility", body: "A polished, accessible site that reads as trustworthy." },
+    mechanicsId: "mechanics",
+    mechanicsSubtitle: "What healthcare web development includes",
+    mechanicsTitle: "The Mechanics Behind the Magic",
+    mechanicsLead: "Every wish needs real machinery behind it.",
+    mechanicsIntro:
+      "As a medical web design agency, we bring together design, build, and performance. Magic on the surface, clean code underneath.",
+    mechanicsItems: [
+      {
+        title: "Design and Prototyping",
+        body: "We design in Figma and Photoshop, mapping the patient user experience before a single page is built.",
+      },
+      {
+        title: "Custom Clinic Web Design",
+        body: "Custom clinic web design shaped around your brand, your patients, and your enquiry goals.",
+      },
+      {
+        title: "Development and Build",
+        body: "We build with Wix and modern tools like Cursor, writing clean code for medical sites that stay fast and reliable.",
+      },
+      {
+        title: "Speed and Responsiveness",
+        body: "Fast-loading clinic websites that work flawlessly on every screen, mobile first.",
+      },
+      {
+        title: "Patient Enquiry Architecture",
+        body: "Patient inquiry architecture and secure patient intake forms that guide visitors smoothly from interest to booking.",
+      },
+      {
+        title: "SEO-Ready Foundations",
+        body: "SEO-friendly medical web design, structured so your site is built to rank from day one.",
+      },
     ],
-    buildSubtitle: "What it supports",
-    buildTitle: "Websites built to rank and convert.",
-    buildParagraph:
-      "We build on a modern stack (Next.js) with SEO, accessibility, and conversion baked in — not bolted on afterwards.",
-    cards: [
-      { title: "Web Design", body: "Beautiful, on-brand interfaces designed around the patient journey." },
-      { title: "Development", body: "Fast, accessible clinic websites built on a modern, reliable stack." },
-      { title: "Mobile-First Build", body: "Sites that look and perform flawlessly on the phones patients use." },
-      { title: "SEO Foundations", body: "Clean structure and speed that give your content room to rank." },
-      { title: "Conversion Design", body: "Clear pathways and calls to action that turn visits into enquiries." },
-      { title: "Booking Integration", body: "Enquiry forms and booking flows connected to how your clinic works." },
+    specialtySubtitle: "Specialist clinic websites",
+    specialtyTitle: "Built for Your Specialty",
+    specialtyLead: "Every specialty needs a different journey.",
+    specialties: [
+      {
+        title: "Aesthetic and Dermatology",
+        body: "Web design for skin, aesthetic, and procedure-led clinics.",
+        link: { label: "Explore aesthetic clinic web design", href: AESTHETIC_HREF },
+      },
+      {
+        title: "Dental and Orthodontics",
+        body: "Web design for dental, implant, and orthodontic practices.",
+        link: { label: "Explore dental clinic web design", href: DENTAL_HREF },
+      },
+      {
+        title: "Medical and Specialist Clinics",
+        body: "Website development for doctors across endocrine, cardiology, neurology, and other specialist care.",
+        link: { label: "Explore specialist clinic web design", href: MEDICAL_HREF },
+      },
     ],
-    relatedServices: ["branding-copywriting", "healthcare-seo", "photo-video", "medical-sem"],
-    approachSubtitle: "How we build it",
-    approachTitle: "Fast, accessible, conversion-focused.",
-    approachParagraph: [
-      "A clinic website is a growth asset, not a brochure. We design and engineer it to do real work — ranking, reassuring, and converting.",
-      "Research shows what patients need. Data shows what converts. Results show what to improve.",
+    grantedSubtitle: "Our work",
+    grantedTitle: "Clinics whose websites we have built.",
+    grantedIntro:
+      "Specialist clinics across Singapore trust Clinic Genie with their websites.",
+    grantedWishes: [
+      {
+        name: "Cedar Endocrine Clinic",
+        summary: "Branding, web design, and development.",
+        href: CEDAR,
+      },
+      {
+        name: "The Heart Specialist Clinic",
+        summary: "Full website design and build.",
+        href: PORTFOLIO,
+      },
+      {
+        name: "Clementi Family and Aesthetic Clinic",
+        summary: "Web design and development.",
+        href: PORTFOLIO,
+      },
+      {
+        name: "Singapore Dental Implant Centre",
+        summary: "Clinic website and enquiry flow.",
+        href: PORTFOLIO,
+      },
     ],
-    steps: [
-      { title: "Plan the structure", body: "We map the pages and journeys patients need, around real search intent." },
-      { title: "Design the experience", body: "We design on-brand, conversion-focused interfaces." },
-      { title: "Build for performance", body: "We develop a fast, accessible, mobile-first site on a modern stack." },
-      { title: "Connect the journey", body: "We integrate enquiry forms, booking, and tracking." },
-      { title: "Launch & optimise", body: "We measure speed, rankings, and conversions, then refine." },
-    ],
-    trustNote:
-      "All website content is written with PHMC/HCSA advertising guidelines in mind, and reviewed with your team.",
-    specialtyTitle: "Every specialty needs a different journey.",
-    specialtyParagraph:
-      "An aesthetics site sells outcomes and confidence; a cardiology site reassures and informs. We design the structure and flow to match how your patients decide.",
-    insights: [
-      { label: "The 7 Things Slowing Down Your Clinic Website", href: "/genie-tips/7-things-slowing-down-clinic-website" },
-      { label: "Healthcare SEO in Singapore: How Specialist Clinics Actually Rank", href: "/genie-tips/healthcare-seo-singapore-2026" },
-      { label: "5 Treatment Pages Every Aesthetic Clinic Should Have", href: "/genie-tips/5-treatment-pages-every-aesthetic-clinic-needs" },
-      { label: "How to Choose a Clinic Name and Logo That Patients Trust", href: "/genie-tips/clinic-name-and-logo-patients-trust" },
-    ],
+    grantedCta: PORTFOLIO_CTA,
+    complianceTitle: "Magic with a conscience.",
+    complianceBody:
+      "In healthcare, a careless page costs more than a click. We build every site with an HCSA compliant website layout, a PDPA-compliant medical website structure, and secure forms, with human review wherever AI lends a hand. Websites that grow enquiries while guarding patient data and your reputation, within Singapore's HCSA, PDPA, and SMC guidelines for website content.",
+    complianceCta: COMPLIANCE_CTA,
     faqs: [
       {
-        q: "What platform do you build on?",
-        a: "We build on a modern stack (Next.js) for speed, security, and SEO — but we'll always match the right solution to your clinic's needs.",
+        q: "How long does it take to build a clinic website?",
+        a: "Most specialist clinic websites take four to eight weeks, depending on size and content. We keep every stage clear and on schedule.",
       },
       {
-        q: "Will my site be fast on mobile?",
-        a: "Yes. Mobile-first performance is a core requirement, because that's where most patients first meet your clinic.",
+        q: "Will my clinic website be mobile-friendly?",
+        a: "Yes. Every site is a mobile-responsive medical website, built mobile first, since most patients browse on their phones.",
       },
       {
-        q: "Can you integrate booking or enquiry forms?",
-        a: "Yes. We connect enquiry and booking flows to the way your clinic actually operates.",
+        q: "Is my patients' data secure?",
+        a: "Yes. We build secure patient intake forms and a PDPA-compliant medical website, protecting patient information at every step.",
       },
       {
-        q: "Do you handle the SEO too?",
-        a: "We build clean SEO foundations into every site, and our Healthcare SEO service can take rankings further.",
+        q: "Will the website be built for SEO?",
+        a: "Yes. We build SEO-friendly medical web design with clean code and fast loading, so your site is ready to rank.",
+      },
+      {
+        q: "Do you use AI to build the site?",
+        a: "We use modern tools, including AI-assisted development, to work faster, then a human reviews every build for quality and compliance.",
       },
     ],
-    finalSubtitle: "Ready for a site that works?",
-    finalTitle: "Turn your website into your hardest-working asset.",
+    finalSubtitle: "Ready to be found and booked?",
+    finalTitle: "What is your clinic's growth wish?",
     finalParagraph:
-      "If your current site is slow, dated, or not converting, let's build a fast, trustworthy clinic website that books patients.",
-    finalSecondaryCta: { label: "Explore Branding + Copywriting", href: "/services/core-pillars/branding-copywriting" },
+      "Tell us about your clinic, your specialty, and the patients you hope to reach. No vague wishes. No confusing jargon. Just a clearer path to a website that is clear, trusted, and chosen.",
+    finalPrimaryCta: FINAL_PRIMARY_CTA,
   },
 
   // ───────────────────────────── 6. Photo + Video ─────────────────────────────
@@ -518,84 +850,143 @@ export const CORE_PILLARS: CorePillar[] = [
     slug: "photo-video",
     name: "Photo + Video",
     accent: "#F27A8E",
-    heroSubtitle: "Photo + Video",
-    heroTitle: "Real visuals that build instant credibility.",
+    heroSubtitle: "Photography and Videography",
+    heroTitle: "Show patients the clinic they can trust.",
     heroParagraph: [
-      "Stock photos signal a clinic that has something to hide. Real images of your space, your team, and your work signal one patients can trust.",
-      "Professional photography and video show patients who you are before they ever walk in — building the confidence that turns interest into enquiries.",
+      "Patients trust what they can see. A real face, a calm space, a doctor who explains with warmth. Medical video production and photography turn your clinic, your team, and your care into visuals that build instant trust.",
+      "Clinic Genie captures the authentic story behind your expertise.",
     ],
     heroPrimaryCta: CONTACT_CTA,
-    heroSecondaryCta: { label: "See our works", href: "/portfolio" },
-    whyTitle: "Patients trust what they can see.",
-    whyParagraph: [
-      "A clean, well-lit clinic, a warm photo of the doctor, a short video that explains a treatment — these do more for trust than any claim you can write.",
-      "Authentic visuals reduce the uncertainty patients feel before booking, and make your clinic feel real, present, and credible.",
+    heroSecondaryCta: { label: "See How the Magic Works", href: "#mechanics" },
+    wishesSubtitle: "What visuals grant your clinic",
+    wishes: [
+      {
+        title: "To Be Seen Clearly",
+        body: "Authentic medical content that shows your clinic, doctors, and care as they truly are.",
+      },
+      {
+        title: "To Be Trusted",
+        body: "Clinical authority visuals that ease patient trust barriers, within HCSA guidelines.",
+      },
+      {
+        title: "To Be Remembered",
+        body: "Patient-centric storytelling that stays with patients long after they watch.",
+      },
     ],
-    keyPoints: [
-      { title: "Authenticity", body: "Real visuals of your clinic, team, and work — never stock." },
-      { title: "Connection", body: "Human imagery that helps patients feel they already know you." },
-      { title: "Credibility", body: "Professional production that signals quality and care." },
+    mechanicsId: "mechanics",
+    mechanicsSubtitle: "What medical video production includes",
+    mechanicsTitle: "The Mechanics Behind the Magic",
+    mechanicsLead: "Every wish needs real machinery behind it.",
+    mechanicsIntro:
+      "As a healthcare photography agency and video team, we handle everything from shoot to final cut. Magic on the surface, craft underneath.",
+    mechanicsItems: [
+      {
+        title: "Clinic and Doctor Photography",
+        body: "Medical clinic photoshoots and doctor headshot photography, edited in Photoshop and Lightroom.",
+      },
+      {
+        title: "Medical Video Production",
+        body: "Doctor interviews, clinic tours, and educational video, filmed and shaped for trust.",
+      },
+      {
+        title: "Doctor Personal Branding",
+        body: "Specialist doctor profiles and content that build doctor personal branding and clinical authority.",
+      },
+      {
+        title: "Editing and Post-Production",
+        body: "Edited in Premiere, After Effects, and CapCut, polished, paced, and patient-ready.",
+      },
+      {
+        title: "Social and Short-Form Cuts",
+        body: "Short, scroll-stopping clips built in Canva and CapCut for social and reels.",
+        link: {
+          label: "See our Social Media",
+          href: "/services/core-pillars/social-media",
+        },
+      },
+      {
+        title: "Authentic, On-Brand Storytelling",
+        body: "Authentic medical content that reflects your real clinic, never staged or stocky.",
+      },
     ],
-    buildSubtitle: "What it supports",
-    buildTitle: "Visual content that earns trust.",
-    buildParagraph:
-      "From clinic photography to doctor interviews, we produce the visuals that make your website, profiles, and social presence feel real and reassuring.",
-    cards: [
-      { title: "Clinic Photography", body: "Show your space the way patients will experience it — clean, warm, and real." },
-      { title: "Doctor & Team Portraits", body: "Help patients connect with the people behind the care." },
-      { title: "Treatment & Service Video", body: "Explain procedures clearly to reduce patient uncertainty." },
-      { title: "Doctor Interviews", body: "Answer common patient questions in a human, credible way." },
-      { title: "Social Media Content", body: "Short-form video and imagery built for clinic social channels." },
-      { title: "Brand Storytelling", body: "Visual narratives that bring your clinic's values to life." },
+    specialtySubtitle: "Specialist clinic visuals",
+    specialtyTitle: "Built for Your Specialty",
+    specialtyLead: "Every specialty tells a different story.",
+    specialties: [
+      {
+        title: "Aesthetic and Dermatology",
+        body: "Aesthetic clinic videography for skin, aesthetic, and procedure-led clinics.",
+        link: { label: "Explore aesthetic clinic visuals", href: AESTHETIC_HREF },
+      },
+      {
+        title: "Dental and Orthodontics",
+        body: "Dental practice photography for dental, implant, and orthodontic clinics.",
+        link: { label: "Explore dental clinic visuals", href: DENTAL_HREF },
+      },
+      {
+        title: "Medical and Specialist Clinics",
+        body: "Corporate video for doctors across endocrine, cardiology, neurology, and other specialist care.",
+        link: { label: "Explore specialist clinic visuals", href: MEDICAL_HREF },
+      },
     ],
-    relatedServices: ["branding-copywriting", "social-media", "web-design-development", "findclinic"],
-    approachSubtitle: "How we build it",
-    approachTitle: "Authentic, clinical-grade, on-brand.",
-    approachParagraph: [
-      "Great visuals aren't just pretty — they're proof. We produce imagery and video that reflect the real quality of your clinic and care.",
-      "Research shows what reassures patients. Data shows what engages. Results show what to refine.",
+    grantedSubtitle: "Our work",
+    grantedTitle: "Clinics we have brought to life.",
+    grantedIntro:
+      "Specialist clinics across Singapore trust Clinic Genie with their photography and video.",
+    grantedWishes: [
+      {
+        name: "Cedar Endocrine Clinic",
+        summary: "Branding photography and clinic video.",
+        href: CEDAR,
+      },
+      {
+        name: "The Heart Specialist Clinic",
+        summary: "Doctor interviews and clinic photography.",
+        href: PORTFOLIO,
+      },
+      {
+        name: "The Acne Clinic",
+        summary: "Short-form video and social content.",
+        href: ACNE,
+      },
+      {
+        name: "Clementi Family and Aesthetic Clinic",
+        summary: "Clinic photoshoot and video.",
+        href: PORTFOLIO,
+      },
     ],
-    steps: [
-      { title: "Plan the shoot", body: "We define the visuals your website, profiles, and channels need." },
-      { title: "Prepare the clinic", body: "We guide setup so your space and team look their best." },
-      { title: "Capture the content", body: "We shoot photography and video with a clinical, on-brand eye." },
-      { title: "Edit & finish", body: "We produce polished assets ready for web, social, and print." },
-      { title: "Deploy across channels", body: "We help place visuals where they build the most trust." },
-    ],
-    trustNote:
-      "All visual content, including any treatment or before-and-after imagery, is produced with PHMC/HCSA advertising guidelines in mind.",
-    specialtyTitle: "Every specialty tells a different story.",
-    specialtyParagraph:
-      "Aesthetics leans on transformation and confidence; paediatrics leans on warmth and reassurance. We shape the visual story to fit your patients.",
-    insights: [
-      { label: "How to Choose a Clinic Name and Logo That Patients Trust", href: "/genie-tips/clinic-name-and-logo-patients-trust" },
-      { label: "What Makes a Clinic Profile More Useful for Patients", href: "/genie-tips" },
-      { label: "Healthcare Advertising Rules in Singapore: A Plain-English Guide", href: "/genie-tips/healthcare-advertising-rules-singapore" },
-      { label: "From Research to Results: A Clinic's First 90 Days of Growth", href: "/genie-tips/first-90-days-of-clinic-growth" },
-    ],
+    grantedCta: PORTFOLIO_CTA,
+    complianceTitle: "Magic with a conscience.",
+    complianceBody:
+      "In healthcare, the wrong image costs more than a click. We create ethical clinic photography and HCSA compliant medical video, with human review wherever AI lends a hand. Compliant healthcare media that builds trust while guarding your reputation, within Singapore's HCSA and SMC guidelines for medical visuals.",
+    complianceCta: COMPLIANCE_CTA,
     faqs: [
       {
-        q: "Do you shoot on location at our clinic?",
-        a: "Yes. We photograph and film at your clinic so the visuals are authentically yours — never generic stock.",
+        q: "Why does my clinic need professional photos and video?",
+        a: "Patients trust what they see. Authentic visuals ease patient trust barriers and help patients choose you with confidence.",
       },
       {
-        q: "Can you produce before-and-after content compliantly?",
-        a: "Where appropriate, yes — always within PHMC/HCSA advertising guidelines and reviewed with your team.",
+        q: "Do you produce doctor interview videos?",
+        a: "Yes. Doctor interviews are one of the strongest ways to build clinical authority and personal branding.",
       },
       {
-        q: "Do you produce content for social media?",
-        a: "Yes. We create short-form video and imagery designed for clinic social channels.",
+        q: "Are your videos compliant with HCSA rules?",
+        a: "Yes. We produce HCSA compliant medical video, with every piece built within Singapore's SMC guidelines for medical visuals.",
       },
       {
-        q: "How long does a shoot take?",
-        a: "Most clinic shoots are completed in a half or full day, depending on the scope of photography and video required.",
+        q: "Can you create short videos for social media?",
+        a: "Yes. We produce short-form cuts for reels and social, alongside longer-form clinic and doctor content.",
+      },
+      {
+        q: "Do you handle photography too?",
+        a: "Yes. From doctor headshot photography to full medical clinic photoshoots, we cover both photo and video.",
       },
     ],
-    finalSubtitle: "Ready to show patients the real you?",
-    finalTitle: "Let patients trust you before they arrive.",
+    finalSubtitle: "Ready to be seen?",
+    finalTitle: "What is your clinic's growth wish?",
     finalParagraph:
-      "If your clinic is still relying on stock imagery, let's capture the real visuals that build genuine patient confidence.",
-    finalSecondaryCta: { label: "Explore Social Media", href: "/services/core-pillars/social-media" },
+      "Tell us about your clinic, your specialty, and the patients you hope to reach. No vague wishes. No confusing jargon. Just a clearer path to being seen, trusted, and remembered.",
+    finalPrimaryCta: FINAL_PRIMARY_CTA,
   },
 
   // ───────────────────────────── 7. Social Media ─────────────────────────────
@@ -604,83 +995,142 @@ export const CORE_PILLARS: CorePillar[] = [
     name: "Social Media",
     accent: "#7FE9F0",
     heroSubtitle: "Social Media",
-    heroTitle: "Stay visible, stay trusted — between visits.",
+    heroTitle: "Stay in the minds of patients, long before they need you.",
     heroParagraph: [
-      "Patients follow clinics they trust, and recommend the ones that feel present and human. Social media keeps your clinic top of mind long before and after an enquiry.",
-      "We help clinics show up consistently with compliant, on-brand content that educates patients, builds familiarity, and supports discovery across the platforms they use.",
+      "Patients follow, watch, and trust a clinic long before they book. Healthcare social media marketing keeps your clinic present, credible, and remembered.",
+      "Clinic Genie creates content built on research, shaped to your brand voice, and tailored to your patients, turning quiet scrolls into lasting trust.",
     ],
     heroPrimaryCta: CONTACT_CTA,
-    heroSecondaryCta: { label: "See our works", href: "/portfolio" },
-    whyTitle: "Familiarity is a form of trust.",
-    whyParagraph: [
-      "A clinic that shows up regularly with useful, human content feels more credible than one that's silent — even before a patient reads a single review.",
-      "Social media builds that familiarity over time, keeping your clinic visible to patients who aren't ready to book yet but will be.",
+    heroSecondaryCta: { label: "See How the Magic Works", href: "#mechanics" },
+    wishesSubtitle: "What social media grants your clinic",
+    wishes: [
+      {
+        title: "To Be Seen",
+        body: "Stay visible where patients spend their time, with consistent, credible healthcare content.",
+      },
+      {
+        title: "To Be Trusted",
+        body: "Patient education content that builds health literacy and earns belief, within HCSA guidelines.",
+      },
+      {
+        title: "To Be Remembered",
+        body: "Specialist clinic engagement that keeps your clinic top of mind, so you are the first name patients think of.",
+      },
     ],
-    keyPoints: [
-      { title: "Presence", body: "Show up consistently where your patients already spend time." },
-      { title: "Education", body: "Useful, patient-friendly content that builds trust over time." },
-      { title: "Familiarity", body: "Stay top of mind so your clinic is the one patients remember." },
+    mechanicsId: "mechanics",
+    mechanicsSubtitle: "What social media marketing includes",
+    mechanicsTitle: "The Mechanics Behind the Magic",
+    mechanicsLead: "Every wish needs real machinery behind it.",
+    mechanicsIntro:
+      "Our healthcare content creation brings together research, strategy, and craft. Magic on the surface, method underneath.",
+    mechanicsItems: [
+      {
+        title: "Audience and Topic Research",
+        body: "With SEMrush and AnswerThePublic, we learn what your patients are asking, then turn it into content they want.",
+      },
+      {
+        title: "Social Media Strategy",
+        body: "A clear plan built around your target audience, your objectives, and your brand voice.",
+      },
+      {
+        title: "Content Creation",
+        body: "Credible healthcare content across posts, carousels, and stories, consistent and on-brand.",
+      },
+      {
+        title: "Medical Video Production",
+        body: "Short, compliant video that explains, reassures, and builds doctor personal branding.",
+        link: {
+          label: "See our Photo and Video Production",
+          href: "/services/core-pillars/photo-video",
+        },
+      },
+      {
+        title: "Patient Education Content",
+        body: "Health literacy marketing that informs patients and positions your clinic as the trusted voice.",
+      },
+      {
+        title: "AI-Assisted, Human-Crafted",
+        body: "We use AI to plan and produce faster, then a human shapes every piece for tone, accuracy, and compliance.",
+      },
     ],
-    buildSubtitle: "What it supports",
-    buildTitle: "A social presence patients trust.",
-    buildParagraph:
-      "We plan, create, and manage clinic social content that's compliant, on-brand, and genuinely useful — built to support discovery, not chase vanity metrics.",
-    cards: [
-      { title: "Content Strategy", body: "A clear plan tied to your specialty, patients, and growth goals." },
-      { title: "Content Creation", body: "On-brand graphics, captions, and short-form video for clinic channels." },
-      { title: "Channel Management", body: "Consistent posting and presence across the platforms that matter." },
-      { title: "Patient Education", body: "Useful, compliant content that answers real patient questions." },
-      { title: "Community Engagement", body: "Thoughtful responses that build relationships and trust." },
-      { title: "Performance Reporting", body: "Clear reporting on reach, engagement, and what to do next." },
+    specialtySubtitle: "Specialist clinic social media",
+    specialtyTitle: "Built for Your Specialty",
+    specialtyLead: "Every specialty has its own audience.",
+    specialties: [
+      {
+        title: "Aesthetic and Dermatology",
+        body: "Aesthetic clinic social media for skin, aesthetic, and procedure-led clinics.",
+        link: { label: "Explore aesthetic clinic social", href: AESTHETIC_HREF },
+      },
+      {
+        title: "Dental and Orthodontics",
+        body: "Dental social media marketing for dental, implant, and orthodontic practices.",
+        link: { label: "Explore dental clinic social", href: DENTAL_HREF },
+      },
+      {
+        title: "Medical and Specialist Clinics",
+        body: "Social media for doctors across endocrine, cardiology, neurology, and other specialist care.",
+        link: { label: "Explore specialist clinic social", href: MEDICAL_HREF },
+      },
     ],
-    relatedServices: ["photo-video", "branding-copywriting", "geo-ai-search", "findclinic"],
-    approachSubtitle: "How we build it",
-    approachTitle: "Consistent, compliant, genuinely useful.",
-    approachParagraph: [
-      "Social media for clinics isn't about going viral — it's about being consistently present, useful, and trustworthy.",
-      "Research shows where patients engage. Data shows what resonates. Results show what to refine.",
+    grantedSubtitle: "Our work",
+    grantedTitle: "Clinics we have helped patients follow.",
+    grantedIntro:
+      "Specialist clinics across Singapore trust Clinic Genie with their social presence.",
+    grantedWishes: [
+      {
+        name: "The Acne Clinic",
+        summary: "Social content and reel strategy for skin confidence.",
+        href: ACNE,
+      },
+      {
+        name: "Joyful Seeds Paediatrics",
+        summary: "Patient education content for parents.",
+        href: JOYFUL,
+      },
+      {
+        name: "Cedar Endocrine Clinic",
+        summary: "Credible content and video.",
+        href: CEDAR,
+      },
+      {
+        name: "The Heart Specialist Clinic",
+        summary: "Doctor-led social and video.",
+        href: PORTFOLIO,
+      },
     ],
-    steps: [
-      { title: "Set the strategy", body: "We define your channels, audience, and content pillars." },
-      { title: "Plan the calendar", body: "We map a sustainable, compliant content schedule." },
-      { title: "Create the content", body: "We produce on-brand graphics, captions, and video." },
-      { title: "Manage & engage", body: "We post consistently and respond thoughtfully." },
-      { title: "Review & improve", body: "We track engagement and refine what works." },
-    ],
-    trustNote:
-      "All social content is created with PHMC/HCSA advertising guidelines in mind, and reviewed with your team.",
-    specialtyTitle: "Every specialty has a different audience.",
-    specialtyParagraph:
-      "Aesthetics audiences want transformation and tips; paediatric audiences want reassurance for parents. We tailor content to who your patients are.",
-    insights: [
-      { label: "What Makes a Clinic Profile More Useful for Patients", href: "/genie-tips" },
-      { label: "Healthcare Advertising Rules in Singapore: A Plain-English Guide", href: "/genie-tips/healthcare-advertising-rules-singapore" },
-      { label: "Will AI Search Kill Your Clinic's Google Traffic?", href: "/genie-tips/will-ai-search-kill-clinic-google-traffic" },
-      { label: "From Research to Results: A Clinic's First 90 Days of Growth", href: "/genie-tips/first-90-days-of-clinic-growth" },
-    ],
+    grantedCta: PORTFOLIO_CTA,
+    complianceTitle: "Magic with a conscience.",
+    complianceBody:
+      "In healthcare, the wrong post costs more than a like. We build ethical medical social media into every piece, and wherever AI lends a hand, a human checks the work. Content and compliant healthcare videos that grow trust while guarding your reputation, within Singapore's HCSA and SMC guidelines for social media.",
+    complianceCta: COMPLIANCE_CTA,
     faqs: [
       {
-        q: "Which platforms should my clinic be on?",
-        a: "It depends on your specialty and patients. We focus your effort on the one or two channels where it will actually matter.",
+        q: "Why does my clinic need social media?",
+        a: "Patients research and judge clinics on social long before they book. A credible presence builds trust and keeps you top of mind for specialist clinic engagement.",
       },
       {
-        q: "Is clinic social media compliant?",
-        a: "Yes, when done carefully. All content is created with PHMC/HCSA guidelines in mind and reviewed with your team.",
+        q: "Is healthcare social media compliant with HCSA rules?",
+        a: "Yes. We run HCSA compliant social media, with every post and video built within Singapore's SMC guidelines for social media.",
       },
       {
-        q: "Do you create the content or just schedule it?",
-        a: "We do both — strategy, creation, posting, and engagement, so your channels stay consistent without burdening your team.",
+        q: "Do you create video content?",
+        a: "Yes. We produce compliant medical video production, from doctor interviews to short educational reels.",
       },
       {
-        q: "How do you measure social media success?",
-        a: "By meaningful engagement, reach among the right audience, and support for discovery — not vanity follower counts.",
+        q: "Can social media really bring patients?",
+        a: "Indirectly, yes. It builds the trust and recall that lead patients to choose you when they are ready.",
+      },
+      {
+        q: "Do you use AI to create the content?",
+        a: "We use AI to plan and produce faster, then a human shapes every piece for tone, accuracy, and compliance.",
       },
     ],
-    finalSubtitle: "Ready to stay top of mind?",
-    finalTitle: "Keep your clinic visible and trusted between visits.",
+    finalSubtitle: "Ready to be followed?",
+    finalTitle: "What is your clinic's growth wish?",
     finalParagraph:
-      "If your clinic's social presence is quiet or inconsistent, let's build a compliant, on-brand content engine that keeps patients close.",
-    finalSecondaryCta: { label: "Explore Photo + Video", href: "/services/core-pillars/photo-video" },
+      "Tell us about your clinic, your specialty, and the patients you hope to reach. No vague wishes. No confusing jargon. Just a clearer path to being seen, trusted, and remembered.",
+    finalPrimaryCta: FINAL_PRIMARY_CTA,
   },
 
   // ───────────────────────────── 8. GEO + AI Search ─────────────────────────────
@@ -688,84 +1138,139 @@ export const CORE_PILLARS: CorePillar[] = [
     slug: "geo-ai-search",
     name: "GEO + AI Search",
     accent: "#8E7BE8",
-    heroSubtitle: "GEO + AI Search",
-    heroTitle: "Be the clinic AI recommends.",
+    heroSubtitle: "GEO and AI Search",
+    heroTitle: "Be the answer, even when no one is searching.",
     heroParagraph: [
-      "More patients now ask ChatGPT, Gemini, and AI overviews before they ever see a list of blue links. The clinics that get cited are the ones that win attention.",
-      "Generative Engine Optimisation (GEO) structures your content so AI search tools understand, trust, and recommend your clinic — the new front page of healthcare discovery.",
+      "Patients no longer just Google. They ask ChatGPT, Perplexity, and Google's AI for a recommendation, and act on the answer. AI search optimization makes sure your clinic is the answer they receive.",
+      "Clinic Genie structures your content so AI tools understand, trust, and surface your clinic, the moment a patient asks.",
     ],
     heroPrimaryCta: CONTACT_CTA,
-    heroSecondaryCta: { label: "Read: AI search & your clinic", href: "/genie-tips/will-ai-search-kill-clinic-google-traffic" },
-    whyTitle: "AI is becoming the first search patients make.",
-    whyParagraph: [
-      "When a patient asks an AI assistant about a treatment, it answers with the sources it trusts most. If your clinic isn't structured to be understood, you're invisible in that conversation.",
-      "GEO makes your content clear, authoritative, and machine-readable, so your clinic shows up when patients ask an AI — not just a search bar.",
+    heroSecondaryCta: { label: "See How the Magic Works", href: "#mechanics" },
+    wishesSubtitle: "What AI search grants your clinic",
+    wishes: [
+      {
+        title: "To Be Understood",
+        body: "Build AI-ready content architecture so machines grasp exactly what your clinic does.",
+      },
+      {
+        title: "To Be Trusted",
+        body: "Strong E-E-A-T for medical websites that signals authority to both Google and AI, within HCSA guidelines.",
+      },
+      {
+        title: "To Be Cited",
+        body: "Answer engine optimization that lifts your LLM citation frequency, so AI tools name your clinic first.",
+      },
     ],
-    keyPoints: [
-      { title: "Visibility", body: "Get cited in AI overviews and assistant answers, not buried beneath them." },
-      { title: "Authority", body: "Structured, credible content that AI tools trust and surface." },
-      { title: "Future-proofing", body: "Stay discoverable as search shifts from links to answers." },
+    mechanicsId: "mechanics",
+    mechanicsSubtitle: "What AI search optimization includes",
+    mechanicsTitle: "The Mechanics Behind the Magic",
+    mechanicsLead: "Every wish needs real machinery behind it.",
+    mechanicsIntro:
+      "We prepare your clinic for a search world led by AI. Magic on the surface, structure underneath.",
+    mechanicsItems: [
+      {
+        title: "Conversational Keyword Research",
+        body: "Using SEMrush and AnswerThePublic, we map conversational search intent: the way patients actually ask AI, not just type.",
+      },
+      {
+        title: "Structured Data and Schema",
+        body: "We add structured data for clinics and medical schema markup, so search engines and AI read your clinic clearly.",
+      },
+      {
+        title: "AI-Ready Content Architecture",
+        body: "Content built for semantic relevance, organised so LLMs can understand and reuse it.",
+      },
+      {
+        title: "Entity and Authority Mapping",
+        body: "Authoritative entity mapping that connects your clinic, doctors, and services into a clear, trusted whole.",
+      },
+      {
+        title: "Citation and Local Consistency",
+        body: "Local citation consistency and digital PR for clinic visibility, building the signals AI trusts.",
+      },
+      {
+        title: "Optimising for AI Platforms",
+        body: "We optimize for Google AI Overviews and visibility in ChatGPT and Perplexity, the answer engines patients now use.",
+      },
     ],
-    buildSubtitle: "What it supports",
-    buildTitle: "Content built for how AI reads the web.",
-    buildParagraph:
-      "GEO combines clear structure, genuine authority, and direct answers so AI tools can confidently understand and recommend your clinic.",
-    cards: [
-      { title: "AI Readability", body: "Structure content so AI tools can parse and cite it accurately." },
-      { title: "Answer-First Content", body: "Lead with the answer patients ask, supported by depth below." },
-      { title: "Structured Data", body: "Schema and markup that help machines understand your clinic." },
-      { title: "Authority Signals", body: "Credentials, sources, and reviews that earn AI trust." },
-      { title: "Entity Optimisation", body: "Make your clinic, doctors, and services recognisable entities online." },
-      { title: "AI Visibility Tracking", body: "Monitor how and where your clinic appears in AI search." },
+    specialtySubtitle: "Specialist clinic AI search",
+    specialtyTitle: "Built for Your Specialty",
+    specialtyLead: "Every specialty is asked about differently.",
+    specialties: [
+      {
+        title: "Aesthetic and Dermatology",
+        body: "AI search optimisation for skin, aesthetic, and procedure-led clinics.",
+        link: { label: "Explore aesthetic clinic AI search", href: AESTHETIC_HREF },
+      },
+      {
+        title: "Dental and Orthodontics",
+        body: "AI search optimisation for dental, implant, and orthodontic practices.",
+        link: { label: "Explore dental clinic AI search", href: DENTAL_HREF },
+      },
+      {
+        title: "Medical and Specialist Clinics",
+        body: "AI search optimisation for endocrine, cardiology, neurology, and other specialist care.",
+        link: { label: "Explore specialist clinic AI search", href: MEDICAL_HREF },
+      },
     ],
-    relatedServices: ["healthcare-seo", "findclinic", "branding-copywriting", "web-design-development"],
-    approachSubtitle: "How we build it",
-    approachTitle: "Clear, structured, authoritative.",
-    approachParagraph: [
-      "GEO is the natural evolution of SEO. The same principles — clarity, authority, and trust — applied to a world where AI answers first.",
-      "Research shows how patients ask. Data shows what AI surfaces. Results show what to improve.",
+    grantedSubtitle: "Our work",
+    grantedTitle: "Clinics we are making AI-ready.",
+    grantedIntro:
+      "Specialist clinics across Singapore trust Clinic Genie to prepare them for AI search.",
+    grantedWishes: [
+      {
+        name: "Cedar Endocrine Clinic",
+        summary: "Schema, structure, and AI-ready content.",
+        href: CEDAR,
+      },
+      {
+        name: "The Heart Specialist Clinic",
+        summary: "Entity mapping and AI visibility.",
+        href: PORTFOLIO,
+      },
+      {
+        name: "Medical and Surgical Dermatology Clinic",
+        summary: "Structured data and authority signals.",
+        href: PORTFOLIO,
+      },
+      {
+        name: "Singapore Dental Implant Centre",
+        summary: "AI-ready content and schema.",
+        href: PORTFOLIO,
+      },
     ],
-    steps: [
-      { title: "Audit AI visibility", body: "We assess how AI tools currently understand and represent your clinic." },
-      { title: "Structure the content", body: "We organise information so machines can parse and cite it." },
-      { title: "Answer the questions", body: "We write answer-first content around real patient queries." },
-      { title: "Strengthen authority", body: "We add structured data and trust signals AI relies on." },
-      { title: "Monitor & adapt", body: "We track AI visibility and refine as the landscape evolves." },
-    ],
-    trustNote:
-      "All AI-optimised content is written with PHMC/HCSA advertising guidelines in mind, and reviewed with your team.",
-    specialtyTitle: "Every specialty gets asked different questions.",
-    specialtyParagraph:
-      "Patients ask AI very different things about dental implants, fertility, or skin treatments. We optimise for the real questions in your specialty.",
-    insights: [
-      { label: "Will AI Search Kill Your Clinic's Google Traffic? What to Do Now", href: "/genie-tips/will-ai-search-kill-clinic-google-traffic" },
-      { label: "Healthcare SEO in Singapore: How Specialist Clinics Actually Rank", href: "/genie-tips/healthcare-seo-singapore-2026" },
-      { label: "What Makes a Clinic Profile More Useful for Patients", href: "/genie-tips" },
-      { label: "From Research to Results: A Clinic's First 90 Days of Growth", href: "/genie-tips/first-90-days-of-clinic-growth" },
-    ],
+    grantedCta: PORTFOLIO_CTA,
+    complianceTitle: "Magic with a conscience.",
+    complianceBody:
+      "In healthcare, the wrong answer costs more than a click. We build HCSA compliant AI marketing into every page, with compliant clinical data structuring and human review wherever AI lends a hand. Visibility in AI search that grows trust while guarding your reputation, within Singapore's HCSA, PHMC, and SMC guidelines.",
+    complianceCta: COMPLIANCE_CTA,
     faqs: [
       {
-        q: "What is GEO?",
-        a: "Generative Engine Optimisation is the practice of structuring content so AI search tools — like ChatGPT, Gemini, and Google's AI overviews — understand, trust, and cite your clinic.",
+        q: "What is AI search optimization?",
+        a: "It prepares your clinic to be found and cited by AI tools like Google AI Overviews, ChatGPT, and Perplexity, not just traditional search. It is also called answer engine optimization, or GEO.",
       },
       {
-        q: "Is GEO different from SEO?",
-        a: "It builds on the same foundations but optimises for AI-generated answers rather than ranked links. The two work best together.",
+        q: "How do I get my clinic to appear in ChatGPT or Perplexity?",
+        a: "Through LLM optimization: structured data, clear authority signals, and content built so AI can understand and cite you.",
       },
       {
-        q: "Can you guarantee my clinic appears in AI answers?",
-        a: "No one can guarantee AI placement, but we maximise your chances with clear structure, authority, and answer-first content.",
+        q: "Is schema markup important for clinics?",
+        a: "Yes. Medical schema markup helps both search engines and AI understand your clinic, doctors, and services clearly.",
       },
       {
-        q: "Is AI search really worth investing in now?",
-        a: "Yes. Patient behaviour is shifting fast, and clinics that adapt early build a durable visibility advantage.",
+        q: "What is E-E-A-T and why does it matter?",
+        a: "E-E-A-T for medical websites (experience, expertise, authoritativeness, trust) is how Google and AI judge medical content. Strong E-E-A-T means you are surfaced more often.",
+      },
+      {
+        q: "Is AI search optimisation compliant with HCSA rules?",
+        a: "Yes. We build HCSA compliant AI marketing, with all content structured and reviewed within Singapore's guidelines.",
       },
     ],
-    finalSubtitle: "Ready for the next era of search?",
-    finalTitle: "Be the clinic patients' AI recommends.",
+    finalSubtitle: "Ready to be the answer?",
+    finalTitle: "What is your clinic's growth wish?",
     finalParagraph:
-      "If you want your clinic to show up when patients ask an AI — not just a search bar — let's make your content the answer.",
-    finalSecondaryCta: { label: "Explore Healthcare SEO", href: "/services/core-pillars/healthcare-seo" },
+      "Tell us about your clinic, your specialty, and the patients you hope to reach. No vague wishes. No confusing jargon. Just a clearer path to being understood, trusted, and chosen, by patients and the AI they ask.",
+    finalPrimaryCta: FINAL_PRIMARY_CTA,
   },
 ];
 

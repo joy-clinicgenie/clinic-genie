@@ -11,12 +11,10 @@ const cardVariants = {
   hidden: {
     opacity: 0,
     y: 22,
-    boxShadow: "0 0 0 rgba(84, 185, 206, 0)",
   },
   show: {
     opacity: 1,
     y: 0,
-    boxShadow: "0 0 0 1px rgba(120, 226, 221, 0.12), 0 0 28px rgba(84, 185, 206, 0.22)",
     transition: { duration: 0.65, ease: ease.glide },
   },
 };
@@ -48,13 +46,13 @@ export function AlliesCards() {
         <motion.div
           key={ally.name}
           variants={cardVariants}
-          className="glass group relative flex h-full flex-col gap-4 overflow-hidden rounded-2xl p-5 transition-shadow duration-ui hover:shadow-glow-md sm:p-8"
+          className="glass group relative flex h-full flex-col overflow-hidden rounded-2xl transition-shadow duration-ui hover:shadow-glow-md"
         >
           {!reduced && (
             <motion.span aria-hidden="true" className={styles.shine} variants={shineVariants} />
           )}
 
-          <div className="relative z-[2] flex h-12 items-center">
+          <div className="relative z-[2] flex h-16 items-center px-5 pt-5 sm:px-8 sm:pt-8">
             <Image
               src={ally.image}
               alt={ally.name}
@@ -67,8 +65,10 @@ export function AlliesCards() {
               sizes="180px"
             />
           </div>
-          <h3 className="relative z-[2] font-display text-base font-semibold text-white">{ally.name}</h3>
-          <p className="relative z-[2] text-sm leading-relaxed text-[#C9E4EA]">{ally.body}</p>
+          <div className="relative z-[2] flex flex-1 flex-col gap-2 px-5 py-5 sm:px-8 sm:py-6">
+            <h3 className="font-display text-base font-semibold text-onDark">{ally.name}</h3>
+            <p className="text-sm leading-relaxed text-onDark-muted">{ally.body}</p>
+          </div>
         </motion.div>
       ))}
     </motion.div>

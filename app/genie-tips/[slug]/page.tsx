@@ -136,7 +136,7 @@ export default function GenieTipPage({ params }: { params: { slug: string } }) {
           {/* Author / agency bio */}
           <Reveal variant="up">
             <div className="flex flex-col gap-2 border-t border-white/10 pt-8">
-              <p className="font-display text-kicker uppercase tracking-wider text-genie-300">Written by</p>
+              <Kicker>Written by</Kicker>
               <p className="font-display text-h4 text-onDark">The Clinic Genie team</p>
               <p className="max-w-xl text-sm leading-relaxed text-onDark-faint">
                 Strategists, writers, designers and developers who work only with clinics — turning specialist expertise

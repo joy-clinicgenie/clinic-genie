@@ -11,7 +11,7 @@ export function CustomCursor() {
   const [enabled, setEnabled] = useState(false);
   const [hovering, setHovering] = useState(false);
   const [down, setDown] = useState(false);
-  const [inHero, setInHero] = useState(false);
+  const [heroOrbActive, setHeroOrbActive] = useState(false);
 
   const dotX = useMotionValue(-100);
   const dotY = useMotionValue(-100);
@@ -25,13 +25,22 @@ export function CustomCursor() {
     setEnabled(true);
     document.body.dataset.customCursor = "on";
 
+    const syncHeroOrb = () => {
+      const active = !!document.body.dataset.heroOrbCursor;
+      setHeroOrbActive(active);
+      if (active) {
+        delete document.body.dataset.customCursor;
+      } else {
+        document.body.dataset.customCursor = "on";
+      }
+    };
+
     const move = (e: PointerEvent) => {
       dotX.set(e.clientX);
       dotY.set(e.clientY);
       const el = e.target as HTMLElement | null;
-      const heroHit = !!el?.closest("#hero");
-      setInHero(heroHit);
       setHovering(!!el?.closest('a, button, [data-cursor="link"], input, textarea, select'));
+      syncHeroOrb();
     };
     const onDown = () => setDown(true);
     const onUp = () => setDown(false);
@@ -44,10 +53,11 @@ export function CustomCursor() {
       window.removeEventListener("pointerdown", onDown);
       window.removeEventListener("pointerup", onUp);
       delete document.body.dataset.customCursor;
+      delete document.body.dataset.heroOrbCursor;
     };
   }, [dotX, dotY]);
 
-  if (!enabled || inHero) return null;
+  if (!enabled || heroOrbActive) return null;
 
   return (
     <>

@@ -12,12 +12,14 @@ export interface Stat {
 }
 
 export function StatTrio({ stats, tone = "dark" }: { stats: Stat[]; tone?: "dark" | "light" }) {
+  const dark = tone === "dark";
+
   return (
     <RevealGroup
       className={cn(
         "grid gap-px overflow-hidden rounded-2xl",
         stats.length === 4 ? "sm:grid-cols-2 lg:grid-cols-4" : "sm:grid-cols-3",
-        tone === "dark" ? "glass" : "glass-light"
+        dark ? "glass" : "border border-[#E6EEF1] bg-[#E6EEF1] shadow-card"
       )}
     >
       {stats.map((s, i) => (
@@ -25,13 +27,13 @@ export function StatTrio({ stats, tone = "dark" }: { stats: Stat[]; tone?: "dark
           key={i}
           className={cn(
             "flex flex-col gap-2 p-7 text-center sm:p-8",
-            tone === "dark" ? "bg-night-900/30" : "bg-white/40"
+            dark ? "bg-white/[0.04]" : "bg-white"
           )}
         >
           <span
             className={cn(
               "font-display text-h2 leading-none",
-              tone === "dark" ? "genie-text" : "text-genie-800"
+              dark ? "genie-text" : "text-genie-800"
             )}
           >
             {s.countTo != null ? (
@@ -40,7 +42,7 @@ export function StatTrio({ stats, tone = "dark" }: { stats: Stat[]; tone?: "dark
               s.value
             )}
           </span>
-          <span className={cn("text-sm", tone === "dark" ? "text-onDark-muted" : "text-ink-500")}>
+          <span className={cn("text-sm", dark ? "text-onDark-muted" : "text-ink-500")}>
             {s.label}
           </span>
         </RevealItem>

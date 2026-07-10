@@ -1,6 +1,19 @@
+export type SubServiceIcon =
+  | "Search"
+  | "ClipboardList"
+  | "Handshake"
+  | "TrendingUp"
+  | "Megaphone"
+  | "PenLine"
+  | "Filter"
+  | "Palette"
+  | "Monitor"
+  | "Camera";
+
 export interface SubService {
   name: string;
   body: string;
+  icon: SubServiceIcon;
 }
 
 export interface Pillar {
@@ -30,14 +43,17 @@ export const PILLARS: Pillar[] = [
       {
         name: "Market Research",
         body: "Understand your patients, competitors and the searches that signal real demand in your specialty.",
+        icon: "Search",
       },
       {
         name: "Strategic Planning",
         body: "A clear, prioritised roadmap for the next 6–12 months, tied to revenue, not vanity metrics.",
+        icon: "ClipboardList",
       },
       {
         name: "Partnership & Grant Consultancy",
         body: "Tap government grants and the right partners (with Real Inbound) to fund and accelerate your growth.",
+        icon: "Handshake",
       },
     ],
     href: "/services#strategy",
@@ -56,18 +72,22 @@ export const PILLARS: Pillar[] = [
       {
         name: "Healthcare SEO",
         body: "Rank for the high-intent treatment searches patients actually type, with compliance-aware, doctor-reviewed content.",
+        icon: "TrendingUp",
       },
       {
         name: "Medical SEM (Paid Search)",
         body: "Targeted Google campaigns that bring in bookings, not just clicks — managed to a cost-per-enquiry you can live with.",
+        icon: "Megaphone",
       },
       {
         name: "Copywriting",
         body: "Patient-first, compliant copy that explains, reassures and converts.",
+        icon: "PenLine",
       },
       {
         name: "Lead Generation",
         body: "Landing pages, funnels and tracking that turn interest into booked consultations.",
+        icon: "Filter",
       },
     ],
     href: "/services#growth",
@@ -86,14 +106,17 @@ export const PILLARS: Pillar[] = [
       {
         name: "Branding & Logo Design",
         body: "A distinctive, premium clinic identity that signals quality before a word is read.",
+        icon: "Palette",
       },
       {
         name: "Web Design & Development",
         body: "Fast, accessible, conversion-focused clinic websites built on a modern stack (Next.js).",
+        icon: "Monitor",
       },
       {
         name: "Photography & Video",
         body: "Real clinic visuals — your space, your team, your work — that build instant credibility.",
+        icon: "Camera",
       },
     ],
     href: "/services#brand",

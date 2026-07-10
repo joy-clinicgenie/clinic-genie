@@ -4,18 +4,16 @@ import { Section } from "@/components/ui/Section";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal, RevealGroup, RevealItem } from "@/components/ui/Reveal";
-import { Kicker } from "@/components/ui/Kicker";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { MagneticButton } from "@/components/ui/MagneticButton";
 import { LightHero } from "@/components/ui/LightHero";
-import { OrbAnchor } from "@/components/orb/OrbAnchor";
 import { PageFinale } from "@/components/ui/PageFinale";
 import {
   LandingKicker,
   LandingHeading,
   LandingBody,
 } from "@/components/home/landing/LandingLayout";
-import { ContactForm } from "@/components/contact/ContactForm";
+import { ContactSection } from "@/components/contact/ContactSection";
 
 export const metadata: Metadata = {
   title: "Contact — Tell Us Your Clinic's Wish",
@@ -47,37 +45,18 @@ export default function ContactPage() {
   return (
     <>
       <LightHero
-        kicker="Contact"
         title="Tell us your clinic's wish."
         highlight="wish"
         subtitle="Whatever you are dreaming up, launching, redesigning, or growing, it starts with one conversation. We will help you make it happen."
+        showOrb={false}
+        showWishForm={false}
+        align="center"
       />
 
-      {/* 2 — Contact form */}
-      <Section tone="dark">
-        <OrbAnchor
-          id="contact-form"
-          mood="thinking"
-          scale={0.95}
-          intensity={0.9}
-          className="absolute left-1/2 top-16 hidden h-px w-px -translate-x-1/2 lg:block"
-        />
-        <Container size="wide">
-          <Reveal variant="up">
-            <ContactForm />
-          </Reveal>
-        </Container>
-      </Section>
+      <ContactSection />
 
       {/* 3 — What happens next */}
       <Section tone="dark">
-        <OrbAnchor
-          id="contact-next"
-          mood="thinking"
-          scale={0.85}
-          intensity={0.85}
-          className="absolute right-[8%] top-1/4 hidden h-px w-px lg:block"
-        />
         <Container className="flex flex-col gap-12">
           <SectionHeading
             kicker="What happens next"
@@ -114,7 +93,7 @@ export default function ContactPage() {
               compliance, explained simply.
             </LandingBody>
             <Reveal variant="up" delay={0.1}>
-              <MagneticButton href="/genie-tips" size="lg" withMiniOrb>
+              <MagneticButton href="/genie-tips" size="lg">
                 Read the Genie&apos;s Insights
               </MagneticButton>
             </Reveal>

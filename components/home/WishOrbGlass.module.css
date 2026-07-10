@@ -1,0 +1,51 @@
+.root {
+  position: absolute;
+  inset: 0;
+  overflow: visible;
+  isolation: isolate;
+}
+
+.canvas {
+  position: absolute !important;
+  inset: 0;
+  z-index: 1;
+}
+
+.root :global(canvas) {
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+  background: transparent !important;
+}
+
+.orbiters {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 2;
+  pointer-events: none;
+  width: 0;
+  height: 0;
+  animation: orbSpin 30s linear infinite;
+}
+
+.orbiters b {
+  position: absolute;
+  font-weight: 400;
+  color: #2fc4d1;
+  text-shadow: 0 0 12px rgba(120, 235, 245, 0.95);
+  animation: orbSpin 30s linear infinite reverse;
+}
+
+@keyframes orbSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .orbiters,
+  .orbiters b {
+    animation: none;
+  }
+}

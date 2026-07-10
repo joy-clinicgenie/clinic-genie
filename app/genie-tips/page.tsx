@@ -31,6 +31,8 @@ export default function GenieTipsPage() {
         title="Clinic growth, demystified."
         highlight="demystified"
         subtitle="Practical, compliance-aware advice on SEO, ads, websites and brand — written for clinic owners and specialist doctors in Singapore. Free wishes, basically."
+        showOrb={false}
+        showWishForm={false}
       />
 
       {/* 2 — Featured post */}

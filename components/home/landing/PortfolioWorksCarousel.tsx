@@ -16,10 +16,23 @@ import {
 import { MagneticButton } from "@/components/ui/MagneticButton";
 import { SparkleCluster } from "@/components/ui/SparkleCluster";
 import { SparkleRing } from "@/components/ui/SparkleRing";
-import { LandingBody, LandingHeading } from "@/components/home/landing/LandingLayout";
+import {
+  LandingBody,
+  LandingHeading,
+  LandingKicker,
+} from "@/components/home/landing/LandingLayout";
 import { PORTFOLIO_WORKS, type PortfolioWorkSlide } from "@/lib/data/portfolio-works";
 import { cn } from "@/lib/cn";
 import styles from "./PortfolioWorksCarousel.module.css";
+
+export type PortfolioWorksCarouselProps = {
+  kicker?: string;
+  title?: string;
+  highlight?: string;
+  body?: string;
+  cta?: { label: string; href: string };
+  slides?: PortfolioWorkSlide[];
+};
 
 const CARD_GAP = -32;
 const CARD_WIDTH_MOBILE = 220;
@@ -643,10 +656,18 @@ const ScrollCarousel = forwardRef<CarouselControlsHandle, { slides: PortfolioWor
   );
 });
 
-export function PortfolioWorksCarousel() {
+export function PortfolioWorksCarousel({
+  kicker,
+  title = "Magic beyond the clinic.",
+  highlight,
+  body = "The same magic, beyond healthcare. From cafés to consultancies, built to help brands grow.",
+  cta = { label: "View Our Works", href: "/portfolio" },
+  slides = PORTFOLIO_WORKS,
+}: PortfolioWorksCarouselProps = {}) {
   const reducedMotion = useReducedMotion();
-  const slides = PORTFOLIO_WORKS;
   const carouselRef = useRef<CarouselControlsHandle>(null);
+  const resolvedHighlight =
+    highlight ?? (title === "Magic beyond the clinic." ? "magic" : undefined);
 
   return (
     <div className="flex w-full flex-col">
@@ -674,12 +695,11 @@ export function PortfolioWorksCarousel() {
           ))}
         </div>
         <div className={styles.intro}>
-          <LandingHeading as="h3" highlight="magic">
-            Magic beyond the clinic.
+          {kicker && <LandingKicker>{kicker}</LandingKicker>}
+          <LandingHeading as="h3" highlight={resolvedHighlight}>
+            {title}
           </LandingHeading>
-          <LandingBody>
-            The same magic, beyond healthcare. From cafés to consultancies, built to help brands grow.
-          </LandingBody>
+          <LandingBody>{body}</LandingBody>
         </div>
 
         <div className={styles.carouselShell}>
@@ -700,8 +720,8 @@ export function PortfolioWorksCarousel() {
           />
 
           <div className={styles.ctaBlock}>
-            <MagneticButton href="/portfolio" size="lg" withMiniOrb>
-              View Our Works
+            <MagneticButton href={cta.href} size="lg" withMiniOrb>
+              {cta.label}
             </MagneticButton>
           </div>
         </div>

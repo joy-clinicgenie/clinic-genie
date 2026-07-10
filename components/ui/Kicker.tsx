@@ -4,7 +4,7 @@ import type { ReactNode } from "react";
 export function Kicker({
   children,
   as: Tag = "span",
-  tone = "dark",
+  tone = "light",
   className,
 }: {
   children: ReactNode;
@@ -15,18 +15,13 @@ export function Kicker({
   return (
     <Tag
       className={cn(
-        "inline-flex items-center gap-2 font-display text-kicker uppercase",
-        tone === "dark" ? "text-genie-300" : "text-genie-700",
+        "inline-flex w-fit items-center rounded-pill border bg-transparent px-3 py-1 font-mono text-xs font-bold uppercase tracking-wider",
+        tone === "dark"
+          ? "border-genie-400 text-genie-300"
+          : "border-genie-600 text-genie-700",
         className
       )}
     >
-      <span
-        className={cn(
-          "inline-block h-1.5 w-1.5 rounded-full",
-          tone === "dark" ? "bg-genie-400 shadow-glow-sm" : "bg-genie-600"
-        )}
-        aria-hidden="true"
-      />
       {children}
     </Tag>
   );

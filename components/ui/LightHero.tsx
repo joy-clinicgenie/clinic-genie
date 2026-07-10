@@ -37,7 +37,7 @@ export function LightHero({
   children,
 }: {
   kicker?: string;
-  title?: string;
+  title?: ReactNode;
   highlight?: string;
   subtitle?: string;
   primaryCta?: CtaLink;
@@ -58,6 +58,7 @@ export function LightHero({
 }) {
   const reduceMotion = useReducedMotion();
   const centered = align === "center";
+  const centeredNoOrb = centered && !showOrb;
 
   const headingBlock =
     kicker || title ? (
@@ -98,7 +99,7 @@ export function LightHero({
     <motion.div
       className={cn(
         styles.copyBlock,
-        centered ? "items-center text-center" : "max-w-3xl lg:text-left"
+        centered ? "mx-auto max-w-3xl items-center text-center" : "max-w-3xl lg:text-left"
       )}
       initial={reduceMotion ? false : { opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
@@ -156,7 +157,11 @@ export function LightHero({
 
       <Container
         size={containerSize}
-        className={cn(styles.lightHeroContent, "relative z-10 w-full")}
+        className={cn(
+          styles.lightHeroContent,
+          centeredNoOrb && styles.lightHeroCenteredNoOrb,
+          "relative z-10 w-full"
+        )}
       >
         <div
           className={cn(
