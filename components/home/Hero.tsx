@@ -39,11 +39,7 @@ export function Hero() {
       </div>
 
       <div className={styles.heroSparkleLayer} data-hero-orb-layer="true" aria-hidden="true">
-        <WishOrbGlass
-          wishes={HERO_WISHES}
-          reducedMotion={reduceMotion ?? false}
-          anchorRef={orbAnchorRef}
-        />
+        <WishOrbGlass wishes={HERO_WISHES} anchorRef={orbAnchorRef} />
       </div>
 
       <Container
