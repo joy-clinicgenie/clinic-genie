@@ -103,7 +103,6 @@ export interface OrbMetrics {
 
 interface WishOrbGlassProps {
   wishes?: readonly HeroWishEntry[];
-  reducedMotion?: boolean;
   anchorRef?: RefObject<HTMLElement | null>;
 }
 
@@ -157,7 +156,6 @@ function updateOrbiters(
 
 export default function WishOrbGlass({
   wishes = HERO_WISHES,
-  reducedMotion = false,
   anchorRef,
 }: WishOrbGlassProps) {
   const wrapRef = useRef<HTMLDivElement>(null);
@@ -204,7 +202,6 @@ export default function WishOrbGlass({
       >
         <Orb
           wishes={wishes}
-          reducedMotion={reducedMotion}
           wrapRef={wrapRef}
           orbitersRef={orbitersRef}
           metricsRef={metricsRef}
@@ -223,7 +220,6 @@ export default function WishOrbGlass({
 
 interface OrbProps {
   wishes: readonly HeroWishEntry[];
-  reducedMotion: boolean;
   wrapRef: RefObject<HTMLDivElement | null>;
   orbitersRef: RefObject<HTMLDivElement | null>;
   metricsRef: MutableRefObject<OrbMetrics>;
@@ -232,7 +228,6 @@ interface OrbProps {
 
 function Orb({
   wishes,
-  reducedMotion,
   wrapRef,
   orbitersRef,
   metricsRef,
@@ -347,12 +342,12 @@ function Orb({
 
   return createPortal(
     <>
-      <HeroSparkleScene reducedMotion={reducedMotion} />
+      <HeroSparkleScene reducedMotion />
       <WishColumn
         ref={wishRigRef}
         wishes={wishes}
         phrasePaused={phrasePaused}
-        reducedMotion={reducedMotion}
+        reducedMotion
         metricsRef={metricsRef}
       />
     </>,
