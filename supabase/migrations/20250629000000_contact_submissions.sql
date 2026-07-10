@@ -14,3 +14,13 @@ create index if not exists contact_submissions_created_at_idx
   on public.contact_submissions (created_at desc);
 
 alter table public.contact_submissions enable row level security;
+
+create policy "contact_submissions_insert"
+  on public.contact_submissions
+  for insert
+  with check (true);
+
+create policy "contact_submissions_select"
+  on public.contact_submissions
+  for select
+  using (true);

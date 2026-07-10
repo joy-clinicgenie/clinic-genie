@@ -8,12 +8,14 @@ function getSupabaseAdmin(): SupabaseClient {
     return adminClient;
   }
 
-  const url = process.env.SUPABASE_URL;
+  const rawUrl = process.env.SUPABASE_URL;
   const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
-  if (!url || !serviceRoleKey) {
+  if (!rawUrl || !serviceRoleKey) {
     throw new Error("Supabase server credentials are not configured.");
   }
+
+  const url = rawUrl.replace(/\/rest\/v1\/?$/, "").replace(/\/$/, "");
 
   adminClient = createClient(url, serviceRoleKey, {
     auth: {
