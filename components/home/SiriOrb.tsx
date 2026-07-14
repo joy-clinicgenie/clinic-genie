@@ -10,24 +10,20 @@ const BLUR_MULTIPLIER_SMALL = 0.008;
 const BLUR_MIN_SMALL = 1;
 const BLUR_MULTIPLIER_LARGE = 0.015;
 const BLUR_MIN_LARGE = 4;
-const CONTRAST_MULTIPLIER_SMALL = 0.004;
-const CONTRAST_MIN_SMALL = 1.2;
-const CONTRAST_MULTIPLIER_LARGE = 0.008;
-const CONTRAST_MIN_LARGE = 1.5;
-const SHADOW_MULTIPLIER_SMALL = 0.004;
-const SHADOW_MIN_SMALL = 0.5;
-const SHADOW_MULTIPLIER_LARGE = 0.008;
-const SHADOW_MIN_LARGE = 2;
-const CONTRAST_TINY = 1.1;
-const CONTRAST_MULTIPLIER_FINAL = 1.2;
-const CONTRAST_MIN_FINAL = 1.3;
+const CONTRAST_MULTIPLIER_SMALL = 0.003;
+const CONTRAST_MIN_SMALL = 1.08;
+const CONTRAST_MULTIPLIER_LARGE = 0.005;
+const CONTRAST_MIN_LARGE = 1.2;
+const CONTRAST_TINY = 1.05;
+const CONTRAST_MULTIPLIER_FINAL = 1.1;
+const CONTRAST_MIN_FINAL = 1.12;
 
-/** Colour-picked from the hero teal gradient. */
+/** Matches `--genie-grad` / `.genie-text` wordmark stops. */
 export const SIRI_ORB_TEAL_COLORS = {
-  bg: "#0B2A46",
-  c1: "#53E1D7",
-  c2: "#2AA3A0",
-  c3: "#208C8E",
+  bg: "#EAFBFB",
+  c1: "#18C4D9",
+  c2: "#78E2DD",
+  c3: "#7DAFE3",
 } as const;
 
 export interface SiriOrbProps {
@@ -82,11 +78,6 @@ export function SiriOrb({
       ? Math.max(sizeValue * CONTRAST_MULTIPLIER_SMALL, CONTRAST_MIN_SMALL)
       : Math.max(sizeValue * CONTRAST_MULTIPLIER_LARGE, CONTRAST_MIN_LARGE);
 
-  const shadowSpread =
-    sizeValue < SIZE_THRESHOLD_SMALL
-      ? Math.max(sizeValue * SHADOW_MULTIPLIER_SMALL, SHADOW_MIN_SMALL)
-      : Math.max(sizeValue * SHADOW_MULTIPLIER_LARGE, SHADOW_MIN_LARGE);
-
   const finalContrast = getFinalContrast(sizeValue, contrastAmount);
 
   return (
@@ -101,7 +92,6 @@ export function SiriOrb({
           "--animation-duration": `${animationDuration}s`,
           "--blur-amount": `${blurAmount}px`,
           "--contrast-amount": finalContrast,
-          "--shadow-spread": `${shadowSpread}px`,
         } as CSSProperties
       }
     />

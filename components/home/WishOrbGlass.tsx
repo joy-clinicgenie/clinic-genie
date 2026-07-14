@@ -78,13 +78,12 @@ const ORB_FRAG = `
     vec2 bend = N.xy * (uRadius / uRes) * (0.08 + 0.32 * edge * edge);
     vec2 ruv = zoomUV - bend;
 
-    // Single sample keeps wish text sharp (no chromatic fringe / false stroke).
+    // Premultiplied FBO sample — avoids dark fringe/stroke around warped text.
     vec4 scene = texture2D(uScene, ruv);
     float content = scene.a;
-    vec3 sceneCol = scene.rgb;
 
-    float rim = pow(edge, 3.0);
-    vec3 glass = vec3(0.33, 0.88, 0.90) * (0.04 + 0.22 * rim);
+    float rim = pow(edge, 4.0);
+    vec3 glass = vec3(1.0) * (0.01 + 0.05 * rim);
 
     vec3 L1 = normalize(vec3(-0.5, 0.65, 0.55));
     vec3 L2 = normalize(vec3(0.6, -0.5, 0.4));
@@ -92,11 +91,11 @@ const ORB_FRAG = `
       pow(max(dot(N, L1), 0.0), 90.0) * 0.28 +
       pow(max(dot(N, L2), 0.0), 140.0) * 0.1;
 
-    vec3 col = glass * (1.0 - content) + sceneCol * content;
+    vec3 col = glass * (1.0 - content) + scene.rgb;
     col += vec3(1.0) * spec * (1.0 - content);
-    col += vec3(0.55, 0.95, 1.0) * rim * 0.12 * (1.0 - content);
+    col += vec3(0.85, 0.98, 1.0) * rim * 0.04 * (1.0 - content);
 
-    float alpha = max(content, rim * 0.38 + 0.1 + spec * 0.55 * (1.0 - content));
+    float alpha = max(content, rim * 0.06 + spec * 0.25 * (1.0 - content));
     gl_FragColor = vec4(col, alpha);
   }`;
 
@@ -652,6 +651,7 @@ const WishColumn = forwardRef<THREE.Group, WishColumnProps>(function WishColumn(
         <shaderMaterial
           ref={materialRef}
           transparent
+          premultipliedAlpha
           depthWrite={false}
           uniforms={wishUniforms}
           vertexShader={`
@@ -670,7 +670,10 @@ const WishColumn = forwardRef<THREE.Group, WishColumnProps>(function WishColumn(
               vec4 t = texture2D(uText, vec2(vUv.x, vUv.y / uSlots + uScroll));
               float d = distance(vUv, vec2(0.5));
               float m = smoothstep(0.28, 0.20, d);
-              gl_FragColor = vec4(t.rgb, t.a * m * uOpacity);
+              // Atlas is filtered against transparent black; un-premultiply to drop the dark stroke.
+              vec3 rgb = t.a > 0.001 ? clamp(t.rgb / t.a, 0.0, 1.0) : t.rgb;
+              float a = t.a * m * uOpacity;
+              gl_FragColor = vec4(rgb * a, a);
             }`}
         />
       </mesh>
