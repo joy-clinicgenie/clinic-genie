@@ -58,9 +58,6 @@ export default function HomePage() {
         className="border-y border-[#E6EEF1] bg-white py-14 shadow-[0_8px_32px_rgba(6,45,54,0.05)]"
         containerClassName="flex flex-col gap-8"
       >
-        <Reveal>
-          <LandingKicker>Clinics we&apos;ve helped grow</LandingKicker>
-        </Reveal>
         <Reveal className="-mx-[var(--page-pad)] w-[calc(100%+2*var(--page-pad))] bg-white">
           <LogoMarquee logos={CLIENT_LOGOS} />
         </Reveal>

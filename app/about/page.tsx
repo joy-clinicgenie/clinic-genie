@@ -1,11 +1,6 @@
 import type { Metadata } from "next";
-import { Section } from "@/components/ui/Section";
-import { Container } from "@/components/ui/Container";
-import { Kicker } from "@/components/ui/Kicker";
-import { Reveal, RevealGroup, RevealItem } from "@/components/ui/Reveal";
-import { MagneticButton } from "@/components/ui/MagneticButton";
+import { Reveal } from "@/components/ui/Reveal";
 import { GenieFeatureCards } from "@/components/ui/GenieFeatureCards";
-import { GlassCard } from "@/components/ui/GlassCard";
 import { LightHero } from "@/components/ui/LightHero";
 import { LandingSection, LandingIntro } from "@/components/home/landing/LandingLayout";
 import { AboutValuesCards } from "@/components/about/AboutValuesCards";
@@ -13,9 +8,8 @@ import { ExpertsCards, ExpertsTagline } from "@/components/about/ExpertsCards";
 import { MagicProcess } from "@/components/home/landing/MagicProcess";
 import { PageFinale } from "@/components/ui/PageFinale";
 import { PageFinaleCTA } from "@/components/ui/PageFinaleCTA";
-import { OrbAnchor } from "@/components/orb/OrbAnchor";
 import { HOME_PROCESS_STEPS } from "@/lib/data/services";
-import { ABOUT_TEAM_ROLES, ABOUT_WISH_POINTS } from "@/lib/data/about";
+import { ABOUT_WISH_POINTS } from "@/lib/data/about";
 
 export const metadata: Metadata = {
   title: "About Clinic Genie | The Genie Behind Better Clinic Growth",
@@ -113,43 +107,7 @@ export default function AboutPage() {
         </div>
       </LandingSection>
 
-      {/* 6 — People behind it */}
-      <Section tone="light" className="bg-[#ffffff]">
-        <OrbAnchor
-          id="about-team"
-          mood="curious"
-          scale={0.85}
-          className="absolute left-1/2 top-20 h-px w-px -translate-x-1/2"
-        />
-        <Container size="wide" className="flex flex-col gap-12">
-          <div className="flex flex-col items-start justify-between gap-6 lg:flex-row lg:items-end">
-            <div className="flex max-w-2xl flex-col gap-4">
-              <Kicker tone="light">Meet the Genies Behind the Magic</Kicker>
-              <h2 className="font-display text-h2 text-balance text-ink-900">
-                A boutique band of medical marketing experts.
-              </h2>
-              <p className="text-lead text-ink-700">
-                Daring, innovative, and built for specialist clinics. Different crafts, one growth engine.
-              </p>
-            </div>
-            <MagneticButton href="/meet-us" variant="secondary">
-              Meet us
-            </MagneticButton>
-          </div>
-          <RevealGroup className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {ABOUT_TEAM_ROLES.map((role) => (
-              <RevealItem key={role.title} className="h-full">
-                <GlassCard tone="light" radius="xl" hover className="flex h-full flex-col gap-3 p-6">
-                  <h3 className="font-display text-base font-semibold text-ink-900">{role.title}</h3>
-                  <p className="text-sm leading-relaxed text-ink-700">{role.body}</p>
-                </GlassCard>
-              </RevealItem>
-            ))}
-          </RevealGroup>
-        </Container>
-      </Section>
-
-      {/* 7 — Final CTA */}
+      {/* Final CTA */}
       <PageFinale>
         <PageFinaleCTA
           kicker="Make your first wish"

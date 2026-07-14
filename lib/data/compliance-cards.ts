@@ -9,13 +9,13 @@ export const COMPLIANCE_CARDS: ComplianceCard[] = [
   {
     title: "Built Within the Rules",
     body: "Every wish is shaped around Singapore's healthcare advertising guidelines, so your content stays clear, careful, and responsible.",
-    image: "/compliance/based-claims.png",
+    image: "/compliance/rules.png",
     alt: "Built within the rules icon",
   },
   {
     title: "Evidence-Based Claims",
     body: "We ground every claim in fact, not hype. What we cannot support, we do not say.",
-    image: "/compliance/no-false-promises.png",
+    image: "/compliance/based-claims.png",
     alt: "Evidence-based claims icon",
   },
   {

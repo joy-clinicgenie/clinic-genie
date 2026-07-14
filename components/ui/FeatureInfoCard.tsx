@@ -95,18 +95,19 @@ export function FeatureInfoCard({
     <article
       className={cn(
         styles.card,
-        "group/card relative flex h-full min-h-[17.5rem] w-full flex-col items-start gap-5 rounded-xl bg-white p-6 text-left shadow-card transition-shadow duration-ui hover:shadow-lg motion-reduce:transition-none",
+        "group/card relative flex h-full min-h-[17.5rem] w-full min-w-0 flex-col items-start gap-5 rounded-xl bg-white p-6 text-left shadow-card transition-shadow duration-ui hover:shadow-lg motion-reduce:transition-none",
+        compact && styles.cardCompact,
         className
       )}
     >
-      <div className="flex w-full items-start justify-between gap-3">
-        <div className={styles.cardGraphic}>
+      <div className="flex w-full min-w-0 items-start justify-between gap-3">
+        <div className={cn(styles.cardGraphic, compact && styles.cardGraphicCompact)}>
           {icon ? (
             <span
               aria-hidden="true"
               className={cn(
-                "flex h-12 w-12 shrink-0 items-center justify-center",
-                compact && "h-10 w-10 sm:h-12 sm:w-12"
+                "flex shrink-0 items-center justify-center",
+                compact ? styles.cardIconCompact : "h-12 w-12"
               )}
             >
               {icon}
@@ -115,11 +116,11 @@ export function FeatureInfoCard({
             <Image
               src={image}
               alt={alt}
-              width={48}
-              height={48}
+              width={compact ? 88 : 48}
+              height={compact ? 88 : 48}
               className={cn(
-                "h-12 w-12 shrink-0 object-contain",
-                compact && "h-10 w-10 sm:h-12 sm:w-12"
+                "shrink-0 object-contain",
+                compact ? styles.cardIconCompact : "h-12 w-12"
               )}
             />
           ) : null}
@@ -151,12 +152,12 @@ export function FeatureInfoCard({
         ) : null}
       </div>
 
-      <div className="flex w-full flex-col gap-2">
+      <div className={cn("flex w-full min-w-0 flex-col gap-2", compact && styles.cardCopy)}>
         <TitleTag
           className={cn(
             styles.cardTitle,
             compact
-              ? "text-sm font-semibold sm:text-xs"
+              ? styles.cardTitleCompact
               : titleAs === "h6"
                 ? "text-h6"
                 : "text-h4"
@@ -164,7 +165,7 @@ export function FeatureInfoCard({
         >
           <CardTitle title={title} highlight={highlight} />
         </TitleTag>
-        <p className={styles.cardBody}>{body}</p>
+        <p className={cn(styles.cardBody, compact && styles.cardBodyCompact)}>{body}</p>
       </div>
 
       {href ? (
