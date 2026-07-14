@@ -63,12 +63,92 @@
   flex-direction: column;
   align-items: flex-start;
   gap: 0.625rem;
+  height: 100%;
   padding: 1.75rem;
 }
 
 @media (min-width: 768px) {
   .textCol {
     padding: 1.75rem 1.25rem 1.75rem 1.75rem;
+  }
+}
+
+.ctaRow {
+  margin-top: auto;
+  padding-top: 0.75rem;
+  border-top: 1px solid #edf1f2;
+  width: 100%;
+}
+
+.exploreCta {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.exploreButton {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  height: 2.5rem;
+  width: 2.5rem;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  background: #e6eef1;
+  color: #062d36;
+  transition: box-shadow 200ms ease-out;
+}
+
+.exploreCta:hover .exploreButton,
+:global(a.group:focus-visible) .exploreButton {
+  box-shadow: 0 0 0 4px #e6eef1;
+}
+
+.exploreLabelClip {
+  display: flex;
+  align-items: center;
+  max-width: 0;
+  overflow: hidden;
+  transition: max-width 220ms ease-out;
+}
+
+.exploreCta:hover .exploreLabelClip,
+:global(a.group:focus-visible) .exploreLabelClip {
+  max-width: 5rem;
+}
+
+.exploreLabel {
+  flex-shrink: 0;
+  padding-left: 0.5rem;
+  white-space: nowrap;
+  pointer-events: none;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #062d36;
+  transform: translateX(-0.75rem);
+  transition: transform 220ms ease-out;
+}
+
+.exploreCta:hover .exploreLabel,
+:global(a.group:focus-visible) .exploreLabel {
+  transform: translateX(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .exploreLabelClip {
+    max-width: 5rem;
+    transition: none;
+  }
+
+  .exploreLabel {
+    transform: none;
+    transition: none;
+  }
+
+  .exploreButton {
+    transition: none;
   }
 }
 

@@ -5,7 +5,6 @@ import { Kicker } from "@/components/ui/Kicker";
 import { Reveal, RevealGroup, RevealItem } from "@/components/ui/Reveal";
 import { MagneticButton } from "@/components/ui/MagneticButton";
 import { GenieFeatureCards } from "@/components/ui/GenieFeatureCards";
-import cardStyles from "@/components/ui/GenieFeatureCards.module.css";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { LightHero } from "@/components/ui/LightHero";
 import { LandingSection, LandingIntro } from "@/components/home/landing/LandingLayout";
@@ -142,7 +141,7 @@ export default function AboutPage() {
               <RevealItem key={role.title} className="h-full">
                 <GlassCard tone="light" radius="xl" hover className="flex h-full flex-col gap-3 p-6">
                   <h3 className="font-display text-base font-semibold text-ink-900">{role.title}</h3>
-                  <p className={cardStyles.cardBody}>{role.body}</p>
+                  <p className="text-sm leading-relaxed text-ink-700">{role.body}</p>
                 </GlassCard>
               </RevealItem>
             ))}

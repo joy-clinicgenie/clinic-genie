@@ -19,6 +19,55 @@ export type WishStackIntro = {
   subtitle?: string;
 };
 
+function CardArrowIcon() {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="20"
+      height="20"
+      viewBox="0 0 18.256 18.256"
+      aria-hidden="true"
+      className="transition-transform duration-ui group-hover/cta:translate-x-0.5 group-hover/cta:-translate-y-0.5 motion-reduce:transition-none"
+    >
+      <g transform="translate(5.363 5.325)">
+        <path
+          d="M14.581,7.05,7.05,14.581"
+          transform="translate(-7.05 -7.012)"
+          fill="none"
+          stroke="currentColor"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1.5"
+        />
+        <path
+          d="M10,7l5.287.037.038,5.287"
+          transform="translate(-7.756 -7)"
+          fill="none"
+          stroke="currentColor"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1.5"
+        />
+      </g>
+    </svg>
+  );
+}
+
+function WishExploreCta() {
+  return (
+    <span className={cn(styles.exploreCta, "group/cta")}>
+      <span aria-hidden="true" className={styles.exploreButton}>
+        <CardArrowIcon />
+      </span>
+      <span className={styles.exploreLabelClip}>
+        <span aria-hidden="true" className={styles.exploreLabel}>
+          Explore
+        </span>
+      </span>
+    </span>
+  );
+}
+
 function WishCardImage({ slug, accent }: { slug: string; accent: string }) {
   const image = WISH_STACK_IMAGES[slug];
   const [failed, setFailed] = useState(false);
@@ -125,16 +174,13 @@ export function WishStack({
                   <span className="inline-flex items-center rounded-pill bg-[#E3F6FA] px-2.5 py-0.5 font-mono text-[10px] uppercase tracking-wider text-[#217B8E]">
                     {chips[pillar.slug] ?? "SERVICE"}
                   </span>
-                  <h3 className="font-display text-[1.15rem] font-bold leading-snug text-ink-900">
+                  <h3 className="font-display text-h4 font-semibold leading-snug text-ink-900">
                     {pillar.name}
                   </h3>
-                  <p className="text-sm leading-relaxed text-[#7E8C92]">{pillar.heroTitle}</p>
-                  <span className="mt-2 inline-flex items-center gap-1.5 border-t border-[#EDF1F2] pt-3 text-sm font-semibold text-ink-900 transition-colors group-hover:text-[#217B8E]">
-                    Explore
-                    <span aria-hidden="true" className="transition-transform group-hover:translate-x-0.5">
-                      →
-                    </span>
-                  </span>
+                  <p className="text-body text-[#7E8C92]">{pillar.heroTitle}</p>
+                  <div className={styles.ctaRow}>
+                    <WishExploreCta />
+                  </div>
                 </div>
                 <WishCardImage slug={pillar.slug} accent={pillar.accent} />
               </div>

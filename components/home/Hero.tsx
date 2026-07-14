@@ -81,8 +81,8 @@ export function Hero() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, ease: ease.glide, delay: 0.12 }}
               >
-                Skilled care deserves to be found. Online, the clinic that ranks first often wins the booking. Clinic
-                Genie closes that gap, so patients find you, trust you, and choose you.
+                Online, the clinic that ranks first often wins the booking. Clinic Genie makes sure that clinic is
+                yours.
               </motion.p>
 
               <motion.div

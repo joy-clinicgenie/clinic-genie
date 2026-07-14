@@ -3,6 +3,19 @@
   inset: 0;
   overflow: visible;
   isolation: isolate;
+  pointer-events: none;
+}
+
+.siriFill {
+  position: absolute;
+  z-index: 0;
+  left: 50%;
+  top: 50%;
+  width: 400px;
+  height: 400px;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  will-change: left, top, width, height;
 }
 
 .canvas {
@@ -16,36 +29,4 @@
   height: 100% !important;
   display: block;
   background: transparent !important;
-}
-
-.orbiters {
-  position: absolute;
-  left: 0;
-  top: 0;
-  z-index: 2;
-  pointer-events: none;
-  width: 0;
-  height: 0;
-  animation: orbSpin 30s linear infinite;
-}
-
-.orbiters b {
-  position: absolute;
-  font-weight: 400;
-  color: #2fc4d1;
-  text-shadow: 0 0 12px rgba(120, 235, 245, 0.95);
-  animation: orbSpin 30s linear infinite reverse;
-}
-
-@keyframes orbSpin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .orbiters,
-  .orbiters b {
-    animation: none;
-  }
 }

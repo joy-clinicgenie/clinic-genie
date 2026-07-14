@@ -1,0 +1,87 @@
+.cardTitle {
+  font-family: var(--font-sora), Sora, ui-sans-serif, system-ui, sans-serif;
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.005em;
+  color: #062d36;
+}
+
+.cardTitle :global(.genie-text) {
+  background-image: none;
+  -webkit-background-clip: unset;
+  background-clip: unset;
+  color: #54b9ce;
+}
+
+.cardBody {
+  margin: 0;
+  font-size: var(--text-body);
+  line-height: 1.65;
+  color: #395d66;
+}
+
+.cardGraphic {
+  position: relative;
+  flex-shrink: 0;
+  width: 3rem;
+  height: 3rem;
+  overflow: visible;
+}
+
+.cardSparkles {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 180ms ease-out;
+}
+
+.card:hover .cardSparkles,
+.card:focus-within .cardSparkles,
+.cardInteractive:hover .cardSparkles,
+.cardInteractive:focus-visible .cardSparkles {
+  opacity: 1;
+}
+
+.cardSparkle {
+  position: absolute;
+  width: 11px;
+  height: 11px;
+  transform: translate(-50%, -50%);
+  color: #18c4d9;
+  filter:
+    drop-shadow(0 0 3px rgba(24, 196, 217, 0.85))
+    drop-shadow(0 0 7px rgba(84, 185, 206, 0.4));
+  animation-name: feature-card-sparkle-blink;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-play-state: paused;
+}
+
+.card:hover .cardSparkle,
+.card:focus-within .cardSparkle,
+.cardInteractive:hover .cardSparkle,
+.cardInteractive:focus-visible .cardSparkle {
+  animation-play-state: running;
+}
+
+@keyframes feature-card-sparkle-blink {
+  0%,
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.75);
+  }
+  50% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cardSparkle {
+    animation: none;
+    opacity: 0.55;
+    transform: translate(-50%, -50%);
+  }
+}

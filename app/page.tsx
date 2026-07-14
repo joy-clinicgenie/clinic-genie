@@ -3,7 +3,7 @@ import { Hero } from "@/components/home/Hero";
 import { LogoMarquee } from "@/components/home/LogoMarquee";
 import { Reveal, RevealGroup, RevealItem } from "@/components/ui/Reveal";
 import { MagneticButton } from "@/components/ui/MagneticButton";
-import { PostCard } from "@/components/blog/PostCard";
+import { InsightPreviewCard } from "@/components/home/landing/InsightPreviewCard";
 import { CORE_PILLARS } from "@/lib/data/pillars";
 import { HOME_PROCESS_STEPS } from "@/lib/data/services";
 import { POSTS } from "@/lib/data/posts";
@@ -226,7 +226,7 @@ export default function HomePage() {
               <RevealGroup className="grid gap-5 md:grid-cols-3">
                 {POSTS.slice(0, 3).map((post) => (
                   <RevealItem key={post.slug} className="h-full">
-                    <PostCard post={post} tone="dark" />
+                    <InsightPreviewCard post={post} />
                   </RevealItem>
                 ))}
               </RevealGroup>

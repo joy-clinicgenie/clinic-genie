@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Animated angle for hero SiriOrb fill (must be global for @keyframes). */
+@property --siri-orb-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
 /* === OFFICIAL CLINIC GENIE BRAND COLOURS === */
 :root {
   --genie-cyan:  #18C4D9;

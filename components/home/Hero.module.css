@@ -118,7 +118,7 @@
   position: absolute;
   inset: 0;
   z-index: 1;
-  pointer-events: auto;
+  pointer-events: none;
 }
 
 .heroContent {
@@ -181,6 +181,8 @@
 
 .body {
   margin-top: 1.125rem;
+  max-width: 90%;
+  margin-inline: auto;
 }
 
 .ctaRow {
@@ -254,7 +256,8 @@
 
   .body {
     margin-top: 1.25rem;
-    max-width: none;
+    max-width: 90%;
+    margin-inline: 0;
   }
 
   .ctaRow {

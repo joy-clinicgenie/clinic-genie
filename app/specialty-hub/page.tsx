@@ -41,9 +41,9 @@ export default function SpecialtyHubPage() {
             align="center"
           />
           <RevealGroup className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-            {SPECIALTY_HUBS.map((hub) => (
+            {SPECIALTY_HUBS.map((hub, index) => (
               <RevealItem key={hub.slug} className="h-full">
-                <SpecialtyHubCard hub={hub} />
+                <SpecialtyHubCard hub={hub} sparkleIndex={index} />
               </RevealItem>
             ))}
           </RevealGroup>
