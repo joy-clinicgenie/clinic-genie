@@ -18,12 +18,12 @@ const CONTRAST_TINY = 1.05;
 const CONTRAST_MULTIPLIER_FINAL = 1.1;
 const CONTRAST_MIN_FINAL = 1.12;
 
-/** Matches `--genie-grad` / `.genie-text` wordmark stops. */
-export const SIRI_ORB_TEAL_COLORS = {
-  bg: "#EAFBFB",
-  c1: "#18C4D9",
-  c2: "#78E2DD",
-  c3: "#7DAFE3",
+/** SmoothUI SiriOrb defaults (soft mint, cyan, aqua). */
+export const SIRI_ORB_DEFAULT_COLORS = {
+  bg: "#C4C4C4",
+  c1: "color-mix(in srgb,rgb(192, 247, 230) 55%,rgb(82, 199, 174) 45%)",
+  c2: "oklch(85% 0.14 200)",
+  c3: "color-mix(in srgb,rgb(44, 229, 239) 55%, white 45%)",
 } as const;
 
 export interface SiriOrbProps {
@@ -65,7 +65,7 @@ export function SiriOrb({
   animationDuration = 20,
   reducedMotion = false,
 }: SiriOrbProps) {
-  const finalColors = { ...SIRI_ORB_TEAL_COLORS, ...colors };
+  const finalColors = { ...SIRI_ORB_DEFAULT_COLORS, ...colors };
   const sizeValue = parseSizePx(size);
 
   const blurAmount =

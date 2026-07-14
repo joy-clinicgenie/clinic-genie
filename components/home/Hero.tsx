@@ -1,27 +1,37 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import Link from "next/link";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
+import { OrbWishDecrypt } from "@/components/home/OrbWishDecrypt";
+import { SiriOrb } from "@/components/home/SiriOrb";
 import { Container } from "@/components/ui/Container";
 import { MagneticButton } from "@/components/ui/MagneticButton";
-import { HERO_WISHES } from "@/lib/data/hero-wishes";
 import { cn } from "@/lib/cn";
 import { ease } from "@/lib/motion";
 import styles from "./Hero.module.css";
-
-const WishOrbGlass = dynamic(() => import("@/components/home/WishOrbGlass"), {
-  ssr: false,
-  loading: () => null,
-});
 
 /**
  * Hero — headline, supporting copy, and CTAs
  */
 export function Hero() {
   const reduceMotion = useReducedMotion();
-  const orbAnchorRef = useRef<HTMLDivElement>(null);
+  const orbRef = useRef<HTMLDivElement>(null);
+  const [orbSize, setOrbSize] = useState(400);
+
+  useEffect(() => {
+    const el = orbRef.current;
+    if (!el) return;
+
+    const updateSize = () => {
+      setOrbSize(Math.max(1, Math.round(el.getBoundingClientRect().width)));
+    };
+
+    updateSize();
+    const ro = new ResizeObserver(updateSize);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
 
   return (
     <section
@@ -33,18 +43,7 @@ export function Hero() {
         "relative flex h-svh max-h-svh min-h-0 flex-col overflow-hidden pt-[calc(3.25rem+env(safe-area-inset-top,0px))] pb-3 lg:pt-[calc(5.25rem+env(safe-area-inset-top,0px))] lg:pb-12"
       )}
     >
-      <div className={styles.heroBackground} data-hero-bg="true" aria-hidden="true">
-        <div className={styles.heroSparkleField} />
-        <div className={styles.heroSparkleFieldAlt} />
-      </div>
-
-      <div className={styles.heroSparkleLayer} data-hero-orb-layer="true" aria-hidden="true">
-        <WishOrbGlass
-          wishes={HERO_WISHES}
-          reducedMotion={reduceMotion ?? false}
-          anchorRef={orbAnchorRef}
-        />
-      </div>
+      <div className={styles.heroBackground} data-hero-bg="true" aria-hidden="true" />
 
       <Container
         size="wide"
@@ -101,7 +100,17 @@ export function Hero() {
             </div>
           </div>
 
-          <div ref={orbAnchorRef} className={styles.heroOrbCol} aria-hidden="true" />
+          <div className={styles.heroOrbCol}>
+            <div ref={orbRef} className={styles.heroOrb}>
+              <div className={styles.heroOrbVisual} aria-hidden="true">
+                <SiriOrb
+                  size={orbSize}
+                  reducedMotion={reduceMotion ?? false}
+                />
+              </div>
+              <OrbWishDecrypt className={styles.heroOrbWish} />
+            </div>
+          </div>
         </div>
       </Container>
 
