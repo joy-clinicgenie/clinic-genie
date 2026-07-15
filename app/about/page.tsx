@@ -43,7 +43,29 @@ export default function AboutPage() {
         cards={ABOUT_WISH_POINTS}
       />
 
-      {/* 3 — What we stand for */}
+      {/* Specialists behind the work */}
+      <LandingSection
+        tone="cyan"
+        className="py-24"
+        containerClassName="flex flex-col gap-12"
+      >
+        <Reveal>
+          <LandingIntro
+            kicker="The experts behind the work"
+            title="The specialists behind every clinic wish."
+            highlight="specialists"
+            subtitle="Growth strategists, SEO specialists, campaign experts, creative makers, and tech builders — each focused on one part of responsible clinic marketing."
+          />
+        </Reveal>
+        <div className="relative">
+          <div className="relative z-10">
+            <ExpertsCards />
+          </div>
+          <ExpertsTagline />
+        </div>
+      </LandingSection>
+
+      {/* What we stand for */}
       <LandingSection
         tone="white"
         className="bg-gradient-to-b from-[#f8fdfd] via-[#eafbfb] to-[#e3f6fa] py-24"
@@ -65,7 +87,7 @@ export default function AboutPage() {
         </div>
       </LandingSection>
 
-      {/* 4 — How the magic works */}
+      {/* How the magic works */}
       <LandingSection
         tone="white"
         navTheme="dark"
@@ -82,28 +104,6 @@ export default function AboutPage() {
               "Every good wish needs a plan. From first spark to long-term growth, Clinic Genie gives your clinic marketing a clearer path from strategy to execution.",
           }}
         />
-      </LandingSection>
-
-      {/* 5 — The experts behind the work */}
-      <LandingSection
-        tone="cyan"
-        className="py-24"
-        containerClassName="flex flex-col gap-12"
-      >
-        <Reveal>
-          <LandingIntro
-            kicker="The experts behind the work"
-            title="The specialists behind every clinic wish."
-            highlight="specialists"
-            subtitle="Growth strategists, SEO specialists, campaign experts, creative makers, and tech builders — each focused on one part of responsible clinic marketing."
-          />
-        </Reveal>
-        <div className="relative">
-          <div className="relative z-10">
-            <ExpertsCards />
-          </div>
-          <ExpertsTagline />
-        </div>
       </LandingSection>
 
       {/* Final CTA */}
