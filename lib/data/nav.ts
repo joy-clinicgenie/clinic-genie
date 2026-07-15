@@ -10,7 +10,7 @@ export interface NavItem {
   children?: NavDropdownItem[];
 }
 
-const SERVICES_DROPDOWN: NavDropdownItem[] = [
+export const SERVICES_DROPDOWN: NavDropdownItem[] = [
   {
     title: "FindClinic.sg",
     description: "Verified clinic discovery for patients across Singapore.",

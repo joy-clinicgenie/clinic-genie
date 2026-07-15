@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Sora, Inter, JetBrains_Mono } from "next/font/google";
+import { Outfit, Instrument_Sans, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
 import { OrbProvider } from "@/lib/providers/OrbProvider";
@@ -12,8 +12,13 @@ import { CustomCursor } from "@/components/ui/CustomCursor";
 import { PointerRipples } from "@/components/ui/PointerRipples";
 import { SITE } from "@/lib/data/nav";
 
-const sora = Sora({ subsets: ["latin"], weight: ["600", "700"], variable: "--font-sora", display: "swap" });
-const inter = Inter({ subsets: ["latin"], weight: ["400", "500", "600", "700"], variable: "--font-inter", display: "swap" });
+const outfit = Outfit({ subsets: ["latin"], weight: ["600", "700"], variable: "--font-outfit", display: "swap" });
+const instrumentSans = Instrument_Sans({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-instrument-sans",
+  display: "swap",
+});
 const jetbrains = JetBrains_Mono({ subsets: ["latin"], weight: ["500"], variable: "--font-jetbrains", display: "swap" });
 
 export const metadata: Metadata = {
@@ -45,7 +50,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${sora.variable} ${inter.variable} ${jetbrains.variable}`}>
+    <html lang="en" className={`${outfit.variable} ${instrumentSans.variable} ${jetbrains.variable}`}>
       <body>
         <MotionProvider>
           <OrbProvider>

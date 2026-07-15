@@ -42,7 +42,7 @@ docs/BUILD_SPEC.md   The full design + build specification this site was built f
 
 - **Brand blue** `#6CBAD9` (genie-500). Links/emphasis on white use `genie-700` (AA). Tokens in `tailwind.config.ts` + `app/globals.css`.
 - Two registers: **conjuring** (dark, glowing, glassmorphic) and **clarity** (near-white, high-contrast for proof/reading), alternated per section.
-- Fonts: **Sora** (display) · **Inter** (body) · **JetBrains Mono** (kickers/metrics) via `next/font`.
+- Fonts: **Outfit** (display) · **Instrument Sans** (body) · **JetBrains Mono** (kickers/metrics) via `next/font`.
 - Fully responsive, keyboard-accessible, and `prefers-reduced-motion`-aware.
 
 > Note: `playwright` is included as a devDependency for visual QA screenshots; it is not used at runtime.

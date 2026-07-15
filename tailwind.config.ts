@@ -90,8 +90,8 @@ const config: Config = {
         },
       },
       fontFamily: {
-        display: ["var(--font-sora)", "Sora", "ui-sans-serif", "system-ui", "sans-serif"],
-        sans:    ["var(--font-inter)", "Inter", "ui-sans-serif", "system-ui", "sans-serif"],
+        display: ["var(--font-outfit)", "Outfit", "ui-sans-serif", "system-ui", "sans-serif"],
+        sans:    ["var(--font-instrument-sans)", "Instrument Sans", "ui-sans-serif", "system-ui", "sans-serif"],
         mono:    ["var(--font-jetbrains)", "JetBrains Mono", "ui-monospace", "monospace"],
       },
       fontSize: {

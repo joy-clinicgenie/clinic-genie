@@ -75,7 +75,7 @@
 
 .categoryTitle {
   margin: 0;
-  font-family: var(--font-sora), Sora, ui-sans-serif, system-ui, sans-serif;
+  font-family: var(--font-outfit), Outfit, ui-sans-serif, system-ui, sans-serif;
   font-size: var(--text-body);
   font-weight: 700;
   line-height: 1.35;
@@ -162,7 +162,7 @@
   position: relative;
   z-index: 1;
   display: inline-block;
-  font-family: var(--font-sora), Sora, ui-sans-serif, system-ui, sans-serif;
+  font-family: var(--font-outfit), Outfit, ui-sans-serif, system-ui, sans-serif;
   font-size: var(--text-body);
   font-weight: 400;
   color: #217b8e;

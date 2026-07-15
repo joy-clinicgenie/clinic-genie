@@ -391,13 +391,13 @@ function randomWishStep(wishCount: number): number {
   return slot === 0 ? wishCount - 1 : slot - 1;
 }
 
-function resolveSoraFontFamily(): string {
-  if (typeof document === "undefined") return "Sora, sans-serif";
-  const fromVar = getComputedStyle(document.documentElement).getPropertyValue("--font-sora").trim();
-  return fromVar || "Sora, sans-serif";
+function resolveOutfitFontFamily(): string {
+  if (typeof document === "undefined") return "Outfit, sans-serif";
+  const fromVar = getComputedStyle(document.documentElement).getPropertyValue("--font-outfit").trim();
+  return fromVar || "Outfit, sans-serif";
 }
 
-function wishFontSpec(family = resolveSoraFontFamily()): string {
+function wishFontSpec(family = resolveOutfitFontFamily()): string {
   return `600 18px ${family}`;
 }
 

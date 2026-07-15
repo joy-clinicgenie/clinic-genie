@@ -1,19 +1,18 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { Section } from "@/components/ui/Section";
 import { Container } from "@/components/ui/Container";
-import { Kicker } from "@/components/ui/Kicker";
 import { Reveal, RevealGroup, RevealItem } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { MagneticButton } from "@/components/ui/MagneticButton";
 import { GlassCard } from "@/components/ui/GlassCard";
-import { LightHero } from "@/components/ui/LightHero";
+import { FeatureInfoCard } from "@/components/ui/FeatureInfoCard";
 import { PageFinale } from "@/components/ui/PageFinale";
 import {
   LandingKicker,
   LandingHeading,
   LandingBody,
 } from "@/components/home/landing/LandingLayout";
+import { ThankYouHero } from "@/components/contact/ThankYouHero";
 import { SITE } from "@/lib/data/nav";
 
 export const metadata: Metadata = {
@@ -26,15 +25,19 @@ export const metadata: Metadata = {
 const NEXT_STEPS = [
   {
     title: "We read your wish",
-    body: "Your clinic, website, goals, and digital presence.",
+    body: "We look at your clinic, website, goals, and the support you are asking about.",
   },
   {
-    title: "We find the right next step",
-    body: "A reply, a discovery call, or a few more questions.",
+    title: "We find the right starting point",
+    body: "A strategy call, a discovery chat, or a few more questions, whatever fits.",
   },
   {
-    title: "We follow up with direction",
-    body: "We will come back to you with a clear next step, shaped around what you want to improve.",
+    title: "We talk growth priorities",
+    body: "Your specialty, your patients, your current presence, and where you want to be.",
+  },
+  {
+    title: "We point you in a direction",
+    body: "If there is a fit, we show you exactly how Clinic Genie can help your clinic grow.",
   },
 ];
 
@@ -64,82 +67,75 @@ const USEFUL_PATHS = [
 export default function ThankYouPage() {
   return (
     <>
-      <LightHero
-        kicker="Wish received"
-        title="Your wish is on its way to the genie."
-        highlight="genie"
-        subtitle="Thank you for reaching out. We have your enquiry, and we will look at it with your clinic, your goals, and your growth in mind."
-        primaryCta={{ href: "/", label: "Return to Homepage" }}
-        secondaryCta={{ href: "/portfolio", label: "See the Magic We've Made" }}
-        showWishForm={false}
-        align="center"
-      />
+      <ThankYouHero />
 
-      {/* 2 — What happens next */}
-      <Section tone="dark">
+      {/* Next steps — mirrors contact "What happens next" */}
+      <Section tone="light" className="![background:#f4f7f8]">
         <Container className="flex flex-col gap-12">
           <SectionHeading
             kicker="Next steps"
-            title="We read the right signals first."
-            highlight="signals"
+            title="A clear next step, not a sales pitch."
+            highlight="next step"
             align="center"
-            subtitle="A useful reply starts with context. We will look at what you shared, your clinic, website, service interest, and the support you are after."
+            tone="light"
           />
-          <RevealGroup className="grid gap-5 md:grid-cols-3">
+          <RevealGroup className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {NEXT_STEPS.map((step, i) => (
               <RevealItem key={step.title} className="h-full">
-                <GlassCard tone="dark" radius="2xl" className="flex h-full flex-col gap-4 p-7">
-                  <span className="font-sans text-kicker uppercase tracking-[0.18em] text-genie-300">
-                    {String(i + 1).padStart(2, "0")}
+                <GlassCard
+                  tone="light"
+                  radius="2xl"
+                  className="flex h-full flex-col gap-4 p-6 sm:p-7"
+                >
+                  <span
+                    aria-hidden="true"
+                    className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-genie-500/15 font-sans text-sm font-semibold text-genie-700"
+                  >
+                    {i + 1}
                   </span>
-                  <h3 className="font-display text-h3 text-onDark">{step.title}</h3>
-                  <p className="text-pretty text-onDark-muted">{step.body}</p>
+                  <div className="flex flex-col gap-2">
+                    <h3 className="font-display text-[1.125rem] font-semibold leading-snug text-ink-900">
+                      {step.title}
+                    </h3>
+                    <p className="text-pretty text-body leading-relaxed text-ink-700">
+                      {step.body}
+                    </p>
+                  </div>
                 </GlassCard>
               </RevealItem>
             ))}
           </RevealGroup>
-          <Reveal variant="up" className="text-center">
-            <p className="text-sm text-onDark-faint">
-              We aim to respond within 1 to 2 business days.
-            </p>
-          </Reveal>
         </Container>
       </Section>
 
-      {/* 3 — While you wait */}
-      <Section tone="dark">
+      {/* Useful paths — FeatureInfoCard style from pillar specialty section */}
+      <Section tone="light" className="bg-white">
         <Container className="flex flex-col gap-12">
           <SectionHeading
             kicker="Useful paths"
             title="Peek inside the lamp."
             highlight="lamp"
             align="center"
+            tone="light"
             subtitle="Curious how Clinic Genie thinks about visibility, trust, and patient search? These are a good place to start."
           />
-          <RevealGroup className="grid gap-5 sm:grid-cols-2">
+          <RevealGroup className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {USEFUL_PATHS.map((path) => (
               <RevealItem key={path.href} className="h-full">
-                <Link href={path.href} className="group block h-full" aria-label={path.title}>
-                  <GlassCard tone="dark" radius="2xl" hover className="flex h-full flex-col gap-3 p-7">
-                    <h3 className="font-display text-lg font-semibold text-onDark transition-colors group-hover:text-white">
-                      {path.title}
-                    </h3>
-                    <p className="flex-1 text-pretty text-sm text-onDark-muted">{path.body}</p>
-                    <span
-                      aria-hidden="true"
-                      className="text-sm font-semibold text-genie-200 transition-colors group-hover:text-white"
-                    >
-                      Explore →
-                    </span>
-                  </GlassCard>
-                </Link>
+                <FeatureInfoCard
+                  title={path.title}
+                  body={path.body}
+                  href={path.href}
+                  ariaLabel={`${path.title}: ${path.body}`}
+                  className="h-full"
+                />
               </RevealItem>
             ))}
           </RevealGroup>
         </Container>
       </Section>
 
-      {/* 4 — Need to add context */}
+      {/* Need to add context */}
       <PageFinale>
         <section className="pb-24 pt-16">
           <Container className="flex flex-col items-center gap-8 text-center">

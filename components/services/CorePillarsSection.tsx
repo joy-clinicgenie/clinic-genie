@@ -1,5 +1,6 @@
 import Link from "next/link";
 import {
+  ArrowUpRight,
   Camera,
   Megaphone,
   Monitor,
@@ -74,13 +75,12 @@ export function CorePillarsSection({ showIndexCta = true }: CorePillarsSectionPr
         <RevealGroup className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {CORE_PILLARS.map((pillar, index) => {
             const Icon = PILLAR_ICONS[pillar.slug] ?? Search;
-            const number = String(index + 1).padStart(2, "0");
 
             return (
               <RevealItem key={pillar.slug} className="h-full">
                 <Link
                   href={`/services/core-pillars/${pillar.slug}`}
-                  className="group block h-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-genie-500 focus-visible:ring-offset-2 focus-visible:ring-offset-cg-mist"
+                  className="group/card block h-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-genie-500 focus-visible:ring-offset-2 focus-visible:ring-offset-cg-mist"
                   aria-label={`Explore ${pillar.name}`}
                 >
                   <GlassCard
@@ -94,10 +94,10 @@ export function CorePillarsSection({ showIndexCta = true }: CorePillarsSectionPr
                         <Icon className="h-5 w-5" strokeWidth={1.75} aria-hidden="true" />
                       </span>
                       <span
-                        className="grid h-8 w-8 place-items-center rounded-full bg-genie-10/80 font-mono text-xs font-semibold text-ink-500"
                         aria-hidden="true"
+                        className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-genie-500/15 font-sans text-sm font-semibold text-genie-700"
                       >
-                        {number}
+                        {index + 1}
                       </span>
                     </div>
 
@@ -106,9 +106,14 @@ export function CorePillarsSection({ showIndexCta = true }: CorePillarsSectionPr
                       <p className="text-sm leading-relaxed text-ink-700">{pillar.heroTitle}</p>
                     </div>
 
-                    <span className="mt-auto inline-flex items-center gap-1.5 pt-1 text-sm font-semibold text-genie-700 transition-[color,gap] duration-ui group-hover:gap-2.5 group-hover:text-genie-900">
-                      Explore
-                      <span aria-hidden="true">→</span>
+                    <span
+                      aria-hidden="true"
+                      className="card-arrow-btn mt-auto flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-cg-soft-grey text-ink-900 transition-[background-color,box-shadow,color] duration-ui group-hover/card:bg-white group-hover/card:ring-4 group-hover/card:ring-genie-100/10 motion-reduce:transition-none"
+                    >
+                      <ArrowUpRight
+                        className="h-5 w-5 transition-transform duration-ui group-hover/card:translate-x-0.5 group-hover/card:-translate-y-0.5 motion-reduce:transition-none"
+                        strokeWidth={1.75}
+                      />
                     </span>
                   </GlassCard>
                 </Link>
