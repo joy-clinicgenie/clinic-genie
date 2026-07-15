@@ -1,0 +1,15 @@
+.gallery {
+  column-count: 1;
+  column-gap: 0.75rem; /* 12px — matches item stack spacing */
+}
+
+.gallery > * {
+  break-inside: avoid;
+  margin-bottom: 0.75rem;
+}
+
+@media (min-width: 640px) {
+  .gallery {
+    column-count: 2;
+  }
+}

@@ -2,6 +2,7 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 import { ABOUT_EXPERT_ROLES } from "@/lib/data/about";
+import { Brandmark } from "@/components/ui/Logo";
 import { cn } from "@/lib/cn";
 import { ease } from "@/lib/motion";
 import styles from "./ExpertsCards.module.css";
@@ -59,10 +60,21 @@ export function ExpertsCards() {
                 />
               ))}
               <article className={styles.card} tabIndex={0}>
-                <p className={cn(styles.prompt, "font-display")} aria-hidden="true">
-                  Hover to reveal
-                </p>
-                <h3 className={cn(styles.title, "font-display")}>{role.title}</h3>
+                <div className={styles.resting} aria-hidden="true">
+                  <Brandmark className={styles.brandmark} />
+                  <p className={cn(styles.prompt, "font-display")}>Hover to reveal</p>
+                </div>
+                <h3 className={cn(styles.title, "font-display")}>
+                  {role.title.startsWith("The ") ? (
+                    <>
+                      <span className={styles.titleLead}>The</span>
+                      <br />
+                      <span className="whitespace-nowrap uppercase">{role.title.slice(4)}</span>
+                    </>
+                  ) : (
+                    role.title
+                  )}
+                </h3>
                 <p className={styles.body}>{role.body}</p>
               </article>
             </div>
@@ -79,7 +91,7 @@ export function ExpertsTagline() {
   return (
     <motion.p
       className={cn(
-        "relative z-0 text-center font-display text-h6 font-regular italic leading-snug text-[#9FDCE8]",
+        "relative z-0 text-center font-display text-h6 font-regular italic leading-snug text-[#3A8093]",
         styles.tagline
       )}
       initial="hidden"

@@ -67,7 +67,7 @@ export function AlliesCards() {
           </div>
           <div className="relative z-[2] flex flex-1 flex-col gap-2 px-5 py-5 sm:px-8 sm:py-6">
             <h3 className="font-display text-base font-semibold text-onDark">{ally.name}</h3>
-            <p className="text-sm leading-relaxed text-onDark-muted">{ally.body}</p>
+            <p className="text-body leading-relaxed text-onDark-muted">{ally.body}</p>
           </div>
         </motion.div>
       ))}

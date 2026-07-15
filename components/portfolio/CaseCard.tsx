@@ -30,7 +30,7 @@ export function CaseCard({ study }: { study: CaseStudy }) {
         {study.tags.map((tag) => (
           <li
             key={tag}
-            className="inline-flex items-center rounded-pill border border-white/15 bg-white/[0.05] px-3 py-1 font-mono text-xs uppercase tracking-wider text-onDark-muted"
+            className="inline-flex items-center rounded-pill border border-white/15 bg-white/[0.05] px-3 py-1 font-sans text-xs uppercase tracking-wider text-onDark-muted"
           >
             {tag}
           </li>

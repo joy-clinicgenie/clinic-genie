@@ -5,6 +5,8 @@ const SIZES = {
   content: "max-w-content",
   wide: "max-w-wide",
   prose: "max-w-prose",
+  article: "max-w-article",
+  "article-hero": "max-w-article-hero",
 };
 
 export function Container({
@@ -13,7 +15,7 @@ export function Container({
   className,
   children,
 }: {
-  size?: "content" | "wide" | "prose";
+  size?: "content" | "wide" | "prose" | "article" | "article-hero";
   as?: ElementType;
   className?: string;
   children: ReactNode;

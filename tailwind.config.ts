@@ -124,6 +124,10 @@ const config: Config = {
         content: "75rem",
         wide:    "82.5rem",
         prose:   "45rem",
+        /** Blog header + hero band */
+        "article-hero": "48rem",
+        /** Blog / article reading width — wider than prose for editorial layouts */
+        article: "56rem",
         /** Body copy width — 70% of container */
         "landing-body": "70%",
       },

@@ -15,7 +15,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/specialty-hub",
     "/portfolio",
     "/genie-tips",
-    "/meet-us",
     "/contact",
     "/terms",
   ];

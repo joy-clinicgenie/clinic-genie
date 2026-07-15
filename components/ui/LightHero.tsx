@@ -22,6 +22,7 @@ export function LightHero({
   title,
   highlight,
   subtitle,
+  description,
   primaryCta,
   secondaryCta,
   showOrb = true,
@@ -40,6 +41,7 @@ export function LightHero({
   title?: ReactNode;
   highlight?: string;
   subtitle?: string;
+  description?: string;
   primaryCta?: CtaLink;
   secondaryCta?: CtaLink;
   showOrb?: boolean;
@@ -68,6 +70,7 @@ export function LightHero({
         title={title ?? ""}
         highlight={highlight}
         subtitle={subtitle}
+        description={description}
         tone="light"
         align={centered ? "center" : "left"}
         className="gap-5"

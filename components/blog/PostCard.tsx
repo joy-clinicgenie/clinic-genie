@@ -3,11 +3,11 @@ import { cn } from "@/lib/cn";
 import type { Post, PostCategory } from "@/lib/data/posts";
 import { getCategoryIllustration } from "@/components/blog/category-illustrations";
 
-function PostCardImage({ category }: { category: PostCategory }) {
+function PostCardImage({ category, slug }: { category: PostCategory; slug: string }) {
   return (
     <div className="h-56 w-full overflow-hidden">
       <div className="h-full w-full [&>svg]:h-full [&>svg]:w-full [&>svg]:object-cover">
-        {getCategoryIllustration(category)}
+        {getCategoryIllustration(category, `-${slug}`)}
       </div>
     </div>
   );
@@ -37,7 +37,7 @@ export function PostCard({
       )}
     >
       <article className="flex h-full flex-col overflow-hidden">
-        <PostCardImage category={post.category} />
+        <PostCardImage category={post.category} slug={post.slug} />
 
         <div
           className={cn(

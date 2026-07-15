@@ -171,7 +171,7 @@ export function WishStack({
             >
               <div className={styles.cardBody}>
                 <div className={styles.textCol}>
-                  <span className="inline-flex items-center rounded-pill bg-[#E3F6FA] px-2.5 py-0.5 font-mono text-[10px] uppercase tracking-wider text-[#217B8E]">
+                  <span className="inline-flex items-center rounded-pill bg-[#E3F6FA] px-2.5 py-0.5 font-sans text-[10px] uppercase tracking-wider text-[#217B8E]">
                     {chips[pillar.slug] ?? "SERVICE"}
                   </span>
                   <h3 className="font-display text-h4 font-semibold leading-snug text-ink-900">

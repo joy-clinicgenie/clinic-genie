@@ -2,11 +2,10 @@ import type { Metadata } from "next";
 import { Reveal } from "@/components/ui/Reveal";
 import { MagneticButton } from "@/components/ui/MagneticButton";
 import { LightHero } from "@/components/ui/LightHero";
-import { WishSection } from "@/components/services/WishSection";
 import { CorePillarsSection } from "@/components/services/CorePillarsSection";
 import { LandingSection, LandingIntro } from "@/components/home/landing/LandingLayout";
 import { MagicProcess } from "@/components/home/landing/MagicProcess";
-import { PILLARS, HOME_PROCESS_STEPS } from "@/lib/data/services";
+import { HOME_PROCESS_STEPS } from "@/lib/data/services";
 import { PageFinale } from "@/components/ui/PageFinale";
 import { PageFinaleCTA } from "@/components/ui/PageFinaleCTA";
 import { ComplianceCards } from "@/components/home/landing/ComplianceCards";
@@ -20,8 +19,6 @@ export const metadata: Metadata = {
   description:
     "Everything your clinic needs to grow under one lamp: business strategy, healthcare SEO and medical SEM, clinic websites, content, AI search and compliance-aware brand design — by a team that only works with clinics.",
 };
-
-const WISH_LABELS = ["Wish One", "Wish Two", "Wish Three"];
 
 export default function ServicesPage() {
   return (
@@ -38,24 +35,9 @@ export default function ServicesPage() {
         showWishForm={false}
       />
 
-      {/* 2,3,4 — One detailed section per pillar (the three wishes) */}
-      {PILLARS.map((pillar, i) => (
-        <WishSection
-          key={pillar.id}
-          pillar={pillar}
-          label={WISH_LABELS[i]}
-          forwardLine={
-            pillar.id === "growth"
-              ? "And we optimise for AI search too — so your clinic shows up when patients ask an AI, not just a search bar."
-              : null
-          }
-        />
-      ))}
-
-      {/* 4.5 — Core service pillars */}
       <CorePillarsSection />
 
-      {/* 5 — How the magic works */}
+      {/* How the magic works */}
       <LandingSection
         tone="white"
         navTheme="dark"

@@ -1,23 +1,33 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { cn } from "@/lib/cn";
 
 const PREFIX = "I Wish for...";
 
 export const ORB_WISH_SUFFIXES = [
-  "BETTER VISIBILITY",
-  "QUALIFIED LEADS",
-  "MORE BOOKINGS",
+  "Better Visibility",
+  "Qualified Leads",
+  "More Bookings",
 ] as const;
 
-const LONGEST_SUFFIX = ORB_WISH_SUFFIXES.reduce(
-  (longest, phrase) => (phrase.length > longest.length ? phrase : longest),
-  ORB_WISH_SUFFIXES[0]
+function splitSuffix(phrase: string): [string, string] {
+  const [first = "", ...rest] = phrase.split(" ");
+  return [first, rest.join(" ")];
+}
+
+const SUFFIX_LINES = ORB_WISH_SUFFIXES.map(splitSuffix);
+const LINE1_LONGEST = SUFFIX_LINES.reduce(
+  (longest, [line1]) => (line1.length > longest.length ? line1 : longest),
+  SUFFIX_LINES[0][0]
+);
+const LINE2_LONGEST = SUFFIX_LINES.reduce(
+  (longest, [, line2]) => (line2.length > longest.length ? line2 : longest),
+  SUFFIX_LINES[0][1]
 );
 
-const CHARSET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ.!@#$*()_+";
+const CHARSET = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz.!@#$*()_+";
 const DWELL_MS = 2500;
 const SCRAMBLE_INTERVAL_MS = 36;
 const SETTLE_STAGGER_MS = 42;
@@ -32,6 +42,16 @@ function scrambleText(target: string): string {
     .split("")
     .map((char) => (char === " " ? " " : randomChar()))
     .join("");
+}
+
+function SuffixLines({ text }: { text: string }): ReactNode {
+  const [line1, line2] = splitSuffix(text);
+  return (
+    <>
+      <span className="block">{line1 || "\u00A0"}</span>
+      <span className="block">{line2 || "\u00A0"}</span>
+    </>
+  );
 }
 
 export interface OrbWishDecryptProps {
@@ -125,30 +145,28 @@ export function OrbWishDecrypt({ className }: OrbWishDecryptProps) {
       </p>
       <p
         className={cn(
-          "relative mt-1 w-max max-w-none font-display text-[calc(0.9375rem+3em)] font-black leading-none sm:text-[calc(1rem+3em)] lg:text-[calc(1.045rem+1.3em)]",
+          "relative mt-1 w-max max-w-none font-display text-[calc(0.9375rem+3.1em)] font-black leading-[0.95] sm:text-[calc(1rem+4.5em)] lg:text-[calc(1.045rem+2.8em)]",
           !reduceMotion && "transition-colors duration-200",
-          !reduceMotion && (decrypting ? "text-[#163038]/45" : "text-[#163038]"),
-          reduceMotion && "text-[#163038]"
+          !reduceMotion && (decrypting ? "text-ink-700/50" : "text-ink-700"),
+          reduceMotion && "text-ink-700"
         )}
         aria-hidden="true"
       >
-        <span
-          className="invisible block whitespace-nowrap"
-          aria-hidden="true"
-        >
-          {LONGEST_SUFFIX}
+        <span className="invisible block" aria-hidden="true">
+          <span className="block">{LINE1_LONGEST}</span>
+          <span className="block">{LINE2_LONGEST}</span>
         </span>
         {reduceMotion ? (
           <motion.span
-            className="absolute inset-0 flex items-center justify-center whitespace-nowrap"
+            className="absolute inset-0 flex flex-col items-center justify-center"
             animate={{ opacity: rmOpacity }}
             transition={{ duration: 0.2, ease: "easeOut" }}
           >
-            {display}
+            <SuffixLines text={display} />
           </motion.span>
         ) : (
-          <span className="absolute inset-0 flex items-center justify-center whitespace-nowrap">
-            {display}
+          <span className="absolute inset-0 flex flex-col items-center justify-center">
+            <SuffixLines text={display} />
           </span>
         )}
       </p>

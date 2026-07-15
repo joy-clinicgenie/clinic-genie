@@ -44,7 +44,7 @@ export function PostGrid() {
               aria-pressed={isActive}
               onClick={() => selectFilter(filter)}
               className={cn(
-                "relative rounded-pill px-4 py-2 font-mono text-xs uppercase tracking-wider transition-colors duration-ui ease-out-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-genie-500/40",
+                "relative rounded-pill px-4 py-2 font-sans text-xs uppercase tracking-wider transition-colors duration-ui ease-out-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-genie-500/40",
                 isActive ? "text-white" : "text-ink-500 hover:text-genie-700"
               )}
             >

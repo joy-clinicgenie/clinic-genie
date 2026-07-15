@@ -27,7 +27,7 @@ One orb instance for the whole site, mounted once in `app/layout.tsx` as `<OrbCo
 ## Structure
 
 ```
-app/                 Routes: / about services portfolio[/slug] genie-tips[/slug] meet-us contact + utility
+app/                 Routes: / about services portfolio[/slug] genie-tips[/slug] contact + utility
 components/orb/       The orb (companion, renderers, store, anchors, variants)
 components/ui/        Design-system primitives (SectionHeading, MagneticButton, GlassCard, Reveal, …)
 components/layout/    Nav, MobileMenu, Footer, PageTransition

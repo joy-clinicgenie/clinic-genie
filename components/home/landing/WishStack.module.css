@@ -95,15 +95,40 @@
   flex-shrink: 0;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
+  isolation: isolate;
   border-radius: 9999px;
   background: #e6eef1;
   color: #062d36;
-  transition: box-shadow 200ms ease-out;
+  transition: box-shadow 200ms ease-out, color 200ms ease-out, background-color 200ms ease-out;
+}
+
+.exploreButton::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border-radius: inherit;
+  background-image: linear-gradient(45deg, #18C4D9, #78E2DD 60%, #7DAFE3);
+  opacity: 0;
+  transition: opacity 200ms var(--ease-genie);
+}
+
+.exploreButton > * {
+  position: relative;
+  z-index: 1;
 }
 
 .exploreCta:hover .exploreButton,
 :global(a.group:focus-visible) .exploreButton {
-  box-shadow: 0 0 0 4px #e6eef1;
+  background: #ffffff;
+  color: #ffffff;
+  box-shadow: 0 0 0 4px rgba(24, 196, 217, 0.1);
+}
+
+.exploreCta:hover .exploreButton::before,
+:global(a.group:focus-visible) .exploreButton::before {
+  opacity: 0.6;
 }
 
 .exploreLabelClip {
@@ -148,6 +173,10 @@
   }
 
   .exploreButton {
+    transition: none;
+  }
+
+  .exploreButton::before {
     transition: none;
   }
 }

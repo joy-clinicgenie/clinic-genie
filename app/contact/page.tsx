@@ -6,7 +6,6 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal, RevealGroup, RevealItem } from "@/components/ui/Reveal";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { MagneticButton } from "@/components/ui/MagneticButton";
-import { LightHero } from "@/components/ui/LightHero";
 import { PageFinale } from "@/components/ui/PageFinale";
 import {
   LandingKicker,
@@ -44,35 +43,40 @@ const NEXT_STEPS = [
 export default function ContactPage() {
   return (
     <>
-      <LightHero
-        title="Tell us your clinic's wish."
-        highlight="wish"
-        subtitle="Whatever you are dreaming up, launching, redesigning, or growing, it starts with one conversation. We will help you make it happen."
-        showOrb={false}
-        showWishForm={false}
-        align="center"
-      />
-
       <ContactSection />
 
       {/* 3 — What happens next */}
-      <Section tone="dark">
+      <Section tone="light" className="![background:#f4f7f8]">
         <Container className="flex flex-col gap-12">
           <SectionHeading
             kicker="What happens next"
             title="A clear next step, not a sales pitch."
             highlight="next step"
             align="center"
+            tone="light"
           />
-          <RevealGroup className="grid gap-5 sm:grid-cols-2">
+          <RevealGroup className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {NEXT_STEPS.map((step, i) => (
               <RevealItem key={step.title} className="h-full">
-                <GlassCard tone="dark" radius="2xl" className="flex h-full flex-col gap-4 p-7">
-                  <span className="font-display text-kicker uppercase tracking-[0.18em] text-genie-300">
-                    {String(i + 1).padStart(2, "0")}
+                <GlassCard
+                  tone="light"
+                  radius="2xl"
+                  className="flex h-full flex-col gap-4 p-6 sm:p-7"
+                >
+                  <span
+                    aria-hidden="true"
+                    className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-genie-500/15 font-sans text-sm font-semibold text-genie-700"
+                  >
+                    {i + 1}
                   </span>
-                  <h3 className="font-display text-h3 text-onDark">{step.title}</h3>
-                  <p className="text-pretty text-onDark-muted">{step.body}</p>
+                  <div className="flex flex-col gap-2">
+                    <h3 className="font-display text-[1.125rem] font-semibold leading-snug text-ink-900">
+                      {step.title}
+                    </h3>
+                    <p className="text-pretty text-body leading-relaxed text-ink-700">
+                      {step.body}
+                    </p>
+                  </div>
                 </GlassCard>
               </RevealItem>
             ))}
@@ -99,7 +103,7 @@ export default function ContactPage() {
             </Reveal>
             <Reveal variant="up" delay={0.15}>
               <p className="text-sm text-[#8FB7C2]">
-                <span className="font-mono uppercase tracking-[0.14em] text-[#9FDCE8]">Genie Insights</span>
+                <span className="font-sans uppercase tracking-[0.14em] text-[#9FDCE8]">Genie Insights</span>
                 {" · "}
                 <Link href="/genie-tips" className="text-white/80 underline-offset-4 hover:text-white hover:underline">
                   Browse all articles

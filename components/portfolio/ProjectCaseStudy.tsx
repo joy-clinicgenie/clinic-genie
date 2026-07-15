@@ -32,7 +32,7 @@ export function ProjectCaseStudy({ study }: { study: CaseStudy }) {
         leading={
           <Link
             href="/portfolio"
-            className="inline-flex w-fit items-center gap-2 font-display text-kicker uppercase text-genie-700 transition-colors hover:text-genie-900"
+            className="inline-flex w-fit items-center gap-2 font-sans text-kicker uppercase text-genie-700 transition-colors hover:text-genie-900"
           >
             <span aria-hidden="true">←</span> Our works
           </Link>

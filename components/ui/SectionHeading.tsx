@@ -28,6 +28,7 @@ export function SectionHeading({
   title,
   highlight,
   subtitle,
+  description,
   align = "left",
   tone = "dark",
   as = "h2",
@@ -37,6 +38,7 @@ export function SectionHeading({
   title: ReactNode;
   highlight?: string;
   subtitle?: string;
+  description?: string;
   align?: "left" | "center";
   tone?: "dark" | "light";
   as?: "h1" | "h2" | "h3";
@@ -45,6 +47,8 @@ export function SectionHeading({
   const Tag = as;
   const titleContent =
     typeof title === "string" ? renderHighlight(title, highlight, tone) : title;
+  const hasSubheading = Boolean(subtitle && description);
+  const bodyText = description ?? subtitle;
 
   return (
     <div
@@ -71,16 +75,30 @@ export function SectionHeading({
           {titleContent}
         </Tag>
       </Reveal>
-      {subtitle && (
-        <Reveal variant="up" delay={0.12}>
+      {hasSubheading && (
+        <Reveal variant="up" delay={0.1}>
           <p
             className={cn(
-              "text-lead max-w-full sm:max-w-[75%] text-pretty",
+              "font-display text-h5 font-normal text-pretty max-w-full sm:max-w-[75%]",
               tone === "dark" ? "text-onDark-muted" : "text-ink-700",
               align === "center" && "mx-auto"
             )}
           >
             {subtitle}
+          </p>
+        </Reveal>
+      )}
+      {bodyText && (
+        <Reveal variant="up" delay={hasSubheading ? 0.14 : 0.12}>
+          <p
+            className={cn(
+              as === "h1" ? "text-body" : "text-lead",
+              "max-w-full sm:max-w-[75%] text-pretty",
+              tone === "dark" ? "text-onDark-muted" : "text-ink-700",
+              align === "center" && "mx-auto"
+            )}
+          >
+            {bodyText}
           </p>
         </Reveal>
       )}

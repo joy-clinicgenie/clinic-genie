@@ -75,7 +75,7 @@ export function Hero() {
               </motion.p>
 
               <motion.p
-                className={cn(styles.body, "text-lead text-pretty text-ink-700")}
+                className={cn(styles.body, "text-body text-pretty text-ink-700")}
                 initial={reduceMotion ? false : { opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, ease: ease.glide, delay: 0.12 }}

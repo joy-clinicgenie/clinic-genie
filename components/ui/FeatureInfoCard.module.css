@@ -1,5 +1,6 @@
 .cardTitle {
   font-family: var(--font-sora), Sora, ui-sans-serif, system-ui, sans-serif;
+  font-size: 20px;
   font-weight: 600;
   line-height: 1.25;
   letter-spacing: -0.005em;
@@ -33,7 +34,7 @@
 
 .cardTitleCompact {
   max-width: 100%;
-  font-size: 1.25rem; /* 20px */
+  font-size: 1rem; /* 16px */
   font-weight: 600;
   line-height: 1.3;
   overflow-wrap: break-word;
@@ -51,19 +52,19 @@
 .cardGraphic {
   position: relative;
   flex-shrink: 0;
-  width: 3rem;
-  height: 3rem;
+  width: 3.5rem;
+  height: 3.5rem;
   overflow: visible;
 }
 
 .cardGraphicCompact {
-  width: 5.5rem;
-  height: 5.5rem;
+  width: 5.06rem; /* 5.5rem less 8% */
+  height: 5.06rem;
 }
 
 .cardIconCompact {
-  width: 5.5rem;
-  height: 5.5rem;
+  width: 5.06rem;
+  height: 5.06rem;
 }
 
 .cardSparkles {

@@ -82,7 +82,7 @@ export function InsightPreviewCard({
 
         <span
           aria-hidden="true"
-          className="mt-auto flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-onDark transition-[box-shadow] duration-ui group-hover/card:ring-4 group-hover/card:ring-white/10 motion-reduce:transition-none"
+          className="card-arrow-btn mt-auto flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-onDark transition-[background-color,box-shadow,color] duration-ui group-hover/card:bg-white group-hover/card:ring-4 group-hover/card:ring-genie-100/10 motion-reduce:transition-none"
         >
           <CardArrowIcon />
         </span>

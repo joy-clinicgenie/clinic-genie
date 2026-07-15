@@ -1,129 +1,3 @@
-export type SubServiceIcon =
-  | "Search"
-  | "ClipboardList"
-  | "Handshake"
-  | "TrendingUp"
-  | "Megaphone"
-  | "PenLine"
-  | "Filter"
-  | "Palette"
-  | "Monitor"
-  | "Camera";
-
-export interface SubService {
-  name: string;
-  body: string;
-  icon: SubServiceIcon;
-}
-
-export interface Pillar {
-  id: "strategy" | "growth" | "brand";
-  number: string;
-  wish: string;
-  title: string;
-  blurb: string;
-  intro: string;
-  outcome: string;
-  services: SubService[];
-  href: string;
-  accent: string;
-}
-
-export const PILLARS: Pillar[] = [
-  {
-    id: "strategy",
-    number: "01",
-    wish: "I wish my clinic had a clear path to grow.",
-    title: "Business Strategy & Development",
-    blurb:
-      "Know exactly where to grow. Market research, strategic planning, and partnership & grant consultancy that point your clinic at the right opportunity.",
-    intro: "Grow on purpose, not by accident. We find the opportunity before we spend a dollar chasing it.",
-    outcome: "You'll know exactly where your next patients will come from.",
-    services: [
-      {
-        name: "Market Research",
-        body: "Understand your patients, competitors and the searches that signal real demand in your specialty.",
-        icon: "Search",
-      },
-      {
-        name: "Strategic Planning",
-        body: "A clear, prioritised roadmap for the next 6–12 months, tied to revenue, not vanity metrics.",
-        icon: "ClipboardList",
-      },
-      {
-        name: "Partnership & Grant Consultancy",
-        body: "Tap government grants and the right partners (with Real Inbound) to fund and accelerate your growth.",
-        icon: "Handshake",
-      },
-    ],
-    href: "/services#strategy",
-    accent: "#6CBAD9",
-  },
-  {
-    id: "growth",
-    number: "02",
-    wish: "I wish the right patients could find me online.",
-    title: "Digital Growth Solutions",
-    blurb:
-      "Be the clinic patients find first. Healthcare SEO, medical SEM, conversion copywriting and lead generation that fill your appointment book.",
-    intro: "Be the clinic patients find first — and the one they choose.",
-    outcome: "More qualified enquiries, every month, measured transparently.",
-    services: [
-      {
-        name: "Healthcare SEO",
-        body: "Rank for the high-intent treatment searches patients actually type, with compliance-aware, doctor-reviewed content.",
-        icon: "TrendingUp",
-      },
-      {
-        name: "Medical SEM (Paid Search)",
-        body: "Targeted Google campaigns that bring in bookings, not just clicks — managed to a cost-per-enquiry you can live with.",
-        icon: "Megaphone",
-      },
-      {
-        name: "Copywriting",
-        body: "Patient-first, compliant copy that explains, reassures and converts.",
-        icon: "PenLine",
-      },
-      {
-        name: "Lead Generation",
-        body: "Landing pages, funnels and tracking that turn interest into booked consultations.",
-        icon: "Filter",
-      },
-    ],
-    href: "/services#growth",
-    accent: "#7FE9F0",
-  },
-  {
-    id: "brand",
-    number: "03",
-    wish: "I wish my brand looked as good as my care.",
-    title: "Brand & Experience Design",
-    blurb:
-      "Look as good as your outcomes. Branding & logo design, clinic websites, and photography & video that make patients trust you on sight.",
-    intro: "Trust is decided in seconds. We make those seconds count.",
-    outcome: "Patients trust you on sight, and the booking feels inevitable.",
-    services: [
-      {
-        name: "Branding & Logo Design",
-        body: "A distinctive, premium clinic identity that signals quality before a word is read.",
-        icon: "Palette",
-      },
-      {
-        name: "Web Design & Development",
-        body: "Fast, accessible, conversion-focused clinic websites built on a modern stack (Next.js).",
-        icon: "Monitor",
-      },
-      {
-        name: "Photography & Video",
-        body: "Real clinic visuals — your space, your team, your work — that build instant credibility.",
-        icon: "Camera",
-      },
-    ],
-    href: "/services#brand",
-    accent: "#8E7BE8",
-  },
-];
-
 export interface ProcessStep {
   n: number;
   title: string;
@@ -182,11 +56,11 @@ export const HOME_PROCESS_STEPS: ProcessStep[] = [
 ];
 
 export const FOOTER_SERVICES = [
-  { label: "Healthcare SEO", href: "/services#growth" },
-  { label: "Medical SEM & Paid Ads", href: "/services#growth" },
-  { label: "Clinic Websites & Web Dev", href: "/services#brand" },
-  { label: "Content & Copywriting", href: "/services#growth" },
-  { label: "AI Search Optimisation", href: "/services#growth" },
-  { label: "Branding & Logo Design", href: "/services#brand" },
-  { label: "Photography & Video", href: "/services#brand" },
+  { label: "Healthcare SEO", href: "/services/core-pillars/healthcare-seo" },
+  { label: "Medical SEM & Paid Ads", href: "/services/core-pillars/medical-sem" },
+  { label: "Clinic Websites & Web Dev", href: "/services/core-pillars/web-design-development" },
+  { label: "Content & Copywriting", href: "/services/core-pillars/branding-copywriting" },
+  { label: "AI Search Optimisation", href: "/services/core-pillars/geo-ai-search" },
+  { label: "Branding & Logo Design", href: "/services/core-pillars/branding-copywriting" },
+  { label: "Photography & Video", href: "/services/core-pillars/photo-video" },
 ];

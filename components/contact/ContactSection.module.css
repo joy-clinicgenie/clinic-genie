@@ -1,147 +1,71 @@
 .section {
   position: relative;
+  background: #f4f7f8;
+}
+
+.banner {
+  position: relative;
   overflow: hidden;
+  padding: 5.5rem 0 8.5rem;
+  border-radius: 0 0 44px 44px;
+  background: linear-gradient(165deg, #18c4d9 0%, #0e5f6b 48%, #062d36 100%);
 }
 
-.grid {
-  display: grid;
-  gap: 2.5rem;
-  align-items: start;
-}
-
-@media (min-width: 1024px) {
-  .grid {
-    grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
-    gap: 3.5rem;
-  }
+.bannerGrid {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.14;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.45) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.45) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.7) 0%, transparent 85%);
 }
 
 .intro {
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
-}
-
-.introCopy {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.builtForList {
-  display: flex;
-  flex-direction: column;
-  gap: 0.625rem;
-}
-
-.builtForPill {
-  display: inline-flex;
   align-items: center;
-  gap: 0.625rem;
-  width: fit-content;
-  border-radius: 999px;
-  background: rgba(230, 250, 251, 0.9);
-  border: 1px solid rgba(204, 244, 246, 0.9);
-  padding: 0.5rem 0.875rem;
-  font-size: 0.875rem;
-  color: #062d36;
+  gap: 1rem;
+  max-width: 40rem;
+  margin: 0 auto;
+  text-align: center;
 }
 
-.blobTopLeft,
-.blobBottomRight {
-  position: absolute;
-  pointer-events: none;
-  border-radius: 999px;
-  filter: blur(48px);
-}
-
-.blobTopLeft {
-  top: -4rem;
-  left: -5rem;
-  width: min(18rem, 42vw);
-  height: min(18rem, 42vw);
-  background: radial-gradient(circle, rgba(120, 226, 221, 0.42) 0%, rgba(120, 226, 221, 0) 72%);
-}
-
-.blobBottomRight {
-  right: -4rem;
-  bottom: -5rem;
-  width: min(20rem, 46vw);
-  height: min(20rem, 46vw);
-  background: radial-gradient(circle, rgba(24, 196, 217, 0.28) 0%, rgba(24, 196, 217, 0) 72%);
-}
-
-.ringPattern {
-  position: absolute;
-  pointer-events: none;
-  opacity: 0.35;
-}
-
-.ringPatternTop {
-  top: 8%;
-  right: 4%;
-  width: min(12rem, 28vw);
-  height: min(12rem, 28vw);
-}
-
-.ringPatternBottom {
-  bottom: 10%;
-  left: 2%;
-  width: min(10rem, 24vw);
-  height: min(10rem, 24vw);
+.formWrap {
+  position: relative;
+  z-index: 2;
+  margin-top: -5.5rem;
+  padding-bottom: 4rem;
 }
 
 .formCard {
+  max-width: 40rem;
+  margin: 0 auto;
   border-radius: 1.25rem;
   border: 1px solid #e6eef1;
   background: #ffffff;
   box-shadow:
-    0 12px 40px rgba(6, 45, 54, 0.08),
-    inset 0 1px 0 rgba(255, 255, 255, 0.9);
-}
-
-.formHeader {
-  display: flex;
-  align-items: flex-start;
-  gap: 1rem;
-  padding-bottom: 1.5rem;
-  border-bottom: 1px solid #e6eef1;
-}
-
-.formHeaderIcon {
-  display: grid;
-  place-items: center;
-  width: 3rem;
-  height: 3rem;
-  flex-shrink: 0;
-  border-radius: 999px;
-  background: #e6fafb;
-  color: #18c4d9;
+    0 20px 50px rgba(6, 45, 54, 0.12),
+    0 4px 16px rgba(6, 45, 54, 0.06);
 }
 
 .formBody {
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
-  padding-top: 1.5rem;
 }
 
-.sectionLabel {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-}
+@media (min-width: 768px) {
+  .banner {
+    padding: 6.5rem 0 9.5rem;
+  }
 
-.sectionLabelDot {
-  width: 0.375rem;
-  height: 0.375rem;
-  border-radius: 999px;
-  background: #18c4d9;
-  flex-shrink: 0;
-}
-
-.sectionLabelLine {
-  height: 1px;
-  flex: 1;
-  background: #e6eef1;
+  .formWrap {
+    margin-top: -6.5rem;
+    padding-bottom: 5rem;
+  }
 }

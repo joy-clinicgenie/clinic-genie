@@ -2,6 +2,7 @@ import { MagneticButton } from "@/components/ui/MagneticButton";
 import { FeatureInfoCard } from "@/components/ui/FeatureInfoCard";
 import { Reveal } from "@/components/ui/Reveal";
 import { LandingBody, LandingHeading, LandingKicker } from "@/components/home/landing/LandingLayout";
+import { cn } from "@/lib/cn";
 import styles from "./GenieFeatureCards.module.css";
 
 export interface GenieFeatureCardItem {
@@ -23,6 +24,7 @@ export interface GenieFeatureCardsProps {
     href: string;
     label: string;
   };
+  className?: string;
 }
 
 export function GenieFeatureCards({
@@ -33,9 +35,10 @@ export function GenieFeatureCards({
   subtitle,
   cards,
   cta,
+  className,
 }: GenieFeatureCardsProps) {
   return (
-    <section id={id} data-nav-theme="light" className={styles.section}>
+    <section id={id} data-nav-theme="light" className={cn(styles.section, className)}>
       <div className="mx-auto w-full max-w-wide px-[var(--page-pad)]">
         <Reveal>
           <header className={styles.header}>

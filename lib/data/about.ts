@@ -81,21 +81,21 @@ export const ABOUT_EXPERT_ROLES: AboutExpertRole[] = [
 
 export const ABOUT_WISH_POINTS: AboutWishPoint[] = [
   {
-    title: "Be found",
+    title: "Built to be found",
     highlight: "found",
     body: "Show up where patient decisions begin.",
     href: "/services/core-pillars/healthcare-seo",
     image: "/about/found-everywhere.svg",
   },
   {
-    title: "Be trusted",
+    title: "Earned to be trusted",
     highlight: "trusted",
-    body: "Communicate clearly and credibly, within Singapore's Healthcare Services Act (HCSA) guidelines.",
+    body: "Clear, credible messaging within HCSA guidelines.",
     href: "/services#compliance",
-    image: "/compliance/compliance-aware.svg",
+    image: "/about/specialist.svg",
   },
   {
-    title: "Be chosen",
+    title: "Ready to be chosen",
     highlight: "chosen",
     body: "Turn search intent into qualified clinic enquiries.",
     href: "/contact",

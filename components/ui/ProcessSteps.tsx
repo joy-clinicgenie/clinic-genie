@@ -249,7 +249,7 @@ export function ProcessSteps({ steps, tone = "dark" }: { steps: Step[]; tone?: "
               <p className={cn("text-sm leading-relaxed", isDark ? "text-onDark-muted" : "text-ink-700")}>{s.body}</p>
               {s.deliverable && (
                 <p className={cn("mt-1 flex flex-col gap-0.5 text-sm", isDark ? "text-genie-300" : "text-genie-700")}>
-                  <span className={cn("font-mono text-xs uppercase tracking-wider", isDark ? "text-genie-400" : "text-genie-700")}>
+                  <span className={cn("font-sans text-xs uppercase tracking-wider", isDark ? "text-genie-400" : "text-genie-700")}>
                     Deliverable
                   </span>
                   {s.deliverable}

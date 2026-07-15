@@ -54,7 +54,7 @@ export default function GenieTipsPage() {
                 className="grid gap-8 p-8 sm:p-10 lg:grid-cols-[1.4fr_1fr] lg:items-center"
               >
                 <div className="flex flex-col gap-5">
-                  <span className="inline-flex w-fit items-center rounded-pill bg-genie-100 px-3 py-1 font-mono text-xs uppercase tracking-wider text-genie-700">
+                  <span className="inline-flex w-fit items-center rounded-pill bg-genie-100 px-3 py-1 font-sans text-xs uppercase tracking-wider text-genie-700">
                     Featured · {featured.category}
                   </span>
                   <h2 className="font-display text-h2 leading-tight text-ink-900 transition-colors group-hover:text-genie-700">

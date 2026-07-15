@@ -1,82 +1,28 @@
 "use client";
 
-import { useState, useId, type ReactNode } from "react";
+import { useState, useId } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
-import {
-  Building2,
-  ChevronDown,
-  Mail,
-  Phone,
-  User,
-} from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import { MagneticButton } from "@/components/ui/MagneticButton";
 import { cn } from "@/lib/cn";
 import { CONTACT_SPECIALTIES } from "@/lib/data/contact";
 import styles from "./ContactSection.module.css";
 
 const FIELD_BASE =
-  "w-full rounded-xl border bg-white py-3 pr-4 text-[0.9375rem] text-ink-900 placeholder:text-ink-500/55 transition-[box-shadow,border-color] duration-ui ease-out-soft focus:outline-none";
+  "w-full rounded-xl border bg-white px-4 py-3 text-[0.9375rem] text-ink-900 placeholder:text-ink-500/55 transition-[box-shadow,border-color] duration-ui ease-out-soft focus:outline-none";
 const FIELD_REST = "border-hairline-light hover:border-genie-300/70";
 const FIELD_FOCUS =
   "border-genie-400 shadow-[0_0_0_3px_rgba(24,196,217,0.18),0_0_18px_rgba(24,196,217,0.12)]";
 
 const FIELD_LABEL = "font-display text-sm font-normal text-ink-700";
-const SECTION_LABEL =
-  "font-display text-kicker font-semibold uppercase tracking-[0.18em] text-ink-500";
-
-function FormSectionLabel({ children }: { children: ReactNode }) {
-  return (
-    <div className={styles.sectionLabel}>
-      <span className={styles.sectionLabelDot} aria-hidden="true" />
-      <span className={SECTION_LABEL}>{children}</span>
-      <span className={styles.sectionLabelLine} aria-hidden="true" />
-    </div>
-  );
-}
-
-function Field({
-  id,
-  label,
-  optional,
-  active,
-  onFocus,
-  onBlur,
-  icon,
-  children,
-}: {
-  id: string;
-  label: string;
-  optional?: boolean;
-  active: boolean;
-  onFocus: () => void;
-  onBlur: () => void;
-  icon: ReactNode;
-  children: (cls: string) => React.ReactNode;
-}) {
-  return (
-    <div className="flex flex-col gap-2" onFocusCapture={onFocus} onBlurCapture={onBlur}>
-      <label htmlFor={id} className={FIELD_LABEL}>
-        {label}
-        {optional && <span className="font-normal normal-case tracking-normal text-ink-500"> (optional)</span>}
-      </label>
-      <div className="relative">
-        <span
-          aria-hidden="true"
-          className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-genie-500"
-        >
-          {icon}
-        </span>
-        {children(cn(FIELD_BASE, "pl-10", active ? FIELD_FOCUS : FIELD_REST))}
-      </div>
-    </div>
-  );
-}
 
 export function ContactForm() {
   const baseId = useId();
   const router = useRouter();
 
   const [focused, setFocused] = useState<string | null>(null);
+  const [consent, setConsent] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -93,6 +39,12 @@ export function ContactForm() {
     if (submitting) return;
 
     setError(null);
+
+    if (!consent) {
+      setError("Please confirm that Clinic Genie may contact you.");
+      return;
+    }
+
     setSubmitting(true);
 
     const form = e.currentTarget;
@@ -109,7 +61,7 @@ export function ContactForm() {
           phone: formData.get("phone"),
           specialty: formData.get("specialty"),
           message: formData.get("message"),
-          consent: true,
+          consent,
         }),
       });
 
@@ -136,108 +88,89 @@ export function ContactForm() {
   return (
     <div className={styles.formCard}>
       <div className="p-7 sm:p-8">
-        <div className={styles.formHeader}>
-          <span className={styles.formHeaderIcon} aria-hidden="true">
-            <Building2 className="h-5 w-5" strokeWidth={1.75} />
-          </span>
-          <div className="flex flex-col gap-1">
-            <h3 className="font-display text-h5 text-ink-900">Start with your clinic details</h3>
-            <p className="text-sm text-ink-700">
-              Share the basics. We will review the request before replying.
-            </p>
-          </div>
-        </div>
-
         <form onSubmit={handleSubmit} className={styles.formBody} noValidate={false}>
           <div className="grid gap-5 sm:grid-cols-2">
-            <Field
-              id={fid("name")}
-              label="Name"
-              active={focused === "name"}
-              onFocus={() => handleFocus("name")}
-              onBlur={handleBlur}
-              icon={<User className="h-4 w-4" strokeWidth={1.75} />}
+            <div
+              className="flex flex-col gap-2"
+              onFocusCapture={() => handleFocus("name")}
+              onBlurCapture={handleBlur}
             >
-              {(cls) => (
-                <input
-                  id={fid("name")}
-                  name="name"
-                  type="text"
-                  autoComplete="name"
-                  required
-                  placeholder="Dr Tan Wei Ming"
-                  className={cls}
-                />
-              )}
-            </Field>
+              <label htmlFor={fid("name")} className={FIELD_LABEL}>
+                Name
+              </label>
+              <input
+                id={fid("name")}
+                name="name"
+                type="text"
+                autoComplete="name"
+                required
+                placeholder="Your Name"
+                className={cn(FIELD_BASE, focused === "name" ? FIELD_FOCUS : FIELD_REST)}
+              />
+            </div>
 
-            <Field
-              id={fid("clinic")}
-              label="Clinic name"
-              active={focused === "clinic"}
-              onFocus={() => handleFocus("clinic")}
-              onBlur={handleBlur}
-              icon={<Building2 className="h-4 w-4" strokeWidth={1.75} />}
+            <div
+              className="flex flex-col gap-2"
+              onFocusCapture={() => handleFocus("clinic")}
+              onBlurCapture={handleBlur}
             >
-              {(cls) => (
-                <input
-                  id={fid("clinic")}
-                  name="clinic"
-                  type="text"
-                  autoComplete="organization"
-                  required
-                  placeholder="Orchard Aesthetics"
-                  className={cls}
-                />
-              )}
-            </Field>
+              <label htmlFor={fid("clinic")} className={FIELD_LABEL}>
+                Clinic name
+              </label>
+              <input
+                id={fid("clinic")}
+                name="clinic"
+                type="text"
+                autoComplete="organization"
+                required
+                placeholder="Your Clinic"
+                className={cn(FIELD_BASE, focused === "clinic" ? FIELD_FOCUS : FIELD_REST)}
+              />
+            </div>
 
-            <Field
-              id={fid("email")}
-              label="Email"
-              active={focused === "email"}
-              onFocus={() => handleFocus("email")}
-              onBlur={handleBlur}
-              icon={<Mail className="h-4 w-4" strokeWidth={1.75} />}
+            <div
+              className="flex flex-col gap-2"
+              onFocusCapture={() => handleFocus("email")}
+              onBlurCapture={handleBlur}
             >
-              {(cls) => (
-                <input
-                  id={fid("email")}
-                  name="email"
-                  type="email"
-                  autoComplete="email"
-                  required
-                  placeholder="you@clinic.com.sg"
-                  className={cls}
-                />
-              )}
-            </Field>
+              <label htmlFor={fid("email")} className={FIELD_LABEL}>
+                Email
+              </label>
+              <input
+                id={fid("email")}
+                name="email"
+                type="email"
+                autoComplete="email"
+                required
+                placeholder="yourname@email.com"
+                className={cn(FIELD_BASE, focused === "email" ? FIELD_FOCUS : FIELD_REST)}
+              />
+            </div>
 
-            <Field
-              id={fid("phone")}
-              label="Phone"
-              optional
-              active={focused === "phone"}
-              onFocus={() => handleFocus("phone")}
-              onBlur={handleBlur}
-              icon={<Phone className="h-4 w-4" strokeWidth={1.75} />}
+            <div
+              className="flex flex-col gap-2"
+              onFocusCapture={() => handleFocus("phone")}
+              onBlurCapture={handleBlur}
             >
-              {(cls) => (
-                <input
-                  id={fid("phone")}
-                  name="phone"
-                  type="tel"
-                  autoComplete="tel"
-                  placeholder="+65 ____ ____"
-                  className={cls}
-                />
-              )}
-            </Field>
+              <label htmlFor={fid("phone")} className={FIELD_LABEL}>
+                Phone <span className="font-normal text-ink-500">(optional)</span>
+              </label>
+              <input
+                id={fid("phone")}
+                name="phone"
+                type="tel"
+                autoComplete="tel"
+                placeholder="+65 1234 5678"
+                className={cn(FIELD_BASE, focused === "phone" ? FIELD_FOCUS : FIELD_REST)}
+              />
+            </div>
           </div>
 
-          <FormSectionLabel>Clinic focus</FormSectionLabel>
-
-          <div className="flex flex-col gap-2" onFocusCapture={() => handleFocus("specialty")} onBlurCapture={handleBlur}>
+          <div
+            className="flex flex-col gap-2"
+            onFocusCapture={() => handleFocus("specialty")}
+            onBlurCapture={handleBlur}
+          >
             <label htmlFor={fid("specialty")} className={FIELD_LABEL}>
               Specialty
             </label>
@@ -249,7 +182,7 @@ export function ContactForm() {
                 defaultValue=""
                 className={cn(
                   FIELD_BASE,
-                  "appearance-none px-4 pr-10",
+                  "appearance-none pr-10",
                   focused === "specialty" ? FIELD_FOCUS : FIELD_REST
                 )}
               >
@@ -270,8 +203,6 @@ export function ContactForm() {
             </div>
           </div>
 
-          <FormSectionLabel>Growth request</FormSectionLabel>
-
           <div
             className="flex flex-col gap-2"
             onFocusCapture={() => handleFocus("message")}
@@ -288,10 +219,31 @@ export function ContactForm() {
               placeholder="Tell us about your clinic, your goals, and where you feel patients aren't finding you yet."
               className={cn(
                 FIELD_BASE,
-                "resize-none px-4 leading-relaxed",
+                "resize-y leading-relaxed",
                 focused === "message" ? FIELD_FOCUS : FIELD_REST
               )}
             />
+          </div>
+
+          <div className="flex items-start gap-3">
+            <input
+              id={fid("consent")}
+              name="consent"
+              type="checkbox"
+              checked={consent}
+              onChange={(e) => setConsent(e.target.checked)}
+              className="mt-1 h-4 w-4 shrink-0 rounded border-hairline-light text-genie-500 accent-genie-500 focus:outline-none focus-visible:shadow-[0_0_0_3px_rgba(24,196,217,0.35)]"
+            />
+            <label htmlFor={fid("consent")} className="text-sm leading-relaxed text-ink-700">
+              You agree that Clinic Genie may contact you about this enquiry, in line with our{" "}
+              <Link
+                href="/terms"
+                className="font-medium text-genie-600 underline-offset-2 hover:underline"
+              >
+                privacy policy
+              </Link>
+              .
+            </label>
           </div>
 
           {error && (
@@ -303,11 +255,20 @@ export function ContactForm() {
             </p>
           )}
 
-          <div className="flex flex-wrap items-center gap-4 pt-1">
-            <MagneticButton type="submit" size="lg" withMiniOrb disabled={submitting}>
+          <div className="flex flex-col gap-3 pt-1">
+            <MagneticButton
+              type="submit"
+              size="lg"
+              withMiniOrb
+              disabled={submitting}
+              className="w-full"
+              magnetic={false}
+            >
               {submitting ? "Sending your wish..." : "Send my wish"}
             </MagneticButton>
-            <p className="text-sm text-ink-500">No obligation. We reply within one business day.</p>
+            <p className="text-center text-sm text-ink-500">
+              No obligation. We reply within one business day.
+            </p>
           </div>
         </form>
       </div>

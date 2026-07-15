@@ -1,12 +1,12 @@
 import type { ReactNode } from "react";
 import type { PostCategory } from "@/lib/data/posts";
 
-function IllustrationSEO() {
+function IllustrationSEO({ idSuffix = "" }: { idSuffix?: string }) {
   return (
     <svg viewBox="0 0 320 160" fill="none" aria-hidden="true" className="h-full w-full">
-      <rect width="320" height="160" fill="url(#seo-bg)" />
+      <rect width="320" height="160" fill={`url(#seo-bg${idSuffix})`} />
       <defs>
-        <linearGradient id="seo-bg" x1="0" y1="0" x2="320" y2="160" gradientUnits="userSpaceOnUse">
+        <linearGradient id={`seo-bg${idSuffix}`} x1="0" y1="0" x2="320" y2="160" gradientUnits="userSpaceOnUse">
           <stop stopColor="#062833" /><stop offset="1" stopColor="#0B3D47" />
         </linearGradient>
       </defs>
@@ -28,19 +28,19 @@ function IllustrationSEO() {
   );
 }
 
-function IllustrationAISearch() {
+function IllustrationAISearch({ idSuffix = "" }: { idSuffix?: string }) {
   return (
     <svg viewBox="0 0 320 160" fill="none" aria-hidden="true" className="h-full w-full">
-      <rect width="320" height="160" fill="url(#ai-bg)" />
+      <rect width="320" height="160" fill={`url(#ai-bg${idSuffix})`} />
       <defs>
-        <linearGradient id="ai-bg" x1="0" y1="0" x2="320" y2="160" gradientUnits="userSpaceOnUse">
+        <linearGradient id={`ai-bg${idSuffix}`} x1="0" y1="0" x2="320" y2="160" gradientUnits="userSpaceOnUse">
           <stop stopColor="#0D1A40" /><stop offset="1" stopColor="#062833" />
         </linearGradient>
-        <radialGradient id="ai-glow" cx="50%" cy="50%" r="50%">
+        <radialGradient id={`ai-glow${idSuffix}`} cx="50%" cy="50%" r="50%">
           <stop stopColor="#18C4D9" stopOpacity="0.3" /><stop offset="1" stopColor="#18C4D9" stopOpacity="0" />
         </radialGradient>
       </defs>
-      <circle cx="160" cy="80" r="60" fill="url(#ai-glow)" />
+      <circle cx="160" cy="80" r="60" fill={`url(#ai-glow${idSuffix})`} />
       {[
         [72, 40],[72, 80],[72, 120],
         [140, 55],[140, 105],
@@ -66,15 +66,15 @@ function IllustrationAISearch() {
   );
 }
 
-function IllustrationWebBrand() {
+function IllustrationWebBrand({ idSuffix = "" }: { idSuffix?: string }) {
   return (
     <svg viewBox="0 0 320 160" fill="none" aria-hidden="true" className="h-full w-full">
-      <rect width="320" height="160" fill="url(#wb-bg)" />
+      <rect width="320" height="160" fill={`url(#wb-bg${idSuffix})`} />
       <defs>
-        <linearGradient id="wb-bg" x1="0" y1="0" x2="320" y2="160" gradientUnits="userSpaceOnUse">
+        <linearGradient id={`wb-bg${idSuffix}`} x1="0" y1="0" x2="320" y2="160" gradientUnits="userSpaceOnUse">
           <stop stopColor="#0B3D47" /><stop offset="1" stopColor="#1A1040" />
         </linearGradient>
-        <linearGradient id="wb-hero" x1="38" y1="52" x2="202" y2="92" gradientUnits="userSpaceOnUse">
+        <linearGradient id={`wb-hero${idSuffix}`} x1="38" y1="52" x2="202" y2="92" gradientUnits="userSpaceOnUse">
           <stop stopColor="#18C4D9" stopOpacity="0.25" /><stop offset="1" stopColor="#8E7BE8" stopOpacity="0.15" />
         </linearGradient>
       </defs>
@@ -86,7 +86,7 @@ function IllustrationWebBrand() {
       <circle cx="76" cy="34" r="4.5" fill="#6BCB77" opacity="0.8" />
       <rect x="88" y="28" width="100" height="12" rx="3" fill="#0A2730" stroke="#18C4D9" strokeWidth="0.8" opacity="0.6" />
       <rect x="38" y="52" width="164" height="40" rx="4" fill="#0A2730" />
-      <rect x="38" y="52" width="164" height="40" rx="4" fill="url(#wb-hero)" />
+      <rect x="38" y="52" width="164" height="40" rx="4" fill={`url(#wb-hero${idSuffix})`} />
       <rect x="48" y="63" width="70" height="7" rx="2" fill="#CCF4F6" opacity="0.7" />
       <rect x="48" y="75" width="45" height="5" rx="2" fill="#78E2DD" opacity="0.4" />
       <rect x="144" y="58" width="46" height="28" rx="3" fill="#0D3A44" stroke="#18C4D9" strokeWidth="0.8" opacity="0.6" />
@@ -103,12 +103,12 @@ function IllustrationWebBrand() {
   );
 }
 
-function IllustrationSEM() {
+function IllustrationSEM({ idSuffix = "" }: { idSuffix?: string }) {
   return (
     <svg viewBox="0 0 320 160" fill="none" aria-hidden="true" className="h-full w-full">
-      <rect width="320" height="160" fill="url(#sem-bg)" />
+      <rect width="320" height="160" fill={`url(#sem-bg${idSuffix})`} />
       <defs>
-        <linearGradient id="sem-bg" x1="0" y1="0" x2="320" y2="160" gradientUnits="userSpaceOnUse">
+        <linearGradient id={`sem-bg${idSuffix}`} x1="0" y1="0" x2="320" y2="160" gradientUnits="userSpaceOnUse">
           <stop stopColor="#062833" /><stop offset="1" stopColor="#0B3D47" />
         </linearGradient>
       </defs>
@@ -136,19 +136,19 @@ function IllustrationSEM() {
   );
 }
 
-function IllustrationCompliance() {
+function IllustrationCompliance({ idSuffix = "" }: { idSuffix?: string }) {
   return (
     <svg viewBox="0 0 320 160" fill="none" aria-hidden="true" className="h-full w-full">
-      <rect width="320" height="160" fill="url(#comp-bg)" />
+      <rect width="320" height="160" fill={`url(#comp-bg${idSuffix})`} />
       <defs>
-        <linearGradient id="comp-bg" x1="0" y1="0" x2="320" y2="160" gradientUnits="userSpaceOnUse">
+        <linearGradient id={`comp-bg${idSuffix}`} x1="0" y1="0" x2="320" y2="160" gradientUnits="userSpaceOnUse">
           <stop stopColor="#062833" /><stop offset="1" stopColor="#0D1A40" />
         </linearGradient>
-        <radialGradient id="comp-glow" cx="50%" cy="50%" r="50%">
+        <radialGradient id={`comp-glow${idSuffix}`} cx="50%" cy="50%" r="50%">
           <stop stopColor="#18C4D9" stopOpacity="0.15" /><stop offset="1" stopColor="#18C4D9" stopOpacity="0" />
         </radialGradient>
       </defs>
-      <circle cx="160" cy="80" r="70" fill="url(#comp-glow)" />
+      <circle cx="160" cy="80" r="70" fill={`url(#comp-glow${idSuffix})`} />
       <path d="M160 28 L196 44 L196 86 C196 106 160 122 160 122 C160 122 124 106 124 86 L124 44 Z" fill="#0E3D4A" stroke="#18C4D9" strokeWidth="2" strokeLinejoin="round" />
       <path d="M160 36 L190 50 L190 86 C190 103 160 116 160 116 C160 116 130 103 130 86 L130 50 Z" fill="#0A2730" />
       <path d="M146 76 l9 9 18-20" stroke="#78E2DD" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -169,12 +169,12 @@ function IllustrationCompliance() {
   );
 }
 
-function IllustrationGrowth() {
+function IllustrationGrowth({ idSuffix = "" }: { idSuffix?: string }) {
   return (
     <svg viewBox="0 0 320 160" fill="none" aria-hidden="true" className="h-full w-full">
-      <rect width="320" height="160" fill="url(#gr-bg)" />
+      <rect width="320" height="160" fill={`url(#gr-bg${idSuffix})`} />
       <defs>
-        <linearGradient id="gr-bg" x1="0" y1="0" x2="320" y2="160" gradientUnits="userSpaceOnUse">
+        <linearGradient id={`gr-bg${idSuffix}`} x1="0" y1="0" x2="320" y2="160" gradientUnits="userSpaceOnUse">
           <stop stopColor="#062833" /><stop offset="1" stopColor="#0B3D47" />
         </linearGradient>
       </defs>
@@ -201,17 +201,17 @@ function IllustrationGrowth() {
   );
 }
 
-const CATEGORY_ILLUSTRATIONS: Record<PostCategory, ReactNode> = {
-  SEO: <IllustrationSEO />,
-  "AI Search": <IllustrationAISearch />,
-  "Web & Brand": <IllustrationWebBrand />,
-  "SEM & Ads": <IllustrationSEM />,
-  Compliance: <IllustrationCompliance />,
-  "Growth Strategy": <IllustrationGrowth />,
-};
+export function getCategoryIllustration(category: PostCategory, idSuffix = ""): ReactNode {
+  const illustrations: Record<PostCategory, ReactNode> = {
+    SEO: <IllustrationSEO idSuffix={idSuffix} />,
+    "AI Search": <IllustrationAISearch idSuffix={idSuffix} />,
+    "Web & Brand": <IllustrationWebBrand idSuffix={idSuffix} />,
+    "SEM & Ads": <IllustrationSEM idSuffix={idSuffix} />,
+    Compliance: <IllustrationCompliance idSuffix={idSuffix} />,
+    "Growth Strategy": <IllustrationGrowth idSuffix={idSuffix} />,
+  };
 
-export function getCategoryIllustration(category: PostCategory): ReactNode {
-  return CATEGORY_ILLUSTRATIONS[category] ?? (
+  return illustrations[category] ?? (
     <div className="h-full w-full bg-gradient-to-br from-night-700 to-night-800" />
   );
 }
