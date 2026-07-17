@@ -160,7 +160,7 @@ export const ABOUT_TRUSTED_CLIENTS: AboutTrustedClient[] = [
   {
     name: "The Acne Clinic",
     services: "Content, SEO, and SEM.",
-    href: "/portfolio/the-acne-clinic",
+    href: "/portfolio",
   },
   {
     name: "Singapore Dental Implant Centre",

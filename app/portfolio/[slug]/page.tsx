@@ -1,29 +1,21 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
-import { ProjectCaseStudy } from "@/components/portfolio/ProjectCaseStudy";
-import { CASE_STUDIES, getCaseStudy } from "@/lib/data/portfolio";
+import { ProjectComingSoon } from "@/components/portfolio/ProjectComingSoon";
+import { CASE_STUDIES } from "@/lib/data/portfolio";
 
 export function generateStaticParams() {
   return CASE_STUDIES.map((c) => ({ slug: c.slug }));
 }
 
-export function generateMetadata({ params }: { params: { slug: string } }): Metadata {
-  const cs = getCaseStudy(params.slug);
-  if (!cs) {
-    return {
-      title: "Project not found | Clinic Genie",
-      description: "The project page you are looking for could not be found.",
-    };
-  }
-  return {
-    title: `${cs.name} — Project | Clinic Genie`,
-    description: cs.heroBody,
-  };
-}
+export const metadata: Metadata = {
+  title: "Project Coming Soon | Clinic Genie",
+  description:
+    "This project story is still brewing. Browse Our Works for specialist clinic projects from Clinic Genie.",
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
 
-export default function CaseStudyPage({ params }: { params: { slug: string } }) {
-  const cs = getCaseStudy(params.slug);
-  if (!cs) notFound();
-
-  return <ProjectCaseStudy study={cs} />;
+export default function CaseStudyPage() {
+  return <ProjectComingSoon />;
 }

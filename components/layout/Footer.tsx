@@ -7,7 +7,7 @@ const companyLinks = [
   { label: "Services", href: "/services" },
   { label: "Specialty Hub", href: "/specialty-hub" },
   { label: "Our Works", href: "/portfolio" },
-  { label: "Genie Tips", href: "/genie-tips" },
+  { label: "Genie Tips", href: "/genie-tips", disabled: true },
   { label: "Contact", href: "/contact" },
 ] as const;
 
@@ -100,12 +100,22 @@ export function Footer() {
               <ul className="flex flex-col gap-3">
                 {companyLinks.map((link) => (
                   <li key={link.href}>
-                    <Link
-                      href={link.href}
-                      className="font-sans text-sm text-onDark/80 transition-colors hover:text-onDark"
-                    >
-                      {link.label}
-                    </Link>
+                    {"disabled" in link && link.disabled ? (
+                      <span
+                        aria-disabled="true"
+                        title="Coming soon"
+                        className="cursor-default font-sans text-sm text-onDark/40"
+                      >
+                        {link.label}
+                      </span>
+                    ) : (
+                      <Link
+                        href={link.href}
+                        className="font-sans text-sm text-onDark/80 transition-colors hover:text-onDark"
+                      >
+                        {link.label}
+                      </Link>
+                    )}
                   </li>
                 ))}
               </ul>

@@ -22,7 +22,6 @@ export const PORTFOLIO_WORKS: PortfolioWorkSlide[] = [
     category: "Endocrinology",
     line: "Your Health Nurtured",
     image: "/works/cedar.png",
-    href: "/portfolio/cedar-endocrine-clinic",
     gradient: "linear-gradient(145deg, #F7FAFB 0%, #EAFBFB 45%, #54B9CE 100%)",
   },
   {
@@ -39,7 +38,6 @@ export const PORTFOLIO_WORKS: PortfolioWorkSlide[] = [
     category: "Paediatrics",
     line: "Planting Joy. Harvesting Potential.",
     image: "/works/joyfulseeds.png",
-    href: "/portfolio/joyful-seeds",
     gradient: "linear-gradient(145deg, #F7FAFB 0%, #EAFBFB 50%, #78E2DD 100%)",
   },
   {

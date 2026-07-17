@@ -53,7 +53,7 @@ export function Nav() {
 
           <ul className="relative hidden items-center gap-1 lg:flex">
             {NAV_ITEMS.map((item) => {
-              const active = isActive(item.href);
+              const active = !item.disabled && isActive(item.href);
 
               if (item.children?.length) {
                 return (
@@ -65,6 +65,23 @@ export function Nav() {
                     active={active}
                     light={light}
                   />
+                );
+              }
+
+              if (item.disabled) {
+                return (
+                  <li key={item.href}>
+                    <span
+                      aria-disabled="true"
+                      title="Coming soon"
+                      className={cn(
+                        "relative inline-flex cursor-default items-center rounded-pill px-4 py-2 text-[0.9375rem] font-medium",
+                        light ? "text-ink-400" : "text-onDark-muted/60"
+                      )}
+                    >
+                      {item.label}
+                    </span>
+                  </li>
                 );
               }
 

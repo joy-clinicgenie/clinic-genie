@@ -8,6 +8,8 @@ export interface NavItem {
   label: string;
   href: string;
   children?: NavDropdownItem[];
+  /** When true, label is shown but not linked (e.g. coming soon). */
+  disabled?: boolean;
 }
 
 export const SERVICES_DROPDOWN: NavDropdownItem[] = [
@@ -62,7 +64,7 @@ export const NAV_ITEMS: NavItem[] = [
   },
   { label: "Specialty Hub", href: "/specialty-hub" },
   { label: "Our Works", href: "/portfolio" },
-  { label: "Genie Tips", href: "/genie-tips" },
+  { label: "Genie Tips", href: "/genie-tips", disabled: true },
 ];
 
 export const SERVICES_PILLARS_INDEX = {

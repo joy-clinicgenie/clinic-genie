@@ -162,6 +162,14 @@ export function MobileMenu({ open, onClose }: { open: boolean; onClose: () => vo
                         ) : null}
                       </AnimatePresence>
                     </>
+                  ) : item.disabled ? (
+                    <span
+                      aria-disabled="true"
+                      title="Coming soon"
+                      className="cursor-default font-display text-4xl font-bold text-onDark/40"
+                    >
+                      {item.label}
+                    </span>
                   ) : (
                     <Link
                       href={item.href}

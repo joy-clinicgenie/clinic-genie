@@ -1,24 +1,21 @@
-import Link from "next/link";
 import { Kicker } from "@/components/ui/Kicker";
 import type { CaseStudy } from "@/lib/data/portfolio";
 
 /**
  * Renders a single case study as a frosted glass card on the dark portfolio grid.
+ * Project detail pages are temporarily unlinked, so this card is display-only.
  */
 export function CaseCard({ study }: { study: CaseStudy }) {
   return (
-    <Link
-      href={`/portfolio/${study.slug}`}
-      aria-label={`Read the ${study.name} case study`}
-      className="glass group relative flex h-full flex-col gap-4 overflow-hidden rounded-2xl p-7 transition-[transform,box-shadow] duration-ui ease-out-soft hover:-translate-y-1.5 hover:shadow-glow-md motion-reduce:hover:translate-y-0 sm:p-8"
+    <article
+      className="glass relative flex h-full flex-col gap-4 overflow-hidden rounded-2xl p-7 sm:p-8"
       style={{ ["--accent" as string]: study.accent }}
+      aria-label={`${study.name} project`}
     >
       <Kicker>{study.specialty}</Kicker>
 
       <div className="flex flex-col gap-1">
-        <h3 className="font-display text-h4 leading-snug text-onDark transition-colors group-hover:text-genie-200">
-          {study.name}
-        </h3>
+        <h3 className="font-display text-h4 leading-snug text-onDark">{study.name}</h3>
         {study.tagline && (
           <p className="font-display text-base italic text-onDark-muted">&ldquo;{study.tagline}&rdquo;</p>
         )}
@@ -39,19 +36,8 @@ export function CaseCard({ study }: { study: CaseStudy }) {
 
       <div className="mt-auto flex flex-col gap-3 border-t border-white/15 pt-5">
         <span className="text-base font-semibold text-onDark">{study.result}</span>
-        <span className="inline-flex items-center gap-1.5 text-sm font-medium text-genie-300 transition-[gap] duration-ui group-hover:gap-2.5">
-          Read the case study
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-            <path
-              d="M3 8h10M9 4l4 4-4 4"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </span>
+        <span className="text-sm font-medium text-onDark-muted">Case study coming soon</span>
       </div>
-    </Link>
+    </article>
   );
 }

@@ -119,9 +119,10 @@ const AESTHETIC_HREF = specialtyHref("dermatology");
 const DENTAL_HREF = specialtyHref("dental");
 const MEDICAL_HREF = "/specialty-hub";
 
-const CEDAR = "/portfolio/cedar-endocrine-clinic";
-const JOYFUL = "/portfolio/joyful-seeds";
-const ACNE = "/portfolio/the-acne-clinic";
+/** Project detail pages are temporarily unlinked; point to the Our Works index. */
+const CEDAR = PORTFOLIO;
+const JOYFUL = PORTFOLIO;
+const ACNE = PORTFOLIO;
 
 export const CORE_PILLARS: CorePillar[] = [
   // ───────────────────────────── 1. FindClinic.sg ─────────────────────────────
