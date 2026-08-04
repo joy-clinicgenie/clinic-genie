@@ -25,6 +25,8 @@ export interface GenieFeatureCardsProps {
     label: string;
   };
   className?: string;
+  headerClassName?: string;
+  subtitleClassName?: string;
 }
 
 export function GenieFeatureCards({
@@ -36,17 +38,21 @@ export function GenieFeatureCards({
   cards,
   cta,
   className,
+  headerClassName,
+  subtitleClassName,
 }: GenieFeatureCardsProps) {
   return (
     <section id={id} data-nav-theme="light" className={cn(styles.section, className)}>
       <div className="mx-auto w-full max-w-wide px-[var(--page-pad)]">
         <Reveal>
-          <header className={styles.header}>
+          <header className={cn(styles.header, "max-w-2xl", headerClassName)}>
             <LandingKicker>{kicker}</LandingKicker>
             <LandingHeading highlight={highlight} className="text-center">
               {title}
             </LandingHeading>
-            {subtitle ? <LandingBody>{subtitle}</LandingBody> : null}
+            {subtitle ? (
+              <LandingBody className={subtitleClassName}>{subtitle}</LandingBody>
+            ) : null}
           </header>
         </Reveal>
 

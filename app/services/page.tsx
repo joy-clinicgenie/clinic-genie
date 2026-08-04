@@ -15,7 +15,7 @@ import specialistSectionStyles from "@/components/home/landing/SpecialistClinics
 import { cn } from "@/lib/cn";
 
 export const metadata: Metadata = {
-  title: "Services — Strategy, Digital Growth & Brand for Clinics | Clinic Genie",
+  title: "Services | Strategy, Digital Growth & Brand for Clinics | Clinic Genie",
   description:
     "Everything your clinic needs to grow under one lamp: business strategy, healthcare SEO and medical SEM, clinic websites, content, AI search and compliance-aware brand design — by a team that only works with clinics.",
 };
@@ -24,15 +24,20 @@ export default function ServicesPage() {
   return (
     <>
       <LightHero
-        className="surface-cyan"
-        kicker="What we do"
-        title="Everything your clinic needs to grow — under one lamp."
+        title="Everything your clinic needs to grow, under one lamp"
         highlight="grow"
-        subtitle="Strategy, digital growth and brand design, woven into one engine. Healthcare SEO, medical SEM, clinic websites, content, AI search and compliance-aware strategy — delivered by a team that only works with clinics."
+        subtitle="Clinic Genie unites healthcare SEO, medical SEM, websites and content to help specialist clinics get found, trusted and chosen."
         primaryCta={{ href: "/contact", label: "Make Your First Wish" }}
-        secondaryCta={{ href: "/services/core-pillars", label: "Explore core service pillars" }}
+        secondaryCta={{ href: "#core-pillars", label: "Explore core service pillars" }}
         showOrb={false}
         showWishForm={false}
+        showSparkles={false}
+        backgroundImage={{
+          src: "/services/hero-bg.png",
+          alt: "",
+          treatment: "dark",
+        }}
+        minHeight="min-h-[78vh]"
       />
 
       <CorePillarsSection />
@@ -103,7 +108,7 @@ export default function ServicesPage() {
       </LandingSection>
 
       {/* 8 — Final CTA */}
-      <PageFinale>
+      <PageFinale backdropClassName="surface-cyan">
         <PageFinaleCTA
           kicker="Make your first wish"
           title="Tell us your wish."

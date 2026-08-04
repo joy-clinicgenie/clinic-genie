@@ -1,7 +1,29 @@
+import { randomUUID } from "node:crypto";
 import { NextResponse } from "next/server";
-import { parseContactSubmission } from "@/lib/contact/schema";
+import {
+  parseContactSubmission,
+  type ContactSubmissionInput,
+  type ContactSubmissionRecord,
+} from "@/lib/contact/schema";
 import { sendContactNotification } from "@/lib/contact/notify";
 import { saveContactSubmission } from "@/lib/supabase/admin";
+
+function hasSupabaseConfig(): boolean {
+  return Boolean(
+    process.env.SUPABASE_URL?.trim() &&
+      process.env.SUPABASE_SERVICE_ROLE_KEY?.trim()
+  );
+}
+
+function buildLocalRecord(
+  data: ContactSubmissionInput
+): ContactSubmissionRecord {
+  return {
+    ...data,
+    id: randomUUID(),
+    created_at: new Date().toISOString(),
+  };
+}
 
 export async function POST(request: Request) {
   let body: unknown;
@@ -18,7 +40,17 @@ export async function POST(request: Request) {
   }
 
   try {
-    const record = await saveContactSubmission(parsed.data);
+    let record: ContactSubmissionRecord;
+    let storage: "supabase" | "local-fallback";
+
+    if (hasSupabaseConfig()) {
+      record = await saveContactSubmission(parsed.data);
+      storage = "supabase";
+    } else {
+      // Allow Resend verification / local testing when Supabase is not configured.
+      record = buildLocalRecord(parsed.data);
+      storage = "local-fallback";
+    }
 
     try {
       await sendContactNotification(record);
@@ -26,11 +58,14 @@ export async function POST(request: Request) {
       console.error("Contact saved but email failed:", emailError);
     }
 
-    return NextResponse.json({ ok: true, id: record.id });
+    return NextResponse.json({ ok: true, id: record.id, storage });
   } catch (error) {
     console.error("Contact submission failed:", error);
     return NextResponse.json(
-      { error: "We could not send your enquiry right now. Please try again or email hello@clinic-genie.com." },
+      {
+        error:
+          "We could not send your enquiry right now. Please try again or email hello@clinic-genie.com.",
+      },
       { status: 500 }
     );
   }

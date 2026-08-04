@@ -136,7 +136,7 @@ export default function ThankYouPage() {
       </Section>
 
       {/* Need to add context */}
-      <PageFinale>
+      <PageFinale backdropClassName="bg-white">
         <section className="pb-24 pt-16">
           <Container className="flex flex-col items-center gap-8 text-center">
             <LandingKicker light>Additional details</LandingKicker>

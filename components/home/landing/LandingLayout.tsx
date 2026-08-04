@@ -239,19 +239,23 @@ export function MetricCell({
   const decimalPlaces = core.includes(".") ? (core.split(".")[1]?.length ?? 0) : 0;
 
   return (
-    <div className="flex flex-col items-center gap-4 px-2 py-2 text-center sm:px-4 lg:px-8 lg:py-4">
-      <span className="inline-flex items-baseline font-display font-bold leading-none text-[#3A8093]">
-        {prefix ? <span className="mr-0.5 text-[1.25em] font-bold leading-none">{prefix}</span> : null}
+    <div className="flex flex-col items-center gap-3 px-2 py-2 text-center sm:px-4 lg:px-8 lg:py-4">
+      <span className="inline-flex items-baseline font-display text-h1 font-bold leading-none tracking-tighter text-[#3A8093]">
+        {prefix ? <span className="font-bold leading-none">{prefix}</span> : null}
         <NumberTicker
           value={numericValue}
           delay={index * 0.18}
           decimalPlaces={decimalPlaces}
-          className="font-bold leading-none tracking-normal text-[#3A8093] text-[length:var(--text-h3)]"
+          className="text-inherit font-bold leading-none tracking-tighter text-[#3A8093]"
           style={{ lineHeight: 1 }}
         />
-        {suffix ? <span className="ml-0.5 text-[1.25em] font-bold leading-none">{suffix}</span> : null}
+        {suffix ? (
+          <span className="ml-0.5 text-[0.55em] font-bold leading-none tracking-tighter">
+            {suffix}
+          </span>
+        ) : null}
       </span>
-      <p className="text-sm leading-none text-[#7E8C92]">{label}</p>
+      <p className="text-base leading-snug text-[#6B7A80]">{label}</p>
     </div>
   );
 }

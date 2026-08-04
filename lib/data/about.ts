@@ -58,23 +58,23 @@ export const ABOUT_VALUES: AboutValue[] = [
 
 export const ABOUT_EXPERT_ROLES: AboutExpertRole[] = [
   {
-    title: "The Growth Strategists",
+    title: "Growth Strategists",
     body: "Shape the clinic marketing roadmap with research, positioning, and clear growth direction.",
   },
   {
-    title: "The SEO Specialists",
+    title: "SEO Specialists",
     body: "Build keyword-led SEO plans that help high-intent patients find your specialist clinic online.",
   },
   {
-    title: "The Campaign Experts",
+    title: "Campaign Experts",
     body: "Run search and paid campaigns that connect clinics with the right patients at the right moment.",
   },
   {
-    title: "The Creative Makers",
+    title: "Creative Makers",
     body: "Craft medical content, brand visuals, websites, and patient-facing stories that build trust.",
   },
   {
-    title: "The Tech Builders",
+    title: "Tech Builders",
     body: "Create fast clinic websites, smoother workflows, and smart automation that keep the magic moving.",
   },
 ];

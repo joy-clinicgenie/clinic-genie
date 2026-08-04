@@ -32,7 +32,7 @@ export function PageFinaleCTA({
   bodyClassName?: string;
 }) {
   return (
-    <section className="pb-32 pt-16">
+    <section className="pb-16 pt-16 lg:pb-20">
       <div className="mx-auto flex w-full max-w-wide flex-col items-center gap-7 px-[var(--page-pad)] text-center">
         <Reveal className="flex w-full flex-col items-center">
           <LandingKicker light>{kicker}</LandingKicker>

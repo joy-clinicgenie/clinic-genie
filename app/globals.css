@@ -127,6 +127,60 @@
 }
 
 @layer components {
+  /* Notion toggle headings rendered as FAQ dropdowns */
+  .notion-article details {
+    margin: 0.75rem 0;
+    overflow: hidden;
+    border: 1px solid #e6eef1;
+    border-radius: 1rem;
+    background: #ffffff;
+    box-shadow: 0 1px 2px rgba(6, 45, 54, 0.06);
+  }
+
+  .notion-article details[open] {
+    border-color: #18c4d9;
+    box-shadow: 0 2px 8px rgba(6, 45, 54, 0.06);
+  }
+
+  .notion-article summary {
+    cursor: pointer;
+    list-style: none;
+    padding: 1.1rem 1.25rem;
+    font-family: var(--font-outfit), Outfit, ui-sans-serif, system-ui, sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.4;
+    color: #062d36;
+  }
+
+  .notion-article summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .notion-article summary::after {
+    content: "+";
+    float: right;
+    margin-left: 1rem;
+    color: #13737f;
+    font-weight: 500;
+  }
+
+  .notion-article details[open] > summary::after {
+    content: "–";
+  }
+
+  .notion-article details > :not(summary) {
+    margin: 0;
+    border-top: 1px solid #e6eef1;
+    background: #eafbfb;
+    padding: 1rem 1.25rem;
+    color: #395d66;
+  }
+
+  .notion-article details > :not(summary):last-child {
+    margin-bottom: 0;
+  }
+
   /* Glass — frosted panel on dark Strategic Teal backgrounds */
   .glass {
     background: rgba(255, 255, 255, 0.08);
@@ -160,7 +214,7 @@
     background: #e3f6fa;
   }
 
-  /* Landing finale shell — rounded top transition off light canvas */
+  /* Closing unit shell — rounded top around bottom CTA + footer */
   .finale-shell {
     @apply relative overflow-hidden rounded-t-[44px];
   }

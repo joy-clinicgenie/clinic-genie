@@ -14,7 +14,6 @@ import {
 import { Container } from "@/components/ui/Container";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { Kicker } from "@/components/ui/Kicker";
-import { MagneticButton } from "@/components/ui/MagneticButton";
 import { Reveal, RevealGroup, RevealItem } from "@/components/ui/Reveal";
 import { Section } from "@/components/ui/Section";
 import { CORE_PILLARS } from "@/lib/data/pillars";
@@ -31,44 +30,25 @@ const PILLAR_ICONS: Record<string, LucideIcon> = {
 };
 
 const SECTION_SUBTITLE =
-  "Eight focused pillars, each with its own page — from FindClinic.sg to GEO & AI Search.";
+  "Eight medical marketing services. One connected growth engine.";
 
-interface CorePillarsSectionProps {
-  /** Hide the “See all pillars” link when already on the pillars index. */
-  showIndexCta?: boolean;
-}
-
-export function CorePillarsSection({ showIndexCta = true }: CorePillarsSectionProps) {
+export function CorePillarsSection() {
   return (
-    <Section tone="light" className="surface-cyan">
+    <Section id="core-pillars" tone="light" className="surface-cyan">
       <Container className="flex flex-col gap-12 md:gap-14">
-        <div className="grid gap-8 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:items-end lg:gap-12">
-          <div className="flex flex-col gap-4">
-            <Reveal variant="up">
-              <Kicker tone="light">Core service pillars</Kicker>
-            </Reveal>
-            <Reveal variant="up" delay={0.05}>
-              <h2 className="font-display text-h2 text-balance text-ink-900">
-                Explore each service in <span className="genie-text">depth</span>.
-              </h2>
-            </Reveal>
-          </div>
-
+        <div className="flex flex-col gap-4">
+          <Reveal variant="up">
+            <Kicker tone="light">Core service pillars</Kicker>
+          </Reveal>
+          <Reveal variant="up" delay={0.05}>
+            <h2 className="font-display text-h2 text-balance text-ink-900">
+              Explore each service in <span className="genie-text">depth</span>.
+            </h2>
+          </Reveal>
           <Reveal variant="up" delay={0.1}>
-            <div className="flex flex-col items-start gap-5 lg:items-end lg:text-right">
-              <p className="max-w-md text-lead text-pretty text-ink-700 lg:ml-auto">
-                {SECTION_SUBTITLE}
-              </p>
-              {showIndexCta ? (
-                <MagneticButton
-                  href="/services/core-pillars"
-                  variant="ghost"
-                  className="text-genie-700 hover:text-genie-900"
-                >
-                  See all pillars →
-                </MagneticButton>
-              ) : null}
-            </div>
+            <p className="max-w-xl text-lead text-pretty text-ink-700">
+              {SECTION_SUBTITLE}
+            </p>
           </Reveal>
         </div>
 

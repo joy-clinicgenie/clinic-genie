@@ -19,6 +19,8 @@ export interface FeatureInfoCardProps {
   badge?: string;
   titleAs?: "h3" | "h6";
   compact?: boolean;
+  /** Default 3.5rem. `lg` is 20% larger (4.2rem). */
+  graphicSize?: "default" | "lg";
   showSparkles?: boolean;
   sparkleIndex?: number;
   className?: string;
@@ -91,12 +93,15 @@ export function FeatureInfoCard({
   badge,
   titleAs = "h3",
   compact = false,
+  graphicSize = "default",
   showSparkles = false,
   sparkleIndex = 0,
   className,
 }: FeatureInfoCardProps) {
   const TitleTag = titleAs;
   const hasGraphic = Boolean(icon || image);
+  const isLargeGraphic = !compact && graphicSize === "lg";
+  const graphicPx = compact ? 81 : isLargeGraphic ? 67 : 56;
   const sparkles = showSparkles && hasGraphic ? buildCardSparkles(sparkleIndex) : [];
   const linkClassName = cn(
     styles.cardInteractive,
@@ -117,13 +122,19 @@ export function FeatureInfoCard({
       {hasGraphic || badge ? (
         <div className="flex w-full min-w-0 items-start justify-between gap-3">
           {hasGraphic ? (
-            <div className={cn(styles.cardGraphic, compact && styles.cardGraphicCompact)}>
+            <div
+              className={cn(
+                styles.cardGraphic,
+                compact && styles.cardGraphicCompact,
+                isLargeGraphic && styles.cardGraphicLg
+              )}
+            >
               {icon ? (
                 <span
                   aria-hidden="true"
                   className={cn(
                     "flex shrink-0 items-center justify-center",
-                    compact ? styles.cardIconCompact : "h-14 w-14"
+                    compact ? styles.cardIconCompact : isLargeGraphic ? styles.cardIconLg : "h-14 w-14"
                   )}
                 >
                   {icon}
@@ -132,11 +143,11 @@ export function FeatureInfoCard({
                 <Image
                   src={image}
                   alt={alt}
-                  width={compact ? 81 : 56}
-                  height={compact ? 81 : 56}
+                  width={graphicPx}
+                  height={graphicPx}
                   className={cn(
                     "shrink-0 object-contain",
-                    compact ? styles.cardIconCompact : "h-14 w-14"
+                    compact ? styles.cardIconCompact : isLargeGraphic ? styles.cardIconLg : "h-14 w-14"
                   )}
                 />
               ) : null}

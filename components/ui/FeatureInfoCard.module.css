@@ -57,6 +57,17 @@
   overflow: visible;
 }
 
+/* 20% larger than .cardGraphic (3.5rem → 4.2rem) */
+.cardGraphicLg {
+  width: 4.2rem;
+  height: 4.2rem;
+}
+
+.cardIconLg {
+  width: 4.2rem;
+  height: 4.2rem;
+}
+
 .cardGraphicCompact {
   width: 5.06rem; /* 5.5rem less 8% */
   height: 5.06rem;

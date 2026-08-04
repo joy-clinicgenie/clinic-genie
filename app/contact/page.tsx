@@ -85,7 +85,7 @@ export default function ContactPage() {
       </Section>
 
       {/* 4 — Before you enquire */}
-      <PageFinale>
+      <PageFinale backdropClassName="bg-[#f4f7f8]">
         <section className="py-24">
           <Container className="flex flex-col items-center gap-8 text-center">
             <LandingKicker light>Before you enquire</LandingKicker>

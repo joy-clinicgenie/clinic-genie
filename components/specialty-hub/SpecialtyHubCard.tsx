@@ -1,4 +1,3 @@
-import { SpecialistIcon } from "@/components/home/landing/SpecialistIcons";
 import { FeatureInfoCard } from "@/components/ui/FeatureInfoCard";
 import { cn } from "@/lib/cn";
 import type { SpecialtyHubCard as SpecialtyHubCardData } from "@/lib/data/specialty-hubs";
@@ -14,8 +13,9 @@ export function SpecialtyHubCard({ hub, sparkleIndex = 0 }: SpecialtyHubCardProp
     <FeatureInfoCard
       title={hub.name}
       body={hub.summary}
-      icon={<SpecialistIcon id={hub.iconId} className="h-12 w-12" />}
+      image={hub.image}
       alt=""
+      graphicSize="lg"
       href={hub.published ? getSpecialtyHubHref(hub) : undefined}
       badge={hub.published ? undefined : "Coming soon"}
       showSparkles

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useId, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { ChevronDown } from "lucide-react";
 import { cn } from "@/lib/cn";
 import {
   SERVICES_PILLARS_INDEX,
@@ -88,7 +89,7 @@ export function ServicesNavDropdown({
         aria-expanded={open}
         aria-controls={panelId}
         className={cn(
-          "relative inline-flex items-center rounded-pill px-4 py-2 text-[0.9375rem] font-medium transition-colors duration-ui",
+          "relative inline-flex items-center gap-1 rounded-pill px-4 py-2 text-[0.9375rem] font-medium transition-colors duration-ui",
           light
             ? active || open
               ? "bg-ink-900 text-white"
@@ -99,6 +100,14 @@ export function ServicesNavDropdown({
         )}
       >
         {label}
+        <ChevronDown
+          aria-hidden="true"
+          className={cn(
+            "h-3.5 w-3.5 shrink-0 transition-transform duration-ui motion-reduce:transition-none",
+            open && "rotate-180"
+          )}
+          strokeWidth={2}
+        />
       </Link>
 
       <AnimatePresence>

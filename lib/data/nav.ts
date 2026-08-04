@@ -64,12 +64,12 @@ export const NAV_ITEMS: NavItem[] = [
   },
   { label: "Specialty Hub", href: "/specialty-hub" },
   { label: "Our Works", href: "/portfolio" },
-  { label: "Genie Tips", href: "/genie-tips", disabled: true },
+  { label: "Genie Tips", href: "/genie-tips" },
 ];
 
 export const SERVICES_PILLARS_INDEX = {
-  label: "See all pillars",
-  href: "/services/core-pillars",
+  label: "View all services",
+  href: "/services",
 } as const;
 
 export const PRIMARY_CTA = { label: "Make Your First Wish", href: "/contact" };

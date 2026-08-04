@@ -319,7 +319,7 @@ export function SpecialtyHubTemplate({ hub }: { hub: SpecialtyHubDetail }) {
       </Section>
 
       {/* 8 — Final CTA */}
-      <PageFinale>
+      <PageFinale backdropClassName="bg-night-800">
         <PageFinaleCTA
           kicker={hub.finalCta.subtitle}
           title={hub.finalCta.title}

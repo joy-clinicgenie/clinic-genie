@@ -1,7 +1,8 @@
 import type { ReactNode } from "react";
+import { Footer } from "@/components/layout/Footer";
 import { cn } from "@/lib/cn";
 
-/** Dark gradient block with rounded top — matches landing page finale shell */
+/** Rounded closing unit: bottom CTA content + site footer as one block. */
 export function PageFinale({
   children,
   className,
@@ -14,8 +15,9 @@ export function PageFinale({
 }) {
   return (
     <div className={backdropClassName}>
-      <div data-nav-theme="dark" className={cn("finale-shell surface-finale text-onDark", className)}>
-        {children}
+      <div data-nav-theme="dark" className={cn("finale-shell text-onDark", className)}>
+        <div className="surface-finale">{children}</div>
+        <Footer />
       </div>
     </div>
   );

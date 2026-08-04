@@ -33,6 +33,7 @@ export function SectionHeading({
   tone = "dark",
   as = "h2",
   className,
+  titleClassName,
 }: {
   kicker?: string;
   title: ReactNode;
@@ -43,6 +44,7 @@ export function SectionHeading({
   tone?: "dark" | "light";
   as?: "h1" | "h2" | "h3";
   className?: string;
+  titleClassName?: string;
 }) {
   const Tag = as;
   const titleContent =
@@ -69,7 +71,8 @@ export function SectionHeading({
             SIZE[as],
             "whitespace-pre-line text-balance",
             tone === "dark" ? "text-onDark" : "text-ink-900",
-            align === "center" && "mx-auto max-w-3xl"
+            align === "center" && "mx-auto max-w-3xl",
+            titleClassName
           )}
         >
           {titleContent}

@@ -1,6 +1,7 @@
 "use client";
 
 import type { ReactNode } from "react";
+import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
@@ -27,6 +28,9 @@ export function LightHero({
   secondaryCta,
   showOrb = true,
   showWishForm = true,
+  showSparkles = true,
+  backgroundImage,
+  surface = "mist",
   align = "left",
   layout: _layout = "split",
   contentOrder = "headingFirst",
@@ -35,6 +39,8 @@ export function LightHero({
   containerSize = "wide",
   leading,
   className,
+  copyClassName,
+  titleClassName,
   children,
 }: {
   kicker?: string;
@@ -46,6 +52,16 @@ export function LightHero({
   secondaryCta?: CtaLink;
   showOrb?: boolean;
   showWishForm?: boolean;
+  showSparkles?: boolean;
+  /** Full-bleed static hero background. Decorative sparkles/circles are hidden when set. */
+  backgroundImage?: {
+    src: string;
+    alt?: string;
+    /** Overlay and copy treatment. Use "dark" for photo heroes with light text. */
+    treatment?: "light" | "dark";
+  };
+  /** Section fill when no background image is set. */
+  surface?: "mist" | "white";
   align?: "left" | "center";
   /** @deprecated Mobile always uses landing-style orb-first layout */
   layout?: "split" | "stacked";
@@ -56,11 +72,23 @@ export function LightHero({
   containerSize?: "wide" | "prose" | "content";
   leading?: ReactNode;
   className?: string;
+  copyClassName?: string;
+  titleClassName?: string;
   children?: ReactNode;
 }) {
   const reduceMotion = useReducedMotion();
   const centered = align === "center";
   const centeredNoOrb = centered && !showOrb;
+  const hasBackgroundImage = Boolean(backgroundImage?.src);
+  const darkImageHero = hasBackgroundImage && backgroundImage?.treatment === "dark";
+  const copyTone = darkImageHero ? "dark" : "light";
+  const surfaceClass = hasBackgroundImage
+    ? darkImageHero
+      ? "bg-night-900"
+      : "bg-cg-mist"
+    : surface === "white"
+      ? "bg-white"
+      : "surface-light";
 
   const headingBlock =
     kicker || title ? (
@@ -71,9 +99,10 @@ export function LightHero({
         highlight={highlight}
         subtitle={subtitle}
         description={description}
-        tone="light"
+        tone={copyTone}
         align={centered ? "center" : "left"}
         className="gap-5"
+        titleClassName={titleClassName}
       />
     ) : null;
 
@@ -91,7 +120,12 @@ export function LightHero({
           </MagneticButton>
         )}
         {secondaryCta && (
-          <MagneticButton href={secondaryCta.href} size="md" variant="ghost" tone="light">
+          <MagneticButton
+            href={secondaryCta.href}
+            size="md"
+            variant="ghost"
+            tone={darkImageHero ? "dark" : "light"}
+          >
             {secondaryCta.label}
           </MagneticButton>
         )}
@@ -102,7 +136,8 @@ export function LightHero({
     <motion.div
       className={cn(
         styles.copyBlock,
-        centered ? "mx-auto max-w-3xl items-center text-center" : "max-w-3xl lg:text-left"
+        centered ? "mx-auto max-w-3xl items-center text-center" : "max-w-3xl lg:text-left",
+        copyClassName
       )}
       initial={reduceMotion ? false : { opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
@@ -138,25 +173,53 @@ export function LightHero({
 
   return (
     <section
-      data-nav-theme="light"
+      data-nav-theme={darkImageHero ? "dark" : "light"}
       className={cn(
-        "surface-light relative flex items-center overflow-hidden pb-12 pt-[calc(3.25rem+env(safe-area-inset-top,0px))] text-ink-900 lg:pb-20 lg:pt-36",
+        "relative flex items-center overflow-hidden pb-12 pt-[calc(3.25rem+env(safe-area-inset-top,0px))] lg:pb-20 lg:pt-36",
+        darkImageHero ? "text-onDark" : "text-ink-900",
+        surfaceClass,
         minHeight,
         className
       )}
     >
-      <SparkleField density={28} parallax variant="cluster" className="opacity-60" />
+      {hasBackgroundImage && backgroundImage ? (
+        <div className="absolute inset-0" aria-hidden={backgroundImage.alt ? undefined : true}>
+          <Image
+            src={backgroundImage.src}
+            alt={backgroundImage.alt ?? ""}
+            fill
+            priority
+            unoptimized={backgroundImage.src.endsWith(".svg")}
+            className="object-cover object-center"
+            sizes="100vw"
+          />
+          {darkImageHero ? (
+            <div
+              aria-hidden="true"
+              className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/55 to-black/25"
+            />
+          ) : (
+            <div aria-hidden="true" className="absolute inset-0 bg-white/55" />
+          )}
+        </div>
+      ) : null}
 
-      <svg
-        aria-hidden="true"
-        className="pointer-events-none absolute -left-16 bottom-[8%] hidden w-[min(380px,55vw)] opacity-[0.35] motion-reduce:hidden lg:block"
-        viewBox="0 0 380 380"
-        fill="none"
-      >
-        <circle cx="190" cy="190" r="170" stroke="#9CC8D2" strokeWidth="1" strokeDasharray="6 10" />
-        <circle cx="190" cy="190" r="120" stroke="#B8D9E0" strokeWidth="0.8" strokeDasharray="4 8" />
-        <circle cx="190" cy="190" r="70" stroke="#9CC8D2" strokeWidth="0.6" />
-      </svg>
+      {showSparkles && !hasBackgroundImage ? (
+        <SparkleField density={28} parallax variant="cluster" className="opacity-60" />
+      ) : null}
+
+      {!hasBackgroundImage ? (
+        <svg
+          aria-hidden="true"
+          className="pointer-events-none absolute -left-16 bottom-[8%] hidden w-[min(380px,55vw)] opacity-[0.35] motion-reduce:hidden lg:block"
+          viewBox="0 0 380 380"
+          fill="none"
+        >
+          <circle cx="190" cy="190" r="170" stroke="#9CC8D2" strokeWidth="1" strokeDasharray="6 10" />
+          <circle cx="190" cy="190" r="120" stroke="#B8D9E0" strokeWidth="0.8" strokeDasharray="4 8" />
+          <circle cx="190" cy="190" r="70" stroke="#9CC8D2" strokeWidth="0.6" />
+        </svg>
+      ) : null}
 
       <Container
         size={containerSize}

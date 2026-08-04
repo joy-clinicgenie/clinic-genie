@@ -11,7 +11,8 @@ export interface SpecialtyHubCard {
   /** Short orb-hover tagline on the landing specialist section */
   highlight: string;
   summary: string;
-  iconId: string;
+  /** Card graphic under /public/specialty-hub */
+  image: string;
   published: boolean;
 }
 
@@ -208,7 +209,7 @@ export const SPECIALTY_HUBS: SpecialtyHub[] = [
     name: "Endocrinology",
     highlight: "Rank for lifelong conditions.",
     summary: "Growth systems for hormone and metabolic specialists — found when patients need answers fast.",
-    iconId: "endocrinology",
+    image: "/specialty-hub/Endocrinology.png",
     published: false,
   },
   {
@@ -217,7 +218,7 @@ export const SPECIALTY_HUBS: SpecialtyHub[] = [
     name: "Cardiology",
     highlight: "Rank where patients look.",
     summary: "Marketing tuned to heart care — from symptom searches to specialist referrals.",
-    iconId: "cardiology",
+    image: "/specialty-hub/Cardiology.png",
     published: false,
   },
   {
@@ -226,7 +227,7 @@ export const SPECIALTY_HUBS: SpecialtyHub[] = [
     name: "Aesthetic + Dermatology",
     highlight: "Paid ads, ready patients.",
     summary: "Visibility and trust for skin and aesthetic clinics — compliant, credible, conversion-ready.",
-    iconId: "dermatology",
+    image: "/specialty-hub/Aesthetic.png",
     published: false,
   },
   {
@@ -235,7 +236,7 @@ export const SPECIALTY_HUBS: SpecialtyHub[] = [
     name: "Dental + Orthodontics",
     highlight: "Win comparison shoppers.",
     summary: "Local discovery and family trust for dental practices that patients choose for the long term.",
-    iconId: "dental",
+    image: "/specialty-hub/Dental.png",
     published: false,
   },
   {
@@ -244,7 +245,7 @@ export const SPECIALTY_HUBS: SpecialtyHub[] = [
     name: "Ophthalmology",
     highlight: "A clear, trust-building site.",
     summary: "Search and brand systems for eye care — clear paths from symptoms to your clinic door.",
-    iconId: "ophthalmology",
+    image: "/specialty-hub/Ophthalmology.png",
     published: false,
   },
   {
@@ -253,7 +254,7 @@ export const SPECIALTY_HUBS: SpecialtyHub[] = [
     name: "Paediatrics",
     highlight: "A voice parents trust.",
     summary: "Growth engines built for children's clinics — how parents find, trust, and choose.",
-    iconId: "paediatrics",
+    image: "/specialty-hub/paediatric.png",
     published: true,
     ...PAEDIATRICS_DETAIL,
   },
@@ -263,7 +264,7 @@ export const SPECIALTY_HUBS: SpecialtyHub[] = [
     name: "Acne Specialist",
     highlight: "Meet patients on social.",
     summary: "Targeted marketing for acne and skin-condition clinics — where anxious patients search first.",
-    iconId: "acne",
+    image: "/specialty-hub/Acne.png",
     published: false,
   },
   {
@@ -272,7 +273,7 @@ export const SPECIALTY_HUBS: SpecialtyHub[] = [
     name: "Neurology + Neurosurgery",
     highlight: "A clear, navigable site.",
     summary: "Specialist visibility for complex neurological care — clarity when patients need reassurance.",
-    iconId: "neurology",
+    image: "/specialty-hub/Neurology.png",
     published: false,
   },
   {
@@ -281,7 +282,7 @@ export const SPECIALTY_HUBS: SpecialtyHub[] = [
     name: "Aquatic Physiotherapy",
     highlight: "Show the road to recovery.",
     summary: "Niche discovery for aquatic rehab — reaching patients searching for a different kind of recovery.",
-    iconId: "aquatic-physio",
+    image: "/specialty-hub/Aquatic.png",
     published: false,
   },
 ];

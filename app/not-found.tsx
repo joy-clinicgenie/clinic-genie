@@ -66,7 +66,7 @@ export default function NotFound() {
         </p>
       </LightHero>
 
-      <PageFinale>
+      <PageFinale backdropClassName="surface-light">
         <section className="pb-24 pt-16">
           <Container className="flex flex-col gap-12">
             <div className="flex flex-col items-center gap-4 text-center">

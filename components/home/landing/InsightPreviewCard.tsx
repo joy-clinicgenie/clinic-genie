@@ -1,9 +1,14 @@
-"use client";
-
-import { getCategoryIllustration } from "@/components/blog/category-illustrations";
-import { LinkPreview } from "@/components/ui/link-preview";
+import Link from "next/link";
 import { cn } from "@/lib/cn";
 import type { Post } from "@/lib/data/posts";
+
+export type InsightPreviewPost = {
+  slug: string;
+  title: string;
+  dek: string;
+  category: string;
+  updated: string;
+};
 
 function CardArrowIcon() {
   return (
@@ -43,16 +48,14 @@ export function InsightPreviewCard({
   post,
   className,
 }: {
-  post: Post;
+  post: InsightPreviewPost | Post;
   className?: string;
 }) {
   const href = `/genie-tips/${post.slug}`;
 
   return (
-    <LinkPreview
-      url={href}
-      isStatic
-      preview={getCategoryIllustration(post.category)}
+    <Link
+      href={href}
       aria-label={`Read: ${post.title}`}
       className={cn(
         "group/card block h-full rounded-xl text-inherit focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-genie-100 focus-visible:ring-offset-2 focus-visible:ring-offset-night-900",
@@ -87,6 +90,6 @@ export function InsightPreviewCard({
           <CardArrowIcon />
         </span>
       </article>
-    </LinkPreview>
+    </Link>
   );
 }

@@ -3,10 +3,14 @@ import { Hero } from "@/components/home/Hero";
 import { LogoMarquee } from "@/components/home/LogoMarquee";
 import { Reveal, RevealGroup, RevealItem } from "@/components/ui/Reveal";
 import { MagneticButton } from "@/components/ui/MagneticButton";
-import { InsightPreviewCard } from "@/components/home/landing/InsightPreviewCard";
+import {
+  InsightPreviewCard,
+  type InsightPreviewPost,
+} from "@/components/home/landing/InsightPreviewCard";
 import { CORE_PILLARS } from "@/lib/data/pillars";
 import { HOME_PROCESS_STEPS } from "@/lib/data/services";
 import { POSTS } from "@/lib/data/posts";
+import { getPublishedPosts } from "@/lib/notion";
 import {
   LandingSection,
   LandingIntro,
@@ -43,10 +47,28 @@ const METRICS = [
   { value: "367K+", label: "Search impressions tracked" },
   { value: "21K+", label: "Paid site sessions tracked" },
   { value: "1.7K+", label: "Call and form actions tracked" },
-  { value: "$9.88", label: "Avergae cost per action" },
+  { value: "$9.88", label: "Average cost per action" },
 ];
 
-export default function HomePage() {
+export default async function HomePage() {
+  const notionPosts = await getPublishedPosts();
+  const insightPosts: InsightPreviewPost[] =
+    notionPosts.length > 0
+      ? notionPosts.slice(0, 3).map((post) => ({
+          slug: post.slug,
+          title: post.title,
+          dek: post.description,
+          category: post.category ?? post.tags[0] ?? "Growth Strategy",
+          updated: post.dateLabel ?? "",
+        }))
+      : POSTS.slice(0, 3).map((post) => ({
+          slug: post.slug,
+          title: post.title,
+          dek: post.dek,
+          category: post.category,
+          updated: post.updated,
+        }));
+
   return (
     <div className="home-landing-flow">
       {/* 1 — Hero */}
@@ -195,7 +217,7 @@ export default function HomePage() {
       </Reveal>
 
       {/* 10 — Dark finale: Genie Tips + final CTA */}
-      <PageFinale>
+      <PageFinale backdropClassName="bg-white">
         <section className="py-24">
           <div className="mx-auto w-full max-w-wide px-[var(--page-pad)]">
             <div className="flex flex-col gap-10">
@@ -221,7 +243,7 @@ export default function HomePage() {
                 </div>
               </div>
               <RevealGroup className="grid gap-5 md:grid-cols-3">
-                {POSTS.slice(0, 3).map((post) => (
+                {insightPosts.map((post) => (
                   <RevealItem key={post.slug} className="h-full">
                     <InsightPreviewCard post={post} />
                   </RevealItem>
@@ -231,7 +253,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        <section className="pb-32 pt-16">
+        <section className="pb-16 pt-16 lg:pb-20">
           <div className="mx-auto flex max-w-wide flex-col items-center gap-7 px-[var(--page-pad)] text-center">
             <Reveal>
               <LandingKicker light>Make your first wish</LandingKicker>

@@ -153,10 +153,10 @@ export default function PillarPage({ params }: { params: { slug: string } }) {
         <Container className="relative z-10 w-full">
           <div className="flex max-w-xl flex-col items-start text-left">
             <Link
-              href="/services/core-pillars"
+              href="/services"
               className="mb-5 inline-flex w-fit items-center gap-2 font-sans text-kicker uppercase text-genie-700 transition-colors hover:text-genie-900"
             >
-              <span aria-hidden="true">←</span> Core service pillars
+              <span aria-hidden="true">←</span> Services
             </Link>
 
             <h1 className="font-display text-h1 text-balance text-ink-900">
@@ -339,7 +339,7 @@ export default function PillarPage({ params }: { params: { slug: string } }) {
       )}
 
       {/* 9 — Final CTA */}
-      <PageFinale backdropClassName="surface-cyan">
+      <PageFinale backdropClassName={hasFaqs ? "bg-white" : "surface-cyan"}>
         <PageFinaleCTA
           kicker={pillar.finalSubtitle}
           title={pillar.finalTitle}

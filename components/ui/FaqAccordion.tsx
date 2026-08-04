@@ -6,13 +6,17 @@ import { cn } from "@/lib/cn";
 import { useOrbStore } from "@/components/orb/store";
 import type { Faq } from "@/lib/data/faqs";
 
-function FaqToggleIcon({ open }: { open: boolean }) {
+function FaqToggleIcon({ open, light }: { open: boolean; light: boolean }) {
   return (
     <span
       aria-hidden="true"
       className={cn(
         "grid h-8 w-8 shrink-0 place-items-center rounded-full border transition-colors duration-ui",
-        "border-ink-500/25 text-ink-500"
+        light
+          ? open
+            ? "border-genie-100 bg-genie-10 text-genie-700"
+            : "border-hairline-light bg-cg-mist text-ink-700"
+          : "border-white/20 bg-genie-500/15 text-genie-300"
       )}
     >
       <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
@@ -37,7 +41,7 @@ export function FaqAccordion({
   const light = tone === "light";
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className={cn("flex flex-col", light ? "gap-3" : "gap-2")}>
       {items.map((item, i) => {
         const isOpen = open === i;
         const panelId = `faq-panel-${i}`;
@@ -47,11 +51,14 @@ export function FaqAccordion({
           <div
             key={i}
             className={cn(
-              "overflow-hidden rounded-2xl transition-colors duration-ui",
+              "overflow-hidden rounded-2xl transition-[background-color,box-shadow,border-color] duration-ui",
               light
-                ? isOpen
-                  ? "bg-cg-soft-grey"
-                  : "bg-transparent"
+                ? cn(
+                    "border bg-white shadow-xs",
+                    isOpen
+                      ? "border-genie-100 shadow-sm"
+                      : "border-hairline-light hover:border-genie-40"
+                  )
                 : cn("glass", isOpen && "shadow-glow-sm")
             )}
           >
@@ -65,16 +72,15 @@ export function FaqAccordion({
               aria-expanded={isOpen}
               aria-controls={panelId}
               className={cn(
-                "flex w-full items-start gap-4 text-left transition-colors duration-ui",
-                light ? "px-5 py-5" : "items-center justify-between p-5",
-                !light && "gap-4"
+                "flex w-full items-start gap-4 px-5 py-5 text-left transition-colors duration-ui",
+                !light && "items-center justify-between"
               )}
             >
-              {light ? <FaqToggleIcon open={isOpen} /> : null}
+              {light ? <FaqToggleIcon open={isOpen} light /> : null}
 
               <span
                 className={cn(
-                  "min-w-0 flex-1 font-display text-base font-semibold",
+                  "min-w-0 flex-1 font-display text-base font-semibold leading-snug",
                   light ? "text-ink-900" : "text-onDark"
                 )}
               >
@@ -111,7 +117,7 @@ export function FaqAccordion({
                     className={cn(
                       "text-sm leading-relaxed",
                       light
-                        ? "px-5 pb-5 pl-[3.75rem] text-ink-700"
+                        ? "border-t border-hairline-light bg-cg-mist px-5 py-4 pl-[3.75rem] text-ink-700"
                         : "px-5 pb-5 text-onDark-muted"
                     )}
                   >

@@ -383,7 +383,7 @@ export function ProjectCaseStudy({ study }: { study: CaseStudy }) {
         </Container>
       </Section>
 
-      <PageFinale>
+      <PageFinale backdropClassName="bg-night-800">
         <PageFinaleCTA
           kicker="Make your first wish"
           title="Want a clearer patient journey for your clinic?"

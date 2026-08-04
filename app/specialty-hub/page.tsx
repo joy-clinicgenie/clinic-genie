@@ -20,14 +20,19 @@ export default function SpecialtyHubPage() {
   return (
     <>
       <LightHero
-        kicker="Specialty Hub"
-        title="Growth engines built for your specialty."
+        title="Growth engines built for your specialty"
         highlight="your specialty"
-        subtitle="Every specialty searches differently. Parents, patients, and families each need a different kind of trust. Explore the growth systems Clinic Genie has built — and is building — for specialist clinics like yours."
+        subtitle="From how patients search to what earns their trust, explore tailored medical marketing strategies for specialist clinics in Singapore."
         primaryCta={{ href: "/contact", label: "Make Your First Wish" }}
-        minHeight="min-h-[60vh]"
         showOrb={false}
         showWishForm={false}
+        showSparkles={false}
+        backgroundImage={{
+          src: "/specialty-hub/hero-bg.png",
+          alt: "",
+          treatment: "light",
+        }}
+        minHeight="min-h-[78vh]"
       />
 
       <Section tone="light">
@@ -50,7 +55,7 @@ export default function SpecialtyHubPage() {
         </Container>
       </Section>
 
-      <PageFinale>
+      <PageFinale backdropClassName="surface-light">
         <PageFinaleCTA
           kicker="Your specialty not listed yet?"
           title="The magic still works."
