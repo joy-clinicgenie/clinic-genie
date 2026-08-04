@@ -22,128 +22,207 @@ export interface SpecialtyHubDetail extends SpecialtyHubCard {
   heroEyebrow: string;
   heroTitle: string;
   heroHighlight?: string;
+  heroLabel?: string;
   heroBody: string;
+  heroImage?: string;
   heroCta: { label: string; href: string };
+  heroSecondaryCta: { label: string; href: string };
   patientDiff: {
+    kicker: string;
+    title: string;
+    highlight?: string;
     subtitle: string;
     cards: { title: string; body: string }[];
   };
   searchCompare: {
-    subtitle: string;
+    kicker: string;
     title: string;
+    highlight?: string;
     intro: string;
-    traditional: { title: string; body: string };
-    aiSearch: { title: string; body: string };
     closing: string;
+    cards: { title: string; body: string }[];
   };
   transformation: {
     subtitle: string;
     title: string;
+    highlight?: string;
     image: string;
     imageAlt: string;
     intro: string;
+    accent: string;
     anchor: { title: string; body: string };
-    engine: { label: string }[];
+    engineKicker: string;
+    engineClosing: string;
+    engine: { title: string; body: string }[];
+    metricsKicker: string;
+    metricsTitle: string;
+    metricsHighlight?: string;
     metricsIntro: string;
-    metrics: string[];
+    metricsClosing: string;
+    metrics: { title: string; body: string }[];
     cta: { label: string; href: string };
   };
   routings: {
     subtitle: string;
     title: string;
+    highlight?: string;
     intro: string;
     links: { label: string; href: string }[];
   };
   compliance: {
+    kicker: string;
     title: string;
+    highlight?: string;
     intro: string;
-    bullets: string[];
+    points: { title: string; body: string }[];
   };
   faqs: SpecialtyHubFaq[];
   finalCta: {
     subtitle: string;
     title: string;
+    highlight?: string;
     body: string;
     cta: { label: string; href: string };
+    secondaryCta?: { label: string; href: string };
+    footnote?: string;
   };
 }
 
 export type SpecialtyHub = SpecialtyHubCard & Partial<Omit<SpecialtyHubDetail, keyof SpecialtyHubCard>>;
 
 const PAEDIATRICS_DETAIL: Omit<SpecialtyHubDetail, keyof SpecialtyHubCard> = {
-  metaTitle: "Paediatric Clinic Marketing Singapore | Growth for Children's Clinics | Clinic Genie",
+  metaTitle: "Joyful Seeds Paediatric & Developmental Clinic | Specialty Hub | Clinic Genie",
   metaDescription:
-    "Marketing growth systems built for paediatric clinics in Singapore. Clinic Genie helps children's clinics get found, trusted, and chosen, through SEO, branding, web, and compliant content.",
-  heroEyebrow: "Paediatric Clinic Marketing",
-  heroTitle: "Growth, conjured for children's clinics.",
-  heroHighlight: "children's clinics",
+    "A new paediatric clinic launched into Bukit Timah with a brand, a search footprint, and a listed presence from day one. See how Clinic Genie granted the growth wish.",
+  heroEyebrow: "Paediatrics + Child Development",
+  heroTitle:
+    "A new paediatric clinic launched into Bukit Timah with a brand, a search footprint, and a listed presence from day one.",
+  heroHighlight: "from day one",
+  heroLabel: "Joyful Seeds Paediatric & Developmental Clinic",
   heroBody:
-    "Parents do not search like everyone else. They search with worry, and choose with care. So we built a growth engine made only for paediatric clinics, tuned to how parents find, trust, and decide. Not a generic package. A wish granted for children's care.",
+    "Planting joy. Harvesting potential. Brand, copy, website, organic search, paid search, and FindClinic presence built as one launch system for a clinic starting from absolute zero online.",
+  heroImage: "/specialty-hub/hero-bg.png",
   heroCta: { label: "Make Your First Wish", href: "/contact" },
+  heroSecondaryCta: { label: "See How the Magic Works", href: "#granted-wish" },
   patientDiff: {
-    subtitle: "Why parents need a different approach",
+    kicker: "Before the work",
+    title: "What stood in the way.",
+    highlight: "way",
+    subtitle:
+      "Two experienced consultant paediatricians, a beautiful idea about how children should be cared for, and a starting position of absolute zero online.",
     cards: [
       {
-        title: "They search for someone else",
-        body: "A parent is rarely searching for themselves. They are anxious, protective, and researching on behalf of a child who cannot speak for themselves. Every word has to earn a parent's trust first.",
+        title: "Zero authority, crowded catchment",
+        body: "A new domain in Bukit Timah competing against long-established clinics with years of accumulated search history and reviews.",
       },
       {
-        title: "They decide fast, then double-check",
-        body: "Parents act quickly when worried, then verify everything: reviews, credentials, the clinic's tone. We make sure every signal reassures.",
+        title: "Two very different patients",
+        body: "A parent booking a flu jab and a parent worried their three year old is not speaking need the same clinic and completely different journeys, tones, and search terms.",
       },
       {
-        title: "They stay, or they leave",
-        body: "A good paediatric experience creates a loyal family for years — siblings, vaccinations, growth. We help your clinic become the one they keep coming back to.",
+        title: "The hardest content in paediatrics",
+        body: "Developmental content is read by frightened parents at midnight. It has to inform without alarming, guide without diagnosing, and never suggest a child's future is fixed.",
       },
     ],
   },
   searchCompare: {
-    subtitle: "How paediatric patients search now",
-    title: "Two kinds of search. One growth engine.",
+    kicker: "Clinic Genie diagnosis",
+    title: "Four lenses. One clearer picture.",
+    highlight: "clearer picture",
     intro:
-      "We understand the exact search footprint of paediatric care, across both traditional search and the AI tools parents now turn to.",
-    traditional: {
-      title: "Traditional SEO",
-      body: 'Commercial and clinical terms parents type into Google: "paediatrician Singapore," "child vaccination clinic near me," "paediatric clinic [area]," specific conditions and treatments.',
-    },
-    aiSearch: {
-      title: "GEO and AI Search",
-      body: 'Long-tail, question-based prompts parents ask ChatGPT, Gemini, and Perplexity: "Where can I treat my child\'s eczema in Singapore," "best paediatrician for ADHD assessment near me," "is my toddler\'s fever serious."',
-    },
-    closing: "We build your clinic to be found in both — the search bar and the answer engine.",
+      "We looked at the project through four lenses. How parents search, what they need to understand, where trust is built, and what makes them ready to enquire.",
+    closing:
+      "That produced a two-pillar structure, a voice built on growth rather than urgency, and a launch plan that gave the clinic a findable presence while its own domain was still earning one.",
+    cards: [
+      {
+        title: "Search Intent",
+        body: "How parents look for care before they choose a clinic, and which queries signal real enquiry intent.",
+      },
+      {
+        title: "Service Clarity",
+        body: "Whether services are grouped, explained, and connected in a way parents can follow without guessing.",
+      },
+      {
+        title: "Trust Signals",
+        body: "Where credibility is built through structure, doctor context, hospital access, and responsible claims.",
+      },
+      {
+        title: "Enquiry Readiness",
+        body: "Whether call, WhatsApp, booking, and teleconsult actions appear at the moments parents are ready to act.",
+      },
+    ],
   },
   transformation: {
     subtitle: "A granted wish",
-    title: "Joyful Seeds Paediatrics",
+    title: "Joyful Seeds Paediatric & Developmental Clinic",
+    highlight: "Joyful Seeds",
     image: "/works/joyfulseeds.png",
-    imageAlt: "Joyful Seeds Paediatrics branding and website",
+    imageAlt: "Joyful Seeds Paediatric and Developmental Clinic branding and website",
     intro:
-      "Joyful Seeds wanted to grow, but growth needed a voice as warm and trustworthy as their care. That became the wish we granted first.",
+      "A new paediatric clinic launched into Bukit Timah with a brand, a search footprint, and a listed presence from day one.",
+    accent: "#FF6A88",
     anchor: {
-      title: "The Anchor: Branding and Copywriting",
-      body: "We shaped a brand and voice built for parents — warm, clear, reassuring — that turns clinical expertise into words families trust at first read. Every line written to ease a worry and earn confidence, within HCSA and SMC guidelines.",
+      title: "Brand and voice",
+      body: "Built a botanical identity around seeds, seasons, and growth, then carried it into the writing so consistently that even the closed sign has a reason. Rest is part of growth, too.",
     },
+    engineKicker: "What we worked on",
+    engineClosing: "Six workstreams, one goal. Help parents move from search to understanding to enquiry with less friction.",
     engine: [
-      { label: "Healthcare SEO · So parents find Joyful Seeds the moment they search." },
-      { label: "Web Design · A clear, mobile-first site that turns visits into enquiries." },
-      { label: "Patient Education Content · Resources that build trust and reassure parents." },
-      { label: "Social Media · Consistent, credible content that keeps the clinic close." },
+      {
+        title: "Two-pillar architecture",
+        body: "Separated general paediatrics from developmental and behavioural care, so everyday health and complex needs each get the structure and tone they deserve.",
+      },
+      {
+        title: "Copywriting",
+        body: "Wrote every page for a parent, not a clinician. Calm, plain, and specific about what happens at a visit, with no rush and no pressure.",
+      },
+      {
+        title: "Search intent mapping",
+        body: "Prioritised the searches parents actually type. Not just paediatrician Bukit Timah, but P1 deferment, SG Enable referral, SPED placement report, and developmental assessment.",
+      },
+      {
+        title: "FindClinic presence",
+        body: "Listed and structured the clinic on FindClinic.sg, giving a brand new practice a discoverable, credible profile from opening week while its own domain built authority.",
+      },
+      {
+        title: "Paid search",
+        body: "Structured campaigns around vaccination, general consultation, and developmental assessment intent, tracked through to booking.",
+      },
     ],
-    metricsIntro:
-      "Magic means nothing without proof. So here is the proof. After we rebuilt Joyful Seeds' brand, website, and search engine, the numbers moved where they matter: visibility, reach, and efficiency.",
+    metricsKicker: "What changed",
+    metricsTitle: "What the clinic can now measure.",
+    metricsHighlight: "measure",
+    metricsIntro: "No smoke. No mirrors. Every claim on this page is something the clinic can point at.",
+    metricsClosing: "Measurable magic. Wishes realised in data, not promises.",
     metrics: [
-      "Ad clicks nearly tripled, reaching over 8,000 a month as campaigns found more parents searching for paediatric care.",
-      "Search impressions rose more than 40%, widening the clinic's visibility across paediatric search terms.",
-      "Cost per click was cut by more than a quarter, stretching every dollar of the clinic's budget further.",
-      "Website visits grew from a near standing start to over 6,000 a month, building to more than 60,000 across the year.",
+      {
+        title: "A brand launched from zero to live presence",
+        body: "Website, search footprint, and listed profile from day one.",
+      },
+      {
+        title: "Two clear care pillars",
+        body: "General and developmental care structured so parents can find the journey they need.",
+      },
+      {
+        title: "Singapore-specific search visibility",
+        body: "Visibility across developmental queries parents actually use.",
+      },
+      {
+        title: "Click to booking attribution",
+        body: "Tracked pathways across web, WhatsApp, and directory.",
+      },
     ],
-    cta: { label: "Read the Full Joyful Seeds Story", href: "/portfolio" },
+    cta: {
+      label: "Make Your First Wish",
+      href: "/contact",
+    },
   },
   routings: {
-    subtitle: "Growth never happens in silos",
-    title: "The full engine behind paediatric growth.",
+    subtitle: "Patient journey map",
+    title: "From search to enquiry, mapped with intent.",
+    highlight: "mapped with intent",
     intro:
-      "Every paediatric clinic's growth draws on more than one service. Explore the systems that power it.",
+      "We built the clinic website as a guided family journey, not a collection of disconnected pages. Branding, copywriting, website UX, SEO, SEM, and FindClinic worked as one system.",
     links: [
       {
         label: "Healthcare SEO",
@@ -157,14 +236,39 @@ const PAEDIATRICS_DETAIL: Omit<SpecialtyHubDetail, keyof SpecialtyHubCard> = {
         label: "Medical SEM",
         href: "/services/core-pillars/medical-sem",
       },
+      {
+        label: "Branding and Copywriting",
+        href: "/services/core-pillars/branding-copywriting",
+      },
+      {
+        label: "FindClinic.sg",
+        href: "/services/core-pillars/findclinic",
+      },
     ],
   },
   compliance: {
-    title: "Magic with a conscience.",
-    intro: "Your reputation with families is everything, so we guard it.",
-    bullets: [
-      "Built within Singapore's HCSA, PHMC, and SMC guidelines, from the first draft.",
-      "Human-verified, with no false promises, exaggerated claims, or testimonial misuse.",
+    kicker: "Built for responsible healthcare marketing",
+    title: "Clarity without overclaiming.",
+    highlight: "overclaiming",
+    intro:
+      "Writing about children carries a duty that goes beyond compliance. A parent reading about developmental delay is already frightened. Every page was written to inform them without adding to that.",
+    points: [
+      {
+        title: "Built within the rules",
+        body: "Copy, structure, and claims were shaped around Singapore healthcare advertising guidelines and the Health Products Act from the first draft.",
+      },
+      {
+        title: "Educational, never diagnostic",
+        body: "Content helps parents recognise when to ask a question. It never suggests a diagnosis, a prognosis, or a medication decision online.",
+      },
+      {
+        title: "No fear, no false promises",
+        body: "No guaranteed outcomes, no developmental timelines presented as certainties, and no urgency applied to families already under strain.",
+      },
+      {
+        title: "Reputation first",
+        body: "Every page protects the paediatricians' names while making children's care easier to understand and enquire about.",
+      },
     ],
   },
   faqs: [
@@ -195,10 +299,13 @@ const PAEDIATRICS_DETAIL: Omit<SpecialtyHubDetail, keyof SpecialtyHubCard> = {
     },
   ],
   finalCta: {
-    subtitle: "Ready to grow your paediatric clinic?",
-    title: "What is your clinic's growth wish?",
-    body: "Tell us about your clinic, your young patients, and the families you want to reach. No vague wishes. No confusing jargon. Just a clearer path to being found, trusted, and chosen.",
+    subtitle: "Make your first wish",
+    title: "Want a clearer patient journey for your clinic?",
+    highlight: "clearer patient journey",
+    body: "Book a strategy call. We will map how patients find, understand, and enquire with your clinic, then show you where Clinic Genie can help.",
     cta: { label: "Make Your First Wish", href: "/contact" },
+    secondaryCta: { label: "See Our Work", href: "/portfolio" },
+    footnote: "No obligation. No jargon. Just a clear next step.",
   },
 };
 
@@ -208,43 +315,47 @@ export const SPECIALTY_HUBS: SpecialtyHub[] = [
     slug: "endocrinology",
     name: "Endocrinology",
     highlight: "Rank for lifelong conditions.",
-    summary: "Growth systems for hormone and metabolic specialists — found when patients need answers fast.",
+    summary:
+      "Cedar Endocrine Clinic: specialist endocrine care across two hospitals, made findable and easy to understand.",
     image: "/specialty-hub/Endocrinology.png",
-    published: false,
+    published: true,
   },
   {
     id: "cardiology",
     slug: "cardiology",
     name: "Cardiology",
     highlight: "Rank where patients look.",
-    summary: "Marketing tuned to heart care — from symptom searches to specialist referrals.",
+    summary:
+      "Sunrise Heart: specialist cardiac care in the heartlands, built to be found by patients and by the AI they now ask first.",
     image: "/specialty-hub/Cardiology.png",
-    published: false,
+    published: true,
   },
   {
     id: "dermatology",
     slug: "dermatology",
     name: "Aesthetic + Dermatology",
     highlight: "Paid ads, ready patients.",
-    summary: "Visibility and trust for skin and aesthetic clinics — compliant, credible, conversion-ready.",
+    summary:
+      "MSDC: a true medical dermatology practice, structured so patients can tell it apart from everything else calling itself a skin clinic.",
     image: "/specialty-hub/Aesthetic.png",
-    published: false,
+    published: true,
   },
   {
     id: "dental",
     slug: "dental",
     name: "Dental + Orthodontics",
     highlight: "Win comparison shoppers.",
-    summary: "Local discovery and family trust for dental practices that patients choose for the long term.",
+    summary:
+      "Singapore Dental Implant Centre: thirty years of implant expertise, given a brand and a search presence to match.",
     image: "/specialty-hub/Dental.png",
-    published: false,
+    published: true,
   },
   {
     id: "ophthalmology",
     slug: "ophthalmology",
     name: "Ophthalmology",
     highlight: "A clear, trust-building site.",
-    summary: "Search and brand systems for eye care — clear paths from symptoms to your clinic door.",
+    summary: "Search and brand systems for eye care. Clear paths from symptoms to your clinic door.",
     image: "/specialty-hub/Ophthalmology.png",
     published: false,
   },
@@ -253,7 +364,8 @@ export const SPECIALTY_HUBS: SpecialtyHub[] = [
     slug: "paediatrics",
     name: "Paediatrics",
     highlight: "A voice parents trust.",
-    summary: "Growth engines built for children's clinics — how parents find, trust, and choose.",
+    summary:
+      "Joyful Seeds launched into Bukit Timah with a brand, search footprint, and listed presence from day one.",
     image: "/specialty-hub/paediatric.png",
     published: true,
     ...PAEDIATRICS_DETAIL,
@@ -263,27 +375,30 @@ export const SPECIALTY_HUBS: SpecialtyHub[] = [
     slug: "acne",
     name: "Acne Specialist",
     highlight: "Meet patients on social.",
-    summary: "Targeted marketing for acne and skin-condition clinics — where anxious patients search first.",
+    summary:
+      "The Acne Clinic: Singapore's first clinic devoted entirely to acne, built to own acne search from day one.",
     image: "/specialty-hub/Acne.png",
-    published: false,
+    published: true,
   },
   {
     id: "neurology",
     slug: "neurology",
     name: "Neurology + Neurosurgery",
     highlight: "A clear, navigable site.",
-    summary: "Specialist visibility for complex neurological care — clarity when patients need reassurance.",
+    summary:
+      "Singapore Brain Spine Nerves Center: three decades of neurosurgical expertise, structured so a frightened patient can find the right answer quickly.",
     image: "/specialty-hub/Neurology.png",
-    published: false,
+    published: true,
   },
   {
     id: "aquatic-physio",
     slug: "aquatic-physio",
     name: "Aquatic Physiotherapy",
     highlight: "Show the road to recovery.",
-    summary: "Niche discovery for aquatic rehab — reaching patients searching for a different kind of recovery.",
+    summary:
+      "AquaPhysio: a licensed aquatic physiotherapy centre, positioned to be told apart from everything that merely looks like it.",
     image: "/specialty-hub/Aquatic.png",
-    published: false,
+    published: true,
   },
 ];
 

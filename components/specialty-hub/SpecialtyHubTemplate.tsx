@@ -11,17 +11,14 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal, RevealGroup, RevealItem } from "@/components/ui/Reveal";
 import { MagneticButton } from "@/components/ui/MagneticButton";
 import { GlassCard } from "@/components/ui/GlassCard";
-import { LightHero } from "@/components/ui/LightHero";
-import { OrbAnchor } from "@/components/orb/OrbAnchor";
+import { FeatureInfoCard } from "@/components/ui/FeatureInfoCard";
 import { PageFinale } from "@/components/ui/PageFinale";
 import { PageFinaleCTA } from "@/components/ui/PageFinaleCTA";
 import { cn } from "@/lib/cn";
 import type { SpecialtyHubDetail } from "@/lib/data/specialty-hubs";
-import { useOrbStore } from "@/components/orb/store";
 
 function HubFaqAccordion({ items }: { items: SpecialtyHubDetail["faqs"] }) {
   const [open, setOpen] = useState<number | null>(0);
-  const pulse = useOrbStore((s) => s.pulse);
 
   return (
     <div className="flex flex-col gap-3">
@@ -42,7 +39,6 @@ function HubFaqAccordion({ items }: { items: SpecialtyHubDetail["faqs"] }) {
               type="button"
               onClick={() => {
                 setOpen(isOpen ? null : i);
-                if (!isOpen) pulse();
               }}
               aria-expanded={isOpen}
               aria-controls={panelId}
@@ -97,165 +93,233 @@ function HubFaqAccordion({ items }: { items: SpecialtyHubDetail["faqs"] }) {
 export function SpecialtyHubTemplate({ hub }: { hub: SpecialtyHubDetail }) {
   return (
     <>
-      <LightHero
-        leading={
-          <Link
-            href="/specialty-hub"
-            className="inline-flex w-fit items-center gap-2 font-sans text-kicker uppercase text-genie-700 transition-colors hover:text-genie-900"
-          >
-            <span aria-hidden="true">←</span> Specialty Hub
-          </Link>
-        }
-        kicker={hub.heroEyebrow}
-        title={hub.heroTitle}
-        highlight={hub.heroHighlight}
-        subtitle={hub.heroBody}
-        primaryCta={{ href: hub.heroCta.href, label: hub.heroCta.label }}
-        minHeight="min-h-[64vh]"
-      />
+      <section
+        data-nav-theme="light"
+        className="relative flex min-h-[64vh] items-center overflow-hidden bg-white pb-16 pt-[calc(3.25rem+env(safe-area-inset-top,0px))] text-ink-900 lg:pb-24 lg:pt-36"
+      >
+        {hub.heroImage ? (
+          <Image
+            src={hub.heroImage}
+            alt=""
+            fill
+            priority
+            className="object-cover object-center lg:object-right"
+            sizes="100vw"
+            aria-hidden="true"
+          />
+        ) : null}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 bg-gradient-to-r from-white from-10% via-white/85 via-45% to-transparent to-80%"
+        />
 
-      {/* 2 — What makes patients different */}
+        <Container className="relative z-10 w-full">
+          <div className="flex max-w-xl flex-col items-start text-left">
+            <Link
+              href="/specialty-hub"
+              className="mb-5 inline-flex w-fit items-center gap-2 font-sans text-kicker uppercase text-genie-700 transition-colors hover:text-genie-900"
+            >
+              <span aria-hidden="true">←</span> Specialty Hub
+            </Link>
+
+            <h1 className="font-display text-h1 text-balance text-ink-900">
+              {hub.heroHighlight && hub.heroTitle.includes(hub.heroHighlight) ? (
+                <>
+                  {hub.heroTitle.split(hub.heroHighlight)[0]}
+                  <span className="genie-text">{hub.heroHighlight}</span>
+                  {hub.heroTitle.split(hub.heroHighlight).slice(1).join(hub.heroHighlight)}
+                </>
+              ) : (
+                hub.heroTitle
+              )}
+            </h1>
+
+            <p className="mt-2 font-display text-[0.9375rem] font-normal text-ink-700 sm:mt-2.5 sm:text-base lg:text-h4">
+              {hub.heroLabel ?? hub.name}
+            </p>
+
+            <div className="mt-4 flex w-full max-w-[90%] flex-col gap-3 sm:mt-5">
+              <p className="text-body text-pretty text-ink-700">{hub.heroBody}</p>
+            </div>
+
+            <div className="mt-7 flex w-full flex-col flex-wrap items-stretch gap-3 sm:w-auto sm:flex-row sm:items-center sm:gap-4">
+              <MagneticButton href={hub.heroCta.href} size="md" withMiniOrb>
+                {hub.heroCta.label}
+              </MagneticButton>
+              <MagneticButton
+                href={hub.heroSecondaryCta.href}
+                size="md"
+                variant="ghost"
+                tone="light"
+              >
+                {hub.heroSecondaryCta.label}
+              </MagneticButton>
+            </div>
+          </div>
+        </Container>
+      </section>
+
+      {/* 2 — Before the work / patient difference */}
       <Section tone="light">
         <Container className="flex flex-col gap-12">
           <SectionHeading
-            kicker="What makes paediatric patients different"
-            title="Parents don't search like patients. They search like parents."
-            highlight="parents"
+            kicker={hub.patientDiff.kicker}
+            title={hub.patientDiff.title}
+            highlight={hub.patientDiff.highlight}
             tone="light"
             subtitle={hub.patientDiff.subtitle}
+            align="center"
           />
-          <RevealGroup className="grid gap-4 sm:grid-cols-3">
+          <RevealGroup className="grid gap-5 md:grid-cols-3">
             {hub.patientDiff.cards.map((card) => (
-              <RevealItem key={card.title}>
-                <GlassCard tone="light" radius="xl" className="flex h-full flex-col gap-2 p-6">
-                  <span aria-hidden="true" className="h-1 w-10 rounded-full bg-genie-400" />
-                  <h3 className="font-display text-h4 text-ink-900">{card.title}</h3>
-                  <p className="text-sm leading-relaxed text-ink-700">{card.body}</p>
-                </GlassCard>
+              <RevealItem key={card.title} className="h-full">
+                <FeatureInfoCard
+                  title={card.title}
+                  body={card.body}
+                  className="h-full"
+                />
               </RevealItem>
             ))}
           </RevealGroup>
         </Container>
       </Section>
 
-      {/* 3 — Traditional SEO vs AI Search */}
+      {/* 3 — Diagnosis / search compare */}
       <Section tone="dark">
-        <OrbAnchor
-          id="specialty-hub-search"
-          mood="focus"
-          scale={0.85}
-          intensity={0.9}
-          className="absolute right-[8%] top-24 hidden h-px w-px lg:block"
-        />
-        <Container className="flex flex-col gap-12">
-          <SectionHeading
-            kicker={hub.searchCompare.subtitle}
-            title={hub.searchCompare.title}
-            subtitle={hub.searchCompare.intro}
-          />
-          <RevealGroup className="grid gap-5 md:grid-cols-2">
-            <RevealItem>
-              <GlassCard tone="dark" radius="xl" className="flex h-full flex-col gap-3 p-7">
-                <h3 className="font-display text-h4 text-onDark">{hub.searchCompare.traditional.title}</h3>
-                <p className="text-sm leading-relaxed text-onDark-muted">{hub.searchCompare.traditional.body}</p>
-              </GlassCard>
-            </RevealItem>
-            <RevealItem>
-              <GlassCard tone="dark" radius="xl" className="flex h-full flex-col gap-3 p-7">
-                <h3 className="font-display text-h4 text-onDark">{hub.searchCompare.aiSearch.title}</h3>
-                <p className="text-sm leading-relaxed text-onDark-muted">{hub.searchCompare.aiSearch.body}</p>
-              </GlassCard>
-            </RevealItem>
-          </RevealGroup>
-          <Reveal variant="up">
-            <p className="mx-auto max-w-2xl text-center text-base text-onDark-muted">
-              {hub.searchCompare.closing}
-            </p>
-          </Reveal>
+        <Container>
+          <div className="grid items-start gap-12 lg:grid-cols-12 lg:gap-16">
+            <Reveal className="lg:col-span-5">
+              <header className="flex max-w-md flex-col items-start gap-4 text-left">
+                <SectionHeading
+                  kicker={hub.searchCompare.kicker}
+                  title={hub.searchCompare.title}
+                  highlight={hub.searchCompare.highlight}
+                  subtitle={hub.searchCompare.intro}
+                />
+                <p className="text-body leading-relaxed text-onDark-muted">
+                  {hub.searchCompare.closing}
+                </p>
+              </header>
+            </Reveal>
+
+            <RevealGroup className="flex flex-col gap-5 lg:col-span-7">
+              {hub.searchCompare.cards.map((card) => (
+                <RevealItem key={card.title}>
+                  <GlassCard tone="dark" radius="xl" className="flex flex-col gap-3 p-7">
+                    <h3 className="font-display text-h4 text-onDark">{card.title}</h3>
+                    <p className="text-base text-onDark-muted">{card.body}</p>
+                  </GlassCard>
+                </RevealItem>
+              ))}
+            </RevealGroup>
+          </div>
         </Container>
       </Section>
 
       {/* 4 — Featured transformation */}
-      <Section tone="light">
+      <Section id="granted-wish" tone="light">
         <Container className="flex flex-col gap-12">
-          <SectionHeading
-            kicker={hub.transformation.subtitle}
-            title={hub.transformation.title}
-            tone="light"
-            subtitle={hub.transformation.intro}
-          />
-          <div className="grid items-center gap-10 lg:grid-cols-2">
+          <div className="grid items-start gap-10 lg:grid-cols-2 lg:gap-14">
             <Reveal variant="up">
-              <div className="overflow-hidden rounded-2xl border border-ink-200 bg-white shadow-md">
+              <div className="relative aspect-square w-full overflow-hidden rounded-2xl bg-white shadow-card">
                 <Image
                   src={hub.transformation.image}
                   alt={hub.transformation.imageAlt}
-                  width={560}
-                  height={747}
-                  className="h-auto w-full object-cover"
+                  fill
+                  className="object-cover object-center"
+                  sizes="(min-width: 1024px) 40vw, 100vw"
                 />
               </div>
             </Reveal>
-            <div className="flex flex-col gap-6">
+
+            <div className="flex flex-col gap-8">
               <Reveal variant="up" delay={0.06}>
-                <GlassCard tone="light" radius="xl" className="flex flex-col gap-2 p-6">
-                  <h3 className="font-display text-h4 text-ink-900">{hub.transformation.anchor.title}</h3>
-                  <p className="text-sm leading-relaxed text-ink-700">{hub.transformation.anchor.body}</p>
-                </GlassCard>
+                <div className="flex flex-col gap-4">
+                  <SectionHeading
+                    kicker={hub.transformation.subtitle}
+                    title={hub.transformation.title}
+                    highlight={hub.transformation.highlight}
+                    tone="light"
+                  />
+                  <p className="font-display text-h5 font-normal text-pretty text-ink-700">
+                    {hub.transformation.intro}
+                  </p>
+                </div>
               </Reveal>
               <Reveal variant="up" delay={0.1}>
                 <div className="flex flex-col gap-3">
-                  <Kicker>The engine around it</Kicker>
-                  <ul className="flex flex-col gap-2">
-                    {hub.transformation.engine.map((item) => (
-                      <li key={item.label} className="flex gap-2 text-sm leading-relaxed text-ink-700">
-                        <span aria-hidden="true" className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-genie-500" />
-                        {item.label}
-                      </li>
-                    ))}
-                  </ul>
-                  <p className="text-sm font-medium text-ink-900">One voice, one engine, every part granting the same wish.</p>
+                  <h3 className="font-display text-h4 text-ink-900">
+                    {hub.transformation.anchor.title}
+                  </h3>
+                  <p className="text-body leading-relaxed text-ink-700">
+                    {hub.transformation.anchor.body}
+                  </p>
                 </div>
               </Reveal>
             </div>
           </div>
 
-          <Reveal variant="up" delay={0.14}>
-            <div className="flex flex-col gap-6 rounded-2xl border border-ink-200 bg-genie-50/60 p-8">
-              <div>
-                <Kicker>Measurable magic</Kicker>
-                <p className="mt-2 max-w-3xl text-sm leading-relaxed text-ink-700">{hub.transformation.metricsIntro}</p>
-              </div>
-              <ul className="grid gap-3 sm:grid-cols-2">
-                {hub.transformation.metrics.map((metric) => (
-                  <li key={metric} className="flex gap-2 text-sm leading-relaxed text-ink-700">
-                    <span aria-hidden="true" className="mt-1.5 text-genie-600">✦</span>
-                    {metric}
-                  </li>
-                ))}
-              </ul>
-              <p className="text-sm font-medium text-ink-900">Measurable magic. Wishes realised in data, not promises.</p>
-              <MagneticButton href={hub.transformation.cta.href} variant="ghost" className="w-fit text-genie-700 hover:text-genie-900">
-                {hub.transformation.cta.label} →
-              </MagneticButton>
+          <div className="flex flex-col gap-8">
+            <div className="flex justify-center">
+              <Kicker tone="light">{hub.transformation.engineKicker}</Kicker>
             </div>
-          </Reveal>
+            <RevealGroup className="grid gap-5 md:grid-cols-2">
+              {hub.transformation.engine.map((item) => (
+                <RevealItem key={item.title} className="h-full">
+                  <FeatureInfoCard title={item.title} body={item.body} className="h-full" />
+                </RevealItem>
+              ))}
+            </RevealGroup>
+            <Reveal variant="up">
+              <p className="text-center text-sm font-medium text-ink-900">
+                {hub.transformation.engineClosing}
+              </p>
+            </Reveal>
+          </div>
+
+          <div className="grid items-start gap-12 lg:grid-cols-12 lg:gap-16">
+            <Reveal className="lg:col-span-5">
+              <div className="flex max-w-md flex-col items-start gap-5 text-left">
+                <SectionHeading
+                  kicker={hub.transformation.metricsKicker}
+                  title={hub.transformation.metricsTitle}
+                  highlight={hub.transformation.metricsHighlight}
+                  tone="light"
+                />
+                <p className="font-display text-h5 font-normal text-pretty text-ink-700">
+                  {hub.transformation.metricsIntro}
+                </p>
+                <p className="text-sm font-medium text-ink-900">
+                  {hub.transformation.metricsClosing}
+                </p>
+                <MagneticButton href={hub.transformation.cta.href} size="md" withMiniOrb>
+                  {hub.transformation.cta.label}
+                </MagneticButton>
+              </div>
+            </Reveal>
+
+            <RevealGroup className="flex flex-col gap-5 lg:col-span-7">
+              {hub.transformation.metrics.map((metric) => (
+                <RevealItem key={metric.title}>
+                  <FeatureInfoCard
+                    title={metric.title}
+                    body={metric.body}
+                    className="h-full"
+                  />
+                </RevealItem>
+              ))}
+            </RevealGroup>
+          </div>
         </Container>
       </Section>
 
       {/* 5 — Cross-channel routings */}
       <Section tone="dark">
-        <OrbAnchor
-          id="specialty-hub-routings"
-          mood="thinking"
-          scale={0.85}
-          intensity={0.9}
-          className="absolute left-1/2 top-20 h-px w-px -translate-x-1/2"
-        />
         <Container className="flex flex-col gap-12">
           <SectionHeading
             kicker={hub.routings.subtitle}
             title={hub.routings.title}
+            highlight={hub.routings.highlight}
             subtitle={hub.routings.intro}
             align="center"
           />
@@ -277,26 +341,19 @@ export function SpecialtyHubTemplate({ hub }: { hub: SpecialtyHubDetail }) {
 
       {/* 6 — Compliance safeguard */}
       <Section tone="light">
-        <Container size="prose" className="flex flex-col gap-8">
+        <Container className="flex flex-col gap-8">
           <SectionHeading
-            kicker="The specialty compliance safeguard"
+            kicker={hub.compliance.kicker}
             title={hub.compliance.title}
-            highlight="conscience"
+            highlight={hub.compliance.highlight}
             tone="light"
             subtitle={hub.compliance.intro}
             align="center"
           />
-          <RevealGroup className="grid gap-4 sm:grid-cols-2">
-            {hub.compliance.bullets.map((bullet) => (
-              <RevealItem key={bullet}>
-                <GlassCard tone="light" radius="xl" className="flex h-full items-start gap-3 p-6">
-                  <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-genie-100 text-genie-700">
-                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                      <path d="M8 1l1.8 3.9L14 5.4l-3 3 .8 4.3L8 10.8 4.2 12.7 5 8.4l-3-3 4.2-.5L8 1z" fill="currentColor" />
-                    </svg>
-                  </span>
-                  <p className="text-sm leading-relaxed text-ink-700">{bullet}</p>
-                </GlassCard>
+          <RevealGroup className="grid gap-5 sm:grid-cols-2">
+            {hub.compliance.points.map((point) => (
+              <RevealItem key={point.title} className="h-full">
+                <FeatureInfoCard title={point.title} body={point.body} className="h-full" />
               </RevealItem>
             ))}
           </RevealGroup>
@@ -305,13 +362,6 @@ export function SpecialtyHubTemplate({ hub }: { hub: SpecialtyHubDetail }) {
 
       {/* 7 — FAQ */}
       <Section tone="dark">
-        <OrbAnchor
-          id="specialty-hub-faq"
-          mood="curious"
-          scale={0.8}
-          intensity={0.85}
-          className="absolute right-[10%] top-1/2 hidden h-px w-px lg:block"
-        />
         <Container size="prose" className="flex flex-col gap-10">
           <SectionHeading kicker="Frequently asked questions" title={`${hub.name}, explained.`} align="center" />
           <HubFaqAccordion items={hub.faqs} />
@@ -323,8 +373,15 @@ export function SpecialtyHubTemplate({ hub }: { hub: SpecialtyHubDetail }) {
         <PageFinaleCTA
           kicker={hub.finalCta.subtitle}
           title={hub.finalCta.title}
+          highlight={hub.finalCta.highlight}
           body={hub.finalCta.body}
           primaryCta={{ href: hub.finalCta.cta.href, label: hub.finalCta.cta.label }}
+          secondaryCta={
+            hub.finalCta.secondaryCta
+              ? { href: hub.finalCta.secondaryCta.href, label: hub.finalCta.secondaryCta.label }
+              : undefined
+          }
+          footnote={hub.finalCta.footnote}
         />
       </PageFinale>
     </>

@@ -23,7 +23,11 @@ export default function SpecialtyHubPage() {
         title="Growth engines built for your specialty"
         highlight="your specialty"
         subtitle="From how patients search to what earns their trust, explore tailored medical marketing strategies for specialist clinics in Singapore."
-        primaryCta={{ href: "/contact", label: "Make Your First Wish" }}
+        primaryCta={{
+          href: "#specialist-clinics",
+          label: "Explore specialties",
+          withMiniOrb: false,
+        }}
         showOrb={false}
         showWishForm={false}
         showSparkles={false}
@@ -35,7 +39,7 @@ export default function SpecialtyHubPage() {
         minHeight="min-h-[78vh]"
       />
 
-      <Section tone="light">
+      <Section id="specialist-clinics" tone="light">
         <Container className="flex flex-col gap-12">
           <SectionHeading
             kicker="Specialist clinics"

@@ -16,6 +16,8 @@ import styles from "./LightHero.module.css";
 type CtaLink = {
   href: string;
   label: string;
+  /** Defaults to true for the primary CTA. */
+  withMiniOrb?: boolean;
 };
 
 export function LightHero({
@@ -115,7 +117,11 @@ export function LightHero({
         )}
       >
         {primaryCta && (
-          <MagneticButton href={primaryCta.href} size="md" withMiniOrb>
+          <MagneticButton
+            href={primaryCta.href}
+            size="md"
+            withMiniOrb={primaryCta.withMiniOrb !== false}
+          >
             {primaryCta.label}
           </MagneticButton>
         )}

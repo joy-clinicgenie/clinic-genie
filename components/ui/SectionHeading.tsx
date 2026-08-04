@@ -34,6 +34,8 @@ export function SectionHeading({
   as = "h2",
   className,
   titleClassName,
+  subtitleClassName,
+  kickerClassName,
 }: {
   kicker?: string;
   title: ReactNode;
@@ -45,6 +47,8 @@ export function SectionHeading({
   as?: "h1" | "h2" | "h3";
   className?: string;
   titleClassName?: string;
+  subtitleClassName?: string;
+  kickerClassName?: string;
 }) {
   const Tag = as;
   const titleContent =
@@ -62,7 +66,9 @@ export function SectionHeading({
     >
       {kicker && (
         <Reveal variant="up">
-          <Kicker tone={tone}>{kicker}</Kicker>
+          <Kicker tone={tone} className={kickerClassName}>
+            {kicker}
+          </Kicker>
         </Reveal>
       )}
       <Reveal variant="up" delay={0.05} className="overflow-hidden">
@@ -96,9 +102,10 @@ export function SectionHeading({
           <p
             className={cn(
               as === "h1" ? "text-body" : "text-lead",
-              "max-w-full sm:max-w-[75%] text-pretty",
               tone === "dark" ? "text-onDark-muted" : "text-ink-700",
-              align === "center" && "mx-auto"
+              align === "center" && "mx-auto",
+              subtitleClassName ??
+                "max-w-full sm:max-w-[75%] whitespace-pre-line text-pretty"
             )}
           >
             {bodyText}

@@ -35,10 +35,11 @@ export const PORTFOLIO_WORKS: PortfolioWorkSlide[] = [
   {
     id: "joyful-seeds",
     title: "Joyful Seeds",
-    category: "Paediatrics",
-    line: "Planting Joy. Harvesting Potential.",
+    category: "Paediatrics + Child Development",
+    line: "Planting joy. Harvesting potential.",
     image: "/works/joyfulseeds.png",
     gradient: "linear-gradient(145deg, #F7FAFB 0%, #EAFBFB 50%, #78E2DD 100%)",
+    href: "/specialty-hub/paediatrics",
   },
   {
     id: "sbsn",

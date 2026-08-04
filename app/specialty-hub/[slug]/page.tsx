@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { SpecialtyHubTemplate } from "@/components/specialty-hub/SpecialtyHubTemplate";
+import { SpecialtyHubWorkTemplate } from "@/components/specialty-hub/SpecialtyHubWorkTemplate";
+import { getCaseStudy } from "@/lib/data/portfolio";
+import { getSpecialtyHubWorkMeta } from "@/lib/data/specialty-hub-works";
 import {
   getPublishedSpecialtyHubs,
   getSpecialtyHub,
@@ -12,6 +15,17 @@ export function generateStaticParams() {
 }
 
 export function generateMetadata({ params }: { params: { slug: string } }): Metadata {
+  const work = getSpecialtyHubWorkMeta(params.slug);
+  if (work) {
+    const study = getCaseStudy(work.studySlug);
+    if (study) {
+      return {
+        title: `${study.name} | Specialty Hub | Clinic Genie`,
+        description: study.line,
+      };
+    }
+  }
+
   const hub = getSpecialtyHub(params.slug);
   if (!hub?.published || !hub.metaTitle) {
     return {
@@ -26,6 +40,21 @@ export function generateMetadata({ params }: { params: { slug: string } }): Meta
 }
 
 export default function SpecialtyHubDetailPage({ params }: { params: { slug: string } }) {
+  const work = getSpecialtyHubWorkMeta(params.slug);
+  if (work) {
+    const study = getCaseStudy(work.studySlug);
+    if (!study) notFound();
+
+    return (
+      <SpecialtyHubWorkTemplate
+        study={study}
+        image={work.image}
+        imageAlt={work.imageAlt}
+        backLink={{ href: "/specialty-hub", label: "Specialty Hub" }}
+      />
+    );
+  }
+
   const hub = getSpecialtyHub(params.slug);
   if (!hub?.published || !isSpecialtyHubDetail(hub)) notFound();
 

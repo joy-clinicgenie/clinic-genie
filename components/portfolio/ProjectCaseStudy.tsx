@@ -23,7 +23,15 @@ function SnapshotItem({ label, value }: { label: string; value: string }) {
   );
 }
 
-export function ProjectCaseStudy({ study }: { study: CaseStudy }) {
+export function ProjectCaseStudy({
+  study,
+  backLink = { href: "/portfolio", label: "Our works" },
+  showRelatedWorks = true,
+}: {
+  study: CaseStudy;
+  backLink?: { href: string; label: string };
+  showRelatedWorks?: boolean;
+}) {
   const others = CASE_STUDIES.filter((c) => c.slug !== study.slug).slice(0, 3);
 
   return (
@@ -31,15 +39,15 @@ export function ProjectCaseStudy({ study }: { study: CaseStudy }) {
       <LightHero
         leading={
           <Link
-            href="/portfolio"
+            href={backLink.href}
             className="inline-flex w-fit items-center gap-2 font-sans text-kicker uppercase text-genie-700 transition-colors hover:text-genie-900"
           >
-            <span aria-hidden="true">←</span> Our works
+            <span aria-hidden="true">←</span> {backLink.label}
           </Link>
         }
         kicker={study.specialty}
         title={study.heroTitle}
-        highlight="clearer clinic enquiry journey"
+        highlight={study.heroHighlight ?? "clearer clinic enquiry journey"}
         subtitle={study.heroSubtitle}
         showOrb={false}
         showWishForm={false}
@@ -51,7 +59,7 @@ export function ProjectCaseStudy({ study }: { study: CaseStudy }) {
             <span className="font-display text-base text-genie-700">&ldquo;{study.tagline}&rdquo;</span>
           )}
         </div>
-        <div className="flex flex-wrap gap-2.5">
+        <div className="flex flex-wrap items-center gap-2.5">
           {study.tags.map((tag) => (
             <span
               key={tag}
@@ -60,6 +68,9 @@ export function ProjectCaseStudy({ study }: { study: CaseStudy }) {
               {tag}
             </span>
           ))}
+          <span className="inline-flex items-center rounded-pill border border-genie-200 bg-genie-50 px-4 py-2 text-sm font-medium text-genie-800">
+            {study.result}
+          </span>
         </div>
       </LightHero>
 
@@ -88,7 +99,10 @@ export function ProjectCaseStudy({ study }: { study: CaseStudy }) {
             kicker="Before the work"
             title="What stood in the way."
             highlight="way"
-            subtitle="The starting point was familiar: patients could find the clinic online, but the path from discovery to enquiry needed clearer structure."
+            subtitle={
+              study.beforeIntro ??
+              "The starting point was familiar: patients could find the clinic online, but the path from discovery to enquiry needed clearer structure."
+            }
           />
           <RevealGroup className="grid gap-5 md:grid-cols-3">
             {study.before.map((item) => (
@@ -134,7 +148,10 @@ export function ProjectCaseStudy({ study }: { study: CaseStudy }) {
             kicker="What we worked on"
             title="The work behind the clearer journey."
             highlight="clearer journey"
-            subtitle="Each workstream supported the same goal: help patients move from search to understanding to enquiry with less friction."
+            subtitle={
+              study.workedOnIntro ??
+              "Each workstream supported the same goal: help patients move from search to understanding to enquiry with less friction."
+            }
           />
           <RevealGroup className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
             {study.workedOn.map((item, i) => (
@@ -167,9 +184,11 @@ export function ProjectCaseStudy({ study }: { study: CaseStudy }) {
             tone="light"
             subtitle={study.strategyIntro}
           />
-          <Reveal variant="up">
-            <p className="max-w-3xl text-lead text-ink-700">{study.strategyBody}</p>
-          </Reveal>
+          {study.strategyBody ? (
+            <Reveal variant="up">
+              <p className="max-w-3xl text-lead text-ink-700">{study.strategyBody}</p>
+            </Reveal>
+          ) : null}
           <RevealGroup className="grid gap-5 md:grid-cols-3">
             {study.strategyShifts.map((shift) => (
               <RevealItem key={shift.before} className="h-full">
@@ -195,7 +214,10 @@ export function ProjectCaseStudy({ study }: { study: CaseStudy }) {
             kicker="Patient journey map"
             title="From search to enquiry, mapped with intent."
             highlight="mapped with intent"
-            subtitle="The project reframed the clinic website as a guided patient journey, not a collection of disconnected pages."
+            subtitle={
+              study.journeyIntro ??
+              "The project reframed the clinic website as a guided patient journey, not a collection of disconnected pages."
+            }
           />
 
           <Reveal variant="up">
@@ -229,7 +251,17 @@ export function ProjectCaseStudy({ study }: { study: CaseStudy }) {
                   </div>
                   <div className="flex flex-col gap-2 border-t border-white/15 pt-4">
                     <Kicker>New</Kicker>
-                    <p className="text-base text-onDark">{study.journey.websiteMap.new}</p>
+                    {Array.isArray(study.journey.websiteMap.new) ? (
+                      <ol className="flex flex-col gap-2">
+                        {study.journey.websiteMap.new.map((step) => (
+                          <li key={step} className="text-base text-onDark">
+                            {step}
+                          </li>
+                        ))}
+                      </ol>
+                    ) : (
+                      <p className="text-base text-onDark">{study.journey.websiteMap.new}</p>
+                    )}
                   </div>
                 </div>
               </GlassCard>
@@ -257,10 +289,13 @@ export function ProjectCaseStudy({ study }: { study: CaseStudy }) {
         <Container className="flex flex-col gap-12">
           <SectionHeading
             kicker="Key deliverables"
-            title="What the clinic received."
-            highlight="received"
+            title={study.deliverablesTitle ?? "What the clinic received."}
+            highlight={study.deliverablesHighlight ?? "received"}
             tone="light"
-            subtitle="Practical assets and systems designed to support clearer discovery, stronger trust, and better enquiry flow."
+            subtitle={
+              study.deliverablesIntro ??
+              "Practical assets and systems designed to support clearer discovery, stronger trust, and better enquiry flow."
+            }
           />
           <RevealGroup className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {study.deliverables.map((item) => (
@@ -285,7 +320,10 @@ export function ProjectCaseStudy({ study }: { study: CaseStudy }) {
             kicker="Built for responsible healthcare marketing"
             title="Clarity without overclaiming."
             highlight="overclaiming"
-            subtitle="The work was designed to help patients understand the clinic while protecting the doctor's reputation and staying within healthcare advertising rules."
+            subtitle={
+              study.complianceIntro ??
+              "The work was designed to help patients understand the clinic while protecting the doctor's reputation and staying within healthcare advertising rules."
+            }
           />
           <RevealGroup className="grid gap-5 sm:grid-cols-2">
             {study.compliancePoints.map((point) => (
@@ -304,11 +342,14 @@ export function ProjectCaseStudy({ study }: { study: CaseStudy }) {
         <Container className="flex flex-col gap-12">
           <SectionHeading
             kicker="What changed"
-            title="Outcomes the clinic could measure."
-            highlight="measure"
+            title={study.changesTitle ?? "Outcomes the clinic could measure."}
+            highlight={study.changesHighlight ?? "measure"}
             tone="light"
             align="center"
-            subtitle="Magic you can measure. Every figure sits within responsible healthcare marketing practice."
+            subtitle={
+              study.changesIntro ??
+              "Magic you can measure. Every figure sits within responsible healthcare marketing practice."
+            }
           />
           <RevealGroup
             className={
@@ -318,7 +359,7 @@ export function ProjectCaseStudy({ study }: { study: CaseStudy }) {
             }
           >
             {study.changes.map((change) => (
-              <RevealItem key={change} className="h-full">
+              <RevealItem key={change.title} className="h-full">
                 <GlassCard
                   tone="light"
                   radius="2xl"
@@ -331,8 +372,13 @@ export function ProjectCaseStudy({ study }: { study: CaseStudy }) {
                     style={{ background: `${study.accent}33` }}
                   />
                   <span className="relative font-display text-h3 leading-tight text-ink-900">
-                    {change}
+                    {change.title}
                   </span>
+                  {change.body ? (
+                    <p className="relative mt-3 text-body leading-relaxed text-ink-700">
+                      {change.body}
+                    </p>
+                  ) : null}
                 </GlassCard>
               </RevealItem>
             ))}
@@ -340,48 +386,50 @@ export function ProjectCaseStudy({ study }: { study: CaseStudy }) {
         </Container>
       </Section>
 
-      <Section tone="dark">
-        <Container className="flex flex-col gap-10">
-          <div className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-end">
-            <SectionHeading
-              kicker="More works"
-              title="Other clinic projects."
-              highlight="projects"
-            />
-            <MagneticButton href="/portfolio" variant="ghost" tone="dark">
-              See all works →
-            </MagneticButton>
-          </div>
-          <RevealGroup className="grid gap-5 md:grid-cols-3">
-            {others.map((o) => (
-              <RevealItem key={o.slug} className="h-full">
-                <Link
-                  href={`/portfolio/${o.slug}`}
-                  className="group block h-full"
-                  aria-label={`Read the ${o.name} project page`}
-                >
-                  <GlassCard tone="dark" radius="xl" hover className="flex h-full flex-col gap-4 p-7">
-                    <span
-                      aria-hidden="true"
-                      className="h-1 w-10 rounded-full"
-                      style={{ background: o.accent }}
-                    />
-                    <Kicker>{o.specialty}</Kicker>
-                    <h3 className="font-display text-h3 text-onDark">{o.name}</h3>
-                    <p className="text-sm text-onDark-muted">{o.line}</p>
-                    <span className="mt-auto inline-flex items-center gap-1.5 text-sm font-semibold text-genie-300 transition-colors group-hover:text-white">
-                      View project
-                      <span aria-hidden="true" className="transition-transform group-hover:translate-x-0.5">
-                        →
+      {showRelatedWorks ? (
+        <Section tone="dark">
+          <Container className="flex flex-col gap-10">
+            <div className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-end">
+              <SectionHeading
+                kicker="More works"
+                title="Other clinic projects."
+                highlight="projects"
+              />
+              <MagneticButton href="/portfolio" variant="ghost" tone="dark">
+                See all works →
+              </MagneticButton>
+            </div>
+            <RevealGroup className="grid gap-5 md:grid-cols-3">
+              {others.map((o) => (
+                <RevealItem key={o.slug} className="h-full">
+                  <Link
+                    href={`/portfolio/${o.slug}`}
+                    className="group block h-full"
+                    aria-label={`Read the ${o.name} project page`}
+                  >
+                    <GlassCard tone="dark" radius="xl" hover className="flex h-full flex-col gap-4 p-7">
+                      <span
+                        aria-hidden="true"
+                        className="h-1 w-10 rounded-full"
+                        style={{ background: o.accent }}
+                      />
+                      <Kicker>{o.specialty}</Kicker>
+                      <h3 className="font-display text-h3 text-onDark">{o.name}</h3>
+                      <p className="text-sm text-onDark-muted">{o.line}</p>
+                      <span className="mt-auto inline-flex items-center gap-1.5 text-sm font-semibold text-genie-300 transition-colors group-hover:text-white">
+                        View project
+                        <span aria-hidden="true" className="transition-transform group-hover:translate-x-0.5">
+                          →
+                        </span>
                       </span>
-                    </span>
-                  </GlassCard>
-                </Link>
-              </RevealItem>
-            ))}
-          </RevealGroup>
-        </Container>
-      </Section>
+                    </GlassCard>
+                  </Link>
+                </RevealItem>
+              ))}
+            </RevealGroup>
+          </Container>
+        </Section>
+      ) : null}
 
       <PageFinale backdropClassName="bg-night-800">
         <PageFinaleCTA

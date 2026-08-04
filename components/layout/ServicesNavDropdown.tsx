@@ -143,7 +143,7 @@ export function ServicesNavDropdown({
                     >
                       <Link
                         href={item.href}
-                        className="group flex flex-col gap-0.5 rounded-2xl px-3 py-3 transition-colors duration-ui hover:bg-white/10 focus-visible:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-genie-400"
+                        className="group flex flex-col gap-0.5 rounded-lg px-3 py-3 transition-colors duration-ui hover:bg-white/10 focus-visible:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-genie-400"
                       >
                         <span className="font-display text-sm font-semibold text-onDark transition-colors group-hover:text-white">
                           {item.title}

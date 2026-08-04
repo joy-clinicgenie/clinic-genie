@@ -119,7 +119,7 @@ export function Hero() {
         aria-label="Scroll to The Gap"
         className={cn(
           styles.scrollCue,
-          "absolute left-1/2 z-[30] grid h-[42px] w-[26px] -translate-x-1/2 place-items-start rounded-[14px] border border-[#D8DEE1] pt-2 transition-colors hover:border-[#54B9CE] focus-visible:shadow-focus"
+          "absolute left-1/2 z-[30] grid h-[42px] w-[26px] -translate-x-1/2 justify-items-center rounded-[14px] border border-[#D8DEE1] pt-2 transition-colors hover:border-[#54B9CE] focus-visible:shadow-focus"
         )}
       >
         <span

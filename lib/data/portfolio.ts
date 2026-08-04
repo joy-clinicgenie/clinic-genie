@@ -1,3 +1,5 @@
+import { SPECIALTY_HUB_WORKS } from "@/lib/data/specialty-hub-works";
+
 export type WorkTag =
   | "Branding"
   | "Photography"
@@ -21,6 +23,8 @@ export interface CaseStudySnapshot {
 export interface CaseStudyCard {
   title: string;
   body: string;
+  image?: string;
+  alt?: string;
 }
 
 export interface CaseStudyShift {
@@ -30,7 +34,7 @@ export interface CaseStudyShift {
 
 export interface CaseStudyJourney {
   flow: string[];
-  websiteMap: { old: string; new: string };
+  websiteMap: { old: string; new: string | string[] };
   growthSystem: string[];
 }
 
@@ -41,26 +45,40 @@ export interface CaseStudy {
   specialty: string;
   line: string;
   tags: WorkTag[];
+  /** Display tags for hero chips when they differ from filterable WorkTag values */
+  serviceTags?: string[];
   result: string;
   accent: string;
 
   heroTitle: string;
   heroSubtitle: string;
   heroBody: string;
+  heroHighlight?: string;
 
   snapshot: CaseStudySnapshot;
+  beforeIntro?: string;
   before: CaseStudyCard[];
   diagnosisIntro: string;
   diagnosisBody: string;
   diagnosisLenses: CaseStudyCard[];
+  workedOnIntro?: string;
   workedOn: CaseStudyCard[];
   strategyIntro: string;
   strategyBody: string;
   strategyShifts: CaseStudyShift[];
+  journeyIntro?: string;
   journey: CaseStudyJourney;
+  deliverablesTitle?: string;
+  deliverablesHighlight?: string;
+  deliverablesIntro?: string;
   deliverables: string[];
+  complianceIntro?: string;
   compliancePoints: CaseStudyCard[];
-  changes: string[];
+  changesTitle?: string;
+  changesHighlight?: string;
+  changesLead?: string;
+  changesIntro?: string;
+  changes: CaseStudyCard[];
 }
 
 const DEFAULT_DIAGNOSIS_LENSES: CaseStudyCard[] = [
@@ -102,99 +120,7 @@ const DEFAULT_COMPLIANCE: CaseStudyCard[] = [
 ];
 
 export const CASE_STUDIES: CaseStudy[] = [
-  {
-    slug: "the-acne-clinic",
-    name: "The Acne Clinic",
-    tagline: "Face it. Fix it.",
-    specialty: "Skin + Aesthetics",
-    line: "A bold new aesthetics brand that owns acne search in Singapore.",
-    tags: ["Branding", "Web Design", "SEO", "SEM"],
-    result: "+118% organic traffic · 2.1× consult bookings",
-    accent: "#6CBAD9",
-    heroTitle: "Turning patient search confusion into a clearer clinic enquiry journey.",
-    heroSubtitle: "A specialist clinic project focused on improving how patients discover, understand, and enquire.",
-    heroBody:
-      "Clinic Genie reviewed the clinic's search journey, service structure, website flow, content clarity, and enquiry points to create a more connected digital growth system.",
-    snapshot: {
-      clinicType: "Specialist aesthetics clinic",
-      projectFocus: "Brand, website clarity, healthcare SEO, content structure, and enquiry flow",
-      mainChallenge:
-        "Patients needed a clearer path from online search to service understanding to contact in a competitive acne niche.",
-      role: "Strategy, brand, website structure, search planning, content direction, SEM, and tracking review",
-    },
-    before: [
-      {
-        title: "Unclear service pathways",
-        body: "Patients could reach the website, but the journey from acne concern to treatment understanding to enquiry was not clear enough.",
-      },
-      {
-        title: "Thin search structure",
-        body: "Key treatments needed stronger page structure, clearer keyword intent, and better supporting content.",
-      },
-      {
-        title: "Weak enquiry visibility",
-        body: "Contact actions were present, but they were not always positioned at the right decision points.",
-      },
-    ],
-    diagnosisIntro:
-      "We looked at the project through four lenses: how patients search, what they need to understand, where trust is built, and what makes them ready to enquire.",
-    diagnosisBody:
-      "This helped identify where the website needed clearer structure, stronger service explanation, better content pathways, and more intentional enquiry points.",
-    diagnosisLenses: DEFAULT_DIAGNOSIS_LENSES,
-    workedOn: [
-      {
-        title: "Service architecture",
-        body: "Restructured how acne, acne scars, peels, laser, and skin booster services were grouped, explained, and connected.",
-      },
-      {
-        title: "Search intent mapping",
-        body: "Mapped content around what patients search before choosing an acne or aesthetics clinic.",
-      },
-      {
-        title: "Trust-led page flow",
-        body: "Improved page sections so patients could understand the clinic before being asked to enquire.",
-      },
-      {
-        title: "Conversion touchpoints",
-        body: "Reviewed where call, form, and appointment CTAs should appear across the treatment journey.",
-      },
-      {
-        title: "Content expansion plan",
-        body: "Planned supporting articles and FAQs to strengthen topical relevance around acne care.",
-      },
-    ],
-    strategyIntro:
-      "The project gave the clinic a clearer website foundation, stronger service page logic, improved content direction, and a more connected enquiry journey.",
-    strategyBody:
-      "Instead of treating SEO, website copy, and lead tracking as separate tasks, the work connected them into one patient discovery system.",
-    strategyShifts: [
-      { before: "Service information scattered", after: "Services grouped by patient intent" },
-      { before: "Generic content structure", after: "Search-led page planning" },
-      { before: "Passive contact points", after: "CTAs placed around decision moments" },
-    ],
-    journey: {
-      flow: ["Search", "Learn", "Compare", "Trust", "Enquire"],
-      websiteMap: {
-        old: "Homepage → generic service page → contact",
-        new: "Homepage → service cluster → condition page → FAQ → doctor/location → enquiry",
-      },
-      growthSystem: ["SEO", "Website UX", "Content", "Tracking", "Ads"],
-    },
-    deliverables: [
-      "Brand identity and clinic collateral",
-      "Homepage and treatment pages",
-      "Healthcare SEO structure",
-      "Supporting content plan",
-      "Google Ads and tracking setup",
-    ],
-    compliancePoints: DEFAULT_COMPLIANCE,
-    changes: [
-      "+118% organic traffic in 6 months",
-      "Page 1 for \"acne scar treatment Singapore\"",
-      "2.1× increase in consult bookings",
-      "38% lower cost-per-enquiry vs launch month",
-    ],
-  },
+  ...SPECIALTY_HUB_WORKS,
   {
     slug: "pilotpulse",
     name: "PilotPulse",
@@ -281,9 +207,9 @@ export const CASE_STUDIES: CaseStudy[] = [
     ],
     compliancePoints: DEFAULT_COMPLIANCE,
     changes: [
-      "Page 1 for 6 priority treatment keywords",
-      "+74% organic sessions in 4 months",
-      "2× longer average session duration",
+      { title: "Page 1 for 6 priority treatment keywords", body: "" },
+      { title: "+74% organic sessions in 4 months", body: "" },
+      { title: "2× longer average session duration", body: "" },
     ],
   },
   {
@@ -372,191 +298,191 @@ export const CASE_STUDIES: CaseStudy[] = [
     ],
     compliancePoints: DEFAULT_COMPLIANCE,
     changes: [
-      "+64% qualified enquiries in 5 months",
-      "Page 1 for key fertility consultation searches",
-      "Significant drop in bounce on treatment pages",
-    ],
-  },
-  {
-    slug: "cedar-endocrine-clinic",
-    name: "CEDAR Endocrine Clinic",
-    specialty: "Dental",
-    line: "Your Health Nurtured",
-    tags: ["Branding", "Photography", "Web Design", "SEM", "Lead Gen"],
-    result: "38% lower cost-per-enquiry",
-    accent: "#6CBAD9",
-    heroTitle: "Turning patient search confusion into a clearer clinic enquiry journey.",
-    heroSubtitle: "A specialist clinic project focused on improving how patients discover, understand, and enquire.",
-    heroBody:
-      "Clinic Genie reviewed the clinic's search journey, service structure, website flow, content clarity, and enquiry points to create a more connected digital growth system.",
-    snapshot: {
-      clinicType: "Specialist clinic",
-      projectFocus: "Website clarity, medical SEM, landing pages, and enquiry flow",
-      mainChallenge:
-        "Patients needed a clearer path from paid search to service understanding to booked consultation, with better attribution along the way.",
-      role: "Strategy, website structure, SEM planning, landing page direction, and tracking review",
-    },
-    before: [
-      {
-        title: "Unclear service pathways",
-        body: "Patients could reach the website, but the journey from service discovery to enquiry was not clear enough.",
-      },
-      {
-        title: "Thin search structure",
-        body: "Important clinic services needed stronger landing page structure, clearer keyword intent, and better supporting content.",
-      },
-      {
-        title: "Weak enquiry visibility",
-        body: "Contact actions were present, but they were not always positioned at the right decision points.",
-      },
-    ],
-    diagnosisIntro:
-      "We looked at the project through four lenses: how patients search, what they need to understand, where trust is built, and what makes them ready to enquire.",
-    diagnosisBody:
-      "This helped identify where the website needed clearer structure, stronger service explanation, better content pathways, and more intentional enquiry points.",
-    diagnosisLenses: DEFAULT_DIAGNOSIS_LENSES,
-    workedOn: [
-      {
-        title: "Service architecture",
-        body: "Restructured how key services were grouped, explained, and connected across dedicated landing pages.",
-      },
-      {
-        title: "Search intent mapping",
-        body: "Mapped campaigns and content around what patients search before choosing a clinic.",
-      },
-      {
-        title: "Trust-led page flow",
-        body: "Improved page sections so patients could understand the clinic before being asked to enquire.",
-      },
-      {
-        title: "Conversion touchpoints",
-        body: "Reviewed where call, WhatsApp, form, and appointment CTAs should appear.",
-      },
-      {
-        title: "Tracking and attribution",
-        body: "Connected click, enquiry, and booking signals so the clinic could see what was working.",
-      },
-    ],
-    strategyIntro:
-      "The project gave the clinic a clearer website foundation, stronger service page logic, improved paid search direction, and a more connected enquiry journey.",
-    strategyBody:
-      "Instead of treating SEM, landing pages, and lead tracking as separate tasks, the work connected them into one patient discovery system.",
-    strategyShifts: [
-      { before: "Service information scattered", after: "Services grouped by patient intent" },
-      { before: "Generic content structure", after: "Search-led page planning" },
-      { before: "Passive contact points", after: "CTAs placed around decision moments" },
-    ],
-    journey: {
-      flow: ["Search", "Learn", "Compare", "Trust", "Enquire"],
-      websiteMap: {
-        old: "Homepage → generic service page → contact",
-        new: "Homepage → service cluster → condition page → FAQ → doctor/location → enquiry",
-      },
-      growthSystem: ["SEM", "Website UX", "Landing pages", "Tracking", "Lead gen"],
-    },
-    deliverables: [
-      "Dedicated service landing pages",
-      "Google Ads restructuring",
-      "Conversion tracking setup",
-      "Booking funnel clarity",
-      "Enquiry pathway review",
-    ],
-    compliancePoints: DEFAULT_COMPLIANCE,
-    changes: [
-      "38% lower cost-per-enquiry",
-      "2.6× consultation bookings from paid search",
-      "Clearer attribution from click to booked patient",
+      { title: "+64% qualified enquiries in 5 months", body: "" },
+      { title: "Page 1 for key fertility consultation searches", body: "" },
+      { title: "Significant drop in bounce on treatment pages", body: "" },
     ],
   },
   {
     slug: "joyful-seeds",
-    name: "Joyful Seeds Paediatrics",
-    specialty: "Paediatrics",
-    line: "Planting Joy. Harvesting Potential.",
-    tags: ["Branding", "Web Design", "SEO", "Content", "AI Search"],
-    result: "Featured snippet + 3× organic leads",
+    name: "Joyful Seeds Paediatric & Developmental Clinic",
+    tagline: "Planting joy. Harvesting potential.",
+    specialty: "Paediatrics + Child Development",
+    line: "A new paediatric clinic launched into Bukit Timah with a brand, a search footprint, and a listed presence from day one.",
+    tags: ["Branding", "Content", "Web Design", "SEO", "SEM"],
+    serviceTags: ["Branding", "Copywriting", "Web Design", "SEO", "SEM", "FindClinic"],
+    result: "2 care pillars · 2 paediatricians · 4 hospitals covered",
     accent: "#FF6A88",
-    heroTitle: "Turning patient search confusion into a clearer clinic enquiry journey.",
-    heroSubtitle: "A specialist clinic project focused on improving how patients discover, understand, and enquire.",
-    heroBody:
-      "Clinic Genie reviewed the clinic's search journey, service structure, website flow, content clarity, and enquiry points to create a more connected digital growth system.",
+    heroTitle:
+      "A new paediatric clinic launched into Bukit Timah with a brand, a search footprint, and a listed presence from day one.",
+    heroHighlight: "from day one",
+    heroSubtitle: "Planting joy. Harvesting potential.",
+    heroBody: "",
     snapshot: {
-      clinicType: "Specialist paediatric clinic",
-      projectFocus: "Website clarity, healthcare SEO, content structure, AI search readiness, and enquiry flow",
+      clinicType: "General and developmental paediatric clinic",
+      projectFocus:
+        "Brand and voice, website structure, service architecture, healthcare SEO, paid search, and directory presence",
       mainChallenge:
-        "Parents needed a clearer path from online search to service understanding to contact, with stronger organic visibility for priority care journeys.",
-      role: "Strategy, website structure, search planning, content direction, AI search readiness, and tracking review",
+        "A brand new clinic opening in one of Singapore's most competitive paediatric catchments, with no domain, no search history, and no reviews. General paediatrics is available on almost every corner. The real opportunity sat in developmental and behavioural care, where parents search with urgency and find very little clear guidance.",
+      role: "Brand, copywriting, website structure, service architecture, search planning, content direction, SEM, and FindClinic listing",
     },
+    beforeIntro:
+      "Two experienced consultant paediatricians, a beautiful idea about how children should be cared for, and a starting position of absolute zero online.",
     before: [
       {
-        title: "Unclear service pathways",
-        body: "Parents could reach the website, but the journey from concern to service understanding to enquiry was not clear enough.",
+        title: "Zero authority, crowded catchment",
+        body: "A new domain in Bukit Timah competing against long-established clinics with years of accumulated search history and reviews.",
       },
       {
-        title: "Thin search structure",
-        body: "Important clinic services needed stronger page structure, clearer keyword intent, and better supporting content.",
+        title: "Two very different patients",
+        body: "A parent booking a flu jab and a parent worried their three year old is not speaking need the same clinic and completely different journeys, tones, and search terms.",
       },
       {
-        title: "Weak enquiry visibility",
-        body: "Contact actions were present, but they were not always positioned at the right decision points.",
+        title: "The hardest content in paediatrics",
+        body: "Developmental content is read by frightened parents at midnight. It has to inform without alarming, guide without diagnosing, and never suggest a child's future is fixed.",
       },
     ],
     diagnosisIntro:
-      "We looked at the project through four lenses: how parents search, what they need to understand, where trust is built, and what makes them ready to enquire.",
+      "We looked at the project through four lenses. How parents search, what they need to understand, where trust is built, and what makes them ready to enquire.",
     diagnosisBody:
-      "This helped identify where the website needed clearer structure, stronger service explanation, better content pathways, and more intentional enquiry points.",
-    diagnosisLenses: DEFAULT_DIAGNOSIS_LENSES,
+      "That produced a two-pillar structure, a voice built on growth rather than urgency, and a launch plan that gave the clinic a findable presence while its own domain was still earning one.",
+    diagnosisLenses: [
+      {
+        title: "Search Intent",
+        body: "How parents look for care before they choose a clinic, and which queries signal real enquiry intent.",
+      },
+      {
+        title: "Service Clarity",
+        body: "Whether services are grouped, explained, and connected in a way parents can follow without guessing.",
+      },
+      {
+        title: "Trust Signals",
+        body: "Where credibility is built through structure, doctor context, hospital access, and responsible claims.",
+      },
+      {
+        title: "Enquiry Readiness",
+        body: "Whether call, WhatsApp, booking, and teleconsult actions appear at the moments parents are ready to act.",
+      },
+    ],
+    workedOnIntro:
+      "Six workstreams, one goal. Help parents move from search to understanding to enquiry with less friction.",
     workedOn: [
       {
-        title: "Service architecture",
-        body: "Restructured how key paediatric services were grouped, explained, and connected.",
+        title: "Brand and voice",
+        body: "Built a botanical identity around seeds, seasons, and growth, then carried it into the writing so consistently that even the closed sign has a reason. Rest is part of growth, too.",
+      },
+      {
+        title: "Two-pillar architecture",
+        body: "Separated general paediatrics from developmental and behavioural care, so everyday health and complex needs each get the structure and tone they deserve.",
+      },
+      {
+        title: "Copywriting",
+        body: "Wrote every page for a parent, not a clinician. Calm, plain, and specific about what happens at a visit, with no rush and no pressure.",
       },
       {
         title: "Search intent mapping",
-        body: "Mapped content around what parents search before choosing a paediatric clinic.",
+        body: "Prioritised the searches parents actually type. Not just paediatrician Bukit Timah, but P1 deferment, SG Enable referral, SPED placement report, developmental assessment. High intent, high need, and very little competition writing about them clearly.",
       },
       {
-        title: "Trust-led page flow",
-        body: "Improved page sections so parents could understand the clinic before being asked to enquire.",
+        title: "FindClinic presence",
+        body: "Listed and structured the clinic on FindClinic.sg, giving a brand new practice a discoverable, credible profile from opening week while its own domain built authority.",
       },
       {
-        title: "Conversion touchpoints",
-        body: "Reviewed where call, WhatsApp, form, and appointment CTAs should appear.",
-      },
-      {
-        title: "Content expansion plan",
-        body: "Planned supporting articles and FAQs to strengthen topical relevance and AI search clarity.",
+        title: "Paid search",
+        body: "Structured campaigns around vaccination, general consultation, and developmental assessment intent, tracked through to booking.",
       },
     ],
     strategyIntro:
-      "The project gave the clinic a clearer website foundation, stronger service page logic, improved content direction, and a more connected enquiry journey.",
-    strategyBody:
-      "Instead of treating SEO, website copy, and AI search readiness as separate tasks, the work connected them into one patient discovery system.",
+      "Brand, copy, website, organic search, paid search, and directory presence were built as one launch system rather than six separate briefs.",
+    strategyBody: "",
     strategyShifts: [
-      { before: "Service information scattered", after: "Services grouped by patient intent" },
-      { before: "Generic content structure", after: "Search-led page planning" },
-      { before: "Passive contact points", after: "CTAs placed around decision moments" },
+      { before: "No presence at all", after: "Website, search footprint, and listed profile from day one" },
+      {
+        before: "Paediatrics as one undifferentiated service",
+        after: "General and developmental care as two clear pillars",
+      },
+      {
+        before: "Generic clinic search terms",
+        after: "Singapore-specific developmental queries parents actually use",
+      },
     ],
+    journeyIntro: "We built the clinic website as a guided family journey, not a collection of disconnected pages.",
     journey: {
       flow: ["Search", "Learn", "Compare", "Trust", "Enquire"],
       websiteMap: {
-        old: "Homepage → generic service page → contact",
-        new: "Homepage → service cluster → condition page → FAQ → doctor/location → enquiry",
+        old: "No site, no listing, no search presence.",
+        new: [
+          "Search or FindClinic profile",
+          "General or developmental pillar",
+          "Service page and what to expect",
+          "Paediatricians, hospital access, and hours",
+          "Booking, WhatsApp, or teleconsult",
+        ],
       },
-      growthSystem: ["SEO", "Website UX", "Content", "AI search", "Tracking"],
+      growthSystem: ["Branding", "Copywriting", "Website UX", "SEO", "SEM", "FindClinic"],
     },
+    deliverablesTitle: "Wishes granted.",
+    deliverablesHighlight: "granted",
+    deliverablesIntro:
+      "Practical assets and systems designed to support clearer discovery, stronger trust, and better enquiry flow.",
     deliverables: [
-      "Homepage and service pages",
-      "Healthcare SEO structure",
-      "Doctor-reviewed content system",
-      "AI search readiness updates",
-      "Enquiry pathway review",
+      "Brand identity and botanical visual system",
+      "Full website design and build",
+      "General and developmental pillar architecture",
+      "Site-wide copywriting in parent-first language",
+      "Healthcare SEO foundation and resource content",
+      "Google Ads structure and campaign planning",
+      "FindClinic.sg clinic profile",
     ],
-    compliancePoints: DEFAULT_COMPLIANCE,
+    complianceIntro:
+      "Writing about children carries a duty that goes beyond compliance. A parent reading about developmental delay is already frightened. Every page was written to inform them without adding to that.",
+    compliancePoints: [
+      {
+        title: "Built within the rules",
+        body: "Copy, structure, and claims were shaped around Singapore healthcare advertising guidelines and the Health Products Act from the first draft.",
+        image: "/compliance/rules.png",
+        alt: "Built within the rules icon",
+      },
+      {
+        title: "Educational, never diagnostic",
+        body: "Content helps parents recognise when to ask a question. It never suggests a diagnosis, a prognosis, or a medication decision online.",
+        image: "/compliance/patient-comm.png",
+        alt: "Educational, never diagnostic icon",
+      },
+      {
+        title: "No fear, no false promises",
+        body: "No guaranteed outcomes, no developmental timelines presented as certainties, and no urgency applied to families already under strain.",
+        image: "/compliance/no-false-promises.png",
+        alt: "No fear, no false promises icon",
+      },
+      {
+        title: "Reputation first",
+        body: "Every page protects the paediatricians' names while making children's care easier to understand and enquire about.",
+        image: "/compliance/reputation-first.png",
+        alt: "Reputation first icon",
+      },
+    ],
+    changesTitle: "What the clinic can now measure.",
+    changesHighlight: "measure",
+    changesLead: "No smoke. No mirrors.",
+    changesIntro: "Every claim on this page is something the clinic can point at.",
     changes: [
-      "Featured snippet for a priority care search",
-      "3× organic leads in 6 months",
-      "Cited in AI search answers for key care topics",
+      {
+        title: "Brand from zero",
+        body: "A live brand, website, and FindClinic presence from opening week, with no prior domain history behind it.",
+      },
+      {
+        title: "Two clear care pillars",
+        body: "General and developmental paediatrics each get their own structure, tone, and parent journey.",
+      },
+      {
+        title: "Search visibility",
+        body: "Singapore-specific developmental queries parents actually use, not only generic paediatrician terms.",
+      },
+      {
+        title: "Booking attribution",
+        body: "Click to booking tracked across the website, WhatsApp, and directory pathways.",
+      },
     ],
   },
 ];
