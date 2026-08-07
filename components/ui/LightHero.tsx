@@ -1,9 +1,9 @@
 "use client";
 
 import type { ReactNode } from "react";
-import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
 import { Container } from "@/components/ui/Container";
+import { ParallaxBackground } from "@/components/ui/ParallaxBackground";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { MagneticButton } from "@/components/ui/MagneticButton";
 import { SparkleField } from "@/components/ui/SparkleField";
@@ -189,16 +189,11 @@ export function LightHero({
       )}
     >
       {hasBackgroundImage && backgroundImage ? (
-        <div className="absolute inset-0" aria-hidden={backgroundImage.alt ? undefined : true}>
-          <Image
-            src={backgroundImage.src}
-            alt={backgroundImage.alt ?? ""}
-            fill
-            priority
-            unoptimized={backgroundImage.src.endsWith(".svg")}
-            className="object-cover object-center"
-            sizes="100vw"
-          />
+        <ParallaxBackground
+          src={backgroundImage.src}
+          alt={backgroundImage.alt ?? ""}
+          priority
+        >
           {darkImageHero ? (
             <div
               aria-hidden="true"
@@ -207,7 +202,7 @@ export function LightHero({
           ) : (
             <div aria-hidden="true" className="absolute inset-0 bg-white/55" />
           )}
-        </div>
+        </ParallaxBackground>
       ) : null}
 
       {showSparkles && !hasBackgroundImage ? (

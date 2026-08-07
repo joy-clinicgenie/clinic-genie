@@ -262,11 +262,13 @@
   }
 
   .heroCopyCol {
+    order: 2;
     max-width: 36rem;
     justify-self: start;
   }
 
   .heroOrbCol {
+    order: 1;
     justify-self: stretch;
     align-self: stretch;
     min-height: clamp(22rem, 36vw, 32rem);

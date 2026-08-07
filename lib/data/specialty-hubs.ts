@@ -333,7 +333,7 @@ export const SPECIALTY_HUBS: SpecialtyHub[] = [
   {
     id: "dermatology",
     slug: "dermatology",
-    name: "Aesthetic + Dermatology",
+    name: "Dermatology",
     highlight: "Paid ads, ready patients.",
     summary:
       "MSDC: a true medical dermatology practice, structured so patients can tell it apart from everything else calling itself a skin clinic.",
@@ -383,7 +383,7 @@ export const SPECIALTY_HUBS: SpecialtyHub[] = [
   {
     id: "neurology",
     slug: "neurology",
-    name: "Neurology + Neurosurgery",
+    name: "Neurology",
     highlight: "A clear, navigable site.",
     summary:
       "Singapore Brain Spine Nerves Center: three decades of neurosurgical expertise, structured so a frightened patient can find the right answer quickly.",
@@ -402,49 +402,169 @@ export const SPECIALTY_HUBS: SpecialtyHub[] = [
   },
 ];
 
+export interface SpecialtyCategoryItem {
+  name: string;
+  /** Specialty hub slug when a dedicated hub or work page exists */
+  slug?: string;
+}
+
 export interface SpecialtyCategory {
   id: string;
   name: string;
-  slugs: string[];
+  items: SpecialtyCategoryItem[];
 }
 
 export const SPECIALTY_CATEGORIES: SpecialtyCategory[] = [
   {
-    id: "medical",
-    name: "Medical Specialties",
-    slugs: ["cardiology", "endocrinology", "neurology", "ophthalmology"],
+    id: "primary-care",
+    name: "Primary Care",
+    items: [{ name: "Family Medicine" }],
   },
   {
-    id: "skin",
-    name: "Skin + Aesthetics",
-    slugs: ["dermatology", "acne"],
+    id: "general-adult-geriatrics",
+    name: "General Adult Medicine & Geriatrics",
+    items: [{ name: "Internal Medicine" }, { name: "Geriatric Medicine" }],
   },
   {
-    id: "family",
-    name: "Family + Children",
-    slugs: ["paediatrics"],
+    id: "occupational-aviation-population",
+    name: "Occupational, Aviation & Population Health",
+    items: [
+      { name: "Occupational Medicine" },
+      { name: "Aviation Medicine" },
+      { name: "Public Health" },
+    ],
   },
   {
-    id: "dental",
-    name: "Dental + Oral Health",
-    slugs: ["dental"],
+    id: "cardiovascular-cardiothoracic",
+    name: "Cardiovascular & Cardiothoracic Care",
+    items: [{ name: "Cardiology", slug: "cardiology" }, { name: "Cardiothoracic Surgery" }],
   },
   {
-    id: "rehab",
-    name: "Rehabilitation + Allied Health",
-    slugs: ["aquatic-physio"],
+    id: "endocrine-metabolic",
+    name: "Endocrine & Metabolic Medicine",
+    items: [{ name: "Endocrinology", slug: "endocrinology" }],
   },
   {
-    id: "surgical",
-    name: "Surgical Specialties",
-    slugs: [],
+    id: "digestive",
+    name: "Digestive Medicine",
+    items: [{ name: "Gastroenterology" }],
+  },
+  {
+    id: "general-surgery",
+    name: "General Surgery",
+    items: [{ name: "General Surgery" }],
+  },
+  {
+    id: "renal-urological",
+    name: "Renal & Urological Care",
+    items: [{ name: "Renal Medicine" }, { name: "Urology" }],
+  },
+  {
+    id: "respiratory",
+    name: "Respiratory Medicine",
+    items: [{ name: "Respiratory Medicine" }],
+  },
+  {
+    id: "infectious-diseases",
+    name: "Infectious Diseases",
+    items: [{ name: "Infectious Diseases" }],
+  },
+  {
+    id: "haematology-oncology",
+    name: "Haematology & Oncology",
+    items: [
+      { name: "Haematology" },
+      { name: "Medical Oncology" },
+      { name: "Radiation Oncology" },
+    ],
+  },
+  {
+    id: "palliative-care",
+    name: "Palliative Care",
+    items: [{ name: "Palliative Medicine" }],
+  },
+  {
+    id: "neurosciences",
+    name: "Neurosciences",
+    items: [{ name: "Neurology", slug: "neurology" }, { name: "Neurosurgery" }],
+  },
+  {
+    id: "musculoskeletal-hand-rehab",
+    name: "Musculoskeletal, Hand & Rehabilitation Care",
+    items: [
+      { name: "Rheumatology" },
+      { name: "Orthopaedic Surgery" },
+      { name: "Hand Surgery" },
+      { name: "Rehabilitation Medicine" },
+      { name: "Sports Medicine" },
+    ],
+  },
+  {
+    id: "dermatology",
+    name: "Dermatology",
+    items: [{ name: "Dermatology", slug: "dermatology" }],
+  },
+  {
+    id: "plastic-surgery",
+    name: "Plastic Surgery",
+    items: [{ name: "Plastic Surgery" }],
+  },
+  {
+    id: "womens-health",
+    name: "Women's Health",
+    items: [{ name: "Obstetrics & Gynaecology" }],
+  },
+  {
+    id: "paediatrics-neonatology",
+    name: "Paediatrics & Neonatology",
+    items: [
+      { name: "Paediatric Medicine", slug: "paediatrics" },
+      { name: "Paediatric Surgery" },
+      { name: "Neonatology" },
+      { name: "Paediatric Cardiology" },
+      { name: "Paediatric Gastroenterology" },
+      { name: "Paediatric Haematology & Oncology" },
+      { name: "Paediatric Intensive Care" },
+      { name: "Paediatric Nephrology" },
+    ],
+  },
+  {
+    id: "ophthalmology",
+    name: "Ophthalmology",
+    items: [{ name: "Ophthalmology", slug: "ophthalmology" }],
+  },
+  {
+    id: "ent",
+    name: "Ear, Nose & Throat",
+    items: [{ name: "Otorhinolaryngology / Ear, Nose, Throat (ENT) Surgery" }],
+  },
+  {
+    id: "mental-health",
+    name: "Mental Health",
+    items: [{ name: "Psychiatry" }],
+  },
+  {
+    id: "anaesthesia-emergency-critical",
+    name: "Anaesthesia, Emergency & Critical Care",
+    items: [
+      { name: "Anaesthesiology" },
+      { name: "Emergency Medicine" },
+      { name: "Intensive Care Medicine" },
+    ],
+  },
+  {
+    id: "diagnostic-imaging-laboratory",
+    name: "Diagnostic, Imaging & Laboratory Medicine",
+    items: [
+      { name: "Diagnostic Radiology" },
+      { name: "Nuclear Medicine" },
+      { name: "Pathology" },
+    ],
   },
 ];
 
-export function getSpecialtyCategoryItems(category: SpecialtyCategory): SpecialtyHubCard[] {
-  return category.slugs
-    .map((slug) => SPECIALTY_HUBS.find((hub) => hub.slug === slug))
-    .filter((hub): hub is SpecialtyHubCard => Boolean(hub));
+export function getSpecialtyCategoryItems(category: SpecialtyCategory): SpecialtyCategoryItem[] {
+  return category.items;
 }
 
 export function getSpecialtyHub(slug: string): SpecialtyHub | undefined {
@@ -457,6 +577,12 @@ export function getPublishedSpecialtyHubs(): SpecialtyHub[] {
 
 export function getSpecialtyHubHref(hub: SpecialtyHubCard): string {
   return hub.published ? `/specialty-hub/${hub.slug}` : "/specialty-hub";
+}
+
+export function getSpecialtyCategoryItemHref(item: SpecialtyCategoryItem): string {
+  if (!item.slug) return "/specialty-hub";
+  const hub = getSpecialtyHub(item.slug);
+  return hub ? getSpecialtyHubHref(hub) : "/specialty-hub";
 }
 
 export function isSpecialtyHubDetail(hub: SpecialtyHub): hub is SpecialtyHubDetail {

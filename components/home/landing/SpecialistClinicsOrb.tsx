@@ -1,11 +1,25 @@
 import Link from "next/link";
 import { MagneticButton } from "@/components/ui/MagneticButton";
+import { ParallaxBackground } from "@/components/ui/ParallaxBackground";
 import {
   SPECIALTY_CATEGORIES,
+  getSpecialtyCategoryItemHref,
   getSpecialtyCategoryItems,
-  getSpecialtyHubHref,
 } from "@/lib/data/specialty-hubs";
 import styles from "./SpecialistClinicsOrb.module.css";
+
+/** Soft journey-map wash for specialist clinic sections. */
+export function SpecialistClinicsBackdrop() {
+  return (
+    <ParallaxBackground
+      src={{
+        mobile: "/specialties/healthcare-journey-map-mobile.png",
+        desktop: "/specialties/healthcare-journey-map.png",
+      }}
+      opacity={0.2}
+    />
+  );
+}
 
 export function SpecialistClinicsOrb() {
   return (
@@ -20,10 +34,13 @@ export function SpecialistClinicsOrb() {
                 <h3 className={styles.categoryTitle}>{category.name}</h3>
                 {items.length > 0 ? (
                   <ul className={styles.specialistList}>
-                    {items.map((hub) => (
-                      <li key={hub.id}>
-                        <Link href={getSpecialtyHubHref(hub)} className={styles.specialistBox}>
-                          <span className={styles.specialistName}>{hub.name}</span>
+                    {items.map((item) => (
+                      <li key={`${category.id}-${item.name}`}>
+                        <Link
+                          href={getSpecialtyCategoryItemHref(item)}
+                          className={styles.specialistBox}
+                        >
+                          <span className={styles.specialistName}>{item.name}</span>
                           <span className={styles.specialistArrow} aria-hidden="true">
                             →
                           </span>

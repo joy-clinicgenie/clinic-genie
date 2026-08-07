@@ -10,14 +10,14 @@ import {
 import { NotionToMarkdown } from "notion-to-md";
 
 /**
- * Expected Notion database properties:
- * - Title / Name (title) — post title
+ * Expected Notion Content database properties (Genie Tips):
+ * - Name (title) — post title
  * - Slug (rich_text) — URL slug
- * - Published (checkbox) — only `true` rows are public
- * - Date (date) — publish date
- * - Description (rich_text) — short summary for cards and metadata
- * - Tags (multi_select) — topic labels
- * - Category (select) — optional topic for previews
+ * - Ready to Publish (checkbox) — only `true` rows are public
+ * - Publish Date (date) — publish date
+ * - Excerpt / Meta Description (rich_text) — short summary for cards and metadata
+ * - Tags (relation) — optional; resolved separately when needed
+ * - Hide in Main Feed (checkbox) — optional feed exclusion
  */
 
 export type NotionPost = {
@@ -175,8 +175,14 @@ function sortPostsByDateDesc(posts: NotionPost[]): NotionPost[] {
 }
 
 /**
- * Fetches all published posts from the Notion database where Published is true.
+ * Fetches all published posts from the Notion Content database.
+ * Prefers "Ready to Publish", with "Published" as a fallback for older schemas.
  */
+const PUBLISH_CHECKBOX_PROPERTIES = [
+  "Ready to Publish",
+  "Published",
+] as const;
+
 export async function getPublishedPosts(): Promise<NotionPost[]> {
   const notion = getNotionClient();
   if (!notion) return [];
@@ -191,18 +197,29 @@ export async function getPublishedPosts(): Promise<NotionPost[]> {
   if (!dataSourceId) return [];
 
   try {
-    const results = await collectPaginatedAPI(notion.dataSources.query, {
-      data_source_id: dataSourceId,
-      filter: {
-        property: "Published",
-        checkbox: {
-          equals: true,
-        },
-      },
-    });
+    let results: PageObjectResponse[] | null = null;
+
+    for (const property of PUBLISH_CHECKBOX_PROPERTIES) {
+      try {
+        const queried = await collectPaginatedAPI(notion.dataSources.query, {
+          data_source_id: dataSourceId,
+          filter: {
+            property,
+            checkbox: {
+              equals: true,
+            },
+          },
+        });
+        results = queried.filter(isFullPage);
+        break;
+      } catch {
+        // Try the next known publish checkbox property name.
+      }
+    }
+
+    if (!results) return [];
 
     const posts = results
-      .filter(isFullPage)
       .map(mapPageToPost)
       .filter((post) => Boolean(post.slug));
 
@@ -230,26 +247,33 @@ export async function getPostBySlug(
   let page: PageObjectResponse | null = null;
 
   try {
-    const results = await collectPaginatedAPI(notion.dataSources.query, {
-      data_source_id: dataSourceId,
-      filter: {
-        and: [
-          {
-            property: "Published",
-            checkbox: {
-              equals: true,
-            },
+    for (const property of PUBLISH_CHECKBOX_PROPERTIES) {
+      try {
+        const results = await collectPaginatedAPI(notion.dataSources.query, {
+          data_source_id: dataSourceId,
+          filter: {
+            and: [
+              {
+                property,
+                checkbox: {
+                  equals: true,
+                },
+              },
+              {
+                property: "Slug",
+                rich_text: {
+                  equals: normalisedSlug,
+                },
+              },
+            ],
           },
-          {
-            property: "Slug",
-            rich_text: {
-              equals: normalisedSlug,
-            },
-          },
-        ],
-      },
-    });
-    page = results.find(isFullPage) ?? null;
+        });
+        page = results.find(isFullPage) ?? null;
+        break;
+      } catch {
+        // Try the next known publish checkbox property name.
+      }
+    }
   } catch {
     // Slug property may be missing or differently typed; fall back below.
   }

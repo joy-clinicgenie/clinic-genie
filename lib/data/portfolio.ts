@@ -54,6 +54,10 @@ export interface CaseStudy {
   heroSubtitle: string;
   heroBody: string;
   heroHighlight?: string;
+  /** Condensed service lines for the specialty case-study hero */
+  projectScope?: string[];
+  /** Numbered architecture metrics for the specialty case-study hero */
+  projectArchitecture?: { value: string; label: string }[];
 
   snapshot: CaseStudySnapshot;
   beforeIntro?: string;
@@ -318,6 +322,12 @@ export const CASE_STUDIES: CaseStudy[] = [
     heroHighlight: "from day one",
     heroSubtitle: "Planting joy. Harvesting potential.",
     heroBody: "",
+    projectScope: ["Brand Strategy / Website", "SEO / SEM / FindClinic"],
+    projectArchitecture: [
+      { value: "02", label: "Care Pillars" },
+      { value: "02", label: "Paediatricians" },
+      { value: "04", label: "Hospitals Covered" },
+    ],
     snapshot: {
       clinicType: "General and developmental paediatric clinic",
       projectFocus:

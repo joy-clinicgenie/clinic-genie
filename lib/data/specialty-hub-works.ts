@@ -4,6 +4,9 @@ export interface SpecialtyHubWorkMeta {
   studySlug: string;
   image: string;
   imageAlt: string;
+  /** Client logo for the case-study hero brand mark */
+  logo?: string;
+  logoAlt?: string;
 }
 
 export const HUB_CASE_STUDY_META: Record<string, SpecialtyHubWorkMeta> = {
@@ -11,41 +14,57 @@ export const HUB_CASE_STUDY_META: Record<string, SpecialtyHubWorkMeta> = {
     studySlug: "aquaphysio",
     image: "/specialty-hub/Aquatic.png",
     imageAlt: "AquaPhysio aquatic physiotherapy specialty hub visual",
+    logo: "/clients/aquaphysio-rehab-center.png",
+    logoAlt: "AquaPhysio Rehab Centre",
   },
   endocrinology: {
     studySlug: "cedar-endocrine-clinic",
     image: "/works/cedar.png",
     imageAlt: "Cedar Endocrine Clinic website and brand work",
+    logo: "/clients/cedar-endocrine.png",
+    logoAlt: "Cedar Endocrine Clinic",
   },
   dermatology: {
     studySlug: "msdc",
     image: "/works/msdc.png",
     imageAlt: "Medical and Surgical Dermatology Clinic website and brand work",
+    logo: "/clients/medical-surgical-dermatology.png",
+    logoAlt: "Medical & Surgical Dermatology",
   },
   dental: {
     studySlug: "singapore-dental-implant-centre",
     image: "/specialty-hub/Dental.png",
     imageAlt: "Singapore Dental Implant Centre specialty hub visual",
+    logo: "/clients/singapore-dental-implant-centre.png",
+    logoAlt: "Singapore Dental Implant Centre",
   },
   neurology: {
     studySlug: "singapore-brain-spine-nerves",
     image: "/works/sbsn.png",
     imageAlt: "Singapore Brain Spine Nerves Center website and brand work",
+    logo: "/clients/singapore-brain-spine-nerves-center.png",
+    logoAlt: "Singapore Brain Spine Nerves Center",
   },
   cardiology: {
     studySlug: "sunrise-heart",
     image: "/works/sunrise-heart.png",
     imageAlt: "Sunrise Heart Specialist Clinic website and brand work",
+    logo: "/clients/sunrise-heart.png",
+    logoAlt: "Sunrise Heart Clinic",
   },
   acne: {
     studySlug: "the-acne-clinic",
     image: "/specialty-hub/Acne.png",
     imageAlt: "The Acne Clinic specialty hub visual",
+    logo: "/clients/the-acne-clinic.png",
+    logoAlt: "The Acne Clinic",
   },
   paediatrics: {
     studySlug: "joyful-seeds",
     image: "/works/joyfulseeds.png",
     imageAlt: "Joyful Seeds Paediatric and Developmental Clinic branding and website",
+    logo: "/clients/joyful-seeds.png",
+    logoAlt: "Joyful Seeds Paediatric & Developmental Clinic",
   },
 };
 
@@ -69,6 +88,12 @@ export const SPECIALTY_HUB_WORKS: CaseStudy[] = [
     heroHighlight: "told apart",
     heroSubtitle: "The flow of healing.",
     heroBody: "",
+    projectScope: ["Brand Strategy / Website", "SEO / SEM / Copywriting"],
+    projectArchitecture: [
+      { value: "04", label: "Therapy Streams" },
+      { value: "01", label: "Heated Pool" },
+      { value: "01", label: "Medical Centre" },
+    ],
     snapshot: {
       clinicType: "Licensed physiotherapy and aquatic rehabilitation centre",
       projectFocus:
@@ -239,9 +264,15 @@ export const SPECIALTY_HUB_WORKS: CaseStudy[] = [
     result: "6 treatment pillars structured · 2 locations, one enquiry path",
     accent: "#6CBAD9",
     heroTitle: "Specialist endocrine care across two hospitals, made findable and easy to understand.",
-    heroHighlight: "findable and easy to understand",
+    heroHighlight: "made findable and easy to understand.",
     heroSubtitle: "Your health nurtured.",
     heroBody: "",
+    projectScope: ["Brand Strategy / Website", "SEO / SEM / Collaterals"],
+    projectArchitecture: [
+      { value: "06", label: "Treatment Pillars" },
+      { value: "02", label: "Hospital Locations" },
+      { value: "01", label: "Enquiry Pathway" },
+    ],
     snapshot: {
       clinicType: "Specialist endocrinology clinic",
       projectFocus:
@@ -416,6 +447,11 @@ export const SPECIALTY_HUB_WORKS: CaseStudy[] = [
     heroHighlight: "tell it apart",
     heroSubtitle: "Quality skincare for your whole family.",
     heroBody: "",
+    projectScope: ["Brand Strategy / Website", "SEO / SEM / Copywriting"],
+    projectArchitecture: [
+      { value: "25+", label: "Condition Pages" },
+      { value: "18", label: "Years Practice" },
+    ],
     snapshot: {
       clinicType: "Specialist medical and surgical dermatology practice",
       projectFocus:
@@ -588,6 +624,11 @@ export const SPECIALTY_HUB_WORKS: CaseStudy[] = [
     heroHighlight: "brand and a search presence",
     heroSubtitle: "Implanting the foundation of a timeless smile.",
     heroBody: "",
+    projectScope: ["Brand Strategy / Website", "SEO / SEM"],
+    projectArchitecture: [
+      { value: "30+", label: "Years Practice" },
+      { value: "09", label: "Treatment Areas" },
+    ],
     snapshot: {
       clinicType: "Specialist dental implant practice",
       projectFocus:
@@ -761,6 +802,11 @@ export const SPECIALTY_HUB_WORKS: CaseStudy[] = [
     heroHighlight: "find the right answer quickly",
     heroSubtitle: "Brain. Spine. Nerves.",
     heroBody: "",
+    projectScope: ["Brand Strategy / Website", "SEO / SEM / Copywriting"],
+    projectArchitecture: [
+      { value: "03", label: "Clinical Pillars" },
+      { value: "04", label: "Hospitals Covered" },
+    ],
     snapshot: {
       clinicType: "Specialist neurosurgery and spine practice",
       projectFocus:
@@ -935,6 +981,11 @@ export const SPECIALTY_HUB_WORKS: CaseStudy[] = [
     heroHighlight: "AI they now ask first",
     heroSubtitle: "Affordable heart care at Sembawang.",
     heroBody: "",
+    projectScope: ["Brand Strategy / Website", "SEO / SEM / GEO"],
+    projectArchitecture: [
+      { value: "03", label: "Modes of Care" },
+      { value: "05", label: "Northern Towns" },
+    ],
     snapshot: {
       clinicType: "Community cardiology and internal medicine clinic",
       projectFocus:
@@ -1112,6 +1163,11 @@ export const SPECIALTY_HUB_WORKS: CaseStudy[] = [
     heroHighlight: "from day one",
     heroSubtitle: "Face it. Fix it.",
     heroBody: "",
+    projectScope: ["Brand Strategy / Website", "SEO / SEM / Collaterals"],
+    projectArchitecture: [
+      { value: "05", label: "Acne Types" },
+      { value: "01", label: "Clinic Focus" },
+    ],
     snapshot: {
       clinicType: "Single-focus acne clinic",
       projectFocus:

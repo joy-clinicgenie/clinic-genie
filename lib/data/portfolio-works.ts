@@ -15,6 +15,54 @@ export interface PortfolioWorkSlide {
   gradient: string;
 }
 
+/** Maps case-study slugs to PORTFOLIO_WORKS ids when they differ. */
+const CASE_STUDY_PORTFOLIO_IDS: Record<string, string> = {
+  "cedar-endocrine-clinic": "cedar-endocrine",
+  "singapore-brain-spine-nerves": "sbsn",
+};
+
+export interface PortfolioCaseIndex {
+  index: number;
+  total: number;
+}
+
+/**
+ * Resolve CASE STUDY NN / TT from the client works shown on the site.
+ * Returns null when the study is not in PORTFOLIO_WORKS.
+ */
+export function getPortfolioCaseIndex(
+  studySlug: string,
+  studyName?: string
+): PortfolioCaseIndex | null {
+  const total = PORTFOLIO_WORKS.length;
+  if (total === 0) return null;
+
+  const mappedId = CASE_STUDY_PORTFOLIO_IDS[studySlug] ?? studySlug;
+  let idx = PORTFOLIO_WORKS.findIndex((work) => work.id === mappedId);
+
+  if (idx < 0 && studyName) {
+    const name = studyName.toLowerCase();
+    idx = PORTFOLIO_WORKS.findIndex((work) => {
+      const title = work.title.toLowerCase();
+      return name.includes(title) || title.includes(name.split(" clinic")[0] ?? name);
+    });
+  }
+
+  if (idx < 0) return null;
+  return { index: idx + 1, total };
+}
+
+export function formatPortfolioCaseLabel(
+  studySlug: string,
+  studyName?: string
+): string | null {
+  const resolved = getPortfolioCaseIndex(studySlug, studyName);
+  if (!resolved) return null;
+  const nn = String(resolved.index).padStart(2, "0");
+  const tt = String(resolved.total).padStart(2, "0");
+  return `Case Study ${nn} / ${tt}`;
+}
+
 export const PORTFOLIO_WORKS: PortfolioWorkSlide[] = [
   {
     id: "cedar-endocrine",
@@ -58,9 +106,9 @@ export const PORTFOLIO_WORKS: PortfolioWorkSlide[] = [
     gradient: "linear-gradient(145deg, #F7FAFB 0%, #EAFBFB 45%, #54B9CE 100%)",
   },
   {
-    id: "straits-eye",
-    title: "Straits Eye Geriatrics",
-    category: "Ophthalmology",
+    id: "straits-geriatrics",
+    title: "The Straits Geriatrics Centre",
+    category: "Geriatrics",
     line: "Vision care made clearer for patients and families",
     image: "/works/straits-eye.png",
     gradient: "linear-gradient(145deg, #FAFBFC 0%, #E3F6FA 50%, #006B7C 100%)",

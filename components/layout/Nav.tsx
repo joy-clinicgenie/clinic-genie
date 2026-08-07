@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/cn";
 import { Logo } from "@/components/ui/Logo";
@@ -11,15 +11,21 @@ import { NAV_ITEMS, PRIMARY_CTA } from "@/lib/data/nav";
 import { MobileMenu } from "./MobileMenu";
 import { ServicesNavDropdown } from "./ServicesNavDropdown";
 
+const TOP_SHOW_THRESHOLD = 80;
+const IDLE_SHOW_MS = 300;
+
 export function Nav() {
   const pathname = usePathname();
   const [light, setLight] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [navVisible, setNavVisible] = useState(true);
+  const lastScrollY = useRef(0);
+  const idleTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     const NAV_Y = 48; // vertical midpoint of the nav bar
-    const onScroll = () => {
-      // Find which section is behind the nav and read its theme
+
+    const updateTheme = () => {
       const sections = document.querySelectorAll<HTMLElement>("[data-nav-theme]");
       for (const el of sections) {
         const r = el.getBoundingClientRect();
@@ -29,17 +35,68 @@ export function Nav() {
         }
       }
     };
+
+    const clearIdleTimer = () => {
+      if (idleTimer.current !== null) {
+        clearTimeout(idleTimer.current);
+        idleTimer.current = null;
+      }
+    };
+
+    const onScroll = () => {
+      updateTheme();
+
+      const y = window.scrollY;
+
+      if (menuOpen || y < TOP_SHOW_THRESHOLD) {
+        setNavVisible(true);
+        lastScrollY.current = y;
+        clearIdleTimer();
+        return;
+      }
+
+      const delta = y - lastScrollY.current;
+      lastScrollY.current = y;
+
+      if (delta > 0) {
+        setNavVisible(false);
+      } else if (delta < 0) {
+        setNavVisible(true);
+      }
+
+      clearIdleTimer();
+      idleTimer.current = setTimeout(() => {
+        setNavVisible(true);
+        idleTimer.current = null;
+      }, IDLE_SHOW_MS);
+    };
+
+    lastScrollY.current = window.scrollY;
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      clearIdleTimer();
+    };
+  }, [menuOpen]);
+
+  useEffect(() => {
+    if (menuOpen) setNavVisible(true);
+  }, [menuOpen]);
 
   const isActive = (href: string) => pathname === href || (href !== "/" && pathname.startsWith(href));
 
   return (
     <>
-      <header className="fixed inset-x-0 top-0 z-50 lg:flex lg:justify-center lg:px-[var(--page-pad)] lg:pt-4">
-        <motion.nav
+      <motion.header
+        className={cn(
+          "fixed inset-x-0 top-0 z-50 lg:flex lg:justify-center lg:px-[var(--page-pad)] lg:pt-4",
+          !navVisible && "pointer-events-none"
+        )}
+        animate={{ y: navVisible ? 0 : "-110%" }}
+        transition={{ duration: 0.35, ease: "easeOut" }}
+      >
+        <nav
           className={cn(
             "grid w-full grid-cols-[1fr_auto] items-center gap-3 bg-transparent transition-colors duration-ui",
             "px-[var(--page-pad)] py-2.5 pt-[calc(0.625rem+env(safe-area-inset-top,0px))]",
@@ -127,8 +184,8 @@ export function Nav() {
               </svg>
             </button>
           </div>
-        </motion.nav>
-      </header>
+        </nav>
+      </motion.header>
 
       <MobileMenu open={menuOpen} onClose={() => setMenuOpen(false)} />
     </>

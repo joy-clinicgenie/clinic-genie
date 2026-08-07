@@ -9,7 +9,10 @@ import { HOME_PROCESS_STEPS } from "@/lib/data/services";
 import { PageFinale } from "@/components/ui/PageFinale";
 import { PageFinaleCTA } from "@/components/ui/PageFinaleCTA";
 import { ComplianceCards } from "@/components/home/landing/ComplianceCards";
-import { SpecialistClinicsOrb } from "@/components/home/landing/SpecialistClinicsOrb";
+import {
+  SpecialistClinicsBackdrop,
+  SpecialistClinicsOrb,
+} from "@/components/home/landing/SpecialistClinicsOrb";
 import { PortfolioWorksCarousel } from "@/components/home/landing/PortfolioWorksCarousel";
 import specialistSectionStyles from "@/components/home/landing/SpecialistClinicsOrb.module.css";
 import { cn } from "@/lib/cn";
@@ -66,6 +69,7 @@ export default function ServicesPage() {
         tone="white"
         className={cn("pt-24 pb-0", specialistSectionStyles.sectionShell)}
         containerClassName="relative z-10 flex flex-col gap-16"
+        backdrop={<SpecialistClinicsBackdrop />}
       >
         <Reveal>
           <LandingIntro

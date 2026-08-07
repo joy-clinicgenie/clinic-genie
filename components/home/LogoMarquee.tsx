@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { cn } from "@/lib/cn";
 import styles from "./LogoMarquee.module.css";
 
@@ -10,6 +11,11 @@ export interface MarqueeLogo {
   href: string;
   width: number;
   height: number;
+  size?: "default" | "lg" | "xl";
+}
+
+function isExternalHref(href: string): boolean {
+  return href.startsWith("http://") || href.startsWith("https://");
 }
 
 /**
@@ -39,6 +45,27 @@ export function LogoMarquee({
       <ul className={styles.track} style={{ ["--marquee-duration" as string]: `${durationSec}s` }}>
         {loop.map((logo, i) => {
           const isClone = i >= logos.length;
+          const external = isExternalHref(logo.href);
+          const linkClassName =
+            "group block rounded-md outline-none focus-visible:ring-2 focus-visible:ring-[#217B8E]/40 focus-visible:ring-offset-2";
+          const image = (
+            <Image
+              src={logo.src}
+              alt={isClone ? "" : logo.alt}
+              width={logo.width}
+              height={logo.height}
+              className={cn(
+                "w-auto object-contain opacity-55 grayscale transition duration-300 group-hover:opacity-100 group-hover:grayscale-0",
+                logo.size === "xl"
+                  ? "h-14 sm:h-16 lg:h-20"
+                  : logo.size === "lg"
+                    ? "h-11 sm:h-12 lg:h-14"
+                    : "h-9 sm:h-10 lg:h-11"
+              )}
+              sizes="(max-width: 640px) 160px, 240px"
+            />
+          );
+
           return (
             <li
               key={i}
@@ -46,23 +73,27 @@ export function LogoMarquee({
               data-clone={isClone ? "true" : undefined}
               aria-hidden={isClone ? true : undefined}
             >
-              <a
-                href={logo.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                tabIndex={isClone ? -1 : undefined}
-                className="group block rounded-md outline-none focus-visible:ring-2 focus-visible:ring-[#217B8E]/40 focus-visible:ring-offset-2"
-                aria-label={isClone ? undefined : `Visit ${logo.alt} website`}
-              >
-                <Image
-                  src={logo.src}
-                  alt={isClone ? "" : logo.alt}
-                  width={logo.width}
-                  height={logo.height}
-                  className="h-9 w-auto object-contain opacity-55 grayscale transition duration-300 group-hover:opacity-100 group-hover:grayscale-0 sm:h-10 lg:h-11"
-                  sizes="(max-width: 640px) 140px, 200px"
-                />
-              </a>
+              {external ? (
+                <a
+                  href={logo.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  tabIndex={isClone ? -1 : undefined}
+                  className={linkClassName}
+                  aria-label={isClone ? undefined : `Visit ${logo.alt} website`}
+                >
+                  {image}
+                </a>
+              ) : (
+                <Link
+                  href={logo.href}
+                  tabIndex={isClone ? -1 : undefined}
+                  className={linkClassName}
+                  aria-label={isClone ? undefined : `View ${logo.alt}`}
+                >
+                  {image}
+                </Link>
+              )}
             </li>
           );
         })}

@@ -24,7 +24,10 @@ import { PageFinale } from "@/components/ui/PageFinale";
 import { ClinicGenieGap } from "@/components/home/landing/ClinicGenieGap";
 import { WishStack } from "@/components/home/landing/WishStack";
 import { MagicProcess } from "@/components/home/landing/MagicProcess";
-import { SpecialistClinicsOrb } from "@/components/home/landing/SpecialistClinicsOrb";
+import {
+  SpecialistClinicsBackdrop,
+  SpecialistClinicsOrb,
+} from "@/components/home/landing/SpecialistClinicsOrb";
 import specialistSectionStyles from "@/components/home/landing/SpecialistClinicsOrb.module.css";
 import { PortfolioWorksCarousel } from "@/components/home/landing/PortfolioWorksCarousel";
 import { AlliesCards, AlliesTagline } from "@/components/home/landing/AlliesCards";
@@ -199,6 +202,7 @@ export default async function HomePage() {
         tone="white"
         className={cn("pt-24 pb-0", specialistSectionStyles.sectionShell)}
         containerClassName="relative z-10 flex flex-col gap-16"
+        backdrop={<SpecialistClinicsBackdrop />}
       >
         <Reveal>
           <LandingIntro

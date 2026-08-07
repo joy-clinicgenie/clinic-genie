@@ -1,8 +1,8 @@
-import Image from "next/image";
 import { LightHero } from "@/components/ui/LightHero";
 import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
 import { LandingIntro } from "@/components/home/landing/LandingLayout";
+import { AboutOfficeImage } from "@/components/about/AboutOfficeImage";
 import { ExpertsCards, ExpertsTagline } from "@/components/about/ExpertsCards";
 
 export function AboutOverlapHero() {
@@ -30,17 +30,7 @@ export function AboutOverlapHero() {
         className="bg-night-900 pb-20 pt-0 sm:pb-24 lg:pb-28"
       >
         <Container size="wide" className="relative z-10 -mt-28 flex flex-col gap-16 sm:-mt-36 lg:-mt-44 lg:gap-20">
-          <figure className="relative aspect-[16/9] w-full overflow-hidden rounded-xl bg-cg-teal-60 shadow-lg">
-            <Image
-              src="/about/intro-image.svg"
-              alt=""
-              fill
-              priority
-              unoptimized
-              className="object-cover object-center"
-              sizes="(min-width: 1280px) 82.5rem, 100vw"
-            />
-          </figure>
+          <AboutOfficeImage />
 
           <div className="flex flex-col gap-12">
             <Reveal>

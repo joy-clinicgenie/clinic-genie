@@ -1,4 +1,5 @@
 import { LandingIntro, LandingSection } from "@/components/home/landing/LandingLayout";
+import { SpecialistClinicsBackdrop } from "@/components/home/landing/SpecialistClinicsOrb";
 import { FeatureInfoCard } from "@/components/ui/FeatureInfoCard";
 import { Reveal, RevealGroup, RevealItem } from "@/components/ui/Reveal";
 import type { SpecialtyCard } from "@/lib/data/pillars";
@@ -23,6 +24,7 @@ export function PillarSpecialtySection({
       tone="white"
       className={cn("pt-24 pb-24", specialistSectionStyles.sectionShell)}
       containerClassName="relative z-10 flex flex-col gap-12"
+      backdrop={<SpecialistClinicsBackdrop />}
     >
       <Reveal>
         <LandingIntro kicker={kicker} title={title} subtitle={subtitle} />

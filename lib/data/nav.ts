@@ -62,7 +62,7 @@ export const NAV_ITEMS: NavItem[] = [
     href: "/services",
     children: SERVICES_DROPDOWN,
   },
-  { label: "Specialty Hub", href: "/specialty-hub" },
+  { label: "Clinic Specialties", href: "/specialty-hub" },
   { label: "Our Works", href: "/portfolio" },
   { label: "Genie Tips", href: "/genie-tips" },
 ];

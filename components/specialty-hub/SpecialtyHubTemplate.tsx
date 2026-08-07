@@ -14,6 +14,7 @@ import { GlassCard } from "@/components/ui/GlassCard";
 import { FeatureInfoCard } from "@/components/ui/FeatureInfoCard";
 import { PageFinale } from "@/components/ui/PageFinale";
 import { PageFinaleCTA } from "@/components/ui/PageFinaleCTA";
+import { ParallaxBackground } from "@/components/ui/ParallaxBackground";
 import { cn } from "@/lib/cn";
 import type { SpecialtyHubDetail } from "@/lib/data/specialty-hubs";
 
@@ -98,20 +99,22 @@ export function SpecialtyHubTemplate({ hub }: { hub: SpecialtyHubDetail }) {
         className="relative flex min-h-[64vh] items-center overflow-hidden bg-white pb-16 pt-[calc(3.25rem+env(safe-area-inset-top,0px))] text-ink-900 lg:pb-24 lg:pt-36"
       >
         {hub.heroImage ? (
-          <Image
+          <ParallaxBackground
             src={hub.heroImage}
-            alt=""
-            fill
             priority
-            className="object-cover object-center lg:object-right"
-            sizes="100vw"
+            imageClassName="object-cover object-center lg:object-right"
+          >
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-0 bg-gradient-to-r from-white from-10% via-white/85 via-45% to-transparent to-80%"
+            />
+          </ParallaxBackground>
+        ) : (
+          <div
             aria-hidden="true"
+            className="pointer-events-none absolute inset-0 bg-gradient-to-r from-white from-10% via-white/85 via-45% to-transparent to-80%"
           />
-        ) : null}
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0 bg-gradient-to-r from-white from-10% via-white/85 via-45% to-transparent to-80%"
-        />
+        )}
 
         <Container className="relative z-10 w-full">
           <div className="flex max-w-xl flex-col items-start text-left">

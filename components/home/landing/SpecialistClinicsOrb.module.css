@@ -4,25 +4,6 @@
   background-color: #ffffff;
 }
 
-.sectionShell::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  opacity: 0.2;
-  background-image: url("/specialties/healthcare-journey-map-mobile.png");
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-}
-
-@media (min-width: 768px) {
-  .sectionShell::before {
-    background-image: url("/specialties/healthcare-journey-map.png");
-  }
-}
-
 .wrap {
   position: relative;
   display: flex;
@@ -80,7 +61,7 @@
   font-weight: 700;
   line-height: 1.35;
   color: #062d36;
-  text-align: center;
+  text-align: left;
 }
 
 .categoryEmpty {
@@ -162,11 +143,13 @@
   position: relative;
   z-index: 1;
   display: inline-block;
+  min-width: 0;
   font-family: var(--font-outfit), Outfit, ui-sans-serif, system-ui, sans-serif;
   font-size: var(--text-body);
   font-weight: 400;
   color: #217b8e;
   line-height: 1.35;
+  text-wrap: balance;
 }
 
 .specialistArrow {

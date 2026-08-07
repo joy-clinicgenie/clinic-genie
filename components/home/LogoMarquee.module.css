@@ -8,6 +8,7 @@
   display: flex;
   width: max-content;
   align-items: center;
+  padding-block: 0.625rem;
   /* Two identical copies; shifting by exactly -50% loops seamlessly. */
   animation: marquee-left var(--marquee-duration, 36s) linear infinite;
 }

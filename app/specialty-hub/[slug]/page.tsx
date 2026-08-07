@@ -50,7 +50,9 @@ export default function SpecialtyHubDetailPage({ params }: { params: { slug: str
         study={study}
         image={work.image}
         imageAlt={work.imageAlt}
-        backLink={{ href: "/specialty-hub", label: "Specialty Hub" }}
+        logo={work.logo}
+        logoAlt={work.logoAlt}
+        backLink={{ href: "/specialty-hub", label: "Clinic Specialties" }}
       />
     );
   }

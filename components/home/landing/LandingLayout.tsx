@@ -21,6 +21,7 @@ export function LandingSection({
   className,
   containerClassName,
   size = "wide",
+  backdrop,
   children,
 }: {
   id?: string;
@@ -29,14 +30,17 @@ export function LandingSection({
   className?: string;
   containerClassName?: string;
   size?: "content" | "wide" | "prose";
+  /** Absolute layer behind section content (e.g. parallax photo). */
+  backdrop?: ReactNode;
   children: ReactNode;
 }) {
   return (
     <section
       id={id}
       data-nav-theme={navTheme}
-      className={cn("text-ink-900", SECTION_BG[tone], className)}
+      className={cn("relative text-ink-900", SECTION_BG[tone], className)}
     >
+      {backdrop}
       <Container size={size} className={containerClassName}>
         {children}
       </Container>

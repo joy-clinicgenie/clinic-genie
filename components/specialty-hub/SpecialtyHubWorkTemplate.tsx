@@ -14,9 +14,34 @@ import { FeatureInfoCard } from "@/components/ui/FeatureInfoCard";
 import { PageFinale } from "@/components/ui/PageFinale";
 import { PageFinaleCTA } from "@/components/ui/PageFinaleCTA";
 import { LandingIntro, LandingKicker } from "@/components/home/landing/LandingLayout";
+import { ParallaxBackground } from "@/components/ui/ParallaxBackground";
 import { ease } from "@/lib/motion";
 import type { CaseStudy, CaseStudyCard } from "@/lib/data/portfolio";
+import { formatPortfolioCaseLabel } from "@/lib/data/portfolio-works";
 import alliesStyles from "@/components/home/landing/AlliesCards.module.css";
+
+function splitSpecialtyLines(specialty: string): string[] {
+  const parts = specialty.split(/\s*\+\s*/).map((part) => part.trim()).filter(Boolean);
+  if (parts.length <= 1) return parts;
+  return [parts[0]!, ...parts.slice(1).map((part) => `+ ${part}`)];
+}
+
+function renderHeroLine(line: string, highlight?: string) {
+  if (!highlight || !line.includes(highlight)) {
+    return line;
+  }
+
+  const [before, ...rest] = line.split(highlight);
+  const after = rest.join(highlight);
+
+  return (
+    <>
+      {before}
+      <span className="genie-text">{highlight}</span>
+      {after}
+    </>
+  );
+}
 
 const lensCardVariants = {
   hidden: { opacity: 0, y: 22 },
@@ -146,13 +171,22 @@ export function SpecialtyHubWorkTemplate({
   study,
   image = "/works/joyfulseeds.png",
   imageAlt,
-  backLink = { href: "/specialty-hub", label: "Specialty Hub" },
+  logo,
+  logoAlt,
+  backLink = { href: "/specialty-hub", label: "Clinic Specialties" },
 }: {
   study: CaseStudy;
   image?: string;
   imageAlt?: string;
+  logo?: string;
+  logoAlt?: string;
   backLink?: { href: string; label: string };
 }) {
+  const caseLabel = formatPortfolioCaseLabel(study.slug, study.name);
+  const specialtyLines = splitSpecialtyLines(study.specialty);
+  const projectScope = study.projectScope ?? [];
+  const projectArchitecture = study.projectArchitecture ?? [];
+
   return (
     <>
       {/* 01 Hero */}
@@ -160,74 +194,99 @@ export function SpecialtyHubWorkTemplate({
         data-nav-theme="light"
         className="relative flex min-h-[64vh] items-center overflow-hidden bg-white pb-16 pt-[calc(3.25rem+env(safe-area-inset-top,0px))] text-ink-900 lg:pb-24 lg:pt-36"
       >
-        <Image
+        <ParallaxBackground
           src="/specialty-hub/hero-bg.png"
-          alt=""
-          fill
           priority
-          className="object-cover object-center lg:object-right"
-          sizes="100vw"
-          aria-hidden="true"
-        />
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0 bg-gradient-to-r from-white from-10% via-white/85 via-45% to-transparent to-80%"
-        />
+          imageClassName="object-cover object-center lg:object-right"
+        >
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 bg-gradient-to-r from-white from-10% via-white/85 via-45% to-transparent to-80%"
+          />
+        </ParallaxBackground>
 
         <Container className="relative z-10 w-full">
-          <div className="flex max-w-3xl flex-col items-start text-left">
-            <Link
-              href={backLink.href}
-              className="mb-5 inline-flex w-fit items-center gap-2 font-sans text-kicker uppercase text-genie-700 transition-colors hover:text-genie-900"
-            >
-              <span aria-hidden="true">←</span> {backLink.label}
-            </Link>
-
-            <p className="font-sans text-kicker uppercase text-genie-700">{study.specialty}</p>
-
-            <h1 className="mt-3 whitespace-pre-line font-display text-h1 text-ink-900">
-              {study.heroHighlight && study.heroTitle.includes(study.heroHighlight) ? (
-                <>
-                  {study.heroTitle.split(study.heroHighlight)[0]}
-                  <span className="genie-text">{study.heroHighlight}</span>
-                  {study.heroTitle.split(study.heroHighlight).slice(1).join(study.heroHighlight)}
-                </>
-              ) : (
-                study.heroTitle
-              )}
-            </h1>
-
-            <p className="mt-2 font-display text-[0.9375rem] font-normal text-ink-700 sm:mt-2.5 sm:text-base lg:text-h4">
-              {study.name}
-            </p>
-
-            {study.tagline ? (
-              <p className="mt-2 font-display text-h5 font-normal text-genie-700">
-                &ldquo;{study.tagline}&rdquo;
-              </p>
-            ) : null}
-
-            {study.heroBody ? (
-              <div className="mt-4 flex w-full max-w-[90%] flex-col gap-3 sm:mt-5">
-                <p className="text-body text-pretty text-ink-700">{study.heroBody}</p>
-              </div>
-            ) : null}
-
-            <div className="mt-5 flex flex-col items-start gap-3">
-              <div className="flex flex-wrap items-center gap-2.5">
-                {(study.serviceTags ?? study.tags).map((tag) => (
-                  <span
-                    key={tag}
-                    className="inline-flex items-center rounded-pill border border-[#E6EEF1] bg-white px-4 py-2 text-sm font-medium text-ink-900 shadow-card"
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
-              <span className="inline-flex items-center rounded-pill border border-genie-200 bg-genie-50 px-4 py-2 text-sm font-medium text-genie-800">
-                {study.result}
-              </span>
+          <div className="flex w-full max-w-content flex-col items-stretch text-left">
+            <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-3">
+              <Link
+                href={backLink.href}
+                className="inline-flex w-fit items-center gap-2 font-sans text-kicker uppercase text-genie-700 transition-colors hover:text-genie-900"
+              >
+                <span aria-hidden="true">←</span> {backLink.label}
+              </Link>
+              {caseLabel ? (
+                <p className="font-sans text-kicker uppercase text-genie-700">{caseLabel}</p>
+              ) : null}
             </div>
+
+            <div className="mt-10 flex flex-col gap-0.5 sm:mt-12">
+              {specialtyLines.map((line) => (
+                <p key={line} className="font-sans text-kicker uppercase text-genie-700">
+                  {line}
+                </p>
+              ))}
+            </div>
+
+            <div className="mt-8 flex flex-col gap-6 sm:mt-10 lg:flex-row lg:items-start lg:gap-12">
+              <div className="flex shrink-0 flex-col gap-3">
+                {logo ? (
+                  <div className="relative h-12 w-48 sm:h-14 lg:w-56">
+                    <Image
+                      src={logo}
+                      alt={logoAlt ?? study.name}
+                      fill
+                      className="object-contain object-left"
+                      sizes="14rem"
+                      priority
+                    />
+                  </div>
+                ) : null}
+                <p className="whitespace-nowrap font-display text-xs font-semibold uppercase leading-snug tracking-wide text-ink-700 sm:text-sm">
+                  {study.name}
+                </p>
+              </div>
+              <h1 className="max-w-prose font-display text-h1 font-semibold leading-none tracking-tight text-ink-900 lg:text-display">
+                {renderHeroLine(study.line, study.heroHighlight)}
+              </h1>
+            </div>
+
+            {projectScope.length > 0 || projectArchitecture.length > 0 ? (
+              <div className="mt-12 grid gap-10 border-t border-[#E6EEF1] pt-8 sm:mt-14 lg:grid-cols-2 lg:gap-16">
+                {projectScope.length > 0 ? (
+                  <div className="flex flex-col gap-3">
+                    <p className="font-sans text-kicker uppercase text-genie-700">Project Scope</p>
+                    <div className="flex flex-col gap-1">
+                      {projectScope.map((line) => (
+                        <p key={line} className="font-display text-h6 font-semibold text-ink-900">
+                          {line}
+                        </p>
+                      ))}
+                    </div>
+                  </div>
+                ) : null}
+
+                {projectArchitecture.length > 0 ? (
+                  <div className="flex flex-col gap-3">
+                    <p className="font-sans text-kicker uppercase text-genie-700">Project Architecture</p>
+                    <dl className="grid grid-cols-2 gap-6 sm:grid-cols-3 sm:gap-8">
+                      {projectArchitecture.map((metric) => (
+                        <div key={`${metric.value}-${metric.label}`} className="flex flex-col gap-1">
+                          <dt className="sr-only">{metric.label}</dt>
+                          <dd className="flex flex-col gap-1">
+                            <span className="font-display text-h2 font-semibold tabular-nums leading-none text-ink-900">
+                              {metric.value}
+                            </span>
+                            <span className="font-sans text-xs leading-snug text-ink-700">
+                              {metric.label}
+                            </span>
+                          </dd>
+                        </div>
+                      ))}
+                    </dl>
+                  </div>
+                ) : null}
+              </div>
+            ) : null}
           </div>
         </Container>
       </section>

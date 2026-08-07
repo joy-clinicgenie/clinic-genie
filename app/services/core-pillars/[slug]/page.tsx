@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Section } from "@/components/ui/Section";
@@ -16,6 +15,7 @@ import { PageFinaleCTA } from "@/components/ui/PageFinaleCTA";
 import { ComplianceCards } from "@/components/home/landing/ComplianceCards";
 import { LandingIntro, LandingSection } from "@/components/home/landing/LandingLayout";
 import { PortfolioWorksCarousel } from "@/components/home/landing/PortfolioWorksCarousel";
+import { PillarHero } from "@/components/services/PillarHero";
 import { PillarMechanicsSection } from "@/components/services/PillarMechanicsSection";
 import { PillarSpecialtySection } from "@/components/services/PillarSpecialtySection";
 import { CORE_PILLARS, getPillar } from "@/lib/data/pillars";
@@ -122,75 +122,7 @@ export default function PillarPage({ params }: { params: { slug: string } }) {
 
   return (
     <>
-      <section
-        data-nav-theme="light"
-        className="relative flex min-h-[64vh] items-center overflow-hidden bg-white pb-16 pt-[calc(3.25rem+env(safe-area-inset-top,0px))] text-ink-900 lg:pb-24 lg:pt-36"
-      >
-        {wishImage ? (
-          <Image
-            src={wishImage.src}
-            alt=""
-            fill
-            priority
-            className="object-cover object-center lg:object-right"
-            sizes="100vw"
-            aria-hidden="true"
-          />
-        ) : (
-          <div
-            aria-hidden="true"
-            className="absolute inset-0"
-            style={{
-              background: `linear-gradient(135deg, color-mix(in srgb, ${pillar.accent} 28%, white), color-mix(in srgb, ${pillar.accent} 12%, #f7fafb))`,
-            }}
-          />
-        )}
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0 bg-gradient-to-r from-white from-10% via-white/85 via-45% to-transparent to-80%"
-        />
-
-        <Container className="relative z-10 w-full">
-          <div className="flex max-w-xl flex-col items-start text-left">
-            <Link
-              href="/services"
-              className="mb-5 inline-flex w-fit items-center gap-2 font-sans text-kicker uppercase text-genie-700 transition-colors hover:text-genie-900"
-            >
-              <span aria-hidden="true">←</span> Services
-            </Link>
-
-            <h1 className="font-display text-h1 text-balance text-ink-900">
-              {pillar.heroTitle}
-            </h1>
-
-            <p className="mt-2 font-display text-[0.9375rem] font-normal text-ink-700 sm:mt-2.5 sm:text-base lg:text-h4">
-              {pillar.name}
-            </p>
-
-            <div className="mt-4 flex w-full max-w-[90%] flex-col gap-3 sm:mt-5">
-              {pillar.heroParagraph.map((para, i) => (
-                <p key={i} className="text-body text-pretty text-ink-700">
-                  {para}
-                </p>
-              ))}
-            </div>
-
-            <div className="mt-7 flex w-full flex-col flex-wrap items-stretch gap-3 sm:w-auto sm:flex-row sm:items-center sm:gap-4">
-              <MagneticButton href={pillar.heroPrimaryCta.href} size="md" withMiniOrb>
-                {pillar.heroPrimaryCta.label}
-              </MagneticButton>
-              <MagneticButton
-                href={pillar.heroSecondaryCta.href}
-                size="md"
-                variant="ghost"
-                tone="light"
-              >
-                {pillar.heroSecondaryCta.label}
-              </MagneticButton>
-            </div>
-          </div>
-        </Container>
-      </section>
+      <PillarHero pillar={pillar} wishImageSrc={wishImage?.src} />
 
       {/* 2 — Three wishes / ecosystem intro */}
       <Section tone="light">

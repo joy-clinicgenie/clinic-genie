@@ -278,7 +278,7 @@ export const CORE_PILLARS: CorePillar[] = [
       "Clinic Genie is a healthcare SEO agency for specialist clinics, blending search data, proven tools, and AI to turn quiet searches into real enquiries, all within HCSA and SMC guidelines.",
     ],
     heroPrimaryCta: CONTACT_CTA,
-    heroSecondaryCta: { label: "See How It Works", href: "#mechanics" },
+    heroSecondaryCta: { label: "See how the magic works", href: "#mechanics" },
     wishesSubtitle: "What healthcare SEO grants your clinic",
     wishes: [
       {
@@ -426,7 +426,7 @@ export const CORE_PILLARS: CorePillar[] = [
       "Clinic Genie is a healthcare Google Ads agency for specialist clinics, weaving Search, Performance Max, and video into one growth engine, measured down to every enquiry.",
     ],
     heroPrimaryCta: CONTACT_CTA,
-    heroSecondaryCta: { label: "See How the Magic Works", href: "#mechanics" },
+    heroSecondaryCta: { label: "See how the magic works", href: "#mechanics" },
     wishesSubtitle: "What medical SEM grants your clinic",
     wishes: [
       {
@@ -578,7 +578,7 @@ export const CORE_PILLARS: CorePillar[] = [
       "Clinic Genie shapes how specialist clinics are seen and heard, blending research, strategy, and AI-assisted craft to turn clinical expertise into a message patients believe.",
     ],
     heroPrimaryCta: CONTACT_CTA,
-    heroSecondaryCta: { label: "See How the Magic Works", href: "#mechanics" },
+    heroSecondaryCta: { label: "See how the magic works", href: "#mechanics" },
     wishesSubtitle: "What branding and copywriting grant your clinic",
     wishes: [
       {
@@ -718,7 +718,7 @@ export const CORE_PILLARS: CorePillar[] = [
       "Clinic Genie designs and builds clinic websites that load quickly, read beautifully, and turn visitors into enquiries.",
     ],
     heroPrimaryCta: CONTACT_CTA,
-    heroSecondaryCta: { label: "See How the Magic Works", href: "#mechanics" },
+    heroSecondaryCta: { label: "See how the magic works", href: "#mechanics" },
     wishesSubtitle: "What web development grants your clinic",
     wishes: [
       {
@@ -858,7 +858,7 @@ export const CORE_PILLARS: CorePillar[] = [
       "Clinic Genie captures the authentic story behind your expertise.",
     ],
     heroPrimaryCta: CONTACT_CTA,
-    heroSecondaryCta: { label: "See How the Magic Works", href: "#mechanics" },
+    heroSecondaryCta: { label: "See how the magic works", href: "#mechanics" },
     wishesSubtitle: "What visuals grant your clinic",
     wishes: [
       {
@@ -1002,7 +1002,7 @@ export const CORE_PILLARS: CorePillar[] = [
       "Clinic Genie creates content built on research, shaped to your brand voice, and tailored to your patients, turning quiet scrolls into lasting trust.",
     ],
     heroPrimaryCta: CONTACT_CTA,
-    heroSecondaryCta: { label: "See How the Magic Works", href: "#mechanics" },
+    heroSecondaryCta: { label: "See how the magic works", href: "#mechanics" },
     wishesSubtitle: "What social media grants your clinic",
     wishes: [
       {
@@ -1146,7 +1146,7 @@ export const CORE_PILLARS: CorePillar[] = [
       "Clinic Genie structures your content so AI tools understand, trust, and surface your clinic, the moment a patient asks.",
     ],
     heroPrimaryCta: CONTACT_CTA,
-    heroSecondaryCta: { label: "See How the Magic Works", href: "#mechanics" },
+    heroSecondaryCta: { label: "See how the magic works", href: "#mechanics" },
     wishesSubtitle: "What AI search grants your clinic",
     wishes: [
       {
