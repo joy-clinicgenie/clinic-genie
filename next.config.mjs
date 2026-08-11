@@ -12,6 +12,17 @@ const nextConfig = {
         destination: '/services',
         permanent: true,
       },
+      {
+        source: '/specialty-hub',
+        destination: '/clinic-specialties',
+        permanent: true,
+      },
+      {
+        // Page slugs only — do not catch /specialty-hub/*.png assets
+        source: '/specialty-hub/:slug([^/.]+)',
+        destination: '/clinic-specialties/:slug',
+        permanent: true,
+      },
     ];
   },
 };

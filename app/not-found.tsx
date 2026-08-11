@@ -15,7 +15,7 @@ const HELPFUL_PATHS = [
   {
     title: "View Specialist Clinic Marketing",
     body: "Explore growth systems built for endocrinology, dermatology, dental, cardiology, paediatrics, neurology, and rehabilitation clinics.",
-    href: "/specialty-hub",
+    href: "/clinic-specialties",
   },
   {
     title: "Read Genie Insights",

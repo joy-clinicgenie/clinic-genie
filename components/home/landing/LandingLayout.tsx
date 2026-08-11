@@ -236,9 +236,18 @@ export function MetricCell({
 }) {
   const prefix = value.startsWith("$") ? "$" : "";
   const unsigned = prefix ? value.slice(1) : value;
-  const hasKPlus = unsigned.endsWith("K+");
-  const core = hasKPlus ? unsigned.slice(0, -2) : unsigned;
-  const suffix = hasKPlus ? "K+" : "";
+  let suffix = "";
+  let core = unsigned;
+  if (core.endsWith("K+")) {
+    suffix = "K+";
+    core = core.slice(0, -2);
+  } else if (core.endsWith("%")) {
+    suffix = "%";
+    core = core.slice(0, -1);
+  } else if (core.endsWith("+")) {
+    suffix = "+";
+    core = core.slice(0, -1);
+  }
   const numericValue = Number(core);
   const decimalPlaces = core.includes(".") ? (core.split(".")[1]?.length ?? 0) : 0;
 

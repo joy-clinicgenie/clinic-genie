@@ -14,8 +14,6 @@ import {
   type PanInfo,
 } from "framer-motion";
 import { MagneticButton } from "@/components/ui/MagneticButton";
-import { SparkleCluster } from "@/components/ui/SparkleCluster";
-import { SparkleRing } from "@/components/ui/SparkleRing";
 import {
   LandingBody,
   LandingHeading,
@@ -42,22 +40,6 @@ const LOOP_COPIES = 3;
 const FLICK_VELOCITY = 380;
 const FLICK_VELOCITY_STRONG = 900;
 const DRAG_COMMIT_RATIO = 0.18;
-
-const SPARKLE_COLORS = ["#78E2DD", "#7DAFE3", "#CCF4F6"] as const;
-
-function worksSparkleRng(seed: number) {
-  const x = Math.sin(seed * 99.13) * 43758.5453;
-  return x - Math.floor(x);
-}
-
-const WORKS_SPARKLES = Array.from({ length: 20 }, (_, i) => ({
-  x: `${(worksSparkleRng(i + 1) * 92 + 4).toFixed(2)}%`,
-  y: `${(worksSparkleRng(i + 7.3) * 88 + 6).toFixed(2)}%`,
-  size: 10 + Math.floor(worksSparkleRng(i + 3.1) * 7),
-  delay: `${(worksSparkleRng(i + 5.7) * 5).toFixed(2)}s`,
-  dur: `${(3.2 + worksSparkleRng(i + 2.2) * 2.8).toFixed(2)}s`,
-  color: SPARKLE_COLORS[i % SPARKLE_COLORS.length],
-}));
 
 export type CarouselControlsHandle = {
   prev: () => void;
@@ -143,30 +125,15 @@ function WorkCard({
   slide,
   style,
   tabIndex,
-  isFocused = false,
   onFocus,
 }: {
   slide: PortfolioWorkSlide;
   style?: CSSProperties;
   tabIndex?: number;
-  isFocused?: boolean;
   onFocus?: () => void;
 }) {
   const content = (
     <>
-      {isFocused && (
-        <div className={styles.sparkleBadge} aria-hidden="true">
-          <SparkleRing
-            size="lg"
-            ambient
-            groupIntensify
-            intensifyOnHover={false}
-            coreClassName={styles.sparkleBadgeCore}
-          >
-            <span className={styles.sparkleBadgeDot} />
-          </SparkleRing>
-        </div>
-      )}
       <div className={styles.cardInner} style={{ background: slide.gradient }}>
         {slide.image ? (
           <Image
@@ -193,7 +160,7 @@ function WorkCard({
     return (
       <Link
         href={slide.href}
-        className={cn(styles.card, isFocused && "group")}
+        className={styles.card}
         style={style}
         tabIndex={tabIndex}
         onFocus={onFocus}
@@ -207,7 +174,7 @@ function WorkCard({
 
   return (
     <article
-      className={cn(styles.card, isFocused && "group")}
+      className={styles.card}
       style={style}
       tabIndex={tabIndex}
       onFocus={onFocus}
@@ -257,7 +224,6 @@ function CarouselSlide({
     >
       <WorkCard
         slide={slide}
-        isFocused={index === focusedIndex}
         tabIndex={index === focusedIndex ? 0 : -1}
         onFocus={() => onFocusSlide(index)}
       />
@@ -674,25 +640,6 @@ export function PortfolioWorksCarousel({
       <div className={styles.band}>
         <div className={styles.bandBackdrop} aria-hidden="true">
           <div className={styles.bandStars} />
-          {WORKS_SPARKLES.map((spark, index) => (
-            <span
-              key={index}
-              className={styles.bandSparkle}
-              style={
-                {
-                  left: spark.x,
-                  top: spark.y,
-                  width: spark.size,
-                  height: spark.size,
-                  color: spark.color,
-                  animationDelay: spark.delay,
-                  animationDuration: spark.dur,
-                } as CSSProperties
-              }
-            >
-              <SparkleCluster glow className="h-full w-full" />
-            </span>
-          ))}
         </div>
         <div className={styles.intro}>
           {kicker && <LandingKicker>{kicker}</LandingKicker>}

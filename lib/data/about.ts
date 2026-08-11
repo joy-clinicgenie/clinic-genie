@@ -175,7 +175,7 @@ export const ABOUT_TRUSTED_CLIENTS: AboutTrustedClient[] = [
   {
     name: "Joyful Seeds Paediatrics",
     services: "Branding, content, and design.",
-    href: "/specialty-hub/paediatrics",
+    href: "/clinic-specialties/paediatrics",
   },
   {
     name: "AquaPhysio",

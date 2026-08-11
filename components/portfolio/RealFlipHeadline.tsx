@@ -38,7 +38,7 @@ export function RealFlipHeadline({ className }: { className?: string }) {
       <span className="sr-only">{ACCESSIBLE_TITLE}</span>
       <span aria-hidden="true" className="inline-flex items-baseline gap-x-[0.28em]">
         <span>Real</span>
-        <span className="relative inline-grid overflow-hidden align-baseline">
+        <span className="relative inline-grid overflow-hidden pb-[0.18em] align-baseline">
           <span className="invisible col-start-1 row-start-1 whitespace-nowrap" aria-hidden="true">
             rankings
           </span>

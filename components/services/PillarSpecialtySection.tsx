@@ -36,8 +36,12 @@ export function PillarSpecialtySection({
             <FeatureInfoCard
               title={specialty.title}
               body={specialty.body}
-              href={specialty.link.href}
-              ariaLabel={`${specialty.link.label}: ${specialty.body}`}
+              href={specialty.link?.href}
+              ariaLabel={
+                specialty.link
+                  ? `${specialty.link.label}: ${specialty.body}`
+                  : undefined
+              }
               className="h-full"
             />
           </RevealItem>

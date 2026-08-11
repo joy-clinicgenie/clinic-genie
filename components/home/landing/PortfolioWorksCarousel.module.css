@@ -66,31 +66,6 @@
   outline-offset: 3px;
 }
 
-.sparkleBadge {
-  position: absolute;
-  top: 0.75rem;
-  right: 0.75rem;
-  z-index: 3;
-  pointer-events: none;
-}
-
-.sparkleBadgeCore {
-  display: grid;
-  place-items: center;
-  width: 0.65rem;
-  height: 0.65rem;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.92);
-  box-shadow: 0 0 10px rgba(120, 226, 221, 0.75);
-}
-
-.sparkleBadgeDot {
-  width: 0.35rem;
-  height: 0.35rem;
-  border-radius: 999px;
-  background: #54b9ce;
-}
-
 .cardInner {
   position: absolute;
   inset: 0;
@@ -205,27 +180,6 @@
     radial-gradient(2.5px 2.5px at 24% 54%, rgba(204, 244, 246, 0.34), transparent),
     radial-gradient(2.5px 2.5px at 58% 82%, rgba(120, 226, 221, 0.32), transparent),
     radial-gradient(2.5px 2.5px at 76% 24%, rgba(125, 175, 227, 0.34), transparent);
-}
-
-.bandSparkle {
-  position: absolute;
-  transform: translate(-50%, -50%);
-  pointer-events: none;
-  animation-name: works-spark-twinkle;
-  animation-timing-function: ease-in-out;
-  animation-iteration-count: infinite;
-}
-
-@keyframes works-spark-twinkle {
-  0%,
-  100% {
-    opacity: 0.22;
-    transform: translate(-50%, -50%) scale(0.76);
-  }
-  50% {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1.08);
-  }
 }
 
 .band::before,
@@ -466,11 +420,5 @@
 @media (prefers-reduced-motion: reduce) {
   .track {
     cursor: default;
-  }
-
-  .bandSparkle {
-    animation: none;
-    opacity: 0.55;
-    transform: translate(-50%, -50%);
   }
 }

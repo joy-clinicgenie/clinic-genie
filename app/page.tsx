@@ -24,16 +24,15 @@ import { PageFinale } from "@/components/ui/PageFinale";
 import { ClinicGenieGap } from "@/components/home/landing/ClinicGenieGap";
 import { WishStack } from "@/components/home/landing/WishStack";
 import { MagicProcess } from "@/components/home/landing/MagicProcess";
-import {
-  SpecialistClinicsBackdrop,
-  SpecialistClinicsOrb,
-} from "@/components/home/landing/SpecialistClinicsOrb";
-import specialistSectionStyles from "@/components/home/landing/SpecialistClinicsOrb.module.css";
 import { PortfolioWorksCarousel } from "@/components/home/landing/PortfolioWorksCarousel";
 import { AlliesCards, AlliesTagline } from "@/components/home/landing/AlliesCards";
 import { ComplianceCards } from "@/components/home/landing/ComplianceCards";
+import { SpecialtyHubCard } from "@/components/specialty-hub/SpecialtyHubCard";
+import { Section } from "@/components/ui/Section";
+import { Container } from "@/components/ui/Container";
+import { SectionHeading } from "@/components/ui/SectionHeading";
 import { CLIENT_LOGOS } from "@/lib/data/client-logos";
-import { cn } from "@/lib/cn";
+import { SPECIALTY_HUBS } from "@/lib/data/specialty-hubs";
 
 const WISH_CHIPS: Record<string, string> = {
   findclinic: "PLATFORM",
@@ -47,10 +46,10 @@ const WISH_CHIPS: Record<string, string> = {
 };
 
 const METRICS = [
-  { value: "367K+", label: "Search impressions tracked" },
-  { value: "21K+", label: "Paid site sessions tracked" },
-  { value: "1.7K+", label: "Call and form actions tracked" },
-  { value: "$9.88", label: "Average cost per action" },
+  { value: "15+", label: "Specialist clinics served" },
+  { value: "500+", label: "Healthcare content pieces produced" },
+  { value: "100%", label: "HCSA-compliant content delivered" },
+  { value: "3+", label: "Years in healthcare marketing" },
 ];
 
 export default async function HomePage() {
@@ -148,30 +147,11 @@ export default async function HomePage() {
         />
       </LandingSection>
 
-      {/* 7 — Compliance: three cards in one row, CTA below */}
-      <LandingSection tone="white" className="py-24" containerClassName="flex flex-col gap-12">
-        <Reveal>
-          <LandingIntro
-            kicker="Magic with a Conscience"
-            title="Stay visible. Stay credible. Stay within the rules."
-            subtitle="We build Singapore’s healthcare advertising standards into every draft, page, and campaign from the start. Nothing is bolted on after."
-          />
-        </Reveal>
-        <ComplianceCards />
-        <Reveal delay={0.08}>
-          <div className="flex justify-center">
-            <MagneticButton href="/services#compliance" size="md" withMiniOrb>
-              How We Keep You Compliant
-            </MagneticButton>
-          </div>
-        </Reveal>
-      </LandingSection>
-
-      {/* 8 — Allies: strategic teal band, 4 partner cards */}
+      {/* 7 — Allies: strategic teal band, 4 partner cards */}
       <LandingSection
         tone="white"
         navTheme="dark"
-        className="bg-[#062D36] py-24 text-onDark"
+        className="bg-[#062D36] pb-36 pt-24 text-onDark"
         containerClassName="flex flex-col gap-12"
       >
         <Reveal>
@@ -197,28 +177,49 @@ export default async function HomePage() {
         </div>
       </LandingSection>
 
-      {/* 8b — Specialist clinics & works: category groups */}
-      <LandingSection
-        tone="white"
-        className={cn("pt-24 pb-0", specialistSectionStyles.sectionShell)}
-        containerClassName="relative z-10 flex flex-col gap-16"
-        backdrop={<SpecialistClinicsBackdrop />}
-      >
-        <Reveal>
-          <LandingIntro
-            kicker="Specialist clinics & works"
-            title="Built around how patients choose specialist care."
-            subtitle="Every specialty has different patient concerns, search behaviour, and trust barriers. Clinic Genie shapes each clinic marketing strategy around how patients search, compare, and decide."
+      {/* 8 — Clinic specialties */}
+      <Section id="clinic-specialties" tone="light" className="py-24">
+        <Container className="flex flex-col gap-12">
+          <SectionHeading
+            kicker="Clinic Specialties"
+            title="Choose your specialty"
+            highlight="specialty"
+            tone="light"
+            subtitle="Each specialty is tuned to how patients in your field find, trust, and decide, not a generic marketing package."
+            align="center"
           />
-        </Reveal>
-        <Reveal delay={0.08} className="w-full">
-          <SpecialistClinicsOrb />
-        </Reveal>
-      </LandingSection>
+          <RevealGroup className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+            {SPECIALTY_HUBS.map((hub, index) => (
+              <RevealItem key={hub.slug} className="h-full">
+                <SpecialtyHubCard hub={hub} sparkleIndex={index} />
+              </RevealItem>
+            ))}
+          </RevealGroup>
+        </Container>
+      </Section>
 
       <Reveal delay={0.12} className="w-full overflow-visible">
         <PortfolioWorksCarousel />
       </Reveal>
+
+      {/* 9 — Compliance: three cards in one row, CTA below */}
+      <LandingSection tone="white" className="py-24" containerClassName="flex flex-col gap-12">
+        <Reveal>
+          <LandingIntro
+            kicker="Magic with a Conscience"
+            title="Stay visible. Stay credible. Stay within the rules."
+            subtitle="We build Singapore’s healthcare advertising standards into every draft, page, and campaign from the start. Nothing is bolted on after."
+          />
+        </Reveal>
+        <ComplianceCards />
+        <Reveal delay={0.08}>
+          <div className="flex justify-center">
+            <MagneticButton href="/services#compliance" size="md" withMiniOrb>
+              How We Keep You Compliant
+            </MagneticButton>
+          </div>
+        </Reveal>
+      </LandingSection>
 
       {/* 10 — Dark finale: Genie Tips + final CTA */}
       <PageFinale backdropClassName="bg-white">

@@ -7,8 +7,7 @@ import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal, RevealGroup, RevealItem } from "@/components/ui/Reveal";
 import { MagneticButton } from "@/components/ui/MagneticButton";
-import { GlassCard } from "@/components/ui/GlassCard";
-import { FaqAccordion } from "@/components/ui/FaqAccordion";
+import { FaqSection } from "@/components/ui/FaqSection";
 import { FeatureInfoCard } from "@/components/ui/FeatureInfoCard";
 import { PageFinale } from "@/components/ui/PageFinale";
 import { PageFinaleCTA } from "@/components/ui/PageFinaleCTA";
@@ -18,6 +17,8 @@ import { PortfolioWorksCarousel } from "@/components/home/landing/PortfolioWorks
 import { PillarHero } from "@/components/services/PillarHero";
 import { PillarMechanicsSection } from "@/components/services/PillarMechanicsSection";
 import { PillarSpecialtySection } from "@/components/services/PillarSpecialtySection";
+import { PillarWhyJoinSection } from "@/components/services/PillarWhyJoinSection";
+import shineStyles from "@/components/services/PillarShineTitle.module.css";
 import {
   getPillarHeroImage,
   getPillarHeroImageClass,
@@ -28,6 +29,7 @@ import {
   PORTFOLIO_WORKS,
   type PortfolioWorkSlide,
 } from "@/lib/data/portfolio-works";
+import { cn } from "@/lib/cn";
 
 /**
  * Build a full 10-card works carousel: pillar-featured clinics first
@@ -135,6 +137,7 @@ export default function PillarPage({ params }: { params: { slug: string } }) {
   if (!pillar) notFound();
 
   const hasWishes = pillar.wishes.length > 0;
+  const hasWishesShine = Boolean(pillar.wishesHighlight);
   const hasFaqs = Boolean(pillar.faqs && pillar.faqs.length > 0);
   const heroImageSrc = getPillarHeroImage(pillar.slug);
   const heroImageClass = getPillarHeroImageClass(pillar.slug);
@@ -149,14 +152,17 @@ export default function PillarPage({ params }: { params: { slug: string } }) {
       />
 
       {/* 2 — Three wishes / ecosystem intro */}
-      <Section tone="light">
+      <Section tone="light" className={cn(hasWishesShine && shineStyles.shineHost)}>
         <Container className="flex flex-col gap-12">
           {hasWishes ? (
             <>
               <SectionHeading
                 title={pillar.wishesSubtitle}
+                highlight={pillar.wishesHighlight}
+                highlightClassName={shineStyles.shineTitle}
                 tone="light"
                 align="center"
+                titleClassName="max-w-none"
               />
               <RevealGroup className="grid gap-5 md:grid-cols-3">
                 {pillar.wishes.map((wish) => (
@@ -181,6 +187,10 @@ export default function PillarPage({ params }: { params: { slug: string } }) {
               <SectionHeading
                 kicker={pillar.wishesSubtitle}
                 title={pillar.wishesTitle ?? pillar.name}
+                highlight={pillar.wishesHighlight}
+                highlightClassName={
+                  pillar.wishesHighlight ? shineStyles.shineTitle : undefined
+                }
                 tone="light"
                 align="center"
               />
@@ -203,32 +213,12 @@ export default function PillarPage({ params }: { params: { slug: string } }) {
 
       {/* 4 — Why clinics join (FindClinic only) */}
       {pillar.whyJoin && (
-        <Section tone="light">
-          <Container className="flex flex-col gap-12">
-            <SectionHeading
-              kicker={pillar.whyJoin.subtitle}
-              title={pillar.whyJoin.title}
-              tone="light"
-              subtitle={pillar.whyJoin.paragraph}
-              align="center"
-            />
-            <RevealGroup className="grid gap-4 sm:grid-cols-3">
-              {pillar.whyJoin.points.map((point) => (
-                <RevealItem key={point.title}>
-                  <GlassCard tone="light" radius="xl" className="flex h-full flex-col gap-2 p-6">
-                    <span
-                      aria-hidden="true"
-                      className="h-1 w-10 rounded-full"
-                      style={{ background: pillar.accent }}
-                    />
-                    <h3 className="font-display text-h4 text-ink-900">{point.title}</h3>
-                    <p className="text-sm leading-relaxed text-ink-700">{point.body}</p>
-                  </GlassCard>
-                </RevealItem>
-              ))}
-            </RevealGroup>
-          </Container>
-        </Section>
+        <PillarWhyJoinSection
+          kicker={pillar.whyJoin.subtitle}
+          title={pillar.whyJoin.title}
+          subtitle={pillar.whyJoin.paragraph}
+          points={pillar.whyJoin.points}
+        />
       )}
 
       {/* 5 — Specialty matrix (landing specialist design) */}
@@ -253,7 +243,16 @@ export default function PillarPage({ params }: { params: { slug: string } }) {
         />
       </Reveal>
 
-      {/* 7 — Compliance */}
+      {/* 7 — FAQs */}
+      {hasFaqs && pillar.faqs ? (
+        <FaqSection
+          items={pillar.faqs}
+          subtitle={`Everything you need to know about ${pillar.name}.`}
+          idPrefix={`pillar-${pillar.slug}`}
+        />
+      ) : null}
+
+      {/* 8 — Compliance */}
       <LandingSection
         id="compliance"
         tone="cyan"
@@ -277,25 +276,8 @@ export default function PillarPage({ params }: { params: { slug: string } }) {
         </Reveal>
       </LandingSection>
 
-      {/* 8 — FAQs */}
-      {hasFaqs && pillar.faqs && (
-        <Section tone="light" className="bg-white">
-          <Container size="prose" className="flex flex-col gap-12">
-            <header className="flex flex-col items-center gap-3 text-center">
-              <h2 className="font-display text-h2 text-balance text-ink-900">
-                Frequently asked questions
-              </h2>
-              <p className="max-w-lg text-body text-pretty text-ink-700">
-                Everything you need to know about {pillar.name}.
-              </p>
-            </header>
-            <FaqAccordion items={pillar.faqs} tone="light" />
-          </Container>
-        </Section>
-      )}
-
       {/* 9 — Final CTA */}
-      <PageFinale backdropClassName={hasFaqs ? "bg-white" : "surface-cyan"}>
+      <PageFinale backdropClassName="surface-cyan">
         <PageFinaleCTA
           kicker={pillar.finalSubtitle}
           title={pillar.finalTitle}

@@ -1,8 +1,6 @@
 import type { Faq } from "@/lib/data/faqs";
 
-export interface SpecialtyHubFaq extends Faq {
-  link?: { label: string; href: string };
-}
+export type SpecialtyHubFaq = Faq;
 
 export interface SpecialtyHubCard {
   id: string;
@@ -91,7 +89,7 @@ export interface SpecialtyHubDetail extends SpecialtyHubCard {
 export type SpecialtyHub = SpecialtyHubCard & Partial<Omit<SpecialtyHubDetail, keyof SpecialtyHubCard>>;
 
 const PAEDIATRICS_DETAIL: Omit<SpecialtyHubDetail, keyof SpecialtyHubCard> = {
-  metaTitle: "Joyful Seeds Paediatric & Developmental Clinic | Specialty Hub | Clinic Genie",
+  metaTitle: "Joyful Seeds Paediatric & Developmental Clinic | Clinic Specialties | Clinic Genie",
   metaDescription:
     "A new paediatric clinic launched into Bukit Timah with a brand, a search footprint, and a listed presence from day one. See how Clinic Genie granted the growth wish.",
   heroEyebrow: "Paediatrics + Child Development",
@@ -106,7 +104,7 @@ const PAEDIATRICS_DETAIL: Omit<SpecialtyHubDetail, keyof SpecialtyHubCard> = {
   heroSecondaryCta: { label: "See How the Magic Works", href: "#granted-wish" },
   patientDiff: {
     kicker: "Before the work",
-    title: "What stood in the way.",
+    title: "What stood in the way",
     highlight: "way",
     subtitle:
       "Two experienced consultant paediatricians, a beautiful idea about how children should be cared for, and a starting position of absolute zero online.",
@@ -404,7 +402,7 @@ export const SPECIALTY_HUBS: SpecialtyHub[] = [
 
 export interface SpecialtyCategoryItem {
   name: string;
-  /** Specialty hub slug when a dedicated hub or work page exists */
+  /** Clinic specialties slug when a dedicated specialty or work page exists */
   slug?: string;
 }
 
@@ -576,13 +574,13 @@ export function getPublishedSpecialtyHubs(): SpecialtyHub[] {
 }
 
 export function getSpecialtyHubHref(hub: SpecialtyHubCard): string {
-  return hub.published ? `/specialty-hub/${hub.slug}` : "/specialty-hub";
+  return hub.published ? `/clinic-specialties/${hub.slug}` : "/clinic-specialties";
 }
 
 export function getSpecialtyCategoryItemHref(item: SpecialtyCategoryItem): string {
-  if (!item.slug) return "/specialty-hub";
+  if (!item.slug) return "/clinic-specialties";
   const hub = getSpecialtyHub(item.slug);
-  return hub ? getSpecialtyHubHref(hub) : "/specialty-hub";
+  return hub ? getSpecialtyHubHref(hub) : "/clinic-specialties";
 }
 
 export function isSpecialtyHubDetail(hub: SpecialtyHub): hub is SpecialtyHubDetail {

@@ -97,7 +97,7 @@ export function ProjectCaseStudy({
         <Container className="flex flex-col gap-12">
           <SectionHeading
             kicker="Before the work"
-            title="What stood in the way."
+            title="What stood in the way"
             highlight="way"
             subtitle={
               study.beforeIntro ??
@@ -314,30 +314,6 @@ export function ProjectCaseStudy({
         </Container>
       </Section>
 
-      <Section tone="dark">
-        <Container className="flex flex-col gap-12">
-          <SectionHeading
-            kicker="Built for responsible healthcare marketing"
-            title="Clarity without overclaiming."
-            highlight="overclaiming"
-            subtitle={
-              study.complianceIntro ??
-              "The work was designed to help patients understand the clinic while protecting the doctor's reputation and staying within healthcare advertising rules."
-            }
-          />
-          <RevealGroup className="grid gap-5 sm:grid-cols-2">
-            {study.compliancePoints.map((point) => (
-              <RevealItem key={point.title} className="h-full">
-                <GlassCard tone="dark" radius="xl" hover className="flex h-full flex-col gap-4 p-7">
-                  <h3 className="font-display text-h4 text-onDark">{point.title}</h3>
-                  <p className="text-base text-onDark-muted">{point.body}</p>
-                </GlassCard>
-              </RevealItem>
-            ))}
-          </RevealGroup>
-        </Container>
-      </Section>
-
       <Section tone="light">
         <Container className="flex flex-col gap-12">
           <SectionHeading
@@ -430,6 +406,30 @@ export function ProjectCaseStudy({
           </Container>
         </Section>
       ) : null}
+
+      <Section tone="dark">
+        <Container className="flex flex-col gap-12">
+          <SectionHeading
+            kicker="Built for responsible healthcare marketing"
+            title="Clarity without overclaiming."
+            highlight="overclaiming"
+            subtitle={
+              study.complianceIntro ??
+              "The work was designed to help patients understand the clinic while protecting the doctor's reputation and staying within healthcare advertising rules."
+            }
+          />
+          <RevealGroup className="grid gap-5 sm:grid-cols-2">
+            {study.compliancePoints.map((point) => (
+              <RevealItem key={point.title} className="h-full">
+                <GlassCard tone="dark" radius="xl" hover className="flex h-full flex-col gap-4 p-7">
+                  <h3 className="font-display text-h4 text-onDark">{point.title}</h3>
+                  <p className="text-base text-onDark-muted">{point.body}</p>
+                </GlassCard>
+              </RevealItem>
+            ))}
+          </RevealGroup>
+        </Container>
+      </Section>
 
       <PageFinale backdropClassName="bg-night-800">
         <PageFinaleCTA

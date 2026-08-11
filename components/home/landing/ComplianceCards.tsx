@@ -9,7 +9,7 @@ export function ComplianceCards(_props: { tone?: "light" | "dark" } = {}) {
   return (
     <div className="relative left-1/2 w-screen -translate-x-1/2 px-[var(--page-pad)]">
       <motion.div
-        className="mx-auto grid w-full max-w-[96rem] grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-[2fr_1fr_1fr_1fr_1fr] lg:gap-5"
+        className="mx-auto grid w-full max-w-[96rem] grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-5 lg:gap-5"
         initial="hidden"
         whileInView="show"
         viewport={{ once: true, margin: "-10% 0px" }}

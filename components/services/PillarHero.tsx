@@ -8,19 +8,12 @@ import { ParallaxBackground } from "@/components/ui/ParallaxBackground";
 import { ease } from "@/lib/motion";
 import type { CorePillar } from "@/lib/data/pillars";
 
-const HERO_PROOF = [
-  { n: "01", label: "Research-led" },
-  { n: "02", label: "Brand-aligned" },
-  { n: "03", label: "Trust-focused" },
-] as const;
-
 const t = {
   breadcrumb: 0.05,
   serviceName: 0.12,
   headline: 0.22,
   description: 0.38,
-  proof: 0.48,
-  cta: 0.72,
+  cta: 0.55,
 } as const;
 
 type PillarHeroProps = {
@@ -97,9 +90,10 @@ export function PillarHero({
             </p>
           </motion.div>
 
-          <div className="mt-5 overflow-hidden sm:mt-6">
+          <div className="mt-5 overflow-hidden pb-[0.22em] sm:mt-6">
             <motion.p
-              className="font-display text-h3 text-balance text-ink-900 lg:text-h2"
+              className="font-display text-h3 text-balance leading-[1.2] lg:text-h2 lg:leading-[1.18]"
+              style={{ color: pillar.accent }}
               initial={
                 reduceMotion
                   ? false
@@ -124,41 +118,6 @@ export function PillarHero({
               </p>
             ))}
           </motion.div>
-
-          <motion.ul
-            className="mt-6 flex w-full max-w-md list-none flex-wrap gap-x-8 gap-y-4 p-0 sm:mt-7"
-            initial="hidden"
-            animate="show"
-            variants={{
-              hidden: {},
-              show: {
-                transition: {
-                  staggerChildren: reduceMotion ? 0 : 0.06,
-                  delayChildren: reduceMotion ? 0 : t.proof,
-                },
-              },
-            }}
-          >
-            {HERO_PROOF.map((item) => (
-              <motion.li
-                key={item.n}
-                className="flex min-w-[5.5rem] flex-col gap-1"
-                variants={{
-                  hidden: reduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 8 },
-                  show: {
-                    opacity: 1,
-                    y: 0,
-                    transition: { duration: 0.45, ease: ease.glide },
-                  },
-                }}
-              >
-                <span className="font-sans text-kicker text-genie-700">{item.n}</span>
-                <span className="font-sans text-kicker uppercase text-ink-800">
-                  {item.label}
-                </span>
-              </motion.li>
-            ))}
-          </motion.ul>
 
           <motion.div
             className="mt-7 flex w-full flex-col flex-wrap items-stretch gap-3 sm:w-auto sm:flex-row sm:items-center sm:gap-4"

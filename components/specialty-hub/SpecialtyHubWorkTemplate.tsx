@@ -151,16 +151,11 @@ function DiagnosisLensesSection({
   );
 }
 
-const SNAPSHOT_KICKER =
-  "border-white/40 bg-white/30 text-white";
-
 function SnapshotItem({ label, value }: { label: string; value: string }) {
   return (
     <div className="flex flex-col gap-1.5">
       <dt>
-        <Kicker tone="dark" className={SNAPSHOT_KICKER}>
-          {label}
-        </Kicker>
+        <Kicker tone="dark">{label}</Kicker>
       </dt>
       <dd className="text-sm leading-relaxed text-onDark-muted sm:text-base">{value}</dd>
     </div>
@@ -171,13 +166,15 @@ export function SpecialtyHubWorkTemplate({
   study,
   image = "/works/joyfulseeds.png",
   imageAlt,
+  heroImage = "/specialty-hub/hero-bg.png",
   logo,
   logoAlt,
-  backLink = { href: "/specialty-hub", label: "Clinic Specialties" },
+  backLink = { href: "/clinic-specialties", label: "Clinic Specialties" },
 }: {
   study: CaseStudy;
   image?: string;
   imageAlt?: string;
+  heroImage?: string;
   logo?: string;
   logoAlt?: string;
   backLink?: { href: string; label: string };
@@ -195,7 +192,7 @@ export function SpecialtyHubWorkTemplate({
         className="relative flex min-h-[64vh] items-center overflow-hidden bg-white pb-16 pt-[calc(3.25rem+env(safe-area-inset-top,0px))] text-ink-900 lg:pb-24 lg:pt-36"
       >
         <ParallaxBackground
-          src="/specialty-hub/hero-bg.png"
+          src={heroImage}
           priority
           imageClassName="object-cover object-[30%_center] lg:object-[18%_center] lg:-translate-x-[4%]"
         >
@@ -245,7 +242,7 @@ export function SpecialtyHubWorkTemplate({
                   {study.name}
                 </p>
               </div>
-              <h1 className="max-w-prose font-display text-h1 font-semibold leading-none tracking-tight text-ink-900 lg:text-display">
+              <h1 className="max-w-prose font-display text-h1 font-semibold leading-[1.15] tracking-tight text-ink-900 lg:text-display lg:leading-[1.12]">
                 {renderHeroLine(study.line, study.heroHighlight)}
               </h1>
             </div>
@@ -292,7 +289,7 @@ export function SpecialtyHubWorkTemplate({
       </section>
 
       {/* 02 Project snapshot */}
-      <Section tone="dark" className="bg-cg-teal-20 py-12 [background-image:none] md:py-16">
+      <Section tone="dark" className="bg-night-800 py-12 [background-image:none] md:py-16">
         <Container className="flex flex-col gap-6">
           <SectionHeading
             kicker="Project snapshot"
@@ -316,7 +313,7 @@ export function SpecialtyHubWorkTemplate({
         <Container className="flex flex-col gap-12">
           <SectionHeading
             kicker="Before the work"
-            title="What stood in the way."
+            title="What stood in the way"
             highlight="way"
             tone="light"
             subtitle={study.beforeIntro}
@@ -558,46 +555,7 @@ export function SpecialtyHubWorkTemplate({
         </Container>
       </Section>
 
-      {/* 09 Compliance — homepage ComplianceCards pattern */}
-      <Section tone="light" className="py-24 md:py-24">
-        <Container className="flex flex-col gap-12">
-          <Reveal>
-            <LandingIntro
-              kicker="Built for responsible healthcare marketing"
-              title="Clarity without overclaiming."
-              highlight="overclaiming"
-              subtitle={study.complianceIntro}
-            />
-          </Reveal>
-
-          <div className="relative left-1/2 w-screen -translate-x-1/2 px-[var(--page-pad)]">
-            <RevealGroup className="mx-auto grid w-full max-w-[96rem] grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
-              {study.compliancePoints.map((point) => (
-                <RevealItem key={point.title} className="flex h-full min-w-0">
-                  <FeatureInfoCard
-                    title={point.title}
-                    body={point.body}
-                    image={point.image}
-                    alt={point.alt}
-                    compact
-                    className="h-full min-h-0"
-                  />
-                </RevealItem>
-              ))}
-            </RevealGroup>
-          </div>
-
-          <Reveal delay={0.08}>
-            <div className="flex justify-center">
-              <MagneticButton href="/services#compliance" size="md" withMiniOrb>
-                How We Keep You Compliant
-              </MagneticButton>
-            </div>
-          </Reveal>
-        </Container>
-      </Section>
-
-      {/* 10 What changed — pillar mechanics layout */}
+      {/* 09 What changed — pillar mechanics layout */}
       <section
         id="what-changed"
         data-nav-theme="dark"
@@ -644,8 +602,47 @@ export function SpecialtyHubWorkTemplate({
         </div>
       </section>
 
+      {/* 10 Compliance — homepage ComplianceCards pattern */}
+      <Section tone="light" className="py-24 md:py-24">
+        <Container className="flex flex-col gap-12">
+          <Reveal>
+            <LandingIntro
+              kicker="Built for responsible healthcare marketing"
+              title="Clarity without overclaiming."
+              highlight="overclaiming"
+              subtitle={study.complianceIntro}
+            />
+          </Reveal>
+
+          <div className="relative left-1/2 w-screen -translate-x-1/2 px-[var(--page-pad)]">
+            <RevealGroup className="mx-auto grid w-full max-w-[96rem] grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+              {study.compliancePoints.map((point) => (
+                <RevealItem key={point.title} className="flex h-full min-w-0">
+                  <FeatureInfoCard
+                    title={point.title}
+                    body={point.body}
+                    image={point.image}
+                    alt={point.alt}
+                    compact
+                    className="h-full min-h-0"
+                  />
+                </RevealItem>
+              ))}
+            </RevealGroup>
+          </div>
+
+          <Reveal delay={0.08}>
+            <div className="flex justify-center">
+              <MagneticButton href="/services#compliance" size="md" withMiniOrb>
+                How We Keep You Compliant
+              </MagneticButton>
+            </div>
+          </Reveal>
+        </Container>
+      </Section>
+
       {/* 11 Final CTA */}
-      <PageFinale backdropClassName="bg-night-800">
+      <PageFinale backdropClassName="surface-light">
         <PageFinaleCTA
           kicker="Make your first wish"
           title="Want a clearer patient journey for your clinic?"

@@ -4,6 +4,8 @@ export interface SpecialtyHubWorkMeta {
   studySlug: string;
   image: string;
   imageAlt: string;
+  /** Optional specialty hero background under /public/specialty-hub */
+  heroImage?: string;
   /** Client logo for the case-study hero brand mark */
   logo?: string;
   logoAlt?: string;
@@ -13,7 +15,7 @@ export const HUB_CASE_STUDY_META: Record<string, SpecialtyHubWorkMeta> = {
   "aquatic-physio": {
     studySlug: "aquaphysio",
     image: "/specialty-hub/Aquatic.png",
-    imageAlt: "AquaPhysio aquatic physiotherapy specialty hub visual",
+    imageAlt: "AquaPhysio aquatic physiotherapy clinic specialties visual",
     logo: "/clients/aquaphysio-rehab-center.png",
     logoAlt: "AquaPhysio Rehab Centre",
   },
@@ -26,7 +28,7 @@ export const HUB_CASE_STUDY_META: Record<string, SpecialtyHubWorkMeta> = {
   },
   dermatology: {
     studySlug: "msdc",
-    image: "/works/msdc.png",
+    image: "/works/msdc/msdc-paperbag.jpg",
     imageAlt: "Medical and Surgical Dermatology Clinic website and brand work",
     logo: "/clients/medical-surgical-dermatology.png",
     logoAlt: "Medical & Surgical Dermatology",
@@ -49,6 +51,7 @@ export const HUB_CASE_STUDY_META: Record<string, SpecialtyHubWorkMeta> = {
     studySlug: "sunrise-heart",
     image: "/works/sunrise-heart.png",
     imageAlt: "Sunrise Heart Specialist Clinic website and brand work",
+    heroImage: "/specialty-hub/specialty-cardiology.png",
     logo: "/clients/sunrise-heart.png",
     logoAlt: "Sunrise Heart Clinic",
   },
@@ -107,7 +110,7 @@ export const SPECIALTY_HUB_WORKS: CaseStudy[] = [
     before: [
       {
         title: "A differentiator anyone can claim",
-        body: "A heated therapy pool inside Camden Medical Centre is unusual. The phrase \"aqua therapy\" is not. The distinction had to be built into the site, not just asserted on it.",
+        body: "A heated therapy pool inside Camden Medical Centre is unusual. The phrase \"aqua therapy\" is not. The ƒdistinction had to be built into the site, not just asserted on it.",
       },
       {
         title: "Nobody searches for the solution",

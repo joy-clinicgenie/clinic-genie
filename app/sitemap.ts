@@ -10,13 +10,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/",
     "/about",
     "/services",
-    "/specialty-hub",
+    "/clinic-specialties",
     "/portfolio",
     "/contact",
     "/terms",
   ];
 
-  const specialtyHubRoutes = getPublishedSpecialtyHubs().map((hub) => `/specialty-hub/${hub.slug}`);
+  const specialtyHubRoutes = getPublishedSpecialtyHubs().map(
+    (hub) => `/clinic-specialties/${hub.slug}`
+  );
 
   return [...staticRoutes, ...specialtyHubRoutes].map((path) => ({
     url: `${BASE}${path === "/" ? "" : path}`,

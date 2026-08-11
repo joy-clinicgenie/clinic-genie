@@ -268,10 +268,15 @@
 
   /* Genie Cyan gradient text (dark surfaces only) */
   .genie-text {
+    display: inline-block;
+    padding-bottom: 0.12em;
+    margin-bottom: -0.12em;
     background-image: var(--genie-grad);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
   }
 
   .hairline-glow {

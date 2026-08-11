@@ -2,8 +2,6 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
 import { Section } from "@/components/ui/Section";
 import { Container } from "@/components/ui/Container";
 import { Kicker } from "@/components/ui/Kicker";
@@ -12,84 +10,11 @@ import { Reveal, RevealGroup, RevealItem } from "@/components/ui/Reveal";
 import { MagneticButton } from "@/components/ui/MagneticButton";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { FeatureInfoCard } from "@/components/ui/FeatureInfoCard";
+import { FaqSection } from "@/components/ui/FaqSection";
 import { PageFinale } from "@/components/ui/PageFinale";
 import { PageFinaleCTA } from "@/components/ui/PageFinaleCTA";
 import { ParallaxBackground } from "@/components/ui/ParallaxBackground";
-import { cn } from "@/lib/cn";
 import type { SpecialtyHubDetail } from "@/lib/data/specialty-hubs";
-
-function HubFaqAccordion({ items }: { items: SpecialtyHubDetail["faqs"] }) {
-  const [open, setOpen] = useState<number | null>(0);
-
-  return (
-    <div className="flex flex-col gap-3">
-      {items.map((item, i) => {
-        const isOpen = open === i;
-        const panelId = `hub-faq-panel-${i}`;
-        const btnId = `hub-faq-trigger-${i}`;
-        return (
-          <div
-            key={i}
-            className={cn(
-              "glass overflow-hidden rounded-2xl",
-              isOpen && "shadow-glow-sm"
-            )}
-          >
-            <button
-              id={btnId}
-              type="button"
-              onClick={() => {
-                setOpen(isOpen ? null : i);
-              }}
-              aria-expanded={isOpen}
-              aria-controls={panelId}
-              className="flex w-full items-center justify-between gap-4 p-5 text-left"
-            >
-              <span className="font-display text-base font-semibold text-onDark">{item.q}</span>
-              <motion.span
-                aria-hidden="true"
-                animate={{ rotate: isOpen ? 45 : 0 }}
-                transition={{ duration: 0.2 }}
-                className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-genie-500/15 text-genie-300"
-              >
-                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-                  <path d="M7 1v12M1 7h12" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
-                </svg>
-              </motion.span>
-            </button>
-            <AnimatePresence initial={false}>
-              {isOpen && (
-                <motion.div
-                  id={panelId}
-                  role="region"
-                  aria-labelledby={btnId}
-                  initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: "auto", opacity: 1 }}
-                  exit={{ height: 0, opacity: 0 }}
-                  transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-                  className="overflow-hidden"
-                >
-                  <div className="flex flex-col gap-3 px-5 pb-5">
-                    <p className="text-sm leading-relaxed text-onDark-muted">{item.a}</p>
-                    {item.link && (
-                      <Link
-                        href={item.link.href}
-                        className="inline-flex w-fit items-center gap-1.5 text-sm font-semibold text-genie-700 transition-colors hover:text-genie-900"
-                      >
-                        {item.link.label}
-                        <span aria-hidden="true">→</span>
-                      </Link>
-                    )}
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
-        );
-      })}
-    </div>
-  );
-}
 
 export function SpecialtyHubTemplate({ hub }: { hub: SpecialtyHubDetail }) {
   return (
@@ -119,10 +44,10 @@ export function SpecialtyHubTemplate({ hub }: { hub: SpecialtyHubDetail }) {
         <Container className="relative z-10 w-full">
           <div className="flex max-w-xl flex-col items-start text-left">
             <Link
-              href="/specialty-hub"
+              href="/clinic-specialties"
               className="mb-5 inline-flex w-fit items-center gap-2 font-sans text-kicker uppercase text-genie-700 transition-colors hover:text-genie-900"
             >
-              <span aria-hidden="true">←</span> Specialty Hub
+              <span aria-hidden="true">←</span> Clinic Specialties
             </Link>
 
             <h1 className="font-display text-h1 text-balance text-ink-900">
@@ -342,7 +267,14 @@ export function SpecialtyHubTemplate({ hub }: { hub: SpecialtyHubDetail }) {
         </Container>
       </Section>
 
-      {/* 6 — Compliance safeguard */}
+      {/* 6 — FAQ */}
+      <FaqSection
+        items={hub.faqs}
+        subtitle={`Common questions about ${hub.name.toLowerCase()} clinic marketing and growth.`}
+        idPrefix={`hub-${hub.slug}`}
+      />
+
+      {/* 7 — Compliance safeguard */}
       <Section tone="light">
         <Container className="flex flex-col gap-8">
           <SectionHeading
@@ -363,16 +295,8 @@ export function SpecialtyHubTemplate({ hub }: { hub: SpecialtyHubDetail }) {
         </Container>
       </Section>
 
-      {/* 7 — FAQ */}
-      <Section tone="dark">
-        <Container size="prose" className="flex flex-col gap-10">
-          <SectionHeading kicker="Frequently asked questions" title={`${hub.name}, explained.`} align="center" />
-          <HubFaqAccordion items={hub.faqs} />
-        </Container>
-      </Section>
-
       {/* 8 — Final CTA */}
-      <PageFinale backdropClassName="bg-night-800">
+      <PageFinale backdropClassName="surface-light">
         <PageFinaleCTA
           kicker={hub.finalCta.subtitle}
           title={hub.finalCta.title}

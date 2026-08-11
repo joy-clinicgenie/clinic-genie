@@ -84,7 +84,7 @@ export const PORTFOLIO_WORKS: PortfolioWorkSlide[] = [
     line: "Your Health Nurtured",
     image: "/works/cedar.png",
     gradient: "linear-gradient(145deg, #F7FAFB 0%, #EAFBFB 45%, #54B9CE 100%)",
-    href: "/specialty-hub/endocrinology",
+    href: "/clinic-specialties/endocrinology",
   },
   {
     id: "thsc",
@@ -101,7 +101,7 @@ export const PORTFOLIO_WORKS: PortfolioWorkSlide[] = [
     line: "Clearer pathways for specialist skin care",
     image: "/works/msdc.png",
     gradient: "linear-gradient(145deg, #F3F5F6 0%, #C9E4EA 50%, #217B8E 100%)",
-    href: "/specialty-hub/dermatology",
+    href: "/clinic-specialties/dermatology",
   },
   {
     id: "sdic",
@@ -110,7 +110,7 @@ export const PORTFOLIO_WORKS: PortfolioWorkSlide[] = [
     line: "Implanting the foundation of a timeless smile.",
     image: "/works/sdic.png",
     gradient: "linear-gradient(145deg, #F7FAFB 0%, #D8EEF5 50%, #3A8093 100%)",
-    href: "/specialty-hub/dental",
+    href: "/clinic-specialties/dental",
   },
   {
     id: "joyful-seeds",
@@ -119,7 +119,7 @@ export const PORTFOLIO_WORKS: PortfolioWorkSlide[] = [
     line: "Planting joy. Harvesting potential.",
     image: "/works/joyfulseeds.png",
     gradient: "linear-gradient(145deg, #F7FAFB 0%, #EAFBFB 50%, #78E2DD 100%)",
-    href: "/specialty-hub/paediatrics",
+    href: "/clinic-specialties/paediatrics",
   },
   {
     id: "sbsn",
@@ -128,7 +128,7 @@ export const PORTFOLIO_WORKS: PortfolioWorkSlide[] = [
     line: "Specialist clarity for complex care journeys",
     image: "/works/sbsn.png",
     gradient: "linear-gradient(145deg, #F7FAFB 0%, #D8EEF5 50%, #3A8093 100%)",
-    href: "/specialty-hub/neurology",
+    href: "/clinic-specialties/neurology",
   },
   {
     id: "sunrise-heart",
@@ -137,7 +137,7 @@ export const PORTFOLIO_WORKS: PortfolioWorkSlide[] = [
     line: "Trusted pathways for heart health discovery",
     image: "/works/sunrise-heart.png",
     gradient: "linear-gradient(145deg, #F7FAFB 0%, #EAFBFB 45%, #54B9CE 100%)",
-    href: "/specialty-hub/cardiology",
+    href: "/clinic-specialties/cardiology",
   },
   {
     id: "tac",
@@ -146,7 +146,7 @@ export const PORTFOLIO_WORKS: PortfolioWorkSlide[] = [
     line: "Face it. Fix it.",
     image: "/works/tac.png",
     gradient: "linear-gradient(145deg, #F7FAFB 0%, #EAFBFB 50%, #78E2DD 100%)",
-    href: "/specialty-hub/acne",
+    href: "/clinic-specialties/acne",
   },
   {
     id: "straits-geriatrics",

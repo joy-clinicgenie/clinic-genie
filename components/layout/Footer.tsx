@@ -5,7 +5,7 @@ import { SITE } from "@/lib/data/nav";
 const companyLinks = [
   { label: "About Us", href: "/about" },
   { label: "Services", href: "/services" },
-  { label: "Clinic Specialties", href: "/specialty-hub" },
+  { label: "Clinic Specialties", href: "/clinic-specialties" },
   { label: "Our Works", href: "/portfolio" },
   { label: "Genie Tips", href: "/genie-tips" },
   { label: "Contact", href: "/contact" },

@@ -33,7 +33,7 @@ export const CLIENT_LOGOS: ClientLogo[] = [
   {
     src: "/clients/joyful-seeds.png",
     alt: "Joyful Seeds Paediatric & Developmental Clinic",
-    href: "/specialty-hub/paediatrics",
+    href: "/clinic-specialties/paediatrics",
     width: 503,
     height: 180,
     size: "lg",
@@ -41,7 +41,7 @@ export const CLIENT_LOGOS: ClientLogo[] = [
   {
     src: "/clients/singapore-brain-spine-nerves-center.png",
     alt: "Singapore Brain Spine Nerves Center",
-    href: "/specialty-hub/neurology",
+    href: "/clinic-specialties/neurology",
     width: 446,
     height: 180,
     size: "lg",
@@ -49,7 +49,7 @@ export const CLIENT_LOGOS: ClientLogo[] = [
   {
     src: "/clients/singapore-dental-implant-centre.png",
     alt: "Singapore Dental Implant Centre",
-    href: "/specialty-hub/dental",
+    href: "/clinic-specialties/dental",
     width: 451,
     height: 180,
     size: "lg",
@@ -57,7 +57,7 @@ export const CLIENT_LOGOS: ClientLogo[] = [
   {
     src: "/clients/aquaphysio-rehab-center.png",
     alt: "AquaPhysio Rehab Centre",
-    href: "/specialty-hub/aquatic-physio",
+    href: "/clinic-specialties/aquatic-physio",
     width: 156,
     height: 180,
     size: "lg",
@@ -73,7 +73,7 @@ export const CLIENT_LOGOS: ClientLogo[] = [
   {
     src: "/clients/the-acne-clinic.png",
     alt: "The Acne Clinic",
-    href: "/specialty-hub/acne",
+    href: "/clinic-specialties/acne",
     width: 291,
     height: 180,
     size: "xl",

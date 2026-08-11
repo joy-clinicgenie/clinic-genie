@@ -20,7 +20,7 @@ export function generateMetadata({ params }: { params: { slug: string } }): Meta
     const study = getCaseStudy(work.studySlug);
     if (study) {
       return {
-        title: `${study.name} | Specialty Hub | Clinic Genie`,
+        title: `${study.name} | Clinic Specialties | Clinic Genie`,
         description: study.line,
       };
     }
@@ -29,8 +29,8 @@ export function generateMetadata({ params }: { params: { slug: string } }): Meta
   const hub = getSpecialtyHub(params.slug);
   if (!hub?.published || !hub.metaTitle) {
     return {
-      title: "Specialty hub not found | Clinic Genie",
-      description: "The specialty hub you're looking for couldn't be conjured.",
+      title: "Clinic specialty not found | Clinic Genie",
+      description: "The clinic specialty you're looking for couldn't be conjured.",
     };
   }
   return {
@@ -39,7 +39,7 @@ export function generateMetadata({ params }: { params: { slug: string } }): Meta
   };
 }
 
-export default function SpecialtyHubDetailPage({ params }: { params: { slug: string } }) {
+export default function ClinicSpecialtyDetailPage({ params }: { params: { slug: string } }) {
   const work = getSpecialtyHubWorkMeta(params.slug);
   if (work) {
     const study = getCaseStudy(work.studySlug);
@@ -50,9 +50,10 @@ export default function SpecialtyHubDetailPage({ params }: { params: { slug: str
         study={study}
         image={work.image}
         imageAlt={work.imageAlt}
+        heroImage={work.heroImage}
         logo={work.logo}
         logoAlt={work.logoAlt}
-        backLink={{ href: "/specialty-hub", label: "Clinic Specialties" }}
+        backLink={{ href: "/clinic-specialties", label: "Clinic Specialties" }}
       />
     );
   }

@@ -3,15 +3,18 @@ import { cn } from "@/lib/cn";
 import { Kicker } from "./Kicker";
 import { Reveal } from "./Reveal";
 
-function renderHighlight(title: string, highlight?: string, tone: "dark" | "light" = "dark") {
+function renderHighlight(
+  title: string,
+  highlight?: string,
+  highlightClassName = "genie-text"
+) {
   if (!highlight || !title.includes(highlight)) return title;
   const [before, ...rest] = title.split(highlight);
   const after = rest.join(highlight);
-  const cls = "genie-text";
   return (
     <>
       {before}
-      <span className={cls}>{highlight}</span>
+      <span className={highlightClassName}>{highlight}</span>
       {after}
     </>
   );
@@ -27,6 +30,7 @@ export function SectionHeading({
   kicker,
   title,
   highlight,
+  highlightClassName,
   subtitle,
   description,
   align = "left",
@@ -40,6 +44,7 @@ export function SectionHeading({
   kicker?: string;
   title: ReactNode;
   highlight?: string;
+  highlightClassName?: string;
   subtitle?: string;
   description?: string;
   align?: "left" | "center";
@@ -52,7 +57,9 @@ export function SectionHeading({
 }) {
   const Tag = as;
   const titleContent =
-    typeof title === "string" ? renderHighlight(title, highlight, tone) : title;
+    typeof title === "string"
+      ? renderHighlight(title, highlight, highlightClassName)
+      : title;
   const hasSubheading = Boolean(subtitle && description);
   const bodyText = description ?? subtitle;
 
@@ -71,13 +78,13 @@ export function SectionHeading({
           </Kicker>
         </Reveal>
       )}
-      <Reveal variant="up" delay={0.05} className="overflow-hidden">
+      <Reveal variant="up" delay={0.05}>
         <Tag
           className={cn(
             SIZE[as],
             "whitespace-pre-line text-balance",
             tone === "dark" ? "text-onDark" : "text-ink-900",
-            align === "center" && "mx-auto max-w-3xl",
+            align === "center" && "mx-auto max-w-5xl",
             titleClassName
           )}
         >
