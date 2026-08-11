@@ -30,6 +30,8 @@ export type NotionPost = {
   tags: string[];
   category: string | null;
   noIndex?: boolean;
+  /** Stable cover URL proxied through /api/notion-image */
+  coverImage?: string | null;
 };
 
 export type NotionPostWithContent = NotionPost & {
@@ -234,6 +236,12 @@ async function resolveTagNames(
   return byPage;
 }
 
+function getCoverImage(page: PageObjectResponse): string | null {
+  if (getCheckbox(page, ["Hide Cover", "Hide cover"])) return null;
+  if (!page.cover) return null;
+  return `/api/notion-image/cover-${page.id}`;
+}
+
 function mapPageToPost(
   page: PageObjectResponse,
   tagsByPage?: Map<string, string[]>
@@ -253,6 +261,7 @@ function mapPageToPost(
     tags,
     category: category ?? tags[0] ?? null,
     noIndex: getCheckbox(page, ["Do not index", "No Index"]),
+    coverImage: getCoverImage(page),
   };
 }
 
@@ -434,7 +443,7 @@ export async function getPostBySlug(
 
   const mdBlocks = await n2m.pageToMarkdown(page.id);
   const mdString = n2m.toMarkdownString(
-    convertToggleableHeadingsToDetails(mdBlocks)
+    rewriteNotionImageSources(convertToggleableHeadingsToDetails(mdBlocks))
   );
   const markdown = mdString.parent?.trim() ?? "";
 
@@ -450,6 +459,32 @@ type NotionMdBlock = {
   parent: string;
   children: NotionMdBlock[];
 };
+
+/**
+ * Replace short-lived Notion S3 URLs with a stable proxy path keyed by block id.
+ */
+function rewriteNotionImageSources(blocks: NotionMdBlock[]): NotionMdBlock[] {
+  return blocks.map((block) => {
+    const children = block.children?.length
+      ? rewriteNotionImageSources(block.children)
+      : [];
+
+    if (block.type === "image" && block.blockId) {
+      const altMatch = block.parent.match(/^!\[(.*?)\]/);
+      const alt = altMatch?.[1]?.trim() || "Article image";
+      return {
+        ...block,
+        parent: `![${alt}](/api/notion-image/${block.blockId})`,
+        children,
+      };
+    }
+
+    return {
+      ...block,
+      children,
+    };
+  });
+}
 
 /**
  * Notion toggle headings become nested markdown (rendered as dark code blocks).

@@ -89,11 +89,28 @@ export default async function GenieTipPage({ params }: GenieTipPageProps) {
                 ))}
               </ul>
             ) : null}
+
+            {post.coverImage ? (
+              <figure className="mt-10 overflow-hidden rounded-2xl bg-cg-mist shadow-card">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={post.coverImage}
+                  alt=""
+                  className="aspect-[16/9] h-auto w-full object-cover"
+                />
+              </figure>
+            ) : null}
           </Container>
         </header>
 
         <Container size="article" className="py-12 sm:py-16">
-          <NotionArticleBody markdown={post.markdown} />
+          {post.markdown ? (
+            <NotionArticleBody markdown={post.markdown} />
+          ) : (
+            <p className="text-lead text-ink-700">
+              This article is still being prepared. Please check back shortly.
+            </p>
+          )}
         </Container>
       </article>
     </div>

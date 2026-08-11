@@ -17,7 +17,20 @@ export function NotionPostCard({ post }: { post: NotionPost }) {
       aria-label={`Read: ${post.title}`}
       className="group block h-full rounded-xl focus-visible:outline-none"
     >
-      <Card className="h-full transition-[transform,box-shadow] duration-ui ease-out-soft group-hover:-translate-y-1 group-hover:shadow-md motion-reduce:group-hover:translate-y-0 group-focus-visible:ring-2 group-focus-visible:ring-genie-500/50">
+      <Card className="h-full overflow-hidden transition-[transform,box-shadow] duration-ui ease-out-soft group-hover:-translate-y-1 group-hover:shadow-md motion-reduce:group-hover:translate-y-0 group-focus-visible:ring-2 group-focus-visible:ring-genie-500/50">
+        {post.coverImage ? (
+          <div className="relative aspect-[16/10] overflow-hidden bg-cg-mist">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={post.coverImage}
+              alt=""
+              loading="lazy"
+              decoding="async"
+              className="h-full w-full object-cover transition-transform duration-ui group-hover:scale-[1.02] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
+            />
+          </div>
+        ) : null}
+
         <CardHeader>
           {post.dateLabel ? (
             <time
