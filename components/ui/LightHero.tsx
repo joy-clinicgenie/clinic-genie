@@ -61,6 +61,8 @@ export function LightHero({
     alt?: string;
     /** Overlay and copy treatment. Use "dark" for photo heroes with light text. */
     treatment?: "light" | "dark";
+    /** Applied to the background Image (object-position, etc.). */
+    imageClassName?: string;
   };
   /** Section fill when no background image is set. */
   surface?: "mist" | "white";
@@ -193,6 +195,7 @@ export function LightHero({
           src={backgroundImage.src}
           alt={backgroundImage.alt ?? ""}
           priority
+          imageClassName={backgroundImage.imageClassName}
         >
           {darkImageHero ? (
             <div

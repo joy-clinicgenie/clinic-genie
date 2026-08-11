@@ -26,22 +26,27 @@ const t = {
 type PillarHeroProps = {
   pillar: CorePillar;
   wishImageSrc?: string;
+  imageClassName?: string;
 };
 
-export function PillarHero({ pillar, wishImageSrc }: PillarHeroProps) {
+export function PillarHero({
+  pillar,
+  wishImageSrc,
+  imageClassName = "object-cover object-center lg:object-right",
+}: PillarHeroProps) {
   const reduceMotion = useReducedMotion();
 
   return (
     <section
       data-nav-theme="light"
-      className="relative flex min-h-[64vh] items-center overflow-hidden bg-white pb-16 pt-[calc(3.25rem+env(safe-area-inset-top,0px))] text-ink-900 lg:pb-24 lg:pt-36"
+      className="relative flex min-h-[40rem] items-center overflow-hidden bg-white pb-16 pt-[calc(3.25rem+env(safe-area-inset-top,0px))] text-ink-900 sm:min-h-[42rem] lg:h-[46rem] lg:min-h-[46rem] lg:pb-24 lg:pt-36"
     >
       {wishImageSrc ? (
         <ParallaxBackground
           src={wishImageSrc}
           priority
           entranceScale
-          imageClassName="object-cover object-center lg:object-right"
+          imageClassName={imageClassName}
         >
           <div
             aria-hidden="true"

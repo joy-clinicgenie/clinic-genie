@@ -35,6 +35,8 @@ export default function SpecialtyHubPage() {
           src: "/specialty-hub/hero-bg.png",
           alt: "",
           treatment: "light",
+          imageClassName:
+            "object-cover object-[30%_center] lg:object-[74%_center] lg:-translate-x-[4%]",
         }}
         minHeight="min-h-[78vh]"
       />

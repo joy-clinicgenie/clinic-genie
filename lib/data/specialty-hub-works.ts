@@ -33,8 +33,8 @@ export const HUB_CASE_STUDY_META: Record<string, SpecialtyHubWorkMeta> = {
   },
   dental: {
     studySlug: "singapore-dental-implant-centre",
-    image: "/specialty-hub/Dental.png",
-    imageAlt: "Singapore Dental Implant Centre specialty hub visual",
+    image: "/works/sdic.png",
+    imageAlt: "Singapore Dental Implant Centre reception and clinic branding",
     logo: "/clients/singapore-dental-implant-centre.png",
     logoAlt: "Singapore Dental Implant Centre",
   },
@@ -54,8 +54,8 @@ export const HUB_CASE_STUDY_META: Record<string, SpecialtyHubWorkMeta> = {
   },
   acne: {
     studySlug: "the-acne-clinic",
-    image: "/specialty-hub/Acne.png",
-    imageAlt: "The Acne Clinic specialty hub visual",
+    image: "/works/tac.png",
+    imageAlt: "The Acne Clinic reception and clinic branding",
     logo: "/clients/the-acne-clinic.png",
     logoAlt: "The Acne Clinic",
   },

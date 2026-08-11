@@ -19,6 +19,9 @@ export interface PortfolioWorkSlide {
 const CASE_STUDY_PORTFOLIO_IDS: Record<string, string> = {
   "cedar-endocrine-clinic": "cedar-endocrine",
   "singapore-brain-spine-nerves": "sbsn",
+  "singapore-dental-implant-centre": "sdic",
+  "the-acne-clinic": "tac",
+  "joyful-seeds": "joyful-seeds",
 };
 
 export interface PortfolioCaseIndex {
@@ -41,10 +44,10 @@ export function getPortfolioCaseIndex(
   let idx = PORTFOLIO_WORKS.findIndex((work) => work.id === mappedId);
 
   if (idx < 0 && studyName) {
-    const name = studyName.toLowerCase();
+    const name = normalizeClinicKey(studyName);
     idx = PORTFOLIO_WORKS.findIndex((work) => {
-      const title = work.title.toLowerCase();
-      return name.includes(title) || title.includes(name.split(" clinic")[0] ?? name);
+      const title = normalizeClinicKey(work.title);
+      return name.includes(title) || title.includes(name);
     });
   }
 
@@ -63,6 +66,16 @@ export function formatPortfolioCaseLabel(
   return `Case Study ${nn} / ${tt}`;
 }
 
+/** Normalise clinic names for fuzzy matching across copy variants. */
+export function normalizeClinicKey(value: string): string {
+  return value
+    .toLowerCase()
+    .replace(/&/g, "and")
+    .replace(/\b(clinic|centre|center|paediatrics|pediatrics)\b/g, "")
+    .replace(/[^a-z0-9]+/g, " ")
+    .trim();
+}
+
 export const PORTFOLIO_WORKS: PortfolioWorkSlide[] = [
   {
     id: "cedar-endocrine",
@@ -71,14 +84,33 @@ export const PORTFOLIO_WORKS: PortfolioWorkSlide[] = [
     line: "Your Health Nurtured",
     image: "/works/cedar.png",
     gradient: "linear-gradient(145deg, #F7FAFB 0%, #EAFBFB 45%, #54B9CE 100%)",
+    href: "/specialty-hub/endocrinology",
+  },
+  {
+    id: "thsc",
+    title: "The Heart Specialist Clinic",
+    category: "Heart & Cardiology",
+    line: "Trusted pathways for heart specialist care",
+    image: "/works/thsc.png",
+    gradient: "linear-gradient(145deg, #F7FAFB 0%, #EAFBFB 45%, #54B9CE 100%)",
   },
   {
     id: "msdc",
-    title: "Medical & Surgical Dermatology",
+    title: "Medical and Surgical Dermatology Clinic",
     category: "Dermatology",
     line: "Clearer pathways for specialist skin care",
     image: "/works/msdc.png",
     gradient: "linear-gradient(145deg, #F3F5F6 0%, #C9E4EA 50%, #217B8E 100%)",
+    href: "/specialty-hub/dermatology",
+  },
+  {
+    id: "sdic",
+    title: "Singapore Dental Implant Centre",
+    category: "Dental + Implantology",
+    line: "Implanting the foundation of a timeless smile.",
+    image: "/works/sdic.png",
+    gradient: "linear-gradient(145deg, #F7FAFB 0%, #D8EEF5 50%, #3A8093 100%)",
+    href: "/specialty-hub/dental",
   },
   {
     id: "joyful-seeds",
@@ -91,11 +123,12 @@ export const PORTFOLIO_WORKS: PortfolioWorkSlide[] = [
   },
   {
     id: "sbsn",
-    title: "Singapore Brain & Spine Nerves Centre",
+    title: "Singapore Brain Spine Nerves Centre",
     category: "Brain & Spine",
     line: "Specialist clarity for complex care journeys",
     image: "/works/sbsn.png",
     gradient: "linear-gradient(145deg, #F7FAFB 0%, #D8EEF5 50%, #3A8093 100%)",
+    href: "/specialty-hub/neurology",
   },
   {
     id: "sunrise-heart",
@@ -104,13 +137,31 @@ export const PORTFOLIO_WORKS: PortfolioWorkSlide[] = [
     line: "Trusted pathways for heart health discovery",
     image: "/works/sunrise-heart.png",
     gradient: "linear-gradient(145deg, #F7FAFB 0%, #EAFBFB 45%, #54B9CE 100%)",
+    href: "/specialty-hub/cardiology",
+  },
+  {
+    id: "tac",
+    title: "The Acne Clinic",
+    category: "Skin + Aesthetics",
+    line: "Face it. Fix it.",
+    image: "/works/tac.png",
+    gradient: "linear-gradient(145deg, #F7FAFB 0%, #EAFBFB 50%, #78E2DD 100%)",
+    href: "/specialty-hub/acne",
   },
   {
     id: "straits-geriatrics",
     title: "The Straits Geriatrics Centre",
     category: "Geriatrics",
-    line: "Vision care made clearer for patients and families",
-    image: "/works/straits-eye.png",
+    line: "Clearer pathways for older adult care",
+    image: "/works/straits-geriatrics.png",
     gradient: "linear-gradient(145deg, #FAFBFC 0%, #E3F6FA 50%, #006B7C 100%)",
+  },
+  {
+    id: "cfac",
+    title: "Clementi Family and Aesthetic Clinic",
+    category: "Family Medicine + Aesthetics",
+    line: "Clearer pathways for family and aesthetic care",
+    image: "/works/cfac.png",
+    gradient: "linear-gradient(145deg, #F7FAFB 0%, #EAFBFB 50%, #78E2DD 100%)",
   },
 ];

@@ -102,7 +102,7 @@ export function SpecialtyHubTemplate({ hub }: { hub: SpecialtyHubDetail }) {
           <ParallaxBackground
             src={hub.heroImage}
             priority
-            imageClassName="object-cover object-center lg:object-right"
+            imageClassName="object-cover object-[30%_center] lg:object-[18%_center] lg:-translate-x-[4%]"
           >
             <div
               aria-hidden="true"

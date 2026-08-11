@@ -250,7 +250,7 @@ export function MetricCell({
           value={numericValue}
           delay={index * 0.18}
           decimalPlaces={decimalPlaces}
-          className="text-inherit font-bold leading-none tracking-tighter text-[#3A8093]"
+          className="font-bold leading-none tracking-tighter text-[#3A8093]"
           style={{ lineHeight: 1 }}
         />
         {suffix ? (

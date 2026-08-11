@@ -18,43 +18,62 @@ import { PortfolioWorksCarousel } from "@/components/home/landing/PortfolioWorks
 import { PillarHero } from "@/components/services/PillarHero";
 import { PillarMechanicsSection } from "@/components/services/PillarMechanicsSection";
 import { PillarSpecialtySection } from "@/components/services/PillarSpecialtySection";
+import {
+  getPillarHeroImage,
+  getPillarHeroImageClass,
+} from "@/lib/data/pillar-hero-images";
 import { CORE_PILLARS, getPillar } from "@/lib/data/pillars";
-import { PORTFOLIO_WORKS, type PortfolioWorkSlide } from "@/lib/data/portfolio-works";
-import { WISH_STACK_IMAGES } from "@/lib/data/wish-stack-images";
+import {
+  normalizeClinicKey,
+  PORTFOLIO_WORKS,
+  type PortfolioWorkSlide,
+} from "@/lib/data/portfolio-works";
 
-const GRANTED_GRADIENTS = [
-  "linear-gradient(145deg, #F7FAFB 0%, #EAFBFB 45%, #54B9CE 100%)",
-  "linear-gradient(145deg, #F3F5F6 0%, #C9E4EA 50%, #217B8E 100%)",
-  "linear-gradient(145deg, #F7FAFB 0%, #EAFBFB 50%, #78E2DD 100%)",
-  "linear-gradient(145deg, #F7FAFB 0%, #D8EEF5 50%, #3A8093 100%)",
-  "linear-gradient(145deg, #FAFBFC 0%, #E3F6FA 50%, #006B7C 100%)",
-] as const;
-
+/**
+ * Build a full 10-card works carousel: pillar-featured clinics first
+ * (with pillar-specific summaries), then the remaining portfolio works.
+ */
 function grantedWishSlides(
   wishes: { name: string; summary: string; href: string }[],
   slug: string
 ): PortfolioWorkSlide[] {
-  return wishes.map((wish, index) => {
-    const wishKey = wish.name.toLowerCase();
+  const used = new Set<string>();
+  const slides: PortfolioWorkSlide[] = [];
+
+  for (const wish of wishes) {
+    const wishKey = normalizeClinicKey(wish.name);
     const match = PORTFOLIO_WORKS.find((work) => {
-      const workKey = work.title.toLowerCase();
+      const workKey = normalizeClinicKey(work.title);
       return (
         wishKey === workKey ||
         wishKey.includes(workKey) ||
-        workKey.includes(wishKey.replace(/\s+clinic$/, "").trim())
+        workKey.includes(wishKey)
       );
     });
+    if (!match) continue;
 
-    return {
-      id: `${slug}-granted-${index}`,
+    const matchKey = normalizeClinicKey(match.title);
+    if (used.has(matchKey)) continue;
+    used.add(matchKey);
+
+    slides.push({
+      ...match,
+      id: `${slug}-granted-${slides.length}`,
       title: wish.name,
       category: wish.summary,
       line: wish.summary,
-      href: wish.href,
-      image: match?.image,
-      gradient: match?.gradient ?? GRANTED_GRADIENTS[index % GRANTED_GRADIENTS.length],
-    };
-  });
+      href: wish.href || match.href,
+    });
+  }
+
+  for (const work of PORTFOLIO_WORKS) {
+    const key = normalizeClinicKey(work.title);
+    if (used.has(key)) continue;
+    used.add(key);
+    slides.push(work);
+  }
+
+  return slides;
 }
 
 function isExternalHref(href: string): boolean {
@@ -117,12 +136,17 @@ export default function PillarPage({ params }: { params: { slug: string } }) {
 
   const hasWishes = pillar.wishes.length > 0;
   const hasFaqs = Boolean(pillar.faqs && pillar.faqs.length > 0);
-  const wishImage = WISH_STACK_IMAGES[pillar.slug];
+  const heroImageSrc = getPillarHeroImage(pillar.slug);
+  const heroImageClass = getPillarHeroImageClass(pillar.slug);
   const grantedSlides = grantedWishSlides(pillar.grantedWishes, pillar.slug);
 
   return (
     <>
-      <PillarHero pillar={pillar} wishImageSrc={wishImage?.src} />
+      <PillarHero
+        pillar={pillar}
+        wishImageSrc={heroImageSrc}
+        imageClassName={heroImageClass}
+      />
 
       {/* 2 — Three wishes / ecosystem intro */}
       <Section tone="light">

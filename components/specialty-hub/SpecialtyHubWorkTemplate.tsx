@@ -197,7 +197,7 @@ export function SpecialtyHubWorkTemplate({
         <ParallaxBackground
           src="/specialty-hub/hero-bg.png"
           priority
-          imageClassName="object-cover object-center lg:object-right"
+          imageClassName="object-cover object-[30%_center] lg:object-[18%_center] lg:-translate-x-[4%]"
         >
           <div
             aria-hidden="true"
