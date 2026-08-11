@@ -38,6 +38,7 @@ export async function generateMetadata({
     description:
       post.description ||
       "Clinic marketing insight from Clinic Genie for specialist clinics in Singapore.",
+    robots: post.noIndex ? { index: false, follow: false } : undefined,
   };
 }
 

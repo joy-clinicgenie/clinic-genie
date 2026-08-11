@@ -16,7 +16,7 @@ import { NotionToMarkdown } from "notion-to-md";
  * - Ready to Publish (checkbox) — only `true` rows are public
  * - Publish Date (date) — publish date
  * - Excerpt / Meta Description (rich_text) — short summary for cards and metadata
- * - Tags (relation) — optional; resolved separately when needed
+ * - Tags (relation) — resolved to related page titles when present
  * - Hide in Main Feed (checkbox) — optional feed exclusion
  */
 
@@ -29,6 +29,7 @@ export type NotionPost = {
   dateLabel: string | null;
   tags: string[];
   category: string | null;
+  noIndex?: boolean;
 };
 
 export type NotionPostWithContent = NotionPost & {
@@ -44,6 +45,15 @@ function getNotionClient(): Client | null {
   const token = getEnv("NOTION_TOKEN");
   if (!token) return null;
   return new Client({ auth: token });
+}
+
+function logNotionWarning(message: string, detail?: unknown): void {
+  if (process.env.NODE_ENV === "production") return;
+  if (detail === undefined) {
+    console.warn(`[notion] ${message}`);
+    return;
+  }
+  console.warn(`[notion] ${message}`, detail);
 }
 
 async function getDataSourceId(notion: Client): Promise<string | null> {
@@ -102,9 +112,9 @@ function getProperty(
 function getTitle(page: PageObjectResponse): string {
   const property = getProperty(page, ["Name", "Title", "title"]);
   if (property?.type === "title") {
-    return plainText(property.title) || "Untitled";
+    return plainText(property.title);
   }
-  return "Untitled";
+  return "";
 }
 
 function getRichText(page: PageObjectResponse, names: string[]): string {
@@ -115,6 +125,14 @@ function getRichText(page: PageObjectResponse, names: string[]): string {
   return "";
 }
 
+function getCheckbox(page: PageObjectResponse, names: string[]): boolean {
+  const property = getProperty(page, names);
+  if (property?.type === "checkbox") {
+    return property.checkbox;
+  }
+  return false;
+}
+
 function getDate(page: PageObjectResponse): string | null {
   const property = getProperty(page, ["Date", "Published Date", "Publish Date"]);
   if (property?.type === "date") {
@@ -123,7 +141,15 @@ function getDate(page: PageObjectResponse): string | null {
   return page.created_time.slice(0, 10);
 }
 
-function getTags(page: PageObjectResponse): string[] {
+function getTagRelationIds(page: PageObjectResponse): string[] {
+  const property = getProperty(page, ["Tags", "Tag"]);
+  if (property?.type === "relation") {
+    return property.relation.map((item) => item.id);
+  }
+  return [];
+}
+
+function getSelectTags(page: PageObjectResponse): string[] {
   const property = getProperty(page, ["Tags", "Tag"]);
   if (property?.type === "multi_select") {
     return property.multi_select.map((tag) => tag.name);
@@ -145,24 +171,88 @@ function getCategory(page: PageObjectResponse): string | null {
 function getSlug(page: PageObjectResponse, title: string): string {
   const fromProperty = getRichText(page, ["Slug", "slug"]);
   if (fromProperty) return slugify(fromProperty);
-  return slugify(title) || page.id.replace(/-/g, "");
+  return slugify(title);
 }
 
-export function mapPageToPost(page: PageObjectResponse): NotionPost {
+function getDescription(page: PageObjectResponse): string {
+  return (
+    getRichText(page, [
+      "Excerpt",
+      "Meta Description",
+      "Description",
+      "Summary",
+      "Dek",
+    ]) || ""
+  );
+}
+
+function isPublishablePost(post: NotionPost): boolean {
+  if (!post.title || post.title === "Untitled") return false;
+  if (!post.slug || post.slug === "untitled") return false;
+  return true;
+}
+
+async function resolveTagNames(
+  notion: Client,
+  pages: PageObjectResponse[]
+): Promise<Map<string, string[]>> {
+  const ids = new Set<string>();
+  for (const page of pages) {
+    for (const id of getTagRelationIds(page)) {
+      ids.add(id);
+    }
+  }
+
+  const titles = new Map<string, string>();
+  await Promise.all(
+    [...ids].map(async (id) => {
+      try {
+        const related = await notion.pages.retrieve({ page_id: id });
+        if (!isFullPage(related)) return;
+        const title = getTitle(related);
+        if (title) titles.set(id, title);
+      } catch {
+        // Related tag page may be inaccessible to the integration.
+      }
+    })
+  );
+
+  const byPage = new Map<string, string[]>();
+  for (const page of pages) {
+    const selectTags = getSelectTags(page);
+    if (selectTags.length > 0) {
+      byPage.set(page.id, selectTags);
+      continue;
+    }
+
+    const resolved = getTagRelationIds(page)
+      .map((id) => titles.get(id))
+      .filter((name): name is string => Boolean(name));
+    byPage.set(page.id, resolved);
+  }
+
+  return byPage;
+}
+
+function mapPageToPost(
+  page: PageObjectResponse,
+  tagsByPage?: Map<string, string[]>
+): NotionPost {
   const title = getTitle(page);
   const date = getDate(page);
-  const tags = getTags(page);
+  const tags = tagsByPage?.get(page.id) ?? getSelectTags(page);
   const category = getCategory(page);
 
   return {
     id: page.id,
-    title,
+    title: title || "Untitled",
     slug: getSlug(page, title),
-    description: getRichText(page, ["Description", "Summary", "Excerpt", "Dek"]),
+    description: getDescription(page),
     date,
     dateLabel: formatDateLabel(date),
     tags,
     category: category ?? tags[0] ?? null,
+    noIndex: getCheckbox(page, ["Do not index", "No Index"]),
   };
 }
 
@@ -185,16 +275,28 @@ const PUBLISH_CHECKBOX_PROPERTIES = [
 
 export async function getPublishedPosts(): Promise<NotionPost[]> {
   const notion = getNotionClient();
-  if (!notion) return [];
+  if (!notion) {
+    logNotionWarning("NOTION_TOKEN is missing; returning no posts.");
+    return [];
+  }
+
+  if (!getEnv("NOTION_DATABASE_ID")) {
+    logNotionWarning("NOTION_DATABASE_ID is missing; returning no posts.");
+    return [];
+  }
 
   let dataSourceId: string | null = null;
   try {
     dataSourceId = await getDataSourceId(notion);
-  } catch {
+  } catch (error) {
+    logNotionWarning("Failed to retrieve Notion database.", error);
     return [];
   }
 
-  if (!dataSourceId) return [];
+  if (!dataSourceId) {
+    logNotionWarning("Notion database has no data source.");
+    return [];
+  }
 
   try {
     let results: PageObjectResponse[] | null = null;
@@ -204,27 +306,58 @@ export async function getPublishedPosts(): Promise<NotionPost[]> {
         const queried = await collectPaginatedAPI(notion.dataSources.query, {
           data_source_id: dataSourceId,
           filter: {
-            property,
-            checkbox: {
-              equals: true,
-            },
+            and: [
+              {
+                property,
+                checkbox: {
+                  equals: true,
+                },
+              },
+              {
+                property: "Hide in Main Feed",
+                checkbox: {
+                  equals: false,
+                },
+              },
+            ],
           },
         });
         results = queried.filter(isFullPage);
         break;
       } catch {
-        // Try the next known publish checkbox property name.
+        // Older schemas may lack Hide in Main Feed; retry publish checkbox alone.
+        try {
+          const queried = await collectPaginatedAPI(notion.dataSources.query, {
+            data_source_id: dataSourceId,
+            filter: {
+              property,
+              checkbox: {
+                equals: true,
+              },
+            },
+          });
+          results = queried
+            .filter(isFullPage)
+            .filter(
+              (page) => !getCheckbox(page, ["Hide in Main Feed", "Hide From Feed"])
+            );
+          break;
+        } catch {
+          // Try the next known publish checkbox property name.
+        }
       }
     }
 
     if (!results) return [];
 
+    const tagsByPage = await resolveTagNames(notion, results);
     const posts = results
-      .map(mapPageToPost)
-      .filter((post) => Boolean(post.slug));
+      .map((page) => mapPageToPost(page, tagsByPage))
+      .filter(isPublishablePost);
 
     return sortPostsByDateDesc(posts);
-  } catch {
+  } catch (error) {
+    logNotionWarning("Failed to query published Notion posts.", error);
     return [];
   }
 }
@@ -269,7 +402,7 @@ export async function getPostBySlug(
           },
         });
         page = results.find(isFullPage) ?? null;
-        break;
+        if (page) break;
       } catch {
         // Try the next known publish checkbox property name.
       }
@@ -288,7 +421,10 @@ export async function getPostBySlug(
     page = retrieved;
   }
 
-  const post = mapPageToPost(page);
+  const tagsByPage = await resolveTagNames(notion, [page]);
+  const post = mapPageToPost(page, tagsByPage);
+  if (!isPublishablePost(post)) return null;
+
   const n2m = new NotionToMarkdown({
     // notion-to-md types target an older Client shape; runtime API is compatible.
     notionClient: notion as unknown as ConstructorParameters<
