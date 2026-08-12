@@ -61,11 +61,12 @@ export default async function GenieTipPage({ params }: GenieTipPageProps) {
   return (
     <div className="min-h-screen bg-white text-ink-900">
       <article data-nav-theme="light">
-        <Container size="content" className="pb-16 pt-14 sm:pb-20 sm:pt-16">
+        <Container size="content" className="pb-16 pt-24 sm:pb-20 sm:pt-28 lg:pt-32">
           <Link
             href="/genie-tips"
-            className="text-sm font-medium text-ink-500 underline-offset-4 transition-colors hover:text-genie-700 hover:underline"
+            className="inline-flex w-fit items-center gap-1.5 rounded-pill px-3.5 py-2 text-sm font-medium text-ink-500 transition-[background-color,color,box-shadow] duration-ui ease-out-soft hover:bg-cg-mist hover:text-genie-700 hover:shadow-xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-genie-500/50"
           >
+            <span aria-hidden="true">←</span>
             Genie Tips
           </Link>
 

@@ -46,9 +46,9 @@ const WISH_CHIPS: Record<string, string> = {
 };
 
 const METRICS = [
-  { value: "15+", label: "Specialist clinics served" },
-  { value: "500+", label: "Healthcare content pieces produced" },
-  { value: "100%", label: "HCSA-compliant content delivered" },
+  { value: "20+", label: "Specialist clinics served" },
+  { value: "47,000+", label: "Patient enquiries generated" },
+  { value: "S$350K>", label: "Google Ads spend managed" },
   { value: "3+", label: "Years in healthcare marketing" },
 ];
 

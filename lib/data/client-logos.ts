@@ -5,7 +5,7 @@ export interface ClientLogo {
   width: number;
   height: number;
   /** Use a slightly taller marquee size for logos that read small at the default height */
-  size?: "default" | "lg" | "xl";
+  size?: "sm" | "default" | "lg" | "xl";
 }
 
 export const CLIENT_LOGOS: ClientLogo[] = [
@@ -29,6 +29,7 @@ export const CLIENT_LOGOS: ClientLogo[] = [
     href: "https://www.msdermatology.com.sg/",
     width: 1102,
     height: 180,
+    size: "sm",
   },
   {
     src: "/clients/joyful-seeds.png",
@@ -44,7 +45,7 @@ export const CLIENT_LOGOS: ClientLogo[] = [
     href: "/clinic-specialties/neurology",
     width: 446,
     height: 180,
-    size: "lg",
+    size: "xl",
   },
   {
     src: "/clients/singapore-dental-implant-centre.png",
@@ -55,11 +56,11 @@ export const CLIENT_LOGOS: ClientLogo[] = [
     size: "lg",
   },
   {
-    src: "/clients/aquaphysio-rehab-center.png",
+    src: "/clients/aquaphysio.png",
     alt: "AquaPhysio Rehab Centre",
     href: "/clinic-specialties/aquatic-physio",
-    width: 156,
-    height: 180,
+    width: 1263,
+    height: 361,
     size: "lg",
   },
   {
@@ -76,7 +77,7 @@ export const CLIENT_LOGOS: ClientLogo[] = [
     href: "/clinic-specialties/acne",
     width: 291,
     height: 180,
-    size: "xl",
+    size: "lg",
   },
   {
     src: "/clients/clementi-family-aesthetic.png",

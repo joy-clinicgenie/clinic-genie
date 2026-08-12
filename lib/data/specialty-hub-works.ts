@@ -14,9 +14,9 @@ export interface SpecialtyHubWorkMeta {
 export const HUB_CASE_STUDY_META: Record<string, SpecialtyHubWorkMeta> = {
   "aquatic-physio": {
     studySlug: "aquaphysio",
-    image: "/specialty-hub/Aquatic.png",
-    imageAlt: "AquaPhysio aquatic physiotherapy clinic specialties visual",
-    logo: "/clients/aquaphysio-rehab-center.png",
+    image: "/works/aquaphysio/aquaphysio-mockup.png",
+    imageAlt: "AquaPhysio Rehab Centre website mockup on laptop",
+    logo: "/clients/aquaphysio.png",
     logoAlt: "AquaPhysio Rehab Centre",
   },
   endocrinology: {

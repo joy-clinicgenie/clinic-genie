@@ -32,7 +32,7 @@ export function PillarHero({
   return (
     <section
       data-nav-theme="light"
-      className="relative flex min-h-[40rem] items-center overflow-hidden bg-white pb-16 pt-[calc(3.25rem+env(safe-area-inset-top,0px))] text-ink-900 sm:min-h-[42rem] lg:h-[46rem] lg:min-h-[46rem] lg:pb-24 lg:pt-36"
+      className="relative flex min-h-[40rem] items-center overflow-hidden rounded-b-[44px] bg-white pb-16 pt-[calc(3.25rem+env(safe-area-inset-top,0px))] text-ink-900 sm:min-h-[42rem] lg:h-[46rem] lg:min-h-[46rem] lg:pb-24 lg:pt-36"
     >
       {wishImageSrc ? (
         <ParallaxBackground

@@ -234,11 +234,14 @@ export function MetricCell({
   label: string;
   index: number;
 }) {
-  const prefix = value.startsWith("$") ? "$" : "";
-  const unsigned = prefix ? value.slice(1) : value;
+  const prefix = value.startsWith("S$") ? "S$" : value.startsWith("$") ? "$" : "";
+  const unsigned = prefix ? value.slice(prefix.length) : value;
   let suffix = "";
   let core = unsigned;
-  if (core.endsWith("K+")) {
+  if (core.endsWith("K>")) {
+    suffix = "K>";
+    core = core.slice(0, -2);
+  } else if (core.endsWith("K+")) {
     suffix = "K+";
     core = core.slice(0, -2);
   } else if (core.endsWith("%")) {
@@ -247,8 +250,11 @@ export function MetricCell({
   } else if (core.endsWith("+")) {
     suffix = "+";
     core = core.slice(0, -1);
+  } else if (core.endsWith(">")) {
+    suffix = ">";
+    core = core.slice(0, -1);
   }
-  const numericValue = Number(core);
+  const numericValue = Number(core.replace(/,/g, ""));
   const decimalPlaces = core.includes(".") ? (core.split(".")[1]?.length ?? 0) : 0;
 
   return (

@@ -26,6 +26,7 @@ export interface PortfolioWorkSlide {
 
 /** Maps case-study slugs to PORTFOLIO_WORKS ids when they differ. */
 const CASE_STUDY_PORTFOLIO_IDS: Record<string, string> = {
+  aquaphysio: "aquaphysio",
   "cedar-endocrine-clinic": "cedar-endocrine",
   "singapore-brain-spine-nerves": "sbsn",
   "singapore-dental-implant-centre": "sdic",
@@ -87,14 +88,24 @@ export function normalizeClinicKey(value: string): string {
 
 export const PORTFOLIO_WORKS: PortfolioWorkSlide[] = [
   {
+    id: "aquaphysio",
+    title: "AquaPhysio Rehab Centre",
+    category: "Aquatic Physiotherapy",
+    line: "The flow of healing.",
+    logo: "/clients/square/aquaphysio-rehab-square.png",
+    image: "/works/aquaphysio/aquaphysio-mockup.png",
+    cardColor: "#18C4D9",
+    href: "/clinic-specialties/aquatic-physio",
+  },
+  {
     id: "cedar-endocrine",
     title: "Cedar Endocrine Clinic",
     category: "Endocrinology",
     line: "Your Health Nurtured",
-    logo: "/clients/cedar-endocrine-white.png",
+    logo: "/clients/square/cedar-square-white.png",
     invertLogo: false,
     image: "/works/cedar.png",
-    cardColor: "#18C4D9",
+    cardColor: "#2EC4CE",
     href: "/clinic-specialties/endocrinology",
   },
   {
@@ -104,17 +115,17 @@ export const PORTFOLIO_WORKS: PortfolioWorkSlide[] = [
     line: "Trusted pathways for heart specialist care",
     logo: "/clients/the-heart-specialist-clinic.png",
     image: "/works/thsc.png",
-    cardColor: "#2EC4CE",
+    cardColor: "#0E8FA0",
   },
   {
     id: "msdc",
     title: "Medical and Surgical Dermatology Clinic",
     category: "Dermatology",
     line: "Clearer pathways for specialist skin care",
-    logo: "/clients/medical-surgical-dermatology.png",
+    logo: "/clients/square/msdc-square.png",
     image: "/works/msdc/msdc-paperbag.jpg",
     hoverImages: ["/works/msdc/msdc-namecard.png", "/works/msdc.png"],
-    cardColor: "#0E8FA0",
+    cardColor: "#3DB8C4",
     href: "/clinic-specialties/dermatology",
   },
   {
@@ -122,9 +133,9 @@ export const PORTFOLIO_WORKS: PortfolioWorkSlide[] = [
     title: "Singapore Dental Implant Centre",
     category: "Dental + Implantology",
     line: "Implanting the foundation of a timeless smile.",
-    logo: "/clients/singapore-dental-implant-centre.png",
+    logo: "/clients/square/sdic-square.png",
     image: "/works/sdic.png",
-    cardColor: "#3DB8C4",
+    cardColor: "#4DCFC9",
     href: "/clinic-specialties/dental",
   },
   {
@@ -132,9 +143,9 @@ export const PORTFOLIO_WORKS: PortfolioWorkSlide[] = [
     title: "Joyful Seeds",
     category: "Paediatrics + Child Development",
     line: "Planting joy. Harvesting potential.",
-    logo: "/clients/joyful-seeds.png",
+    logo: "/clients/square/joyfulseed-square.png",
     image: "/works/joyfulseeds.png",
-    cardColor: "#4DCFC9",
+    cardColor: "#13A8BA",
     href: "/clinic-specialties/paediatrics",
   },
   {
@@ -142,9 +153,9 @@ export const PORTFOLIO_WORKS: PortfolioWorkSlide[] = [
     title: "Singapore Brain Spine Nerves Centre",
     category: "Brain & Spine",
     line: "Specialist clarity for complex care journeys",
-    logo: "/clients/singapore-brain-spine-nerves-center.png",
+    logo: "/clients/square/sbsn-square.png",
     image: "/works/sbsn.png",
-    cardColor: "#13A8BA",
+    cardColor: "#78E2DD",
     href: "/clinic-specialties/neurology",
   },
   {
@@ -152,9 +163,9 @@ export const PORTFOLIO_WORKS: PortfolioWorkSlide[] = [
     title: "Sunrise Heart Clinic",
     category: "Heart & Cardiology",
     line: "Trusted pathways for heart health discovery",
-    logo: "/clients/sunrise-heart.png",
+    logo: "/clients/square/sunrise-square.png",
     image: "/works/sunrise-heart.png",
-    cardColor: "#78E2DD",
+    cardColor: "#1A8C99",
     href: "/clinic-specialties/cardiology",
   },
   {
@@ -172,7 +183,7 @@ export const PORTFOLIO_WORKS: PortfolioWorkSlide[] = [
       "/works/tac/TAC-mock.jpg",
       "/works/tac/TAC-posters.png",
     ],
-    cardColor: "#1A8C99",
+    cardColor: "#33D0DD",
     href: "/clinic-specialties/acne",
   },
   {
@@ -180,18 +191,18 @@ export const PORTFOLIO_WORKS: PortfolioWorkSlide[] = [
     title: "The Straits Geriatrics Centre",
     category: "Geriatrics",
     line: "Clearer pathways for older adult care",
-    logo: "/clients/the-straits-geriatrics-centre.png",
+    logo: "/clients/square/straits-geriatrics-square.png",
     image: "/works/straits-geriatrics.png",
-    cardColor: "#33D0DD",
+    cardColor: "#20B2C2",
   },
   {
     id: "cfac",
     title: "Clementi Family and Aesthetic Clinic",
     category: "Family Medicine + Aesthetics",
     line: "Clearer pathways for family and aesthetic care",
-    logo: "/clients/clementi-family-aesthetic.png",
+    logo: "/clients/square/cfac-square.png",
     image: "/works/cfac.png",
-    cardColor: "#20B2C2",
+    cardColor: "#45C4C8",
   },
 ];
 

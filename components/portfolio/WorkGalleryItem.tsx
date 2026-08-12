@@ -65,8 +65,12 @@ export function WorkGalleryItem({ work, index }: WorkGalleryItemProps) {
           className={cn(
             "h-auto w-auto object-contain",
             work.id === "tac"
-              ? "max-h-16 max-w-[52%] sm:max-h-20 lg:max-h-24"
-              : "max-h-24 max-w-[72%] sm:max-h-28 lg:max-h-32",
+              ? "max-h-20 max-w-[62%] sm:max-h-24 lg:max-h-28"
+              : work.id === "aquaphysio"
+                ? "max-h-[6.65rem] max-w-[57%] sm:max-h-[7.6rem] lg:max-h-[8.55rem]"
+                : work.logo.includes("/square/")
+                  ? "max-h-32 max-w-[70%] sm:max-h-40 lg:max-h-44"
+                  : "max-h-28 max-w-[86%] sm:max-h-32 lg:max-h-40",
             work.invertLogo !== false && "brightness-0 invert",
             "transition-transform duration-ui ease-out-soft",
             "group-hover:scale-[1.03] motion-reduce:group-hover:scale-100"

@@ -144,7 +144,7 @@ export default function PillarPage({ params }: { params: { slug: string } }) {
   const grantedSlides = grantedWishSlides(pillar.grantedWishes, pillar.slug);
 
   return (
-    <>
+    <div className="min-h-screen surface-light text-ink-900">
       <PillarHero
         pillar={pillar}
         wishImageSrc={heroImageSrc}
@@ -296,6 +296,6 @@ export default function PillarPage({ params }: { params: { slug: string } }) {
           }
         />
       </PageFinale>
-    </>
+    </div>
   );
 }

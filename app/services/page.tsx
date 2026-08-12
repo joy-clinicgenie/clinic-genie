@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 
 export default function ServicesPage() {
   return (
-    <>
+    <div className="min-h-screen surface-cyan text-ink-900">
       <LightHero
         title="Everything your clinic needs to grow, under one lamp"
         highlight="grow"
@@ -30,6 +30,7 @@ export default function ServicesPage() {
           treatment: "dark",
         }}
         minHeight="min-h-[78vh]"
+        className="rounded-b-[44px]"
       />
 
       <CorePillarsSection />
@@ -49,6 +50,6 @@ export default function ServicesPage() {
           footnote="No obligation. No jargon. Just a clear next step."
         />
       </PageFinale>
-    </>
+    </div>
   );
 }

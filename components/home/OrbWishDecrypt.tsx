@@ -1,175 +1,112 @@
 "use client";
 
-import { useEffect, useState, type ReactNode } from "react";
-import { motion, useReducedMotion } from "framer-motion";
+import { useEffect, useState } from "react";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { cn } from "@/lib/cn";
+import { ease } from "@/lib/motion";
 
-const PREFIX = "I Wish for...";
+type WishEntry = {
+  /** Shown above the rotating lines. Includes trailing "a" when needed. */
+  prefix: string;
+  lines: readonly [string, string];
+};
 
-export const ORB_WISH_SUFFIXES = [
-  "Better Visibility",
-  "Qualified Leads",
-  "More Bookings",
+/**
+ * Each wish is exactly two display lines.
+ * Phrases that start with "A" keep that word in the prefix instead.
+ */
+export const ORB_WISHES: readonly WishEntry[] = [
+  { prefix: "I Wish for...", lines: ["More", "Patients"] },
+  { prefix: "I Wish for...", lines: ["Higher", "Rankings"] },
+  { prefix: "I Wish for...", lines: ["More", "Enquiries"] },
+  { prefix: "I Wish for a...", lines: ["Better", "Website"] },
+  { prefix: "I Wish for a...", lines: ["Stronger", "Brand"] },
 ] as const;
 
-function splitSuffix(phrase: string): [string, string] {
-  const [first = "", ...rest] = phrase.split(" ");
-  return [first, rest.join(" ")];
-}
+/** @deprecated Prefer ORB_WISHES. Kept for any older imports. */
+export const ORB_WISH_SUFFIXES = ORB_WISHES.map((wish) => wish.lines);
 
-const SUFFIX_LINES = ORB_WISH_SUFFIXES.map(splitSuffix);
-const LINE1_LONGEST = SUFFIX_LINES.reduce(
-  (longest, [line1]) => (line1.length > longest.length ? line1 : longest),
-  SUFFIX_LINES[0][0]
+const LINE1_LONGEST = ORB_WISHES.reduce(
+  (longest, { lines }) =>
+    lines[0].length > longest.length ? lines[0] : longest,
+  ORB_WISHES[0].lines[0]
 );
-const LINE2_LONGEST = SUFFIX_LINES.reduce(
-  (longest, [, line2]) => (line2.length > longest.length ? line2 : longest),
-  SUFFIX_LINES[0][1]
+const LINE2_LONGEST = ORB_WISHES.reduce(
+  (longest, { lines }) =>
+    lines[1].length > longest.length ? lines[1] : longest,
+  ORB_WISHES[0].lines[1]
 );
 
-const CHARSET = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz.!@#$*()_+";
-const DWELL_MS = 2500;
-const SCRAMBLE_INTERVAL_MS = 36;
-const SETTLE_STAGGER_MS = 42;
-const SCRAMBLES_PER_CHAR = 4;
-
-function randomChar(): string {
-  return CHARSET[Math.floor(Math.random() * CHARSET.length)] ?? "a";
-}
-
-function scrambleText(target: string): string {
-  return target
-    .split("")
-    .map((char) => (char === " " ? " " : randomChar()))
-    .join("");
-}
-
-function SuffixLines({ text }: { text: string }): ReactNode {
-  const [line1, line2] = splitSuffix(text);
-  return (
-    <>
-      <span className="block">{line1 || "\u00A0"}</span>
-      <span className="block">{line2 || "\u00A0"}</span>
-    </>
-  );
-}
+const DWELL_MS = 3200;
 
 export interface OrbWishDecryptProps {
   className?: string;
 }
 
 /**
- * Static “I wish for” with a looping decrypt animation for wish suffixes.
+ * Soft crossfade between two-line wish phrases under a static “I wish for” prefix.
  */
 export function OrbWishDecrypt({ className }: OrbWishDecryptProps) {
   const reduceMotion = useReducedMotion();
   const [index, setIndex] = useState(0);
-  const [display, setDisplay] = useState<string>(ORB_WISH_SUFFIXES[0]);
-  const [decrypting, setDecrypting] = useState(false);
-  const [rmOpacity, setRmOpacity] = useState(1);
 
-  const target = ORB_WISH_SUFFIXES[index];
-  const fullWish = `${PREFIX} ${target}`;
+  const activeWish = ORB_WISHES[index];
+  const fullWish = `${activeWish.prefix} ${activeWish.lines[0]} ${activeWish.lines[1]}`;
 
   useEffect(() => {
-    if (reduceMotion) {
-      setDecrypting(false);
-      setRmOpacity(0);
-      const fadeIn = setTimeout(() => {
-        setDisplay(target);
-        setRmOpacity(1);
-      }, 160);
-      const advance = setTimeout(() => {
-        setIndex((prev) => (prev + 1) % ORB_WISH_SUFFIXES.length);
-      }, DWELL_MS + 160);
-      return () => {
-        clearTimeout(fadeIn);
-        clearTimeout(advance);
-      };
-    }
+    const timer = window.setTimeout(() => {
+      setIndex((prev) => (prev + 1) % ORB_WISHES.length);
+    }, DWELL_MS);
 
-    let cancelled = false;
-    const timers: ReturnType<typeof setTimeout>[] = [];
-    const chars = target.split("");
-
-    setDecrypting(true);
-    setDisplay(scrambleText(target));
-
-    chars.forEach((finalChar, charIndex) => {
-      for (let scramble = 0; scramble < SCRAMBLES_PER_CHAR; scramble++) {
-        const isFinal = scramble === SCRAMBLES_PER_CHAR - 1;
-        const at =
-          charIndex * SETTLE_STAGGER_MS + scramble * SCRAMBLE_INTERVAL_MS;
-
-        timers.push(
-          setTimeout(() => {
-            if (cancelled) return;
-            setDisplay((prev) => {
-              const next = prev.padEnd(chars.length, " ").split("");
-              next[charIndex] =
-                isFinal || finalChar === " " ? finalChar : randomChar();
-              return next.slice(0, chars.length).join("");
-            });
-            if (isFinal && charIndex === chars.length - 1) {
-              setDecrypting(false);
-            }
-          }, at)
-        );
-      }
-    });
-
-    const decryptDuration =
-      (chars.length - 1) * SETTLE_STAGGER_MS +
-      SCRAMBLES_PER_CHAR * SCRAMBLE_INTERVAL_MS;
-
-    timers.push(
-      setTimeout(() => {
-        if (cancelled) return;
-        setIndex((prev) => (prev + 1) % ORB_WISH_SUFFIXES.length);
-      }, decryptDuration + DWELL_MS)
-    );
-
-    return () => {
-      cancelled = true;
-      timers.forEach(clearTimeout);
-    };
-  }, [index, reduceMotion, target]);
+    return () => window.clearTimeout(timer);
+  }, [index]);
 
   return (
     <div className={cn("flex flex-col items-center text-center", className)}>
+      <div className="relative flex h-6 items-center justify-center sm:h-7">
+        <AnimatePresence mode="wait" initial={false}>
+          <motion.p
+            key={activeWish.prefix}
+            className="font-display text-sm font-medium tracking-wide text-ink-500 sm:text-base"
+            aria-hidden="true"
+            initial={reduceMotion ? false : { opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={reduceMotion ? undefined : { opacity: 0 }}
+            transition={{ duration: 0.35, ease: ease.glide }}
+          >
+            {activeWish.prefix}
+          </motion.p>
+        </AnimatePresence>
+      </div>
+
       <p
-        className="font-display text-sm font-medium tracking-wide text-ink-500 sm:text-base"
-        aria-hidden="true"
-      >
-        {PREFIX}
-      </p>
-      <p
-        className={cn(
-          "relative mt-1 w-max max-w-none font-display text-[calc(0.9375rem+3.1em)] font-black leading-[0.95] sm:text-[calc(1rem+4.5em)] lg:text-[calc(1.045rem+2.8em)]",
-          !reduceMotion && "transition-colors duration-200",
-          !reduceMotion && (decrypting ? "text-ink-700/50" : "text-ink-700"),
-          reduceMotion && "text-ink-700"
-        )}
+        className="relative mt-1 w-max max-w-none font-display text-[calc(0.9375rem+3.1em)] font-black leading-[0.95] text-ink-700 sm:text-[calc(1rem+4.5em)] lg:text-[calc(1.045rem+2.8em)]"
         aria-hidden="true"
       >
         <span className="invisible block" aria-hidden="true">
-          <span className="block">{LINE1_LONGEST}</span>
-          <span className="block">{LINE2_LONGEST}</span>
+          <span className="block whitespace-nowrap">{LINE1_LONGEST}</span>
+          <span className="block whitespace-nowrap">{LINE2_LONGEST}</span>
         </span>
-        {reduceMotion ? (
+
+        <AnimatePresence mode="wait" initial={false}>
           <motion.span
+            key={index}
             className="absolute inset-0 flex flex-col items-center justify-center"
-            animate={{ opacity: rmOpacity }}
-            transition={{ duration: 0.2, ease: "easeOut" }}
+            initial={reduceMotion ? false : { opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={reduceMotion ? undefined : { opacity: 0, y: -8 }}
+            transition={{ duration: 0.45, ease: ease.glide }}
           >
-            <SuffixLines text={display} />
+            <span className="block whitespace-nowrap">
+              {activeWish.lines[0]}
+            </span>
+            <span className="block whitespace-nowrap">
+              {activeWish.lines[1]}
+            </span>
           </motion.span>
-        ) : (
-          <span className="absolute inset-0 flex flex-col items-center justify-center">
-            <SuffixLines text={display} />
-          </span>
-        )}
+        </AnimatePresence>
       </p>
+
       <p className="sr-only" aria-live="polite" aria-atomic="true">
         {fullWish}
       </p>

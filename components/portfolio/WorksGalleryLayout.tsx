@@ -22,6 +22,7 @@ import styles from "./WorksGalleryLayout.module.css";
 
 const FILTER_LABELS: Record<string, string> = {
   [PORTFOLIO_FILTER_ALL]: "All our projects",
+  "Aquatic Physiotherapy": "Aquatic Physio",
   Endocrinology: "Endocrinology",
   "Heart & Cardiology": "Cardiology",
   Dermatology: "Dermatology",

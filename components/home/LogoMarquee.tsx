@@ -11,7 +11,7 @@ export interface MarqueeLogo {
   href: string;
   width: number;
   height: number;
-  size?: "default" | "lg" | "xl";
+  size?: "sm" | "default" | "lg" | "xl";
 }
 
 function isExternalHref(href: string): boolean {
@@ -60,7 +60,9 @@ export function LogoMarquee({
                   ? "h-14 sm:h-16 lg:h-20"
                   : logo.size === "lg"
                     ? "h-11 sm:h-12 lg:h-14"
-                    : "h-9 sm:h-10 lg:h-11"
+                    : logo.size === "sm"
+                      ? "h-7 sm:h-8 lg:h-9"
+                      : "h-9 sm:h-10 lg:h-11"
               )}
               sizes="(max-width: 640px) 160px, 240px"
             />
