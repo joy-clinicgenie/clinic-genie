@@ -1,99 +1,125 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { motion, useReducedMotion } from "framer-motion";
+import { useReducedMotion } from "framer-motion";
 import { cn } from "@/lib/cn";
-import { ease } from "@/lib/motion";
 import type { PortfolioWorkSlide } from "@/lib/data/portfolio-works";
 
-const ASPECT_BY_INDEX = [
-  "aspect-[4/5]",
-  "aspect-[5/4]",
-  "aspect-[3/4]",
-  "aspect-square",
-  "aspect-[4/5]",
-  "aspect-[5/4]",
-] as const;
+const HOVER_CYCLE_MS = 1800;
 
 type WorkGalleryItemProps = {
   work: PortfolioWorkSlide;
   index: number;
-  isFocused: boolean;
-  isDimmed: boolean;
-  onFocusChange: (id: string | null) => void;
 };
 
-function CaptionRow({ title, line }: { title: string; line: string }) {
-  return (
-    <div className="flex items-start justify-between gap-3">
-      <p className="font-sans text-sm font-medium text-onDark">{title}</p>
-      <p className="max-w-[55%] text-right font-sans text-sm text-onDark/80">{line}</p>
-    </div>
-  );
-}
-
-export function WorkGalleryItem({
-  work,
-  index,
-  isFocused,
-  isDimmed,
-  onFocusChange,
-}: WorkGalleryItemProps) {
+export function WorkGalleryItem({ work, index }: WorkGalleryItemProps) {
   const reduceMotion = useReducedMotion();
-  const duration = reduceMotion ? 0 : 0.45;
-  const aspect = ASPECT_BY_INDEX[index % ASPECT_BY_INDEX.length];
   const hasCaseStudy = Boolean(work.href);
+  const galleryImages = [
+    ...(work.image ? [work.image] : []),
+    ...(work.hoverImages ?? []),
+  ];
+  const [isActive, setIsActive] = useState(false);
+  const [activeImageIndex, setActiveImageIndex] = useState(0);
+  const showWorkMedia = isActive && galleryImages.length > 0;
+
+  useEffect(() => {
+    if (!isActive || galleryImages.length <= 1 || reduceMotion) {
+      setActiveImageIndex(0);
+      return;
+    }
+
+    setActiveImageIndex(0);
+    const timer = window.setInterval(() => {
+      setActiveImageIndex((current) => (current + 1) % galleryImages.length);
+    }, HOVER_CYCLE_MS);
+
+    return () => window.clearInterval(timer);
+  }, [galleryImages.length, isActive, reduceMotion]);
 
   const media = (
-    <motion.div
-      initial={false}
-      animate={{ opacity: isDimmed ? 0.35 : 1 }}
-      transition={{ duration, ease: ease.glide }}
-      className={cn("relative w-full overflow-hidden rounded-lg bg-night-850", aspect)}
-    >
-      {work.image ? (
-        <Image
-          src={work.image}
-          alt=""
-          fill
-          sizes="(max-width: 1024px) 100vw, 40vw"
-          className="object-cover"
-          priority={index < 2}
-        />
-      ) : (
-        <div className="absolute inset-0" style={{ background: work.gradient }} aria-hidden />
+    <div
+      className={cn(
+        "relative aspect-square w-full overflow-hidden rounded-2xl shadow-xs",
+        "transition-[transform,box-shadow] duration-ui ease-out-soft",
+        "group-hover:-translate-y-1 group-hover:shadow-lg",
+        "group-focus-visible:-translate-y-1 group-focus-visible:shadow-lg",
+        "motion-reduce:group-hover:translate-y-0 motion-reduce:group-focus-visible:translate-y-0"
       )}
-
-      {/* Captions overlay the tile so stack spacing stays uniform */}
-      <motion.div
-        initial={false}
-        animate={{ opacity: isFocused ? 1 : 0 }}
-        transition={{ duration, ease: ease.glide }}
+    >
+      <div
         className={cn(
-          "pointer-events-none absolute inset-x-0 bottom-0 hidden bg-gradient-to-t from-night-950/85 via-night-950/40 to-transparent px-3 pb-3 pt-10 lg:block",
-          !isFocused && "select-none"
+          "absolute inset-0 flex items-center justify-center px-10 transition-opacity duration-ui ease-out-soft",
+          showWorkMedia ? "pointer-events-none opacity-0" : "opacity-100"
         )}
-        aria-hidden={!isFocused}
+        style={{ backgroundColor: work.cardColor }}
+        aria-hidden={showWorkMedia}
       >
-        <CaptionRow title={work.title} line={work.line} />
-      </motion.div>
-
-      <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-night-950/85 via-night-950/40 to-transparent px-3 pb-3 pt-10 lg:hidden">
-        <CaptionRow title={work.title} line={work.line} />
+        <Image
+          src={work.logo}
+          alt=""
+          width={320}
+          height={110}
+          className={cn(
+            "h-auto w-auto object-contain",
+            work.id === "tac"
+              ? "max-h-16 max-w-[52%] sm:max-h-20 lg:max-h-24"
+              : "max-h-24 max-w-[72%] sm:max-h-28 lg:max-h-32",
+            work.invertLogo !== false && "brightness-0 invert",
+            "transition-transform duration-ui ease-out-soft",
+            "group-hover:scale-[1.03] motion-reduce:group-hover:scale-100"
+          )}
+          priority={index < 4}
+        />
       </div>
-    </motion.div>
+
+      {galleryImages.length > 0 ? (
+        <div
+          className={cn(
+            "absolute inset-0 transition-opacity duration-ui ease-out-soft",
+            showWorkMedia ? "opacity-100" : "pointer-events-none opacity-0"
+          )}
+          aria-hidden={!showWorkMedia}
+        >
+          {galleryImages.map((src, imageIndex) => (
+            <Image
+              key={src}
+              src={src}
+              alt=""
+              fill
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+              className={cn(
+                "object-cover transition-opacity duration-ui ease-out-soft",
+                showWorkMedia && imageIndex === activeImageIndex
+                  ? "opacity-100"
+                  : "opacity-0"
+              )}
+            />
+          ))}
+
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-night-950/90 via-night-950/40 to-transparent px-5 pb-5 pt-20">
+            <p className="font-display text-base font-semibold tracking-tight text-onDark">
+              {work.title}
+            </p>
+            <p className="mt-1 text-sm leading-snug text-onDark/80">{work.line}</p>
+          </div>
+        </div>
+      ) : null}
+    </div>
   );
 
   const sharedClassName = cn(
     "group block w-full outline-none",
-    "focus-visible:ring-2 focus-visible:ring-genie-400/70 focus-visible:ring-offset-2 focus-visible:ring-offset-night-950"
+    "focus-visible:ring-2 focus-visible:ring-genie-500/45 focus-visible:ring-offset-4 focus-visible:ring-offset-cg-teal-5"
   );
 
   const handlers = {
-    onMouseEnter: () => onFocusChange(work.id),
-    onFocus: () => onFocusChange(work.id),
-    onBlur: () => onFocusChange(null),
+    onMouseEnter: () => setIsActive(true),
+    onMouseLeave: () => setIsActive(false),
+    onFocus: () => setIsActive(true),
+    onBlur: () => setIsActive(false),
   };
 
   if (hasCaseStudy && work.href) {

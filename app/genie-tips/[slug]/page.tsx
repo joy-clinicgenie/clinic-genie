@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { GenieTipArticleSidebar } from "@/components/blog/GenieTipArticleSidebar";
+import { LatestGenieTipsSection } from "@/components/blog/LatestGenieTipsSection";
 import { NotionArticleBody } from "@/components/blog/NotionArticleBody";
-import { Badge } from "@/components/ui/badge";
 import { Container } from "@/components/ui/Container";
 import {
   getPostBySlug,
+  getPublishedPosts,
   getPublishedPostSlugs,
 } from "@/lib/notion";
 
@@ -43,76 +45,91 @@ export async function generateMetadata({
 }
 
 export default async function GenieTipPage({ params }: GenieTipPageProps) {
-  const post = await getPostBySlug(params.slug);
+  const [post, allPosts] = await Promise.all([
+    getPostBySlug(params.slug),
+    getPublishedPosts(),
+  ]);
 
   if (!post) {
     notFound();
   }
 
+  const latestPosts = allPosts
+    .filter((item) => item.slug !== post.slug)
+    .slice(0, 3);
+
   return (
     <div className="min-h-screen bg-white text-ink-900">
-      <article>
-        <header className="surface-light border-b border-hairline-light">
-          <Container size="article-hero" className="py-14 sm:py-16">
-            <Link
-              href="/genie-tips"
-              className="text-sm font-medium text-genie-700 underline-offset-4 hover:underline"
-            >
-              Back to Genie Tips
-            </Link>
+      <article data-nav-theme="light">
+        <Container size="content" className="pb-16 pt-14 sm:pb-20 sm:pt-16">
+          <Link
+            href="/genie-tips"
+            className="text-sm font-medium text-ink-500 underline-offset-4 transition-colors hover:text-genie-700 hover:underline"
+          >
+            Genie Tips
+          </Link>
 
+          <header className="mt-8 max-w-article">
             {post.dateLabel ? (
               <time
                 dateTime={post.date ?? undefined}
-                className="mt-6 block text-xs text-ink-500"
+                className="block text-sm text-ink-500"
               >
                 {post.dateLabel}
               </time>
             ) : null}
 
-            <h1 className="mt-3 font-display text-h1 text-ink-900">
+            <h1 className="mt-3 font-display text-h1 text-balance text-ink-900">
               {post.title}
             </h1>
 
             {post.description ? (
-              <p className="mt-4 max-w-2xl text-lead text-ink-700">
+              <p className="mt-5 max-w-prose text-lead text-pretty text-ink-500">
                 {post.description}
               </p>
             ) : null}
+          </header>
 
-            {post.tags.length > 0 ? (
-              <ul className="mt-6 flex flex-wrap gap-2">
-                {post.tags.map((tag) => (
-                  <li key={tag}>
-                    <Badge variant="secondary">{tag}</Badge>
-                  </li>
-                ))}
-              </ul>
-            ) : null}
-
+          <div className="mt-10 grid gap-10 lg:mt-12 lg:grid-cols-12 lg:items-start lg:gap-x-12 lg:gap-y-12">
             {post.coverImage ? (
-              <figure className="mt-10 overflow-hidden rounded-2xl bg-cg-mist shadow-card">
+              <figure className="overflow-hidden rounded-2xl bg-cg-mist lg:col-span-8 lg:col-start-1 lg:row-start-1 xl:col-span-9">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={post.coverImage}
                   alt=""
-                  className="aspect-[16/9] h-auto w-full object-cover"
+                  className="aspect-[16/10] h-auto w-full object-cover"
                 />
               </figure>
             ) : null}
-          </Container>
-        </header>
 
-        <Container size="article" className="py-12 sm:py-16">
-          {post.markdown ? (
-            <NotionArticleBody markdown={post.markdown} />
-          ) : (
-            <p className="text-lead text-ink-700">
-              This article is still being prepared. Please check back shortly.
-            </p>
-          )}
+            <div className="lg:col-span-4 lg:col-start-9 lg:row-span-2 lg:row-start-1 xl:col-span-3 xl:col-start-10">
+              <GenieTipArticleSidebar
+                tags={post.tags}
+                category={post.category}
+              />
+            </div>
+
+            <div
+              className={
+                post.coverImage
+                  ? "min-w-0 lg:col-span-8 lg:col-start-1 lg:row-start-2 xl:col-span-9"
+                  : "min-w-0 lg:col-span-8 lg:col-start-1 lg:row-start-1 xl:col-span-9"
+              }
+            >
+              {post.markdown ? (
+                <NotionArticleBody markdown={post.markdown} />
+              ) : (
+                <p className="text-lead text-ink-700">
+                  This article is still being prepared. Please check back
+                  shortly.
+                </p>
+              )}
+            </div>
+          </div>
         </Container>
       </article>
+
+      <LatestGenieTipsSection posts={latestPosts} />
     </div>
   );
 }

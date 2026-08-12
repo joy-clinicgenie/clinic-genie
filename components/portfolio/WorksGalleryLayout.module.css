@@ -1,15 +1,18 @@
-.gallery {
-  column-count: 1;
-  column-gap: 0.75rem; /* 12px — matches item stack spacing */
+.mesh {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 55% 45% at 8% 0%, rgba(120, 226, 221, 0.34), transparent 70%),
+    radial-gradient(ellipse 50% 40% at 92% 8%, rgba(24, 196, 217, 0.18), transparent 68%),
+    radial-gradient(ellipse 60% 50% at 78% 100%, rgba(120, 226, 221, 0.22), transparent 72%),
+    radial-gradient(ellipse 40% 35% at 20% 85%, rgba(204, 244, 246, 0.55), transparent 70%),
+    linear-gradient(180deg, #f7fbfb 0%, #eef7f8 45%, #f4fafb 100%);
 }
 
-.gallery > * {
-  break-inside: avoid;
-  margin-bottom: 0.75rem;
-}
-
-@media (min-width: 640px) {
-  .gallery {
-    column-count: 2;
-  }
+.heroTitle {
+  font-size: clamp(2.75rem, 6.5vw, 4.75rem);
+  line-height: 1.05;
+  letter-spacing: -0.035em;
+  font-weight: 700;
 }

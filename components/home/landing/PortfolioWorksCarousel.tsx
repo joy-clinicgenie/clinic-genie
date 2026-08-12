@@ -134,7 +134,7 @@ function WorkCard({
 }) {
   const content = (
     <>
-      <div className={styles.cardInner} style={{ background: slide.gradient }}>
+      <div className={styles.cardInner} style={{ backgroundColor: slide.cardColor }}>
         {slide.image ? (
           <Image
             src={slide.image}

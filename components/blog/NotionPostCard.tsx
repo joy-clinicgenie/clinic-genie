@@ -1,73 +1,53 @@
 import Link from "next/link";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { GenieTipAuthor } from "@/components/blog/GenieTipAuthor";
+import { GenieTipMeta } from "@/components/blog/GenieTipMeta";
 import type { NotionPost } from "@/lib/notion";
 
 export function NotionPostCard({ post }: { post: NotionPost }) {
+  const category = post.category ?? post.tags[0] ?? null;
+
   return (
-    <Link
-      href={`/genie-tips/${post.slug}`}
-      aria-label={`Read: ${post.title}`}
-      className="group block h-full rounded-xl focus-visible:outline-none"
-    >
-      <Card className="h-full overflow-hidden transition-[transform,box-shadow] duration-ui ease-out-soft group-hover:-translate-y-1 group-hover:shadow-md motion-reduce:group-hover:translate-y-0 group-focus-visible:ring-2 group-focus-visible:ring-genie-500/50">
-        {post.coverImage ? (
-          <div className="relative aspect-[16/10] overflow-hidden bg-cg-mist">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
+    <article className="h-full">
+      <Link
+        href={`/genie-tips/${post.slug}`}
+        aria-label={`Read: ${post.title}`}
+        className="group flex h-full flex-col gap-4 rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-genie-500/50 focus-visible:ring-offset-4"
+      >
+        <div className="overflow-hidden rounded-xl bg-cg-mist">
+          {post.coverImage ? (
+            // eslint-disable-next-line @next/next/no-img-element
             <img
               src={post.coverImage}
               alt=""
               loading="lazy"
               decoding="async"
-              className="h-full w-full object-cover transition-transform duration-ui group-hover:scale-[1.02] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
+              className="aspect-[16/10] h-auto w-full object-cover transition-transform duration-ui ease-out-soft group-hover:scale-[1.02] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
             />
-          </div>
-        ) : null}
+          ) : (
+            <div className="aspect-[16/10] w-full bg-gradient-to-br from-cg-mist to-cg-soft-grey" />
+          )}
+        </div>
 
-        <CardHeader>
-          {post.dateLabel ? (
-            <time
-              dateTime={post.date ?? undefined}
-              className="text-xs text-ink-500"
-            >
-              {post.dateLabel}
-            </time>
-          ) : null}
-          <CardTitle className="transition-colors group-hover:text-genie-700">
+        <div className="flex flex-1 flex-col gap-3">
+          <GenieTipMeta
+            date={post.date}
+            dateLabel={post.dateLabel}
+            category={category}
+          />
+
+          <h3 className="font-display text-h4 text-balance text-ink-900 transition-colors group-hover:text-genie-700">
             {post.title}
-          </CardTitle>
+          </h3>
+
           {post.description ? (
-            <CardDescription className="line-clamp-3">
+            <p className="line-clamp-2 text-sm leading-relaxed text-ink-500">
               {post.description}
-            </CardDescription>
+            </p>
           ) : null}
-        </CardHeader>
 
-        {post.tags.length > 0 ? (
-          <CardContent>
-            <ul className="flex flex-wrap gap-2">
-              {post.tags.map((tag) => (
-                <li key={tag}>
-                  <Badge variant="secondary">{tag}</Badge>
-                </li>
-              ))}
-            </ul>
-          </CardContent>
-        ) : null}
-
-        <CardFooter>
-          <span className="text-sm font-medium text-genie-700 transition-colors group-hover:text-genie-800">
-            Read article
-          </span>
-        </CardFooter>
-      </Card>
-    </Link>
+          <GenieTipAuthor className="mt-auto pt-2" />
+        </div>
+      </Link>
+    </article>
   );
 }

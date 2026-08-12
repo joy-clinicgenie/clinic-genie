@@ -14,7 +14,7 @@ export default function PortfolioPage() {
     <>
       <WorksGalleryLayout />
 
-      <PageFinale backdropClassName="bg-night-950">
+      <PageFinale backdropClassName="bg-cg-teal-5">
         <PageFinaleCTA
           kicker="Make your first wish"
           title="Your clinic could be next."
