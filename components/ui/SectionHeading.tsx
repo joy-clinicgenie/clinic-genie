@@ -34,6 +34,7 @@ export function SectionHeading({
   subtitle,
   description,
   align = "left",
+  mobileAlign,
   tone = "dark",
   as = "h2",
   className,
@@ -48,6 +49,7 @@ export function SectionHeading({
   subtitle?: string;
   description?: string;
   align?: "left" | "center";
+  mobileAlign?: "left" | "center";
   tone?: "dark" | "light";
   as?: "h1" | "h2" | "h3";
   className?: string;
@@ -62,12 +64,16 @@ export function SectionHeading({
       : title;
   const hasSubheading = Boolean(subtitle && description);
   const bodyText = description ?? subtitle;
+  const resolvedMobileAlign = mobileAlign ?? align;
 
   return (
     <div
       className={cn(
         "flex flex-col gap-4",
         align === "center" && "items-center text-center",
+        resolvedMobileAlign === "center" &&
+          align !== "center" &&
+          "max-lg:items-center max-lg:text-center lg:items-start lg:text-left",
         className
       )}
     >
@@ -85,6 +91,9 @@ export function SectionHeading({
             "whitespace-pre-line text-balance",
             tone === "dark" ? "text-onDark" : "text-ink-900",
             align === "center" && "mx-auto max-w-5xl",
+            resolvedMobileAlign === "center" &&
+              align !== "center" &&
+              "max-lg:mx-auto lg:mx-0",
             titleClassName
           )}
         >
@@ -95,7 +104,7 @@ export function SectionHeading({
         <Reveal variant="up" delay={0.1}>
           <p
             className={cn(
-              "font-display text-h5 font-normal text-pretty max-w-full sm:max-w-[75%]",
+              "font-display text-subtitle font-normal text-pretty max-w-sm sm:max-w-[75%] sm:text-h5",
               tone === "dark" ? "text-onDark-muted" : "text-ink-700",
               align === "center" && "mx-auto"
             )}
@@ -111,6 +120,9 @@ export function SectionHeading({
               as === "h1" ? "text-body" : "text-lead",
               tone === "dark" ? "text-onDark-muted" : "text-ink-700",
               align === "center" && "mx-auto",
+              resolvedMobileAlign === "center" &&
+                align !== "center" &&
+                "max-lg:mx-auto lg:mx-0",
               subtitleClassName ??
                 "max-w-full sm:max-w-[75%] whitespace-pre-line text-pretty"
             )}

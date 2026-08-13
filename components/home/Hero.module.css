@@ -133,12 +133,13 @@
   align-items: center;
   width: 100%;
   min-width: 0;
-  gap: 0;
+  gap: 1.5rem;
 }
 
 .heroCopyCol {
   position: relative;
   z-index: 1;
+  order: 2;
   width: 100%;
   min-width: 0;
   pointer-events: auto;
@@ -147,11 +148,12 @@
 .heroOrbCol {
   position: relative;
   z-index: 0;
+  order: 1;
   display: grid;
   place-items: center;
   width: 100%;
   min-height: clamp(18rem, 52vw, 28rem);
-  margin-top: 1.5rem;
+  margin-top: 0;
   pointer-events: none;
 }
 

@@ -1,9 +1,9 @@
 import {
   LandingBody,
   LandingHeading,
-  LandingKicker,
   LandingSection,
 } from "@/components/home/landing/LandingLayout";
+import { SectionEyebrow } from "@/components/ui/SectionEyebrow";
 import { FeatureInfoCard } from "@/components/ui/FeatureInfoCard";
 import { Reveal, RevealGroup, RevealItem } from "@/components/ui/Reveal";
 import styles from "./PillarShineTitle.module.css";
@@ -34,7 +34,7 @@ export function PillarWhyJoinSection({
     >
       <Reveal>
         <div className="flex flex-col items-center gap-4 text-center">
-          <LandingKicker>{kicker}</LandingKicker>
+          <SectionEyebrow align="center">{kicker}</SectionEyebrow>
           <LandingHeading className={styles.shineTitle}>{title}</LandingHeading>
           <LandingBody>{subtitle}</LandingBody>
         </div>

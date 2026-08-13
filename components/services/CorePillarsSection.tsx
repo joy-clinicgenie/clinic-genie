@@ -17,19 +17,23 @@ export function CorePillarsSection() {
     <Section
       id="core-pillars"
       tone="light"
-      className="bg-gradient-to-b from-[#e3f6fa] to-white"
+      className="bg-gradient-to-b from-[#e3f6fa] to-white max-lg:pt-24"
     >
-      <Container className="flex flex-col gap-12 md:gap-14">
-        <div className="flex flex-col gap-4">
-          <Reveal variant="up">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 -top-8 hidden h-28 bg-[radial-gradient(ellipse_at_50%_0%,rgba(24,196,217,0.11),transparent_72%)] max-lg:block"
+      />
+      <Container className="relative flex flex-col gap-12 md:gap-14">
+        <div className="flex max-w-xl flex-col items-start gap-4 text-left">
+          <Reveal variant="upSoft">
             <Kicker tone="light">Core service pillars</Kicker>
           </Reveal>
-          <Reveal variant="up" delay={0.05}>
+          <Reveal variant="upSoft" delay={0.06}>
             <h2 className="font-display text-h2 text-balance text-ink-900">
               Explore each service in <span className="genie-text">depth</span>
             </h2>
           </Reveal>
-          <Reveal variant="up" delay={0.1}>
+          <Reveal variant="upSoft" delay={0.12}>
             <p className="max-w-xl text-lead text-pretty text-ink-700">
               {SECTION_SUBTITLE}
             </p>

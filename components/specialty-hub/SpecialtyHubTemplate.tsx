@@ -62,7 +62,7 @@ export function SpecialtyHubTemplate({ hub }: { hub: SpecialtyHubDetail }) {
               )}
             </h1>
 
-            <p className="mt-2 font-display text-[0.9375rem] font-normal text-ink-700 sm:mt-2.5 sm:text-base lg:text-h4">
+            <p className="mt-2 font-display text-subtitle font-normal text-ink-700 sm:mt-2.5 lg:text-h4">
               {hub.heroLabel ?? hub.name}
             </p>
 

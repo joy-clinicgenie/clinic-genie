@@ -41,6 +41,12 @@
   word-break: break-word;
 }
 
+@media (max-width: 1023px) {
+  .cardTitleCompact {
+    font-size: 20px;
+  }
+}
+
 .cardBodyCompact {
   max-width: 100%;
   font-size: 1rem; /* 16px */

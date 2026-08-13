@@ -13,7 +13,7 @@ export function FeaturedGenieTip({ post }: { post: NotionPost }) {
         aria-label={`Read: ${post.title}`}
         className="group grid items-center gap-8 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-genie-500/50 focus-visible:ring-offset-4 lg:grid-cols-2 lg:gap-12"
       >
-        <div className="overflow-hidden rounded-xl bg-cg-mist">
+        <div className="overflow-hidden rounded-lg bg-cg-mist lg:rounded-xl">
           {post.coverImage ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img
@@ -31,6 +31,7 @@ export function FeaturedGenieTip({ post }: { post: NotionPost }) {
             date={post.date}
             dateLabel={post.dateLabel}
             category={category}
+            appearance="editorial"
           />
 
           <h2 className="font-display text-h2 text-balance text-ink-900 transition-colors group-hover:text-genie-700">

@@ -22,6 +22,8 @@ type ParallaxBackgroundProps = {
   unoptimized?: boolean;
   /** Subtle entrance scale from 1.02 → 1 on load. */
   entranceScale?: boolean;
+  /** `subtle` keeps crop stable; default is a larger scroll shift. */
+  strength?: "default" | "subtle";
   /** Gradient / wash layers rendered above the image. */
   children?: ReactNode;
 };
@@ -40,6 +42,7 @@ export function ParallaxBackground({
   opacity = 1,
   unoptimized,
   entranceScale = false,
+  strength = "default",
   children,
 }: ParallaxBackgroundProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -50,7 +53,16 @@ export function ParallaxBackground({
     offset: ["start end", "end start"],
   });
 
-  const imageY = useTransform(scrollYProgress, [0, 1], ["-30%", "30%"]);
+  const imageY = useTransform(
+    scrollYProgress,
+    [0, 1],
+    strength === "subtle" ? ["-3%", "3%"] : ["-30%", "30%"]
+  );
+  const imageScale = useTransform(
+    scrollYProgress,
+    [0, 1],
+    strength === "subtle" ? [1, 1.03] : [1, 1]
+  );
   const decorative = !alt;
   const playEntrance = entranceScale && !reduceMotion;
 
@@ -61,10 +73,19 @@ export function ParallaxBackground({
       aria-hidden={decorative ? true : undefined}
     >
       <motion.div
-        className="absolute inset-[-12%] will-change-transform"
-        style={reduceMotion ? { opacity } : { y: imageY, opacity }}
+        className={cn(
+          "will-change-transform",
+          strength === "subtle" ? "absolute inset-[-4%]" : "absolute inset-[-12%]"
+        )}
+        style={
+          reduceMotion
+            ? { opacity }
+            : strength === "subtle"
+              ? { y: imageY, scale: imageScale, opacity }
+              : { y: imageY, opacity }
+        }
         initial={playEntrance ? { scale: 1.02 } : false}
-        animate={{ scale: 1 }}
+        animate={playEntrance ? { scale: 1 } : undefined}
         transition={{ duration: 0.9, ease: ease.glide }}
       >
         {typeof src === "string" ? (

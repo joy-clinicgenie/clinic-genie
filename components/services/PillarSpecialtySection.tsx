@@ -27,7 +27,7 @@ export function PillarSpecialtySection({
       backdrop={<SpecialistClinicsBackdrop />}
     >
       <Reveal>
-        <LandingIntro kicker={kicker} title={title} subtitle={subtitle} />
+        <LandingIntro kicker={kicker} title={title} subtitle={subtitle} kickerVariant="editorial" />
       </Reveal>
 
       <RevealGroup className="grid gap-5 md:grid-cols-3">

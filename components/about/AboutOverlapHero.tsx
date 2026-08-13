@@ -1,13 +1,13 @@
 import { LightHero } from "@/components/ui/LightHero";
 import { Container } from "@/components/ui/Container";
-import { Reveal } from "@/components/ui/Reveal";
-import { LandingIntro } from "@/components/home/landing/LandingLayout";
 import { AboutOfficeImage } from "@/components/about/AboutOfficeImage";
+import { AboutExpertsIntro } from "@/components/about/AboutExpertsIntro";
 import { ExpertsCards, ExpertsTagline } from "@/components/about/ExpertsCards";
+import styles from "./AboutOverlapHero.module.css";
 
 export function AboutOverlapHero() {
   return (
-    <div>
+    <div className={styles.shell}>
       <LightHero
         title="The genie behind better clinic growth"
         highlight="genie"
@@ -21,27 +21,24 @@ export function AboutOverlapHero() {
         minHeight="min-h-0"
         copyClassName="max-w-5xl"
         titleClassName="max-w-none md:whitespace-nowrap"
-        className="pb-40 sm:pb-48 lg:pb-56"
+        subtitleClassName="max-w-xs sm:max-w-[75%] whitespace-pre-line text-pretty"
+        className="max-lg:items-start max-lg:pb-[calc((100vw-2*var(--page-pad))*3/4)] lg:pb-56"
       />
 
       <section
         aria-label="About Clinic Genie"
         data-nav-theme="dark"
-        className="bg-night-900 pb-20 pt-0 sm:pb-24 lg:pb-28"
+        className={`${styles.darkSection} bg-night-900 pb-20 pt-0 sm:pb-24 lg:pb-28`}
       >
-        <Container size="wide" className="relative z-10 -mt-28 flex flex-col gap-16 sm:-mt-36 lg:-mt-44 lg:gap-20">
-          <AboutOfficeImage />
+        <div className={styles.darkGlow} aria-hidden="true" />
 
-          <div className="flex flex-col gap-12">
-            <Reveal>
-              <LandingIntro
-                light
-                kicker="The experts behind the work"
-                title="The specialists behind every clinic wish."
-                highlight="specialists"
-                subtitle="Each focused on one part of responsible clinic marketing, working as one growth engine."
-              />
-            </Reveal>
+        <Container size="wide" className="relative z-10 lg:-mt-44">
+          <div className={styles.imageWrap}>
+            <AboutOfficeImage />
+          </div>
+
+          <div className={styles.intro}>
+            <AboutExpertsIntro />
           </div>
         </Container>
 

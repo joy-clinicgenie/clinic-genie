@@ -5,6 +5,8 @@ import { notFound } from "next/navigation";
 import { Section } from "@/components/ui/Section";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { SectionEyebrow } from "@/components/ui/SectionEyebrow";
+import { EcosystemConnection } from "@/components/ui/EcosystemConnection";
 import { Reveal, RevealGroup, RevealItem } from "@/components/ui/Reveal";
 import { MagneticButton } from "@/components/ui/MagneticButton";
 import { FaqSection } from "@/components/ui/FaqSection";
@@ -152,8 +154,19 @@ export default function PillarPage({ params }: { params: { slug: string } }) {
       />
 
       {/* 2 — Three wishes / ecosystem intro */}
-      <Section tone="light" className={cn(hasWishesShine && shineStyles.shineHost)}>
-        <Container className="flex flex-col gap-12">
+      <Section
+        tone="light"
+        className={cn(
+          "max-lg:pt-14 max-lg:pb-16",
+          hasWishesShine && shineStyles.shineHost
+        )}
+      >
+        <Container
+          className={cn(
+            "flex flex-col",
+            hasWishes ? "max-lg:gap-8 lg:gap-12" : "max-lg:gap-0 lg:gap-12"
+          )}
+        >
           {hasWishes ? (
             <>
               <SectionHeading
@@ -162,7 +175,12 @@ export default function PillarPage({ params }: { params: { slug: string } }) {
                 highlightClassName={shineStyles.shineTitle}
                 tone="light"
                 align="center"
-                titleClassName="max-w-none"
+                titleClassName="max-w-none max-lg:max-w-xs"
+              />
+              <EcosystemConnection
+                from="Clinic Genie"
+                to={pillar.name}
+                className="lg:hidden"
               />
               <RevealGroup className="grid gap-5 md:grid-cols-3">
                 {pillar.wishes.map((wish) => (
@@ -184,21 +202,31 @@ export default function PillarPage({ params }: { params: { slug: string } }) {
             </>
           ) : (
             <>
-              <SectionHeading
-                kicker={pillar.wishesSubtitle}
-                title={pillar.wishesTitle ?? pillar.name}
-                highlight={pillar.wishesHighlight}
-                highlightClassName={
-                  pillar.wishesHighlight ? shineStyles.shineTitle : undefined
-                }
-                tone="light"
-                align="center"
+              <div className="flex flex-col items-center gap-4 text-center">
+                <Reveal variant="upSoft">
+                  <SectionEyebrow align="center">{pillar.wishesSubtitle}</SectionEyebrow>
+                </Reveal>
+                <SectionHeading
+                  title={pillar.wishesTitle ?? pillar.name}
+                  highlight={pillar.wishesHighlight}
+                  highlightClassName={
+                    pillar.wishesHighlight ? shineStyles.shineTitle : undefined
+                  }
+                  tone="light"
+                  align="center"
+                  titleClassName="max-lg:max-w-xs"
+                />
+              </div>
+              <EcosystemConnection
+                from="Clinic Genie"
+                to={pillar.name}
+                className="max-lg:mt-8 lg:hidden"
               />
               {pillar.wishesIntro && (
-                <div className="mx-auto flex max-w-2xl flex-col gap-4 text-center">
+                <div className="mx-auto flex w-4/5 max-w-2xl flex-col gap-4 text-center max-lg:mt-8 lg:w-full">
                   {pillar.wishesIntro.map((para, i) => (
-                    <Reveal key={i} variant="up" delay={0.05 * i}>
-                      <p className="text-lead text-ink-700">{para}</p>
+                    <Reveal key={i} variant="upSoft" delay={0.66}>
+                      <p className="text-lead text-pretty text-ink-700">{para}</p>
                     </Reveal>
                   ))}
                 </div>
@@ -232,6 +260,7 @@ export default function PillarPage({ params }: { params: { slug: string } }) {
       {/* 6 — Granted wishes / Our work */}
       <Reveal delay={0.08} className="w-full overflow-visible">
         <PortfolioWorksCarousel
+          variant="showcase"
           kicker={pillar.grantedSubtitle}
           title={pillar.grantedTitle}
           body={pillar.grantedIntro}

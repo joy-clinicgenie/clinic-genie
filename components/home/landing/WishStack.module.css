@@ -21,9 +21,9 @@
 
 .introSticky {
   position: sticky;
-  top: var(--wish-sticky-top);
+  top: 0;
   z-index: 30;
-  padding-top: var(--wish-sticky-gap);
+  padding-top: calc(var(--wish-sticky-top) + var(--wish-sticky-gap));
   padding-bottom: clamp(1.25rem, 2.5vh, 2rem);
   isolation: isolate;
 }
@@ -41,18 +41,44 @@
   pointer-events: none;
 }
 
+.introSticky::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  z-index: 1;
+  width: 100dvw;
+  height: clamp(3.5rem, 9vh, 5.5rem);
+  transform: translateX(-50%);
+  background: linear-gradient(
+    180deg,
+    #e3f6fa 0%,
+    rgb(227 246 250 / 0.82) 42%,
+    rgb(227 246 250 / 0) 100%
+  );
+  pointer-events: none;
+}
+
+@media (min-width: 1024px) {
+  .introSticky {
+    top: var(--wish-sticky-top);
+    padding-top: var(--wish-sticky-gap);
+  }
+}
+
 .stack {
   display: flex;
   flex-direction: column;
 }
 
 .cardBody {
-  display: grid;
-  grid-template-columns: 1fr;
+  display: flex;
+  flex-direction: column;
 }
 
 @media (min-width: 768px) {
   .cardBody {
+    display: grid;
     grid-template-columns: minmax(0, 1fr) 42%;
     min-height: 11.5rem;
   }
@@ -183,14 +209,19 @@
 
 .imageCol {
   position: relative;
-  min-height: 10rem;
+  order: -1;
+  width: 100%;
+  height: 10.5rem;
+  flex-shrink: 0;
   overflow: hidden;
 }
 
 @media (min-width: 768px) {
   .imageCol {
+    order: 0;
+    height: auto;
     min-height: 0;
-    height: 100%;
+    align-self: stretch;
   }
 }
 

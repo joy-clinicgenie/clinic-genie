@@ -107,6 +107,7 @@ const config: Config = {
         kicker: ["var(--text-kicker)", { lineHeight: "1.4", letterSpacing: "0.18em", fontWeight: "600" }],
         lead:   ["var(--text-h6)", { lineHeight: "1.6" }],
         body:   ["var(--text-body)", { lineHeight: "1.7" }],
+        subtitle: ["var(--text-subtitle)", { lineHeight: "1.5" }],
         h6:     ["var(--text-h6)", { lineHeight: "1.5", fontWeight: "500" }],
         h5:     ["var(--text-h5)", { lineHeight: "1.35", letterSpacing: "-0.003em", fontWeight: "600" }],
         h4:     ["var(--text-h4)", { lineHeight: "1.3", letterSpacing: "-0.005em", fontWeight: "600" }],

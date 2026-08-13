@@ -94,14 +94,14 @@ function WishCardImage({ slug, accent }: { slug: string; accent: string }) {
           />
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute inset-0 bg-gradient-to-r from-white from-15% via-white/60 via-35% to-transparent"
+            className="pointer-events-none absolute inset-0 hidden bg-gradient-to-r from-white from-15% via-white/60 via-35% to-transparent md:block"
           />
         </>
       )}
       {!showPhoto && (
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0 bg-gradient-to-r from-white from-20% via-white/50 via-40% to-transparent"
+          className="pointer-events-none absolute inset-0 hidden bg-gradient-to-r from-white from-20% via-white/50 via-40% to-transparent md:block"
         />
       )}
     </div>
@@ -127,7 +127,7 @@ export function WishStack({
     if (!root || !intro) return;
 
     const measure = () => {
-      const stickyTop = parseFloat(getComputedStyle(root).getPropertyValue("--wish-sticky-top")) || 96;
+      const stickyTop = parseFloat(getComputedStyle(intro).top) || 0;
       setStackBase(stickyTop + intro.offsetHeight);
     };
 
@@ -174,7 +174,7 @@ export function WishStack({
                   <span className="inline-flex items-center rounded-pill bg-[#E3F6FA] px-2.5 py-0.5 font-sans text-[10px] uppercase tracking-wider text-[#217B8E]">
                     {chips[pillar.slug] ?? "SERVICE"}
                   </span>
-                  <h3 className="font-display text-h4 font-semibold leading-snug text-ink-900">
+                  <h3 className="font-display text-[20px] font-semibold leading-snug text-ink-900 lg:text-h4">
                     {pillar.name}
                   </h3>
                   <p className="text-body text-[#7E8C92]">{pillar.heroTitle}</p>

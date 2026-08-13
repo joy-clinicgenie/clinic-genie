@@ -72,7 +72,7 @@ export function ExpertsCards() {
                 "hover:shadow-glow-sm sm:min-h-72 sm:grid-rows-[4.5rem_3.25rem_1fr] sm:gap-4 sm:px-7 sm:py-7"
               )}
             >
-              <h3 className="line-clamp-3 w-full font-display text-base font-semibold leading-snug tracking-tight text-onDark sm:text-lg">
+              <h3 className="line-clamp-3 w-full font-display text-[20px] font-semibold leading-snug tracking-tight text-onDark lg:text-lg">
                 {role.title}
               </h3>
 
@@ -84,7 +84,7 @@ export function ExpertsCards() {
                 />
               </div>
 
-              <p className="line-clamp-4 w-full self-end text-sm leading-relaxed text-onDark-muted">
+              <p className="line-clamp-4 w-full self-end text-body leading-relaxed text-onDark-muted">
                 {role.body}
               </p>
             </article>

@@ -10,6 +10,26 @@
   min-width: 0;
 }
 
+.hintDown {
+  animation: hero-hint-down 2.4s ease-in-out infinite;
+}
+
+@keyframes hero-hint-down {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(3px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hintDown {
+    animation: none;
+  }
+}
+
 @media (max-width: 1023px) {
   .lightHeroContent {
     transform: translateY(-10svh);

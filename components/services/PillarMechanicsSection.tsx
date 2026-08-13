@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { LandingKicker } from "@/components/home/landing/LandingLayout";
+import { SectionEyebrow } from "@/components/ui/SectionEyebrow";
 import { Reveal, RevealGroup, RevealItem } from "@/components/ui/Reveal";
 import type { CorePillar } from "@/lib/data/pillars";
 
@@ -41,9 +41,9 @@ export function PillarMechanicsSection({ pillar }: { pillar: CorePillar }) {
         <div className="mx-auto grid w-full max-w-[96rem] gap-12 lg:grid-cols-12 lg:items-start lg:gap-16">
           <Reveal className="lg:col-span-4">
             <header className="flex max-w-md flex-col items-start gap-4 text-left">
-              <LandingKicker light align="left">
+              <SectionEyebrow tone="dark" align="left">
                 {pillar.mechanicsSubtitle}
-              </LandingKicker>
+              </SectionEyebrow>
               <h2 className="font-display text-h2 text-balance text-white">
                 {pillar.mechanicsTitle}
               </h2>

@@ -15,15 +15,18 @@ export function Brandmark({ className }: { className?: string }) {
 export function Logo({
   className,
   tone = "dark",
+  onClick,
 }: {
   className?: string;
   showWordmark?: boolean;
   tone?: "dark" | "light";
+  onClick?: () => void;
 }) {
   return (
     <Link
       href="/"
       aria-label="Clinic Genie — home"
+      onClick={onClick}
       className={cn("group inline-flex items-center", className)}
     >
       {/* eslint-disable-next-line @next/next/no-img-element */}

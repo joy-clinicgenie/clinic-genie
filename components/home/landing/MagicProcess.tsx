@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore } from "react";
 import {
   motion,
   useMotionValueEvent,
@@ -39,7 +39,7 @@ function buildMagicPath(points: Point[]) {
 
 function pathLayoutMode() {
   if (window.matchMedia("(min-width: 1280px)").matches) return "horizontal";
-  if (window.matchMedia("(max-width: 639px)").matches) return "vertical";
+  if (window.matchMedia("(max-width: 1023px)").matches) return "vertical";
   return "free";
 }
 
@@ -70,20 +70,34 @@ function stepThresholds(count: number, index: number) {
   return { start, end, activeAt: start + span * 0.2 };
 }
 
+function useCompactProcess() {
+  return useSyncExternalStore(
+    (onStoreChange) => {
+      const mq = window.matchMedia("(max-width: 1023px)");
+      mq.addEventListener("change", onStoreChange);
+      return () => mq.removeEventListener("change", onStoreChange);
+    },
+    () => window.matchMedia("(max-width: 1023px)").matches,
+    () => true
+  );
+}
+
 function MagicNumber({
   n,
   active,
   circleRef,
+  compact = false,
 }: {
   n: number;
   active: boolean;
   circleRef?: (el: HTMLSpanElement | null) => void;
+  compact?: boolean;
 }) {
   const reduced = useReducedMotion();
 
   return (
     <SparkleRing
-      size="md"
+      size={compact ? "sm" : "md"}
       ambient={false}
       active={active && !reduced}
       glow
@@ -91,7 +105,8 @@ function MagicNumber({
       coreRef={circleRef}
       coreClassName={cn(
         styles.numberCircle,
-        "grid h-16 w-16 place-items-center rounded-full border border-[#9CC8D2]/80 bg-white/75 font-display text-h4 text-ink-900 backdrop-blur-glass-light"
+        "grid place-items-center rounded-full border border-[#9CC8D2]/80 bg-white/75 font-display text-ink-900 backdrop-blur-glass-light",
+        compact ? "h-10 w-10 text-base" : "h-16 w-16 text-h4"
       )}
     >
       {n}
@@ -107,6 +122,7 @@ function ProcessCard({
   index,
   total,
   dark = false,
+  compact = false,
   className,
 }: {
   step: ProcessStep;
@@ -116,25 +132,31 @@ function ProcessCard({
   index: number;
   total: number;
   dark?: boolean;
+  compact?: boolean;
   className?: string;
 }) {
   const reduced = useReducedMotion();
   const { start, end } = stepThresholds(total, index);
   const isFirst = index === 0;
   const opacity = useTransform(progress, isFirst ? [0, 1] : [start, end], isFirst ? [1, 1] : [0, 1]);
-  const y = useTransform(progress, isFirst ? [0, 1] : [start, end], isFirst ? [0, 0] : [24, 0]);
+  const y = useTransform(progress, isFirst ? [0, 1] : [start, end], isFirst ? [0, 0] : [-24, 0]);
 
   return (
-    <article className={cn("flex flex-col items-center gap-4 text-center", className)}>
-      <MagicNumber n={step.n} active={active} circleRef={circleRef} />
+    <article
+      className={cn(
+        "flex flex-row items-start gap-3 text-left lg:flex-col lg:items-center lg:gap-4 lg:text-center",
+        className
+      )}
+    >
+      <MagicNumber n={step.n} active={active} circleRef={circleRef} compact={compact} />
       <motion.div
-        className="flex flex-col gap-2"
+        className="flex min-w-0 flex-1 flex-col gap-1.5 lg:flex-none lg:gap-2"
         style={reduced ? undefined : { opacity, y }}
       >
         <h3 className={cn("font-display text-h4", dark ? "text-white" : "text-ink-900")}>{step.title}</h3>
         <p
           className={cn(
-            "mx-auto max-w-full text-base leading-relaxed text-pretty sm:max-w-[75%]",
+            "max-w-full text-base leading-relaxed text-pretty lg:mx-auto lg:max-w-[75%]",
             dark ? "text-[#C9E4EA]" : "text-[#7E8C92]"
           )}
         >
@@ -167,6 +189,7 @@ export function MagicProcess({
   const pathRef = useRef<SVGPathElement>(null);
 
   const reduced = useReducedMotion();
+  const compact = useCompactProcess();
   const [pathD, setPathD] = useState("");
   const [pathLength, setPathLength] = useState(1);
   const [lineAxis, setLineAxis] = useState({ x1: 0, y1: 0, x2: 1, y2: 0 });
@@ -268,7 +291,7 @@ export function MagicProcess({
   return (
     <div
       ref={sectionRef}
-      className={cn(styles.section, dark && styles.sectionDark)}
+      className={cn(styles.section, dark && styles.sectionDark, compact && styles.sectionCompact)}
       style={{ minHeight: reduced ? undefined : `${steps.length * 100}vh` }}
     >
       <div ref={stageRef} className={styles.sticky}>
@@ -351,7 +374,7 @@ export function MagicProcess({
             )}
           </motion.svg>
 
-          <div className={cn("relative grid grid-cols-1 items-start gap-8 sm:grid-cols-2 xl:grid-cols-5 xl:gap-4", styles.stepsGrid)}>
+          <div className={cn("relative grid grid-cols-1 items-start gap-3 lg:grid-cols-2 lg:gap-8 xl:grid-cols-5 xl:gap-4", styles.stepsGrid)}>
             {steps.map((step, index) => (
               <ProcessCard
                 key={step.n}
@@ -361,6 +384,7 @@ export function MagicProcess({
                 index={index}
                 total={steps.length}
                 dark={dark}
+                compact={compact}
                 circleRef={(el) => {
                   circleRefs.current[index] = el;
                 }}

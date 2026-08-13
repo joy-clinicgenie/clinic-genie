@@ -65,7 +65,7 @@ export function Hero() {
               <motion.p
                 className={cn(
                   styles.tagline,
-                  "font-display text-[0.9375rem] font-normal text-ink-700 sm:text-base lg:text-h4"
+                  "font-display text-subtitle font-medium leading-snug text-ink-700 lg:text-[length:calc(var(--text-h1)/2)]"
                 )}
                 initial={reduceMotion ? false : { opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}

@@ -14,6 +14,7 @@ import {
   type PanInfo,
 } from "framer-motion";
 import { MagneticButton } from "@/components/ui/MagneticButton";
+import { SectionEyebrow } from "@/components/ui/SectionEyebrow";
 import {
   LandingBody,
   LandingHeading,
@@ -23,6 +24,9 @@ import { PORTFOLIO_WORKS, type PortfolioWorkSlide } from "@/lib/data/portfolio-w
 import { cn } from "@/lib/cn";
 import styles from "./PortfolioWorksCarousel.module.css";
 
+export type CarouselVariant = "cinematic" | "showcase";
+type MotionMode = "editorial" | "coverflow";
+
 export type PortfolioWorksCarouselProps = {
   kicker?: string;
   title?: string;
@@ -30,16 +34,52 @@ export type PortfolioWorksCarouselProps = {
   body?: string;
   cta?: { label: string; href: string };
   slides?: PortfolioWorkSlide[];
+  /** `showcase` is the compact mobile clinic treatment on service sub-pages. */
+  variant?: CarouselVariant;
 };
 
-const CARD_GAP = -32;
-const CARD_WIDTH_MOBILE = 220;
-const CARD_WIDTH_DESKTOP = 280;
-const ANGLE_PER_SLOT = 24;
+const GRANTED_HEADING = "Clinics whose wishes we have granted.";
+const CARD_GAP_DESKTOP = -28;
+const CARD_GAP_TABLET = -16;
+const CARD_GAP_SHOWCASE = -40;
+const CARD_WIDTH_TABLET = 288;
+const CARD_WIDTH_DESKTOP = 320;
+const CARD_WIDTH_DESKTOP_XL = 336;
+const CARD_WIDTH_SHOWCASE_MIN = 180;
+const CARD_WIDTH_SHOWCASE_MAX = 210;
+const MD_BREAKPOINT = 768;
+const LG_BREAKPOINT = 1024;
+const XL_BREAKPOINT = 1440;
 const LOOP_COPIES = 3;
 const FLICK_VELOCITY = 380;
 const FLICK_VELOCITY_STRONG = 900;
 const DRAG_COMMIT_RATIO = 0.18;
+
+const SNAP_SPRING = {
+  type: "spring" as const,
+  stiffness: 210,
+  damping: 30,
+  mass: 0.92,
+};
+
+type CarouselLayout = {
+  cardWidth: number;
+  viewportWidth: number;
+  gap: number;
+  mode: MotionMode;
+  intensity: number;
+};
+
+type SlidePose = {
+  rotateY: number;
+  rotateZ: number;
+  scale: number;
+  translateZ: number;
+  translateX: number;
+  translateY: number;
+  opacity: number;
+  zIndex: number;
+};
 
 export type CarouselControlsHandle = {
   prev: () => void;
@@ -56,44 +96,104 @@ function normalizeLoopIndex(index: number, originalCount: number) {
   return originalCount + mod;
 }
 
-function getCardWidth(viewportWidth: number) {
-  return viewportWidth >= 768 ? CARD_WIDTH_DESKTOP : CARD_WIDTH_MOBILE;
+function lerp(a: number, b: number, t: number) {
+  return a + (b - a) * t;
 }
 
-function getCardStep(cardWidth: number) {
-  return cardWidth + CARD_GAP;
+function clamp01(value: number) {
+  return Math.min(1, Math.max(0, value));
 }
 
-function getTargetX(index: number, cardWidth: number, viewportWidth: number) {
-  const step = getCardStep(cardWidth);
+function getShowcaseCardWidth(viewportWidth: number) {
+  return Math.round(
+    Math.min(CARD_WIDTH_SHOWCASE_MAX, Math.max(CARD_WIDTH_SHOWCASE_MIN, viewportWidth * 0.52))
+  );
+}
+
+function getCinematicMobileWidth(viewportWidth: number) {
+  return Math.round(Math.min(280, Math.max(228, viewportWidth * 0.72)));
+}
+
+function getMotionMode(variant: CarouselVariant, viewportWidth: number): MotionMode {
+  if (viewportWidth < MD_BREAKPOINT) return "coverflow";
+  if (variant === "showcase" && viewportWidth < LG_BREAKPOINT) return "coverflow";
+  return "editorial";
+}
+
+function getCardWidth(viewportWidth: number, variant: CarouselVariant = "cinematic") {
+  if (getMotionMode(variant, viewportWidth) === "coverflow") {
+    return variant === "showcase"
+      ? getShowcaseCardWidth(viewportWidth)
+      : getCinematicMobileWidth(viewportWidth);
+  }
+  if (viewportWidth < LG_BREAKPOINT) return CARD_WIDTH_TABLET;
+  if (viewportWidth < XL_BREAKPOINT) return CARD_WIDTH_DESKTOP;
+  return CARD_WIDTH_DESKTOP_XL;
+}
+
+function getCardGap(mode: MotionMode, viewportWidth: number) {
+  if (mode === "coverflow") return CARD_GAP_SHOWCASE;
+  if (viewportWidth < LG_BREAKPOINT) return CARD_GAP_TABLET;
+  return CARD_GAP_DESKTOP;
+}
+
+function getMotionIntensity(viewportWidth: number) {
+  if (viewportWidth < LG_BREAKPOINT) return 0.62;
+  return 1;
+}
+
+function measureLayout(viewportWidth: number, variant: CarouselVariant): CarouselLayout {
+  const mode = getMotionMode(variant, viewportWidth);
+  return {
+    cardWidth: getCardWidth(viewportWidth, variant),
+    viewportWidth,
+    gap: getCardGap(mode, viewportWidth),
+    mode,
+    intensity: getMotionIntensity(viewportWidth),
+  };
+}
+
+function getCardStep(cardWidth: number, gap: number) {
+  return cardWidth + gap;
+}
+
+function getTargetX(index: number, cardWidth: number, viewportWidth: number, gap: number) {
+  const step = getCardStep(cardWidth, gap);
   return viewportWidth / 2 - (index * step + cardWidth / 2);
 }
 
-function getIndexFromX(x: number, cardWidth: number, viewportWidth: number) {
-  const step = getCardStep(cardWidth);
+function getIndexFromX(x: number, cardWidth: number, viewportWidth: number, gap: number) {
+  const step = getCardStep(cardWidth, gap);
   const raw = (viewportWidth / 2 - x - cardWidth / 2) / step;
   return Math.round(raw);
 }
 
-function getVirtualIndex(x: number, cardWidth: number, viewportWidth: number) {
-  const step = getCardStep(cardWidth);
+function getVirtualIndex(x: number, cardWidth: number, viewportWidth: number, gap: number) {
+  const step = getCardStep(cardWidth, gap);
   return (viewportWidth / 2 - x - cardWidth / 2) / step;
+}
+
+function displaySlideIndex(focusedIndex: number, count: number) {
+  if (count <= 0) return 0;
+  return ((focusedIndex % count) + count) % count;
 }
 
 function resolveSnapIndex(
   currentX: number,
   cardWidth: number,
   viewportWidth: number,
+  gap: number,
   offsetX: number,
   velocityX: number,
-  maxIndex: number
+  maxIndex: number,
+  singleStep: boolean
 ) {
-  const step = getCardStep(cardWidth);
-  const virtual = getVirtualIndex(currentX, cardWidth, viewportWidth);
+  const step = getCardStep(cardWidth, gap);
+  const virtual = getVirtualIndex(currentX, cardWidth, viewportWidth, gap);
   let target = Math.round(virtual);
 
   const absVelocity = Math.abs(velocityX);
-  if (absVelocity > FLICK_VELOCITY_STRONG) {
+  if (!singleStep && absVelocity > FLICK_VELOCITY_STRONG) {
     target += velocityX > 0 ? -2 : 2;
   } else if (absVelocity > FLICK_VELOCITY) {
     target += velocityX > 0 ? -1 : 1;
@@ -106,19 +206,46 @@ function resolveSnapIndex(
   return Math.max(0, Math.min(maxIndex, target));
 }
 
-/** Smooth inward-cylinder curve from continuous offset (not snapped to integers). */
-function cylinderTransform(offset: number) {
+/** Desktop editorial cover-flow: Peripheral → Supporting → Active → Supporting → Peripheral */
+function editorialTransform(offset: number, intensity = 1): SlidePose {
   const abs = Math.abs(offset);
-  const depth = 1 - Math.cos(Math.min(abs, 2.8) * (ANGLE_PER_SLOT * (Math.PI / 180)));
+  const sign = offset === 0 ? 0 : Math.sign(offset);
+  const t1 = clamp01(abs);
+  const t2 = clamp01(abs - 1);
+  const t3 = clamp01(abs - 2);
 
   return {
-    rotateY: offset * -ANGLE_PER_SLOT,
-    scale: 0.73 + depth * 0.34,
-    translateZ: depth * 110 - 120,
-    translateX: offset * -3,
-    opacity: 0.62 + Math.min(abs * 0.11, 0.34),
-    zIndex: Math.round(depth * 110 - 120 + 520),
+    rotateY: sign * lerp(0, lerp(5, 9, t2), t1) * intensity,
+    rotateZ: sign * lerp(0, lerp(3, 5.5, t2), t1) * intensity,
+    scale: lerp(1, lerp(0.93, lerp(0.84, 0.8, t3), t2), t1),
+    translateZ: lerp(16, lerp(0, -12, t2), t1) * intensity,
+    translateX: 0,
+    translateY: lerp(-7, lerp(2, 10, t2), t1),
+    opacity: lerp(1, lerp(0.9, lerp(0.7, 0.58, t3), t2), t1),
+    zIndex: Math.round(lerp(48, lerp(24, lerp(10, 4, t3), t2), t1)),
   };
+}
+
+/** Mobile: one dominant active card with readable neighbour peeks. */
+function coverflowTransform(offset: number): SlidePose {
+  const abs = Math.abs(offset);
+  const t = Math.min(abs, 1);
+  const t2 = clamp01(abs - 1);
+
+  return {
+    rotateY: 0,
+    rotateZ: 0,
+    scale: 1 - t * 0.12 - t2 * 0.06,
+    translateZ: 0,
+    translateX: 0,
+    translateY: lerp(-4, 0, t),
+    opacity: 1 - t * 0.12 - t2 * 0.2,
+    zIndex: Math.round((1 - abs) * 40 + 10),
+  };
+}
+
+function slideTransform(offset: number, mode: MotionMode, intensity: number): SlidePose {
+  return mode === "coverflow" ? coverflowTransform(offset) : editorialTransform(offset, intensity);
 }
 
 function WorkCard({
@@ -126,11 +253,13 @@ function WorkCard({
   style,
   tabIndex,
   onFocus,
+  isActive = false,
 }: {
   slide: PortfolioWorkSlide;
   style?: CSSProperties;
   tabIndex?: number;
   onFocus?: () => void;
+  isActive?: boolean;
 }) {
   const content = (
     <>
@@ -141,7 +270,7 @@ function WorkCard({
             alt={slide.title}
             fill
             className={styles.cardImage}
-            sizes="(max-width: 768px) 220px, 280px"
+            sizes="(max-width: 767px) 72vw, (max-width: 1023px) 288px, (max-width: 1439px) 320px, 336px"
           />
         ) : (
           <div className={styles.cardPlaceholder} aria-hidden="true">
@@ -152,15 +281,23 @@ function WorkCard({
       <div className={styles.cardOverlay}>
         <p className={styles.cardTitle}>{slide.title}</p>
         <p className={styles.cardCategory}>{slide.category}</p>
+        {isActive && slide.href ? (
+          <span className={styles.cardView} aria-hidden="true">
+            View Project
+            <span className={styles.cardViewArrow}>↗</span>
+          </span>
+        ) : null}
       </div>
     </>
   );
+
+  const cardClass = cn(styles.card, isActive && styles.cardActive);
 
   if (slide.href) {
     return (
       <Link
         href={slide.href}
-        className={styles.card}
+        className={cardClass}
         style={style}
         tabIndex={tabIndex}
         onFocus={onFocus}
@@ -174,7 +311,7 @@ function WorkCard({
 
   return (
     <article
-      className={styles.card}
+      className={cardClass}
       style={style}
       tabIndex={tabIndex}
       onFocus={onFocus}
@@ -191,6 +328,9 @@ function CarouselSlide({
   x,
   cardWidth,
   viewportWidth,
+  gap,
+  mode,
+  intensity,
   focusedIndex,
   onFocusSlide,
 }: {
@@ -199,31 +339,45 @@ function CarouselSlide({
   x: MotionValue<number>;
   cardWidth: number;
   viewportWidth: number;
+  gap: number;
+  mode: MotionMode;
+  intensity: number;
   focusedIndex: number;
   onFocusSlide: (index: number) => void;
 }) {
-  const offset = useTransform(x, (currentX) => index - getVirtualIndex(currentX, cardWidth, viewportWidth));
-  const rotateY = useTransform(offset, (o) => cylinderTransform(o).rotateY);
-  const scale = useTransform(offset, (o) => cylinderTransform(o).scale);
-  const translateZ = useTransform(offset, (o) => cylinderTransform(o).translateZ);
-  const translateX = useTransform(offset, (o) => cylinderTransform(o).translateX);
-  const opacity = useTransform(offset, (o) => cylinderTransform(o).opacity);
-  const zIndex = useTransform(offset, (o) => cylinderTransform(o).zIndex);
+  const layoutRef = useRef({ cardWidth, viewportWidth, gap, mode, intensity });
+  layoutRef.current = { cardWidth, viewportWidth, gap, mode, intensity };
+
+  const offset = useTransform(x, (currentX) => {
+    const l = layoutRef.current;
+    return index - getVirtualIndex(currentX, l.cardWidth, l.viewportWidth, l.gap);
+  });
+  const rotateY = useTransform(offset, (o) => slideTransform(o, layoutRef.current.mode, layoutRef.current.intensity).rotateY);
+  const rotateZ = useTransform(offset, (o) => slideTransform(o, layoutRef.current.mode, layoutRef.current.intensity).rotateZ);
+  const scale = useTransform(offset, (o) => slideTransform(o, layoutRef.current.mode, layoutRef.current.intensity).scale);
+  const translateZ = useTransform(offset, (o) => slideTransform(o, layoutRef.current.mode, layoutRef.current.intensity).translateZ);
+  const translateX = useTransform(offset, (o) => slideTransform(o, layoutRef.current.mode, layoutRef.current.intensity).translateX);
+  const translateY = useTransform(offset, (o) => slideTransform(o, layoutRef.current.mode, layoutRef.current.intensity).translateY);
+  const opacity = useTransform(offset, (o) => slideTransform(o, layoutRef.current.mode, layoutRef.current.intensity).opacity);
+  const zIndex = useTransform(offset, (o) => slideTransform(o, layoutRef.current.mode, layoutRef.current.intensity).zIndex);
 
   return (
     <motion.div
       className={styles.slide}
       style={{
         rotateY,
+        rotateZ,
         scale,
         translateZ,
         translateX,
+        y: translateY,
         opacity,
         zIndex,
       }}
     >
       <WorkCard
         slide={slide}
+        isActive={index === focusedIndex}
         tabIndex={index === focusedIndex ? 0 : -1}
         onFocus={() => onFocusSlide(index)}
       />
@@ -301,14 +455,14 @@ function useCarouselWheelOnHover(
 
 function CarouselControls({ onPrev, onNext }: { onPrev: () => void; onNext: () => void }) {
   return (
-    <div className={styles.navControls} role="group" aria-label="Carousel navigation">
-      <button type="button" className={styles.navButton} aria-label="Previous project" onClick={onPrev}>
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+    <div className={styles.navCluster} role="group" aria-label="Carousel navigation">
+      <button type="button" className={styles.navArrow} aria-label="Previous project" onClick={onPrev}>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" aria-hidden="true">
           <path d="M15 6l-6 6 6 6" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
       </button>
-      <button type="button" className={styles.navButton} aria-label="Next project" onClick={onNext}>
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+      <button type="button" className={styles.navArrow} aria-label="Next project" onClick={onNext}>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" aria-hidden="true">
           <path d="M9 6l6 6-6 6" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
       </button>
@@ -316,40 +470,109 @@ function CarouselControls({ onPrev, onNext }: { onPrev: () => void; onNext: () =
   );
 }
 
-const DragCarousel = forwardRef<CarouselControlsHandle, { slides: PortfolioWorkSlide[] }>(function DragCarousel(
-  { slides },
-  ref
-) {
+function padIndex(value: number) {
+  return String(value).padStart(2, "0");
+}
+
+function CarouselProgress({ index, total }: { index: number; total: number }) {
+  const progress = total > 0 ? ((index + 1) / total) * 100 : 0;
+
+  return (
+    <p className={styles.progress} aria-hidden="true">
+      <span className={styles.progressIndex}>{padIndex(index + 1)}</span>
+      <span className={styles.progressTrack}>
+        <span className={styles.progressFill} style={{ width: `${progress}%` }} />
+      </span>
+      <span className={styles.progressIndex}>{padIndex(total)}</span>
+    </p>
+  );
+}
+
+function CarouselPager({
+  index,
+  total,
+  onPrev,
+  onNext,
+}: {
+  index: number;
+  total: number;
+  onPrev: () => void;
+  onNext: () => void;
+}) {
+  const progress = total > 0 ? ((index + 1) / total) * 100 : 0;
+
+  return (
+    <div className={styles.pager} role="group" aria-label="Carousel navigation">
+      <div className={styles.pagerRow}>
+        <button type="button" className={styles.pagerButton} aria-label="Previous clinic" onClick={onPrev}>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" aria-hidden="true">
+            <path d="M15 6l-6 6 6 6" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </button>
+        <span className={styles.pagerIndex} aria-hidden="true">
+          {padIndex(index + 1)} / {padIndex(total)}
+        </span>
+        <button type="button" className={styles.pagerButton} aria-label="Next clinic" onClick={onNext}>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" aria-hidden="true">
+            <path d="M9 6l6 6-6 6" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </button>
+      </div>
+      <div className={styles.pagerTrack} aria-hidden="true">
+        <span className={styles.pagerFill} style={{ width: `${progress}%` }} />
+      </div>
+    </div>
+  );
+}
+
+const DragCarousel = forwardRef<
+  CarouselControlsHandle,
+  {
+    slides: PortfolioWorkSlide[];
+    variant: CarouselVariant;
+    onActiveIndexChange?: (index: number) => void;
+  }
+>(function DragCarousel({ slides, variant, onActiveIndexChange }, ref) {
   const loopedSlides = useMemo(() => buildLoopedSlides(slides), [slides]);
   const regionRef = useRef<HTMLDivElement>(null);
   const skipAnimateRef = useRef(false);
   const draggingRef = useRef(false);
   const [focusedIndex, setFocusedIndex] = useState(slides.length);
   const [dragging, setDragging] = useState(false);
-  const [layout, setLayout] = useState({ cardWidth: CARD_WIDTH_DESKTOP, viewportWidth: 1280 });
-  const x = useMotionValue(getTargetX(slides.length, CARD_WIDTH_DESKTOP, 1280));
+  const [layout, setLayout] = useState<CarouselLayout>(() =>
+    measureLayout(1280, variant)
+  );
+  const x = useMotionValue(
+    getTargetX(slides.length, CARD_WIDTH_DESKTOP, 1280, CARD_GAP_DESKTOP)
+  );
 
   useEffect(() => {
     const updateLayout = () => {
       const viewportWidth = regionRef.current?.clientWidth ?? window.innerWidth;
-      const cardWidth = getCardWidth(viewportWidth);
-      setLayout({ cardWidth, viewportWidth });
+      setLayout(measureLayout(viewportWidth, variant));
     };
     updateLayout();
     window.addEventListener("resize", updateLayout);
     return () => window.removeEventListener("resize", updateLayout);
-  }, []);
+  }, [variant]);
+
+  const { cardWidth, viewportWidth, gap, mode, intensity } = layout;
+  const coverflow = mode === "coverflow";
 
   const recenterIfNeeded = useCallback(
     (index: number) => {
       const normalized = normalizeLoopIndex(index, slides.length);
       if (normalized === index) return;
       skipAnimateRef.current = true;
-      x.set(getTargetX(normalized, layout.cardWidth, layout.viewportWidth));
+      x.set(getTargetX(normalized, cardWidth, viewportWidth, gap));
       setFocusedIndex(normalized);
     },
-    [layout.cardWidth, layout.viewportWidth, slides.length, x]
+    [cardWidth, gap, slides.length, viewportWidth, x]
   );
+
+  useEffect(() => {
+    onActiveIndexChange?.(displaySlideIndex(focusedIndex, slides.length));
+  }, [focusedIndex, onActiveIndexChange, slides.length]);
 
   useEffect(() => {
     if (skipAnimateRef.current) {
@@ -358,24 +581,23 @@ const DragCarousel = forwardRef<CarouselControlsHandle, { slides: PortfolioWorkS
     }
     if (draggingRef.current) return;
 
-    const target = getTargetX(focusedIndex, layout.cardWidth, layout.viewportWidth);
+    const target = getTargetX(focusedIndex, cardWidth, viewportWidth, gap);
     const controls = animate(x, target, {
-      type: "spring",
-      stiffness: 280,
-      damping: 32,
-      mass: 0.85,
+      ...SNAP_SPRING,
+      stiffness: coverflow ? 240 : SNAP_SPRING.stiffness,
+      damping: coverflow ? 40 : SNAP_SPRING.damping,
       onComplete: () => {
-        const currentIndex = getIndexFromX(x.get(), layout.cardWidth, layout.viewportWidth);
+        const currentIndex = getIndexFromX(x.get(), cardWidth, viewportWidth, gap);
         recenterIfNeeded(currentIndex);
       },
     });
 
     return () => controls.stop();
-  }, [focusedIndex, layout.cardWidth, layout.viewportWidth, recenterIfNeeded, x]);
+  }, [cardWidth, coverflow, focusedIndex, gap, recenterIfNeeded, viewportWidth, x]);
 
   useMotionValueEvent(x, "change", (currentX) => {
     if (!draggingRef.current) return;
-    setFocusedIndex(getIndexFromX(currentX, layout.cardWidth, layout.viewportWidth));
+    setFocusedIndex(getIndexFromX(currentX, cardWidth, viewportWidth, gap));
   });
 
   const goToIndex = useCallback(
@@ -386,14 +608,18 @@ const DragCarousel = forwardRef<CarouselControlsHandle, { slides: PortfolioWorkS
         skipAnimateRef.current = true;
         setFocusedIndex(clamped);
 
-        animate(x, getTargetX(clamped, layout.cardWidth, layout.viewportWidth), {
-          type: "spring",
-          stiffness: 300 + Math.min(120, Math.abs(options.velocity ?? 0) * 0.05),
-          damping: 32 + Math.min(12, Math.abs(options.velocity ?? 0) * 0.004),
-          mass: 0.8,
-          velocity: options.velocity ?? 0,
+        animate(x, getTargetX(clamped, cardWidth, viewportWidth, gap), {
+          ...SNAP_SPRING,
+          stiffness: coverflow
+            ? 240
+            : SNAP_SPRING.stiffness + Math.min(80, Math.abs(options.velocity ?? 0) * 0.04),
+          damping: coverflow
+            ? 40
+            : SNAP_SPRING.damping + Math.min(8, Math.abs(options.velocity ?? 0) * 0.003),
+          mass: coverflow ? 0.9 : SNAP_SPRING.mass,
+          velocity: coverflow ? 0 : options.velocity ?? 0,
           onComplete: () => {
-            const currentIndex = getIndexFromX(x.get(), layout.cardWidth, layout.viewportWidth);
+            const currentIndex = getIndexFromX(x.get(), cardWidth, viewportWidth, gap);
             recenterIfNeeded(currentIndex);
           },
         });
@@ -402,7 +628,7 @@ const DragCarousel = forwardRef<CarouselControlsHandle, { slides: PortfolioWorkS
 
       setFocusedIndex(clamped);
     },
-    [layout.cardWidth, layout.viewportWidth, loopedSlides.length, recenterIfNeeded, x]
+    [cardWidth, coverflow, gap, loopedSlides.length, recenterIfNeeded, viewportWidth, x]
   );
 
   useImperativeHandle(ref, () => ({
@@ -423,16 +649,18 @@ const DragCarousel = forwardRef<CarouselControlsHandle, { slides: PortfolioWorkS
 
       const target = resolveSnapIndex(
         x.get(),
-        layout.cardWidth,
-        layout.viewportWidth,
+        cardWidth,
+        viewportWidth,
+        gap,
         info.offset.x,
         info.velocity.x,
-        loopedSlides.length - 1
+        loopedSlides.length - 1,
+        coverflow
       );
 
       goToIndex(target, { fromDrag: true, velocity: info.velocity.x });
     },
-    [goToIndex, layout.cardWidth, layout.viewportWidth, loopedSlides.length, x]
+    [cardWidth, coverflow, gap, goToIndex, loopedSlides.length, viewportWidth, x]
   );
 
   const onKeyDown = useCallback(
@@ -453,27 +681,26 @@ const DragCarousel = forwardRef<CarouselControlsHandle, { slides: PortfolioWorkS
       x.stop();
       draggingRef.current = true;
 
-      const minX = getTargetX(loopedSlides.length - 1, layout.cardWidth, layout.viewportWidth);
-      const maxX = getTargetX(0, layout.cardWidth, layout.viewportWidth);
+      const minX = getTargetX(loopedSlides.length - 1, cardWidth, viewportWidth, gap);
+      const maxX = getTargetX(0, cardWidth, viewportWidth, gap);
       const nextX = Math.max(minX, Math.min(maxX, x.get() - delta));
 
       x.set(nextX);
-      setFocusedIndex(getIndexFromX(nextX, layout.cardWidth, layout.viewportWidth));
+      setFocusedIndex(getIndexFromX(nextX, cardWidth, viewportWidth, gap));
     },
-    [layout.cardWidth, layout.viewportWidth, loopedSlides.length, x]
+    [cardWidth, gap, loopedSlides.length, viewportWidth, x]
   );
 
   const onWheelEnd = useCallback(() => {
     draggingRef.current = false;
 
-    const target = getIndexFromX(x.get(), layout.cardWidth, layout.viewportWidth);
+    const target = getIndexFromX(x.get(), cardWidth, viewportWidth, gap);
     goToIndex(target, { fromDrag: true, velocity: 0 });
-  }, [goToIndex, layout.cardWidth, layout.viewportWidth, x]);
+  }, [cardWidth, gap, goToIndex, viewportWidth, x]);
 
   useCarouselWheelOnHover(regionRef, onWheelDelta, onWheelEnd);
 
-  const { cardWidth, viewportWidth } = layout;
-  const activeSlide = slides[((focusedIndex % slides.length) + slides.length) % slides.length];
+  const activeSlide = slides[displaySlideIndex(focusedIndex, slides.length)];
 
   return (
     <div
@@ -484,6 +711,10 @@ const DragCarousel = forwardRef<CarouselControlsHandle, { slides: PortfolioWorkS
       aria-roledescription="carousel"
       tabIndex={0}
       onKeyDown={onKeyDown}
+      style={{
+        ["--carousel-card-width" as string]: `${cardWidth}px`,
+        ["--carousel-gap" as string]: `${gap}px`,
+      }}
     >
       <div className={styles.stage}>
         <motion.div
@@ -491,8 +722,8 @@ const DragCarousel = forwardRef<CarouselControlsHandle, { slides: PortfolioWorkS
           style={{ x }}
           drag="x"
           dragConstraints={{
-            left: getTargetX(loopedSlides.length - 1, cardWidth, viewportWidth),
-            right: getTargetX(0, cardWidth, viewportWidth),
+            left: getTargetX(loopedSlides.length - 1, cardWidth, viewportWidth, gap),
+            right: getTargetX(0, cardWidth, viewportWidth, gap),
           }}
           dragElastic={0.04}
           dragMomentum={false}
@@ -508,6 +739,9 @@ const DragCarousel = forwardRef<CarouselControlsHandle, { slides: PortfolioWorkS
               x={x}
               cardWidth={cardWidth}
               viewportWidth={viewportWidth}
+              gap={gap}
+              mode={mode}
+              intensity={intensity}
               focusedIndex={focusedIndex}
               onFocusSlide={goToIndex}
             />
@@ -515,17 +749,20 @@ const DragCarousel = forwardRef<CarouselControlsHandle, { slides: PortfolioWorkS
         </motion.div>
       </div>
       <p className="sr-only" aria-live="polite">
-        Showing {activeSlide?.title}, slide {((focusedIndex % slides.length) + slides.length) % slides.length + 1} of{" "}
+        Showing {activeSlide?.title}, slide {displaySlideIndex(focusedIndex, slides.length) + 1} of{" "}
         {slides.length}
       </p>
     </div>
   );
 });
 
-const ScrollCarousel = forwardRef<CarouselControlsHandle, { slides: PortfolioWorkSlide[] }>(function ScrollCarousel(
-  { slides },
-  ref
-) {
+const ScrollCarousel = forwardRef<
+  CarouselControlsHandle,
+  {
+    slides: PortfolioWorkSlide[];
+    onActiveIndexChange?: (index: number) => void;
+  }
+>(function ScrollCarousel({ slides, onActiveIndexChange }, ref) {
   const regionRef = useRef<HTMLDivElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const loopedSlides = useMemo(() => buildLoopedSlides(slides), [slides]);
@@ -536,10 +773,19 @@ const ScrollCarousel = forwardRef<CarouselControlsHandle, { slides: PortfolioWor
     if (!el) return 0;
     const first = el.querySelector<HTMLElement>(`.${styles.scrollSlide}`);
     if (!first) return 0;
-    const gap = Number.parseFloat(getComputedStyle(el).gap) || 0;
-    const marginRight = Number.parseFloat(getComputedStyle(first).marginRight) || CARD_GAP;
-    return first.offsetWidth + marginRight + gap;
+    const cssGap = Number.parseFloat(getComputedStyle(el).gap) || 0;
+    const marginRight = Number.parseFloat(getComputedStyle(first).marginRight) || CARD_GAP_DESKTOP;
+    return first.offsetWidth + marginRight + cssGap;
   }, []);
+
+  const reportIndex = useCallback(() => {
+    const el = scrollRef.current;
+    if (!el || !onActiveIndexChange) return;
+    const step = getScrollStep();
+    if (!step) return;
+    const raw = Math.round(el.scrollLeft / step);
+    onActiveIndexChange(displaySlideIndex(raw, slides.length));
+  }, [getScrollStep, onActiveIndexChange, slides.length]);
 
   const recenterScroll = useCallback(() => {
     const el = scrollRef.current;
@@ -556,14 +802,16 @@ const ScrollCarousel = forwardRef<CarouselControlsHandle, { slides: PortfolioWor
       el.scrollLeft -= setWidth;
       recenteringRef.current = false;
     }
-  }, [getScrollStep, slides.length]);
+    reportIndex();
+  }, [getScrollStep, reportIndex, slides.length]);
 
   useEffect(() => {
     const el = scrollRef.current;
     if (!el) return;
     const step = getScrollStep();
     if (step) el.scrollLeft = slides.length * step;
-  }, [getScrollStep, slides.length]);
+    reportIndex();
+  }, [getScrollStep, reportIndex, slides.length]);
 
   const scrollByStep = useCallback(
     (direction: -1 | 1) => {
@@ -623,51 +871,118 @@ const ScrollCarousel = forwardRef<CarouselControlsHandle, { slides: PortfolioWor
 });
 
 export function PortfolioWorksCarousel({
-  kicker,
-  title = "Magic beyond the clinic.",
+  kicker = "Our Work",
+  title = GRANTED_HEADING,
   highlight,
-  body = "The same magic, beyond healthcare. From cafés to consultancies, built to help brands grow.",
-  cta = { label: "View Our Works", href: "/portfolio" },
+  body = "Specialist clinics across Singapore trust Clinic Genie with their paid search.",
+  cta = { label: "See Our Granted Wishes", href: "/portfolio" },
   slides = PORTFOLIO_WORKS,
+  variant = "cinematic",
 }: PortfolioWorksCarouselProps = {}) {
   const reducedMotion = useReducedMotion();
   const carouselRef = useRef<CarouselControlsHandle>(null);
-  const resolvedHighlight =
-    highlight ?? (title === "Magic beyond the clinic." ? "magic" : undefined);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const showcase = variant === "showcase";
+  const grantedHeading = title === GRANTED_HEADING;
+  const resolvedHighlight = highlight ?? undefined;
+  const headingLevel = showcase ? "h3" : "h2";
+
+  const onActiveIndexChange = useCallback((index: number) => {
+    setActiveIndex(index);
+  }, []);
+
+  const heading = grantedHeading ? (
+    <LandingHeading as={headingLevel} className={styles.introHeading}>
+      <span className={styles.headingMobile}>{GRANTED_HEADING}</span>
+      <span className={styles.headingDesktop}>
+        Clinics whose wishes
+        <br />
+        we have granted.
+      </span>
+    </LandingHeading>
+  ) : (
+    <LandingHeading
+      as={headingLevel}
+      highlight={resolvedHighlight}
+      className={cn(styles.introHeading, showcase && "max-lg:max-w-xs")}
+    >
+      {title}
+    </LandingHeading>
+  );
+
+  const nav = (
+    <div className={styles.navBlock}>
+      <CarouselControls
+        onPrev={() => carouselRef.current?.prev()}
+        onNext={() => carouselRef.current?.next()}
+      />
+      <CarouselProgress index={activeIndex} total={slides.length} />
+    </div>
+  );
 
   return (
     <div className="flex w-full flex-col">
-      <div className={styles.band}>
+      <div className={cn(styles.band, showcase && styles.bandShowcase)}>
         <div className={styles.bandBackdrop} aria-hidden="true">
           <div className={styles.bandStars} />
         </div>
         <div className={styles.intro}>
-          {kicker && <LandingKicker>{kicker}</LandingKicker>}
-          <LandingHeading as="h3" highlight={resolvedHighlight}>
-            {title}
-          </LandingHeading>
-          <LandingBody>{body}</LandingBody>
+          {kicker &&
+            (showcase ? (
+              <SectionEyebrow align="center" className={styles.introKicker}>
+                {kicker}
+              </SectionEyebrow>
+            ) : (
+              <LandingKicker className={styles.introKicker}>{kicker}</LandingKicker>
+            ))}
+          {heading}
+          <LandingBody className={cn(styles.introBody, showcase && "max-lg:max-w-sm")}>
+            {body}
+          </LandingBody>
         </div>
 
         <div className={styles.carouselShell}>
-          <div className={styles.carouselReflection} aria-hidden="true">
-            <div className={styles.carouselReflectionFill} />
-          </div>
+          <div className={styles.carouselGlow} aria-hidden="true" />
           {reducedMotion ? (
-            <ScrollCarousel ref={carouselRef} slides={slides} />
+            <ScrollCarousel
+              ref={carouselRef}
+              slides={slides}
+              onActiveIndexChange={onActiveIndexChange}
+            />
           ) : (
-            <DragCarousel ref={carouselRef} slides={slides} />
+            <DragCarousel
+              ref={carouselRef}
+              slides={slides}
+              variant={variant}
+              onActiveIndexChange={onActiveIndexChange}
+            />
           )}
         </div>
 
         <div className={styles.controlsBlock}>
-          <CarouselControls
-            onPrev={() => carouselRef.current?.prev()}
-            onNext={() => carouselRef.current?.next()}
-          />
+          {showcase ? (
+            <>
+              <div className={styles.pagerMobile}>
+                <CarouselPager
+                  index={activeIndex}
+                  total={slides.length}
+                  onPrev={() => carouselRef.current?.prev()}
+                  onNext={() => carouselRef.current?.next()}
+                />
+              </div>
+              <div className={styles.pagerDesktop}>{nav}</div>
+            </>
+          ) : (
+            nav
+          )}
 
           <div className={styles.ctaBlock}>
-            <MagneticButton href={cta.href} size="lg" withMiniOrb>
+            <MagneticButton
+              href={cta.href}
+              size="md"
+              withMiniOrb
+              className={showcase ? styles.showcaseCta : styles.worksCta}
+            >
               {cta.label}
             </MagneticButton>
           </div>

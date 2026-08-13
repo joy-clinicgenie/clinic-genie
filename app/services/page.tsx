@@ -5,6 +5,7 @@ import { CorePillarsSection } from "@/components/services/CorePillarsSection";
 import { PageFinale } from "@/components/ui/PageFinale";
 import { PageFinaleCTA } from "@/components/ui/PageFinaleCTA";
 import { PortfolioWorksCarousel } from "@/components/home/landing/PortfolioWorksCarousel";
+import styles from "@/components/services/ServicesHero.module.css";
 
 export const metadata: Metadata = {
   title: "Services | Strategy, Digital Growth & Brand for Clinics | Clinic Genie",
@@ -15,31 +16,36 @@ export const metadata: Metadata = {
 export default function ServicesPage() {
   return (
     <div className="min-h-screen surface-cyan text-ink-900">
-      <LightHero
-        title="Everything your clinic needs to grow, under one lamp"
-        highlight="grow"
-        subtitle="Clinic Genie unites healthcare SEO, medical SEM, websites and content to help specialist clinics get found, trusted and chosen."
-        primaryCta={{ href: "/contact", label: "Make Your First Wish" }}
-        secondaryCta={{ href: "#core-pillars", label: "Explore core service pillars" }}
-        showOrb={false}
-        showWishForm={false}
-        showSparkles={false}
-        backgroundImage={{
-          src: "/services/hero-bg.png",
-          alt: "",
-          treatment: "dark",
-        }}
-        minHeight="min-h-[78vh]"
-        className="rounded-b-[44px]"
-      />
+      <div className={styles.stage}>
+        <LightHero
+          title="Everything your clinic needs to grow, under one lamp"
+          highlight="grow"
+          subtitle="Clinic Genie unites healthcare SEO, medical SEM, websites and content to help specialist clinics get found, trusted and chosen."
+          primaryCta={{ href: "/contact", label: "Make Your First Wish" }}
+          secondaryCta={{ href: "#core-pillars", label: "Explore core service pillars" }}
+          showOrb={false}
+          showWishForm={false}
+          showSparkles={false}
+          mobileAlign="center"
+          backgroundImage={{
+            src: "/services/hero-bg.png",
+            alt: "",
+            treatment: "dark",
+            imageClassName:
+              "object-cover max-lg:object-[82%_40%] lg:object-center",
+          }}
+          minHeight="max-lg:min-h-0 lg:min-h-[78vh]"
+          subtitleClassName="max-w-sm whitespace-pre-line text-pretty max-lg:mx-auto sm:max-w-[75%]"
+          className={`${styles.hero} max-lg:items-start max-lg:rounded-b-2xl max-lg:pb-20 lg:rounded-b-[44px]`}
+        />
 
-      <CorePillarsSection />
+        <CorePillarsSection />
+      </div>
 
       <Reveal delay={0.12} className="w-full overflow-visible">
         <PortfolioWorksCarousel />
       </Reveal>
 
-      {/* Final CTA */}
       <PageFinale backdropClassName="surface-cyan">
         <PageFinaleCTA
           kicker="Make your first wish"

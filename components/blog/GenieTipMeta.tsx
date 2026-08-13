@@ -6,6 +6,7 @@ type GenieTipMetaProps = {
   dateLabel?: string | null;
   category?: string | null;
   className?: string;
+  appearance?: "badge" | "editorial";
 };
 
 export function GenieTipMeta({
@@ -13,6 +14,7 @@ export function GenieTipMeta({
   dateLabel,
   category,
   className,
+  appearance = "badge",
 }: GenieTipMetaProps) {
   if (!dateLabel && !category) return null;
 
@@ -24,12 +26,18 @@ export function GenieTipMeta({
         </time>
       ) : null}
       {category ? (
-        <Badge
-          variant="secondary"
-          className="bg-cg-mist px-3 text-xs font-medium text-genie-700"
-        >
-          {category}
-        </Badge>
+        appearance === "editorial" ? (
+          <span className="font-sans text-kicker font-semibold uppercase tracking-widest text-genie-700">
+            {category}
+          </span>
+        ) : (
+          <Badge
+            variant="secondary"
+            className="bg-cg-mist px-3 text-xs font-medium text-genie-700"
+          >
+            {category}
+          </Badge>
+        )
       ) : null}
     </div>
   );

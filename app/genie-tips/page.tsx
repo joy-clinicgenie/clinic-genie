@@ -4,8 +4,9 @@ import { FeaturedGenieTip } from "@/components/blog/FeaturedGenieTip";
 import { GenieTipsPagination } from "@/components/blog/GenieTipsPagination";
 import { NotionPostCard } from "@/components/blog/NotionPostCard";
 import { Container } from "@/components/ui/Container";
-import { DefaultPageFinale } from "@/components/ui/DefaultPageFinale";
-import { LightHero } from "@/components/ui/LightHero";
+import { GenieTipsHero } from "@/components/blog/GenieTipsHero";
+import { PageFinale } from "@/components/ui/PageFinale";
+import { PageFinaleCTA } from "@/components/ui/PageFinaleCTA";
 import { getPublishedPosts } from "@/lib/notion";
 
 export const revalidate = 60;
@@ -52,29 +53,16 @@ export default async function GenieTipsPage({
 
   return (
     <div className="min-h-screen bg-cg-teal-5 text-ink-900">
-      <LightHero
+      <GenieTipsHero
         title="Genie Tips"
         subtitle="Explore our latest articles and clinic growth insights."
-        showOrb={false}
-        showWishForm={false}
-        showSparkles={false}
-        align="center"
-        minHeight="min-h-[48vh]"
-        backgroundImage={{
-          src: "/about/office.png",
-          alt: "",
-          treatment: "dark",
-          imageClassName: "object-cover object-center",
-        }}
-        className="rounded-b-[44px] pb-16 pt-[calc(5rem+env(safe-area-inset-top,0px))] lg:pb-20 lg:pt-40"
-        titleClassName="text-onDark"
       />
 
       <main>
         <section
           data-nav-theme="light"
           aria-labelledby="genie-tips-heading"
-          className="pb-16 pt-12 sm:pb-20 sm:pt-16"
+          className="pb-16 pt-10 sm:pb-20 sm:pt-14 lg:pt-16"
         >
           <Container size="wide" className="flex flex-col gap-14 sm:gap-16">
             <h2 id="genie-tips-heading" className="sr-only">
@@ -124,7 +112,17 @@ export default async function GenieTipsPage({
         </section>
       </main>
 
-      <DefaultPageFinale backdropClassName="bg-cg-teal-5" />
+      <PageFinale backdropClassName="bg-cg-teal-5">
+        <PageFinaleCTA
+          kicker="Make your first wish"
+          title="Want a clearer patient journey for your clinic?"
+          highlight="clearer patient journey"
+          body="Book a strategy call. We will map how patients find, understand, and enquire with your clinic, then show you where Clinic Genie can help."
+          primaryCta={{ href: "/contact", label: "Make Your First Wish" }}
+          secondaryCta={{ href: "/portfolio", label: "See Our Work" }}
+          footnote="No obligation. No jargon. Just a clear next step."
+        />
+      </PageFinale>
     </div>
   );
 }

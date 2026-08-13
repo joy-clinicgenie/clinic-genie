@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import { cn } from "@/lib/cn";
 import { Container } from "@/components/ui/Container";
 import { NumberTicker } from "@/components/ui/number-ticker";
+import { SparkleCluster } from "@/components/ui/SparkleCluster";
 import { landing } from "./tokens";
 
 /* ─── Section shells (PDF page rhythm) ─────────────────────────────────────── */
@@ -57,22 +58,31 @@ export function LandingKicker({
   children,
   light = false,
   align = "center",
+  variant: _variant = "editorial",
   className,
 }: {
   children: ReactNode;
   light?: boolean;
   align?: "left" | "center";
+  /** Kept for callers; both values now use the editorial sparkle treatment. */
+  variant?: "pill" | "editorial";
   className?: string;
 }) {
   return (
     <p
       className={cn(
-        "inline-flex w-fit items-center rounded-pill border bg-transparent px-3 py-1 font-sans text-xs font-bold uppercase tracking-wider",
-        light ? "border-genie-400 text-genie-300" : "border-genie-600 text-genie-700",
+        "inline-flex w-fit items-center gap-2 font-sans text-kicker font-semibold uppercase tracking-widest",
+        light ? "text-genie-300" : "text-genie-700",
         align === "center" ? "mx-auto" : undefined,
         className
       )}
     >
+      <span className="inline-flex" aria-hidden="true">
+        <SparkleCluster
+          size="sm"
+          className={light ? "text-genie-300" : "text-genie-600"}
+        />
+      </span>
       {children}
     </p>
   );
@@ -150,16 +160,20 @@ export function LandingIntro({
   highlight,
   subtitle,
   light = false,
+  kickerVariant = "editorial",
 }: {
   kicker: string;
   title: string;
   highlight?: string;
   subtitle?: ReactNode;
   light?: boolean;
+  kickerVariant?: "pill" | "editorial";
 }) {
   return (
     <div className="flex flex-col items-center gap-4 text-center">
-      <LandingKicker light={light}>{kicker}</LandingKicker>
+      <LandingKicker light={light} variant={kickerVariant}>
+        {kicker}
+      </LandingKicker>
       <LandingHeading highlight={highlight} light={light}>
         {title}
       </LandingHeading>

@@ -10,6 +10,7 @@ import {
   type NavItem,
 } from "@/lib/data/nav";
 import { MagicOrb } from "@/components/orb/MagicOrb";
+import { Logo } from "@/components/ui/Logo";
 import { MagneticButton } from "@/components/ui/MagneticButton";
 import { cn } from "@/lib/cn";
 
@@ -58,10 +59,8 @@ export function MobileMenu({ open, onClose }: { open: boolean; onClose: () => vo
             <MagicOrb variant="home" className="w-72" />
           </div>
 
-          <div className="relative flex items-center justify-between px-[var(--page-pad)] pt-5">
-            <span className="font-display text-lg font-bold text-onDark">
-              Clinic <span className="genie-text">Genie</span>
-            </span>
+          <div className="relative flex items-center justify-between px-[var(--page-pad)] pb-2.5 pt-[calc(0.625rem+env(safe-area-inset-top,0px))]">
+            <Logo tone="dark" onClick={onClose} />
             <button
               ref={closeBtnRef}
               type="button"

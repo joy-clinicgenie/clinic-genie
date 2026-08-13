@@ -1,5 +1,6 @@
 import { cn } from "@/lib/cn";
 import type { ReactNode } from "react";
+import { SparkleCluster } from "@/components/ui/SparkleCluster";
 
 export function Kicker({
   children,
@@ -12,16 +13,19 @@ export function Kicker({
   tone?: "dark" | "light";
   className?: string;
 }) {
+  const onDark = tone === "dark";
+
   return (
     <Tag
       className={cn(
-        "inline-flex w-fit items-center rounded-pill border bg-transparent px-3 py-1 font-sans text-xs font-bold uppercase tracking-wider",
-        tone === "dark"
-          ? "border-genie-400 text-genie-300"
-          : "border-genie-600 text-genie-700",
+        "inline-flex w-fit items-center gap-2 font-sans text-kicker font-semibold uppercase tracking-widest",
+        onDark ? "text-genie-300" : "text-genie-700",
         className
       )}
     >
+      <span className="inline-flex" aria-hidden="true">
+        <SparkleCluster size="sm" className={onDark ? "text-genie-300" : "text-genie-600"} />
+      </span>
       {children}
     </Tag>
   );

@@ -80,7 +80,7 @@ export function OrbWishDecrypt({ className }: OrbWishDecryptProps) {
       </div>
 
       <p
-        className="relative mt-1 w-max max-w-none font-display text-[calc(0.9375rem+3.1em)] font-black leading-[0.95] text-ink-700 sm:text-[calc(1rem+4.5em)] lg:text-[calc(1.045rem+2.8em)]"
+        className="relative mt-1 w-max max-w-none font-display text-[50px] font-black leading-[0.95] text-ink-700 sm:text-[calc(1rem+4.5em)] lg:text-[calc(1.045rem+2.8em)]"
         aria-hidden="true"
       >
         <span className="invisible block" aria-hidden="true">

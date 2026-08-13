@@ -1,7 +1,9 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { motion, useReducedMotion } from "framer-motion";
+import { useRef } from "react";
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import { ChevronDown } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { ParallaxBackground } from "@/components/ui/ParallaxBackground";
 import { SectionHeading } from "@/components/ui/SectionHeading";
@@ -34,6 +36,7 @@ export function LightHero({
   backgroundImage,
   surface = "mist",
   align = "left",
+  mobileAlign,
   layout: _layout = "split",
   contentOrder = "headingFirst",
   orbSize: _orbSize = "compact",
@@ -43,6 +46,7 @@ export function LightHero({
   className,
   copyClassName,
   titleClassName,
+  subtitleClassName,
   children,
 }: {
   kicker?: string;
@@ -67,6 +71,7 @@ export function LightHero({
   /** Section fill when no background image is set. */
   surface?: "mist" | "white";
   align?: "left" | "center";
+  mobileAlign?: "left" | "center";
   /** @deprecated Mobile always uses landing-style orb-first layout */
   layout?: "split" | "stacked";
   contentOrder?: "headingFirst" | "childrenFirst";
@@ -78,11 +83,13 @@ export function LightHero({
   className?: string;
   copyClassName?: string;
   titleClassName?: string;
+  subtitleClassName?: string;
   children?: ReactNode;
 }) {
   const reduceMotion = useReducedMotion();
+  const sectionRef = useRef<HTMLElement>(null);
   const centered = align === "center";
-  const centeredNoOrb = centered && !showOrb;
+  const mobileCentered = (mobileAlign ?? align) === "center";
   const hasBackgroundImage = Boolean(backgroundImage?.src);
   const darkImageHero = hasBackgroundImage && backgroundImage?.treatment === "dark";
   const copyTone = darkImageHero ? "dark" : "light";
@@ -93,6 +100,13 @@ export function LightHero({
     : surface === "white"
       ? "bg-white"
       : "surface-light";
+  const secondaryIsPageAnchor = Boolean(secondaryCta?.href.startsWith("#"));
+
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end start"],
+  });
+  const veilOpacity = useTransform(scrollYProgress, [0, 0.85], [0, reduceMotion ? 0 : 0.22]);
 
   const headingBlock =
     kicker || title ? (
@@ -105,8 +119,10 @@ export function LightHero({
         description={description}
         tone={copyTone}
         align={centered ? "center" : "left"}
+        mobileAlign={mobileAlign}
         className="gap-5"
         titleClassName={titleClassName}
+        subtitleClassName={subtitleClassName}
       />
     ) : null;
 
@@ -114,8 +130,9 @@ export function LightHero({
     primaryCta || secondaryCta ? (
       <div
         className={cn(
-          "flex flex-col flex-wrap items-center gap-3 sm:flex-row sm:gap-4",
-          centered ? "justify-center" : "justify-center lg:justify-start"
+          "flex flex-col flex-wrap items-center gap-5 sm:flex-row sm:gap-4",
+          centered || mobileCentered ? "justify-center" : "justify-center lg:justify-start",
+          !centered && mobileCentered && "lg:justify-start"
         )}
       >
         {primaryCta && (
@@ -135,6 +152,13 @@ export function LightHero({
             tone={darkImageHero ? "dark" : "light"}
           >
             {secondaryCta.label}
+            {secondaryIsPageAnchor ? (
+              <ChevronDown
+                aria-hidden="true"
+                strokeWidth={1.75}
+                className={cn("h-3.5 w-3.5 shrink-0 opacity-70", styles.hintDown)}
+              />
+            ) : null}
           </MagneticButton>
         )}
       </div>
@@ -145,6 +169,7 @@ export function LightHero({
       className={cn(
         styles.copyBlock,
         centered ? "mx-auto max-w-3xl items-center text-center" : "max-w-3xl lg:text-left",
+        !centered && mobileCentered && "max-lg:mx-auto max-lg:items-center max-lg:text-center",
         copyClassName
       )}
       initial={reduceMotion ? false : { opacity: 0, y: 20 }}
@@ -181,9 +206,10 @@ export function LightHero({
 
   return (
     <section
+      ref={sectionRef}
       data-nav-theme={darkImageHero ? "dark" : "light"}
       className={cn(
-        "relative flex items-center overflow-hidden pb-12 pt-[calc(3.25rem+env(safe-area-inset-top,0px))] lg:pb-20 lg:pt-36",
+        "relative flex items-center overflow-hidden pb-12 pt-[calc(6.5rem+env(safe-area-inset-top,0px))] lg:pb-20 lg:pt-36",
         darkImageHero ? "text-onDark" : "text-ink-900",
         surfaceClass,
         minHeight,
@@ -195,17 +221,36 @@ export function LightHero({
           src={backgroundImage.src}
           alt={backgroundImage.alt ?? ""}
           priority
+          strength="subtle"
           imageClassName={backgroundImage.imageClassName}
         >
           {darkImageHero ? (
-            <div
-              aria-hidden="true"
-              className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/55 to-black/25"
-            />
+            <>
+              <div
+                aria-hidden="true"
+                className="absolute inset-0 hidden bg-gradient-to-r from-black/80 via-black/55 to-black/25 lg:block"
+              />
+              <div
+                aria-hidden="true"
+                className="absolute inset-0 bg-gradient-to-b from-night-950/72 via-night-950/46 to-night-950/28 lg:hidden"
+              />
+              <div
+                aria-hidden="true"
+                className="absolute inset-x-0 top-0 h-[58%] bg-[radial-gradient(ellipse_at_50%_12%,rgba(4,31,39,0.5),transparent_72%)] lg:hidden"
+              />
+            </>
           ) : (
             <div aria-hidden="true" className="absolute inset-0 bg-white/55" />
           )}
         </ParallaxBackground>
+      ) : null}
+
+      {darkImageHero ? (
+        <motion.div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 bg-night-950 lg:hidden"
+          style={{ opacity: veilOpacity }}
+        />
       ) : null}
 
       {showSparkles && !hasBackgroundImage ? (
@@ -229,7 +274,7 @@ export function LightHero({
         size={containerSize}
         className={cn(
           styles.lightHeroContent,
-          centeredNoOrb && styles.lightHeroCenteredNoOrb,
+          !showOrb && styles.lightHeroCenteredNoOrb,
           "relative z-10 w-full"
         )}
       >

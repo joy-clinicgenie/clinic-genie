@@ -1,0 +1,68 @@
+.shell {
+  position: relative;
+  overflow-x: clip;
+}
+
+.darkSection {
+  position: relative;
+  isolation: isolate;
+}
+
+.darkGlow {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.darkGlow::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: min(24rem, 85vw);
+  height: 12rem;
+  transform: translateX(-50%);
+  background: radial-gradient(
+    ellipse at 50% 0%,
+    rgba(24, 196, 217, 0.14),
+    transparent 72%
+  );
+}
+
+.imageWrap {
+  position: relative;
+  z-index: 20;
+}
+
+.intro {
+  position: relative;
+  z-index: 10;
+}
+
+@media (max-width: 1023px) {
+  .imageWrap {
+    /* Pull the 4:3 image up so ~40px remains in the dark section. */
+    margin-top: calc(-1 * (100% * 3 / 4 - 2.5rem));
+  }
+
+  .intro {
+    margin-top: 4rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .darkGlow {
+    display: none;
+  }
+
+  .intro {
+    margin-top: 5rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .darkGlow::before {
+    opacity: 0.7;
+  }
+}

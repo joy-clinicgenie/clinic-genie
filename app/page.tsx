@@ -1,4 +1,5 @@
 import Link from "next/link";
+import type { Viewport } from "next";
 import { Hero } from "@/components/home/Hero";
 import { LogoMarquee } from "@/components/home/LogoMarquee";
 import { Reveal, RevealGroup, RevealItem } from "@/components/ui/Reveal";
@@ -51,6 +52,10 @@ const METRICS = [
   { value: "S$350K>", label: "Google Ads spend managed" },
   { value: "3+", label: "Years in healthcare marketing" },
 ];
+
+export const viewport: Viewport = {
+  themeColor: "#F6F6F6",
+};
 
 export default async function HomePage() {
   const notionPosts = await getPublishedPosts();

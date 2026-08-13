@@ -5,6 +5,8 @@ import { GenieTipArticleSidebar } from "@/components/blog/GenieTipArticleSidebar
 import { LatestGenieTipsSection } from "@/components/blog/LatestGenieTipsSection";
 import { NotionArticleBody } from "@/components/blog/NotionArticleBody";
 import { Container } from "@/components/ui/Container";
+import { PageFinale } from "@/components/ui/PageFinale";
+import { PageFinaleCTA } from "@/components/ui/PageFinaleCTA";
 import {
   getPostBySlug,
   getPublishedPosts,
@@ -131,6 +133,18 @@ export default async function GenieTipPage({ params }: GenieTipPageProps) {
       </article>
 
       <LatestGenieTipsSection posts={latestPosts} />
+
+      <PageFinale backdropClassName="bg-cg-teal-5">
+        <PageFinaleCTA
+          kicker="Make your first wish"
+          title="Want a clearer patient journey for your clinic?"
+          highlight="clearer patient journey"
+          body="Book a strategy call. We will map how patients find, understand, and enquire with your clinic, then show you where Clinic Genie can help."
+          primaryCta={{ href: "/contact", label: "Make Your First Wish" }}
+          secondaryCta={{ href: "/portfolio", label: "See Our Work" }}
+          footnote="No obligation. No jargon. Just a clear next step."
+        />
+      </PageFinale>
     </div>
   );
 }

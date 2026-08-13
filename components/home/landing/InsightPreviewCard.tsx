@@ -75,7 +75,7 @@ export function InsightPreviewCard({
         </div>
 
         <div className="flex w-full flex-col gap-2">
-          <h3 className="font-display text-h4 font-semibold leading-snug text-onDark transition-colors group-hover/card:text-genie-200">
+          <h3 className="font-display text-[20px] font-semibold leading-snug text-onDark transition-colors group-hover/card:text-genie-200 lg:text-h4">
             {post.title}
           </h3>
           <p className="line-clamp-3 text-body text-onDark-muted">

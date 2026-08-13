@@ -3,6 +3,11 @@
 import Image from "next/image";
 import { useRef } from "react";
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import { cn } from "@/lib/cn";
+import { ease } from "@/lib/motion";
+
+const OFFICE_WIDTH = 1981;
+const OFFICE_HEIGHT = 793;
 
 export function AboutOfficeImage() {
   const ref = useRef<HTMLElement>(null);
@@ -13,33 +18,34 @@ export function AboutOfficeImage() {
     offset: ["start end", "end start"],
   });
 
-  const imageOpacity = useTransform(scrollYProgress, [0, 0.45, 1], [0.88, 0.72, 0.55]);
-  const imageY = useTransform(scrollYProgress, [0, 1], ["-4%", "4%"]);
-  const washOpacity = useTransform(scrollYProgress, [0, 0.45, 1], [0.55, 0.85, 1]);
+  const imageY = useTransform(scrollYProgress, [0, 1], ["-2%", "2%"]);
 
   return (
-    <figure
+    <motion.figure
       ref={ref}
-      className="relative z-20 aspect-[15/8] w-full overflow-hidden rounded-xl shadow-lg"
+      className={cn(
+        "relative z-20 w-full overflow-hidden rounded-xl",
+        "max-lg:aspect-[4/3] max-lg:shadow-sm lg:shadow-lg"
+      )}
+      initial={reduceMotion ? false : { opacity: 0, y: 8 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-12% 0px" }}
+      transition={{ duration: 0.55, ease: ease.glide }}
     >
       <motion.div
-        aria-hidden="true"
-        className="absolute inset-0 bg-gradient-to-b from-cg-sky via-cg-teal-60 to-cg-teal-100"
-        style={reduceMotion ? undefined : { opacity: washOpacity }}
-      />
-      <motion.div
-        className="absolute inset-[-8%] will-change-transform"
-        style={reduceMotion ? undefined : { y: imageY, opacity: imageOpacity }}
+        className="max-lg:absolute max-lg:-top-[4%] max-lg:left-0 max-lg:h-[108%] max-lg:w-full lg:relative"
+        style={reduceMotion ? undefined : { y: imageY }}
       >
         <Image
           src="/about/office.png"
           alt="Clinic Genie team workspace for specialist clinic marketing"
-          fill
+          width={OFFICE_WIDTH}
+          height={OFFICE_HEIGHT}
           priority
-          className={reduceMotion ? "object-cover object-center opacity-75" : "object-cover object-center"}
+          className="h-auto w-full max-lg:h-full max-lg:object-cover max-lg:object-center"
           sizes="(min-width: 1280px) 82.5rem, 100vw"
         />
       </motion.div>
-    </figure>
+    </motion.figure>
   );
 }

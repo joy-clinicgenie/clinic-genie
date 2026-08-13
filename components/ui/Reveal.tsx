@@ -5,8 +5,8 @@ import type { ElementType, ReactNode } from "react";
 import { ease } from "@/lib/motion";
 
 const VARIANTS: Record<string, Variants> = {
-  up: {
-    hidden: { opacity: 0, y: 24 },
+  upSoft: {
+    hidden: { opacity: 0, y: 8 },
     show: { opacity: 1, y: 0 },
   },
   scale: {
@@ -29,7 +29,7 @@ export function Reveal({
   className,
   children,
 }: {
-  variant?: "up" | "scale" | "mask";
+  variant?: "up" | "upSoft" | "scale" | "mask";
   delay?: number;
   once?: boolean;
   as?: ElementType;
