@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { cn } from "@/lib/cn";
-import { SparkleCluster } from "@/components/ui/SparkleCluster";
+import { SparkleIcon } from "@/components/ui/SparkleIcon";
 
 /**
  * Editorial section label.
@@ -39,7 +39,7 @@ export function SectionEyebrow({
         </span>
       ) : sparkle ? (
         <span className="inline-flex" aria-hidden="true">
-          <SparkleCluster size="sm" className={onDark ? "text-genie-300" : "text-genie-600"} />
+          <SparkleIcon className={onDark ? "text-genie-300" : "text-genie-600"} />
         </span>
       ) : null}
       {children}

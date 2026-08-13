@@ -443,8 +443,6 @@
 
 .introBody {
   max-width: 37.5rem;
-  font-size: 1.125rem;
-  line-height: 1.65;
 }
 
 .worksCta:global(.btn-cta) {
@@ -532,10 +530,6 @@
   .intro {
     padding-inline: clamp(1rem, 4vw, 1.5rem);
     padding-bottom: 2.5rem;
-  }
-
-  .introBody {
-    font-size: 1rem;
   }
 
   .stage {

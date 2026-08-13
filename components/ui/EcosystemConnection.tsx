@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
-import { SparkleCluster } from "@/components/ui/SparkleCluster";
+import { SparkleIcon } from "@/components/ui/SparkleIcon";
 import { cn } from "@/lib/cn";
 import { ease } from "@/lib/motion";
 import styles from "./EcosystemConnection.module.css";
@@ -65,7 +65,7 @@ export function EcosystemConnection({
             viewport={{ once: true, amount: 0.55 }}
             transition={{ duration: 0.3, ease: ease.glide, delay: 0.48 }}
           >
-            <SparkleCluster size="sm" />
+            <SparkleIcon />
           </motion.span>
         </span>
       </div>

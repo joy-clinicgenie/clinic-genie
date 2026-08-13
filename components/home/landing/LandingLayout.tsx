@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import { cn } from "@/lib/cn";
 import { Container } from "@/components/ui/Container";
 import { NumberTicker } from "@/components/ui/number-ticker";
-import { SparkleCluster } from "@/components/ui/SparkleCluster";
+import { SparkleIcon } from "@/components/ui/SparkleIcon";
 import { landing } from "./tokens";
 
 /* ─── Section shells (PDF page rhythm) ─────────────────────────────────────── */
@@ -78,10 +78,7 @@ export function LandingKicker({
       )}
     >
       <span className="inline-flex" aria-hidden="true">
-        <SparkleCluster
-          size="sm"
-          className={light ? "text-genie-300" : "text-genie-600"}
-        />
+        <SparkleIcon className={light ? "text-genie-300" : "text-genie-600"} />
       </span>
       {children}
     </p>

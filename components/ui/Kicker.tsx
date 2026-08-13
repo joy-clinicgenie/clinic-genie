@@ -1,6 +1,6 @@
 import { cn } from "@/lib/cn";
 import type { ReactNode } from "react";
-import { SparkleCluster } from "@/components/ui/SparkleCluster";
+import { SparkleIcon } from "@/components/ui/SparkleIcon";
 
 export function Kicker({
   children,
@@ -24,7 +24,7 @@ export function Kicker({
       )}
     >
       <span className="inline-flex" aria-hidden="true">
-        <SparkleCluster size="sm" className={onDark ? "text-genie-300" : "text-genie-600"} />
+        <SparkleIcon className={onDark ? "text-genie-300" : "text-genie-600"} />
       </span>
       {children}
     </Tag>

@@ -31,7 +31,6 @@ import { ComplianceCards } from "@/components/home/landing/ComplianceCards";
 import { SpecialtyHubCard } from "@/components/specialty-hub/SpecialtyHubCard";
 import { Section } from "@/components/ui/Section";
 import { Container } from "@/components/ui/Container";
-import { SectionHeading } from "@/components/ui/SectionHeading";
 import { CLIENT_LOGOS } from "@/lib/data/client-logos";
 import { SPECIALTY_HUBS } from "@/lib/data/specialty-hubs";
 
@@ -125,7 +124,7 @@ export default async function HomePage() {
           chips={WISH_CHIPS}
           intro={{
             kicker: "The eight wishes we grant",
-            title: "Eight kinds of magic, one growth engine.",
+            title: "Eight kinds of magic, one growth engine",
             highlight: "magic",
             subtitle:
               "Clinic marketing shouldn't live in silos. We conjure it into one growth engine.",
@@ -185,13 +184,11 @@ export default async function HomePage() {
       {/* 8 — Clinic specialties */}
       <Section id="clinic-specialties" tone="light" className="py-24">
         <Container className="flex flex-col gap-12">
-          <SectionHeading
+          <LandingIntro
             kicker="Clinic Specialties"
             title="Choose your specialty"
             highlight="specialty"
-            tone="light"
             subtitle="Each specialty is tuned to how patients in your field find, trust, and decide, not a generic marketing package."
-            align="center"
           />
           <RevealGroup className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
             {SPECIALTY_HUBS.map((hub, index) => (

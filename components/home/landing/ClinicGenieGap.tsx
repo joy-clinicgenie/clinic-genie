@@ -30,7 +30,7 @@ export function ClinicGenieGap() {
       id="gap"
       className="surface-cyan"
       kicker="Meet your Clinic Genie"
-      title="A Singapore clinic marketing agency built for specialists."
+      title="A Singapore clinic marketing agency built for specialists"
       highlight="specialists"
       cards={[...ROWS]}
       cta={{ href: "/about", label: "Meet the Genies Behind the Magic" }}

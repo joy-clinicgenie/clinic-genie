@@ -59,7 +59,7 @@ export function Hero() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.65, ease: ease.glide, delay: 0.05 }}
               >
-                <span className="genie-text">Clinic Genie</span> helps patients find you.
+                <span className="genie-text">Clinic Genie</span> helps patients find you
               </motion.h1>
 
               <motion.p
