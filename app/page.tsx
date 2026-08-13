@@ -92,7 +92,7 @@ export default async function HomePage() {
       </LandingSection>
 
       {/* 3 — Marketing metrics */}
-      <LandingSection tone="white" className="py-24" containerClassName="flex flex-col">
+      <LandingSection tone="white" className="pb-32 pt-24" containerClassName="flex flex-col">
         <Reveal>
           <div className="flex flex-col items-center gap-10 text-center">
             <LandingKicker>Marketing metrics</LandingKicker>
@@ -136,7 +136,7 @@ export default async function HomePage() {
       <LandingSection
         tone="white"
         navTheme="dark"
-        className="bg-[#062D36] py-0 text-onDark"
+        className="relative z-10 -mb-8 -mt-8 rounded-2xl bg-[#062D36] py-0 text-onDark lg:-mb-11 lg:-mt-11 lg:rounded-[44px]"
         containerClassName="flex flex-col"
       >
         <MagicProcess
@@ -155,7 +155,7 @@ export default async function HomePage() {
       <LandingSection
         tone="white"
         navTheme="dark"
-        className="bg-[#062D36] pb-36 pt-24 text-onDark"
+        className="relative z-[1] overflow-hidden rounded-b-2xl bg-[#062D36] pb-36 pt-24 text-onDark lg:rounded-b-[44px]"
         containerClassName="flex flex-col gap-12"
       >
         <Reveal>
@@ -182,7 +182,7 @@ export default async function HomePage() {
       </LandingSection>
 
       {/* 8 — Clinic specialties */}
-      <Section id="clinic-specialties" tone="light" className="py-24">
+      <Section id="clinic-specialties" tone="light" className="-mt-8 pb-24 pt-32 md:-mt-11 md:pt-36">
         <Container className="flex flex-col gap-12">
           <LandingIntro
             kicker="Clinic Specialties"
@@ -224,7 +224,7 @@ export default async function HomePage() {
       </LandingSection>
 
       {/* 10 — Dark finale: Genie Tips + final CTA */}
-      <PageFinale backdropClassName="bg-white">
+      <PageFinale backdropClassName="bg-transparent">
         <section className="py-24">
           <div className="mx-auto w-full max-w-wide px-[var(--page-pad)]">
             <div className="flex flex-col gap-10">

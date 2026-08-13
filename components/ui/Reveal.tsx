@@ -5,6 +5,10 @@ import type { ElementType, ReactNode } from "react";
 import { ease } from "@/lib/motion";
 
 const VARIANTS: Record<string, Variants> = {
+  up: {
+    hidden: { opacity: 0, y: 12 },
+    show: { opacity: 1, y: 0 },
+  },
   upSoft: {
     hidden: { opacity: 0, y: 8 },
     show: { opacity: 1, y: 0 },

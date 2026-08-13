@@ -25,6 +25,10 @@ export interface CaseStudyCard {
   body: string;
   image?: string;
   alt?: string;
+  /** Oversized value shown in metrics and architecture treatments */
+  metric?: string;
+  /** Optional schematic shown beside a workstream */
+  diagram?: "pillars";
 }
 
 export interface CaseStudyShift {
@@ -34,7 +38,7 @@ export interface CaseStudyShift {
 
 export interface CaseStudyJourney {
   flow: string[];
-  websiteMap: { old: string; new: string | string[] };
+  websiteMap: { old: string | string[]; new: string | string[] };
   growthSystem: string[];
 }
 
@@ -54,6 +58,8 @@ export interface CaseStudy {
   heroSubtitle: string;
   heroBody: string;
   heroHighlight?: string;
+  /** Optional full hero eyebrow. Falls back to case label plus specialty. */
+  heroEyebrow?: string;
   /** Condensed service lines for the specialty case-study hero */
   projectScope?: string[];
   /** Numbered architecture metrics for the specialty case-study hero */
@@ -71,6 +77,8 @@ export interface CaseStudy {
   strategyBody: string;
   strategyShifts: CaseStudyShift[];
   journeyIntro?: string;
+  journeyTitle?: string;
+  journeyHighlight?: string;
   journey: CaseStudyJourney;
   deliverablesTitle?: string;
   deliverablesHighlight?: string;
@@ -322,7 +330,8 @@ export const CASE_STUDIES: CaseStudy[] = [
     heroHighlight: "from day one",
     heroSubtitle: "Planting joy. Harvesting potential.",
     heroBody: "",
-    projectScope: ["Brand Strategy / Website", "SEO / SEM / FindClinic"],
+    heroEyebrow: "Case Study 05 / 10 · Paediatrics + Child Development",
+    projectScope: ["Brand Strategy / Website / SEO / SEM / FindClinic"],
     projectArchitecture: [
       { value: "02", label: "Care Pillars" },
       { value: "02", label: "Paediatricians" },
@@ -331,17 +340,17 @@ export const CASE_STUDIES: CaseStudy[] = [
     snapshot: {
       clinicType: "General and developmental paediatric clinic",
       projectFocus:
-        "Brand and voice, website structure, service architecture, healthcare SEO, paid search, and directory presence",
+        "Brand and voice, website structure, service architecture, healthcare SEO, paid search, directory presence",
       mainChallenge:
-        "A brand new clinic opening in one of Singapore's most competitive paediatric catchments, with no domain, no search history, and no reviews. General paediatrics is available on almost every corner. The real opportunity sat in developmental and behavioural care, where parents search with urgency and find very little clear guidance.",
+        "Two experienced consultant paediatricians, a beautiful idea about how children should be cared for, and a starting position of absolute zero online. General paediatrics is available on almost every corner of one of Singapore's most competitive catchments. The real opportunity sat in developmental and behavioural care, where parents search with urgency and find very little clear guidance.",
       role: "Brand, copywriting, website structure, service architecture, search planning, content direction, SEM, and FindClinic listing",
     },
     beforeIntro:
-      "Two experienced consultant paediatricians, a beautiful idea about how children should be cared for, and a starting position of absolute zero online.",
+      "Two experienced consultant paediatricians, a beautiful idea about how children should be cared for, and a starting position of absolute zero online. General paediatrics is available on almost every corner of one of Singapore's most competitive catchments. The real opportunity sat in developmental and behavioural care, where parents search with urgency and find very little clear guidance.",
     before: [
       {
         title: "Zero authority, crowded catchment",
-        body: "A new domain in Bukit Timah competing against long-established clinics with years of accumulated search history and reviews.",
+        body: "A new domain in Bukit Timah against long-established clinics with years of accumulated search history and reviews.",
       },
       {
         title: "Two very different patients",
@@ -353,13 +362,13 @@ export const CASE_STUDIES: CaseStudy[] = [
       },
     ],
     diagnosisIntro:
-      "We looked at the project through four lenses. How parents search, what they need to understand, where trust is built, and what makes them ready to enquire.",
+      "We looked at the project through four lenses: how parents search, what they need to understand, where trust is built, and what makes them ready to enquire.",
     diagnosisBody:
-      "That produced a two-pillar structure, a voice built on growth rather than urgency, and a launch plan that gave the clinic a findable presence while its own domain was still earning one.",
+      "That produced a voice built on growth rather than urgency, and a launch plan that made the clinic findable while its own domain was still earning authority.",
     diagnosisLenses: [
       {
         title: "Search Intent",
-        body: "How parents look for care before they choose a clinic, and which queries signal real enquiry intent.",
+        body: "How parents look for care before choosing a clinic, and which queries signal real enquiry intent.",
       },
       {
         title: "Service Clarity",
@@ -375,31 +384,31 @@ export const CASE_STUDIES: CaseStudy[] = [
       },
     ],
     workedOnIntro:
-      "Six workstreams, one goal. Help parents move from search to understanding to enquiry with less friction.",
+      "Six workstreams, one goal: help parents move from search to understanding to enquiry with less friction.",
     workedOn: [
       {
         title: "Brand and voice",
-        body: "Built a botanical identity around seeds, seasons, and growth, then carried it into the writing so consistently that even the closed sign has a reason. Rest is part of growth, too.",
+        body: "A botanical identity around seeds, seasons, and growth, carried into the writing so consistently that even the closed sign has a reason. Rest is part of growth, too.",
       },
       {
         title: "Two-pillar architecture",
-        body: "Separated general paediatrics from developmental and behavioural care, so everyday health and complex needs each get the structure and tone they deserve.",
+        body: "General paediatrics separated from developmental and behavioural care, so everyday health and complex needs each get the structure and tone they deserve.",
       },
       {
         title: "Copywriting",
-        body: "Wrote every page for a parent, not a clinician. Calm, plain, and specific about what happens at a visit, with no rush and no pressure.",
+        body: "Every page written for a parent, not a clinician. Calm, plain, and specific about what happens at a visit, with no rush and no pressure.",
       },
       {
         title: "Search intent mapping",
-        body: "Prioritised the searches parents actually type. Not just paediatrician Bukit Timah, but P1 deferment, SG Enable referral, SPED placement report, developmental assessment. High intent, high need, and very little competition writing about them clearly.",
+        body: "The searches parents actually type: not just paediatrician Bukit Timah, but P1 deferment, SG Enable referral, SPED placement report, developmental assessment. High intent, high need, little competition writing about them clearly.",
       },
       {
         title: "FindClinic presence",
-        body: "Listed and structured the clinic on FindClinic.sg, giving a brand new practice a discoverable, credible profile from opening week while its own domain built authority.",
+        body: "Listed and structured on FindClinic.sg, giving a brand new practice a discoverable, credible profile from opening week.",
       },
       {
         title: "Paid search",
-        body: "Structured campaigns around vaccination, general consultation, and developmental assessment intent, tracked through to booking.",
+        body: "Campaigns structured around vaccination, general consultation, and developmental assessment intent, tracked through to booking.",
       },
     ],
     strategyIntro:
@@ -416,11 +425,12 @@ export const CASE_STUDIES: CaseStudy[] = [
         after: "Singapore-specific developmental queries parents actually use",
       },
     ],
-    journeyIntro: "We built the clinic website as a guided family journey, not a collection of disconnected pages.",
+    journeyIntro:
+      "We built the website as a guided family journey from day one, with brand, search, paid, and directory presence launched as one system.",
     journey: {
       flow: ["Search", "Learn", "Compare", "Trust", "Enquire"],
       websiteMap: {
-        old: "No site, no listing, no search presence.",
+        old: ["No site", "No listing", "No search presence"],
         new: [
           "Search or FindClinic profile",
           "General or developmental pillar",
@@ -449,7 +459,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     compliancePoints: [
       {
         title: "Built within the rules",
-        body: "Copy, structure, and claims were shaped around Singapore healthcare advertising guidelines and the Health Products Act from the first draft.",
+        body: "Copy, structure, and claims shaped around Singapore healthcare advertising guidelines and the Health Products Act from the first draft.",
         image: "/compliance/rules.png",
         alt: "Built within the rules icon",
       },
@@ -472,7 +482,7 @@ export const CASE_STUDIES: CaseStudy[] = [
         alt: "Reputation first icon",
       },
     ],
-    changesTitle: "What the clinic can now measure.",
+    changesTitle: "What the clinic can now measure",
     changesHighlight: "measure",
     changesLead: "No smoke. No mirrors.",
     changesIntro: "Every claim on this page is something the clinic can point at.",
@@ -483,7 +493,7 @@ export const CASE_STUDIES: CaseStudy[] = [
       },
       {
         title: "Two clear care pillars",
-        body: "General and developmental paediatrics each get their own structure, tone, and parent journey.",
+        body: "General and developmental paediatrics each with their own structure, tone, and parent journey.",
       },
       {
         title: "Search visibility",
@@ -491,7 +501,7 @@ export const CASE_STUDIES: CaseStudy[] = [
       },
       {
         title: "Booking attribution",
-        body: "Click to booking tracked across the website, WhatsApp, and directory pathways.",
+        body: "Click-to-booking tracked across the website, WhatsApp, and directory pathways.",
       },
     ],
   },

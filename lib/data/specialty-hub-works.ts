@@ -21,8 +21,8 @@ export const HUB_CASE_STUDY_META: Record<string, SpecialtyHubWorkMeta> = {
   },
   endocrinology: {
     studySlug: "cedar-endocrine-clinic",
-    image: "/works/cedar.png",
-    imageAlt: "Cedar Endocrine Clinic website and brand work",
+    image: "/works/cedar/cedar-mockup.png",
+    imageAlt: "Cedar Endocrine Clinic website mockup on laptop",
     logo: "/clients/cedar-endocrine.png",
     logoAlt: "Cedar Endocrine Clinic",
   },
@@ -42,30 +42,30 @@ export const HUB_CASE_STUDY_META: Record<string, SpecialtyHubWorkMeta> = {
   },
   neurology: {
     studySlug: "singapore-brain-spine-nerves",
-    image: "/works/sbsn.png",
-    imageAlt: "Singapore Brain Spine Nerves Center website and brand work",
+    image: "/works/sbsn/sbsn-mockup.png",
+    imageAlt: "Singapore Brain Spine Nerves Center website mockup on laptop",
     logo: "/clients/singapore-brain-spine-nerves-center.png",
     logoAlt: "Singapore Brain Spine Nerves Center",
   },
   cardiology: {
     studySlug: "sunrise-heart",
-    image: "/works/sunrise-heart.png",
-    imageAlt: "Sunrise Heart Specialist Clinic website and brand work",
+    image: "/works/sunrise/sunrise-mockup.png",
+    imageAlt: "Sunrise Heart Specialist Clinic website mockup on laptop",
     heroImage: "/specialty-hub/specialty-cardiology.png",
     logo: "/clients/sunrise-heart.png",
     logoAlt: "Sunrise Heart Clinic",
   },
   acne: {
     studySlug: "the-acne-clinic",
-    image: "/works/tac.png",
-    imageAlt: "The Acne Clinic reception and clinic branding",
+    image: "/works/tac/TAC-posters.png",
+    imageAlt: "The Acne Clinic treatment room with educational posters on acne causes, scarring, and patient care",
     logo: "/clients/the-acne-clinic.png",
     logoAlt: "The Acne Clinic",
   },
   paediatrics: {
     studySlug: "joyful-seeds",
-    image: "/works/joyfulseeds.png",
-    imageAlt: "Joyful Seeds Paediatric and Developmental Clinic branding and website",
+    image: "/works/joyfulseeds/joyfulseeds-mockup.png",
+    imageAlt: "Joyful Seeds Paediatric and Developmental Clinic website mockup on laptop",
     logo: "/clients/joyful-seeds.png",
     logoAlt: "Joyful Seeds Paediatric & Developmental Clinic",
   },
@@ -91,26 +91,25 @@ export const SPECIALTY_HUB_WORKS: CaseStudy[] = [
     heroHighlight: "told apart",
     heroSubtitle: "The flow of healing.",
     heroBody: "",
-    projectScope: ["Brand Strategy / Website", "SEO / SEM / Copywriting"],
+    heroEyebrow: "Case Study · Physiotherapy + Rehabilitation",
+    projectScope: ["Branding / Copywriting / Web Design / SEO / SEM"],
     projectArchitecture: [
       { value: "04", label: "Therapy Streams" },
-      { value: "01", label: "Heated Pool" },
-      { value: "01", label: "Medical Centre" },
+      { value: "01", label: "Heated Pool Inside a Medical Centre" },
     ],
     snapshot: {
       clinicType: "Licensed physiotherapy and aquatic rehabilitation centre",
-      projectFocus:
-        "Brand and voice, website structure, therapy architecture, healthcare SEO, and paid search",
+      projectFocus: "Brand and voice, website structure, therapy architecture, healthcare SEO, paid search",
       mainChallenge:
-        "AquaPhysio's greatest strength is also its biggest vulnerability. Water therapy sells, so plenty of unregulated operators run pool sessions in condominiums and call it aqua therapy. The work had to make a licensed clinical service distinguishable from a swim class, without disparaging anyone.",
+        "A genuinely rare facility, a licensed clinical team, and a category quietly diluted by everyone who owns a pool. AquaPhysio's greatest strength is also its biggest vulnerability: water therapy sells, so unregulated operators run pool sessions in condominiums and call it aqua therapy. The work had to make a licensed clinical service distinguishable from a swim class, without disparaging anyone.",
       role: "Brand, copywriting, website structure, therapy architecture, search planning, content direction, and SEM",
     },
     beforeIntro:
-      "A genuinely rare facility, a licensed clinical team, and a category being quietly diluted by everyone who owns a pool.",
+      "A genuinely rare facility, a licensed clinical team, and a category quietly diluted by everyone who owns a pool. AquaPhysio's greatest strength is also its biggest vulnerability: water therapy sells, so unregulated operators run pool sessions in condominiums and call it aqua therapy. The work had to make a licensed clinical service distinguishable from a swim class, without disparaging anyone.",
     before: [
       {
         title: "A differentiator anyone can claim",
-        body: "A heated therapy pool inside Camden Medical Centre is unusual. The phrase \"aqua therapy\" is not. The ƒdistinction had to be built into the site, not just asserted on it.",
+        body: "A heated therapy pool inside Camden Medical Centre is unusual. The phrase \"aqua therapy\" is not. The distinction had to be built into the site, not just asserted on it.",
       },
       {
         title: "Nobody searches for the solution",
@@ -118,17 +117,17 @@ export const SPECIALTY_HUB_WORKS: CaseStudy[] = [
       },
       {
         title: "Trust without a single name",
-        body: "Unlike a specialist practice, the credibility here rests on facility, licensing, and registered therapists rather than one recognisable doctor. That needs a different kind of proof.",
+        body: "Credibility here rests on facility, licensing, and registered therapists rather than one recognisable doctor. That needs a different kind of proof.",
       },
     ],
     diagnosisIntro:
-      "We looked at the project through four lenses. How patients search, what they need to understand, where trust is built, and what makes them ready to enquire.",
+      "We looked at the project through four lenses: how patients search, what they need to understand, where trust is built, and what makes them ready to enquire.",
     diagnosisBody:
-      "That produced a therapy structure patients could navigate by need, a plain explanation of what regulated physiotherapy actually means, and trust signals built on licensing and facility rather than a single name.",
+      "That produced trust signals built on licensing and facility rather than a single name, and one rule for everything that followed: catch the symptom first, introduce the water later.",
     diagnosisLenses: [
       {
         title: "Search Intent",
-        body: "How patients look for care before they choose a clinic, and which queries signal real enquiry intent.",
+        body: "How patients look for care before choosing a clinic, and which queries signal real enquiry intent.",
       },
       {
         title: "Service Clarity",
@@ -144,27 +143,27 @@ export const SPECIALTY_HUB_WORKS: CaseStudy[] = [
       },
     ],
     workedOnIntro:
-      "Five workstreams, one goal. Help patients move from search to understanding to enquiry with less friction.",
+      "Five workstreams, one goal: help patients move from search to understanding to enquiry with less friction.",
     workedOn: [
       {
         title: "Brand and voice",
-        body: "Built an identity around water as method rather than novelty. Calm, clinical, and unmistakably a healthcare setting rather than a wellness one.",
+        body: "An identity built around water as method rather than novelty. Calm, clinical, and unmistakably a healthcare setting rather than a wellness one.",
       },
       {
         title: "Therapy architecture",
-        body: "Structured four streams. Aquatic, electrotherapy, precision, and combined. Patients choose by what their body needs, not by what equipment the clinic owns.",
+        body: "Four streams: aquatic, electrotherapy, precision, and combined. Patients choose by what their body needs, not by what equipment the clinic owns.",
       },
       {
         title: "Copywriting",
-        body: "Wrote the site in hedged, honest language throughout. What therapy may help with, what a session involves, and who it suits, without promising recovery timelines.",
+        body: "Hedged, honest language throughout. What therapy may help with, what a session involves, and who it suits, without promising recovery timelines.",
       },
       {
         title: "Category clarity content",
-        body: "Wrote a plain guide to choosing water-based rehabilitation. What a licensed facility looks like, why a registered physiotherapist matters, and what questions to ask. Educational, not adversarial, and it does the positioning work no strapline could.",
+        body: "A plain guide to choosing water-based rehabilitation: what a licensed facility looks like, why a registered physiotherapist matters, and what questions to ask. Educational, not adversarial, and it does the positioning work no strapline could.",
       },
       {
         title: "Search intent mapping",
-        body: "Mapped condition and symptom searches first, therapy modality second, with local Orchard intent layered on top.",
+        body: "Condition and symptom searches mapped first, therapy modality second, with local Orchard intent layered on top, and the SEO foundation, blog programme, and Google Ads structure built on that map.",
       },
     ],
     strategyIntro:
@@ -176,11 +175,11 @@ export const SPECIALTY_HUB_WORKS: CaseStudy[] = [
       { before: "Content written to rank", after: "Content written to help patients choose well" },
     ],
     journeyIntro:
-      "We reframed the centre's website as a guided patient journey, not a collection of disconnected pages.",
+      "We reframed the website as a guided patient journey, with every part reinforcing the same distinction between regulated care and everything adjacent to it.",
     journey: {
       flow: ["Search", "Learn", "Compare", "Trust", "Enquire"],
       websiteMap: {
-        old: "Homepage → services list → contact",
+        old: ["Homepage", "Services list", "Contact"],
         new: [
           "Homepage or article",
           "Condition or symptom",
@@ -210,7 +209,7 @@ export const SPECIALTY_HUB_WORKS: CaseStudy[] = [
     compliancePoints: [
       {
         title: "Built within the rules",
-        body: "Copy, structure, and claims were shaped around the Healthcare Services Act and Singapore healthcare advertising guidelines from the first draft.",
+        body: "Copy, structure, and claims shaped around the Healthcare Services Act and Singapore healthcare advertising guidelines from the first draft.",
         image: "/compliance/rules.png",
         alt: "Built within the rules icon",
       },
@@ -233,26 +232,26 @@ export const SPECIALTY_HUB_WORKS: CaseStudy[] = [
         alt: "Reputation first icon",
       },
     ],
-    changesTitle: "What the centre can now measure.",
+    changesTitle: "What the centre can now measure",
     changesHighlight: "measure",
     changesLead: "No smoke. No mirrors.",
     changesIntro: "Every claim on this page is something the centre can point at.",
     changes: [
       {
-        title: "Condition-led search visibility",
-        body: "Search visibility across condition, symptom, and therapy intent, so patients arrive through the queries they actually type.",
+        title: "Search visibility",
+        body: "Visibility across condition, symptom, and therapy intent.",
       },
       {
         title: "Four therapy streams",
-        body: "Aquatic, electrotherapy, precision, and combined care structured and explained so patients choose by need, not equipment.",
+        body: "Each structured and explained, so patients choose by need.",
       },
       {
-        title: "Category position by education",
-        body: "A licensed clinical position defended through patient education rather than assertion or comparison.",
+        title: "A defended category position",
+        body: "Positioning held through education rather than assertion.",
       },
       {
         title: "Booking attribution",
-        body: "Click to booking attribution across WhatsApp, call, and form.",
+        body: "Click-to-booking attribution across WhatsApp, call, and form.",
       },
     ],
   },
@@ -270,7 +269,8 @@ export const SPECIALTY_HUB_WORKS: CaseStudy[] = [
     heroHighlight: "made findable and easy to understand.",
     heroSubtitle: "Your health nurtured.",
     heroBody: "",
-    projectScope: ["Brand Strategy / Website", "SEO / SEM / Collaterals"],
+    heroEyebrow: "Case Study 01 / 10 · Endocrinology + Hormone Health",
+    projectScope: ["Brand Strategy / Website / SEO / SEM / Collaterals"],
     projectArchitecture: [
       { value: "06", label: "Treatment Pillars" },
       { value: "02", label: "Hospital Locations" },
@@ -278,36 +278,31 @@ export const SPECIALTY_HUB_WORKS: CaseStudy[] = [
     ],
     snapshot: {
       clinicType: "Specialist endocrinology clinic",
-      projectFocus:
-        "Brand identity, website clarity, condition page structure, healthcare SEO, paid search, and clinic collaterals",
+      projectFocus: "Brand, website, condition structure, SEO, paid search, collaterals",
       mainChallenge:
-        "Nobody wakes up searching for an endocrinologist. They search thyroid, diabetes, or whatever symptom is worrying them at 11pm. The clinic needed a structure that met patients at that moment, then guided them towards the right consultation.",
+        "Nobody wakes up searching for an endocrinologist. They search thyroid, diabetes, or whatever is worrying them at 11pm. The clinic needed to meet patients there, then guide them to the right consultation.",
       role: "Brand, website structure, condition architecture, search planning, content direction, SEM, and collateral design",
     },
     beforeIntro:
-      "The starting point was familiar. A respected specialist with genuine depth of expertise, and a digital presence that did not yet show it.",
+      "A respected specialist, and a digital presence that did not yet show it. The core problem: nobody wakes up searching for an endocrinologist. They search thyroid, diabetes, or whatever is worrying them at 11pm. The clinic needed to meet patients there, then guide them to the right consultation.",
     before: [
       {
-        title: "Specialty before symptom",
-        body: "Endocrinology is a word patients rarely type. They search the condition, or the worry behind it. The structure needed to start where patients start.",
-      },
-      {
         title: "Wide scope, thin structure",
-        body: "Six distinct condition areas sat inside one broad specialty. Each needed its own page logic, keyword intent, and plain explanation.",
+        body: "Six condition areas inside one broad specialty, each needing its own page logic and plain explanation.",
       },
       {
         title: "Two locations, one decision",
-        body: "Consulting across two hospitals is a strength. Presented unclearly, it becomes one more thing a patient has to work out before booking.",
+        body: "Two hospitals is a strength. Presented unclearly, it becomes one more thing to work out before booking.",
       },
     ],
     diagnosisIntro:
-      "We looked at the project through four lenses. How patients search, what they need to understand, where trust is built, and what makes them ready to enquire.",
+      "We looked at the project through four lenses: how patients search, what they need to understand, where trust is built, and what makes them ready to enquire.",
     diagnosisBody:
       "That showed us where the brand needed a warmer voice, where the website needed stronger condition structure, and where enquiry points were missing at the moments that mattered.",
     diagnosisLenses: [
       {
         title: "Search Intent",
-        body: "How patients look for care before they choose a clinic, and which queries signal real enquiry intent.",
+        body: "How patients look for care before choosing a clinic, and which queries signal real enquiry intent.",
       },
       {
         title: "Service Clarity",
@@ -323,27 +318,32 @@ export const SPECIALTY_HUB_WORKS: CaseStudy[] = [
       },
     ],
     workedOnIntro:
-      "Five workstreams, one goal. Help patients move from search to understanding to enquiry with less friction.",
+      "Five workstreams, one goal: help patients move from search to understanding to enquiry with less friction.",
     workedOn: [
       {
         title: "Brand identity",
-        body: "Built a calmer, warmer clinical identity around the idea of nurtured care, then carried it across web, print, and clinic collateral.",
+        body: "A calmer, warmer clinical identity built around nurtured care, carried across web, print, and clinic collateral.",
+        image: "/works/cedar.png",
+        alt: "Cedar Endocrine Clinic reception with brand identity on the clinic wall",
       },
       {
         title: "Condition architecture",
-        body: "Structured six endocrine areas into clear pillars, with diabetes and thyroid expanded into supporting condition pages.",
+        body: "Six endocrine areas structured into clear pillars, with diabetes and thyroid expanded into supporting condition pages.",
+        diagram: "pillars",
       },
       {
         title: "Search intent mapping",
-        body: "Mapped pages and campaigns around what patients search first. The condition, not the specialty.",
+        body: "Pages and campaigns mapped around what patients search first, with a healthcare SEO foundation and Google Ads setup built on it.",
       },
       {
         title: "Trust-led page flow",
-        body: "Reordered page sections so patients understand the doctor and the clinic before being asked to enquire.",
+        body: "Page sections reordered so patients understand the doctor and the clinic before being asked to enquire.",
+        image: "/works/cedar/cedar-mockup.png",
+        alt: "Cedar Endocrine Clinic website homepage on a laptop mockup",
       },
       {
         title: "Conversion touchpoints",
-        body: "Reviewed where call, WhatsApp, booking form, and appointment CTAs should appear across both locations.",
+        body: "Call, WhatsApp, booking form, and appointment CTAs reviewed and placed across both locations.",
       },
     ],
     strategyIntro:
@@ -356,15 +356,15 @@ export const SPECIALTY_HUB_WORKS: CaseStudy[] = [
       { before: "Passive contact points", after: "Call, WhatsApp, and booking placed at decision moments" },
     ],
     journeyIntro:
-      "We reframed the clinic website as a guided patient journey, not a collection of disconnected pages.",
+      "We reframed the website as a guided patient journey, not a collection of disconnected pages.",
     journey: {
       flow: ["Search", "Learn", "Compare", "Trust", "Enquire"],
       websiteMap: {
-        old: "Homepage → general treatment page → contact",
+        old: ["Homepage", "General Treatment Page", "Contact"],
         new: [
           "Homepage",
-          "Condition pillar",
-          "Specific condition page",
+          "Condition Pillar",
+          "Specific Condition",
           "Doctor",
           "Location",
           "Booking",
@@ -389,7 +389,7 @@ export const SPECIALTY_HUB_WORKS: CaseStudy[] = [
     compliancePoints: [
       {
         title: "Built within the rules",
-        body: "Copy, structure, and claims were shaped around Singapore healthcare advertising guidelines from the first draft.",
+        body: "Copy, structure, and claims shaped around Singapore healthcare advertising guidelines from the first draft.",
         image: "/compliance/rules.png",
         alt: "Built within the rules icon",
       },
@@ -412,26 +412,26 @@ export const SPECIALTY_HUB_WORKS: CaseStudy[] = [
         alt: "Reputation first icon",
       },
     ],
-    changesTitle: "What the clinic can now measure.",
+    changesTitle: "What the clinic can now measure",
     changesHighlight: "measure",
     changesLead: "No smoke. No mirrors.",
     changesIntro: "Every claim on this page is something the clinic can point at.",
     changes: [
       {
         title: "Six treatment pillars",
-        body: "Search visibility across six treatment pillars, each with its own page logic and keyword intent.",
+        body: "Search visibility across six pillars, each with its own page logic and keyword intent.",
       },
       {
         title: "Condition-level content",
-        body: "Condition-level content built for real patient search intent, starting with thyroid, diabetes, and symptom queries.",
+        body: "Content built for real patient search intent, starting with thyroid, diabetes, and symptom queries.",
       },
       {
         title: "Paid search attribution",
-        body: "Click to booking attribution from paid search, so the clinic can see which campaigns earn consultations.",
+        body: "Click-to-booking attribution, so the clinic can see which campaigns earn consultations.",
       },
       {
         title: "One enquiry pathway",
-        body: "One enquiry pathway across two clinic locations, so patients do not have to work out where to book.",
+        body: "A single pathway across two clinic locations, so patients never have to work out where to book.",
       },
     ],
   },
@@ -450,21 +450,21 @@ export const SPECIALTY_HUB_WORKS: CaseStudy[] = [
     heroHighlight: "tell it apart",
     heroSubtitle: "Quality skincare for your whole family.",
     heroBody: "",
-    projectScope: ["Brand Strategy / Website", "SEO / SEM / Copywriting"],
+    heroEyebrow: "Case Study 03 / 10 · Dermatology + Skin Surgery",
+    projectScope: ["Brand Strategy / Website / SEO / SEM / Copywriting"],
     projectArchitecture: [
       { value: "25+", label: "Condition Pages" },
       { value: "18", label: "Years Practice" },
     ],
     snapshot: {
       clinicType: "Specialist medical and surgical dermatology practice",
-      projectFocus:
-        "Brand and voice, website architecture, condition page structure, healthcare SEO, and paid search",
+      projectFocus: "Brand and voice, website architecture, condition structure, healthcare SEO, paid search",
       mainChallenge:
-        "Search for a dermatologist in Singapore and most of what comes back is aesthetics. MSDC is a medical practice led by a Mohs surgeon who built the first such service at NUHS. The work had to separate genuine specialist dermatology from the cosmetic noise around it, while still serving the everyday eczema and acne patient who arrives through the same door.",
+        "A rare depth of surgical credentials, a very broad clinical scope, and a category where the loudest voices are not the most qualified ones. Search for a dermatologist in Singapore and most of what comes back is aesthetics. MSDC is a medical practice led by a Mohs surgeon who built the first such service at NUHS. The work had to separate genuine specialist dermatology from the cosmetic noise, while still serving the everyday eczema patient arriving through the same door.",
       role: "Brand, copywriting, website structure, condition architecture, search planning, content direction, and SEM",
     },
     beforeIntro:
-      "A rare depth of surgical credentials, a very broad clinical scope, and a category where the loudest voices are not the most qualified ones.",
+      "A rare depth of surgical credentials, a very broad clinical scope, and a category where the loudest voices are not the most qualified ones. Search for a dermatologist in Singapore and most of what comes back is aesthetics. MSDC is a medical practice led by a Mohs surgeon who built the first such service at NUHS. The work had to separate genuine specialist dermatology from the cosmetic noise, while still serving the everyday eczema patient arriving through the same door.",
     before: [
       {
         title: "Specialist care in a crowded category",
@@ -472,21 +472,21 @@ export const SPECIALTY_HUB_WORKS: CaseStudy[] = [
       },
       {
         title: "Twenty-five conditions, one navigation",
-        body: "Eczema, psoriasis, vitiligo, hidradenitis suppurativa, warts, hair loss, skin cancer. Each is a distinct patient with a distinct search. A single services page could not hold them.",
+        body: "Eczema, psoriasis, vitiligo, warts, hair loss, skin cancer. Each is a distinct patient with a distinct search. A single services page could not hold them.",
       },
       {
         title: "Serious and everyday, side by side",
-        body: "A patient with a changing mole and a patient with dandruff need very different tones on the same website. The structure had to hold both without either feeling misplaced.",
+        body: "A patient with a changing mole and a patient with dandruff need very different tones on the same website. The structure had to hold both.",
       },
     ],
     diagnosisIntro:
-      "We looked at the project through four lenses. How patients search, what they need to understand, where trust is built, and what makes them ready to enquire.",
+      "We looked at the project through four lenses: how patients search, what they need to understand, where trust is built, and what makes them ready to enquire.",
     diagnosisBody:
-      "That produced a clear split between medical and surgical care, a condition-level page structure patients could navigate by symptom, and a Mohs offering given the prominence its rarity deserves.",
+      "That produced one organising question for everything that followed: what is the patient actually worried about?",
     diagnosisLenses: [
       {
         title: "Search Intent",
-        body: "How patients look for care before they choose a clinic, and which queries signal real enquiry intent.",
+        body: "How patients look for care before choosing a clinic, and which queries signal real enquiry intent.",
       },
       {
         title: "Service Clarity",
@@ -502,27 +502,27 @@ export const SPECIALTY_HUB_WORKS: CaseStudy[] = [
       },
     ],
     workedOnIntro:
-      "Five workstreams, one goal. Help patients move from search to understanding to enquiry with less friction.",
+      "Five workstreams, one goal: help patients move from search to understanding to enquiry with less friction.",
     workedOn: [
       {
         title: "Brand and voice",
-        body: "Built an identity that reads clinical rather than cosmetic, warm rather than cold, and family-first rather than treatment-first.",
+        body: "An identity that reads clinical rather than cosmetic, warm rather than cold, and family-first rather than treatment-first.",
       },
       {
         title: "Condition architecture",
-        body: "Structured more than twenty-five conditions and procedures into two clear branches, medical and surgical, then grouped them so patients can find themselves in the menu.",
+        body: "More than twenty-five conditions and procedures structured into two clear branches, medical and surgical, grouped so patients can find themselves in the menu.",
       },
       {
         title: "Copywriting",
-        body: "Wrote every condition page in plain language, matching tone to stakes. Reassuring where reassurance is warranted, direct where it is not.",
+        body: "Every condition page in plain language, matching tone to stakes. Reassuring where reassurance is warranted, direct where it is not.",
       },
       {
         title: "Search intent mapping",
-        body: "Mapped condition, symptom, and procedure searches separately, and kept high-volume cosmetic queries from crowding out the medical terms that matter more.",
+        body: "Condition, symptom, and procedure searches mapped separately, keeping high-volume cosmetic queries from crowding out the medical terms that matter more.",
       },
       {
         title: "Paid search and landing pages",
-        body: "Built dedicated campaign landing pages, including a standalone skin cancer route, rather than sending paid traffic to a general services page.",
+        body: "Dedicated campaign landing pages, including a standalone skin cancer route, rather than paid traffic sent to a general services page.",
       },
     ],
     strategyIntro:
@@ -534,11 +534,11 @@ export const SPECIALTY_HUB_WORKS: CaseStudy[] = [
       { before: "Paid traffic to general pages", after: "Dedicated landing pages by campaign intent" },
     ],
     journeyIntro:
-      "We reframed the clinic website as a guided patient journey, not a collection of disconnected pages.",
+      "We reframed the website as a guided patient journey, not a collection of disconnected pages.",
     journey: {
       flow: ["Search", "Learn", "Compare", "Trust", "Enquire"],
       websiteMap: {
-        old: "Homepage → general services page → contact",
+        old: ["Homepage", "General services page", "Contact"],
         new: [
           "Homepage or campaign landing page",
           "Medical or surgical branch",
@@ -567,7 +567,7 @@ export const SPECIALTY_HUB_WORKS: CaseStudy[] = [
     compliancePoints: [
       {
         title: "Built within the rules",
-        body: "Copy, structure, and claims were shaped around Singapore healthcare advertising guidelines from the first draft.",
+        body: "Copy, structure, and claims shaped around Singapore healthcare advertising guidelines from the first draft.",
         image: "/compliance/rules.png",
         alt: "Built within the rules icon",
       },
@@ -579,7 +579,7 @@ export const SPECIALTY_HUB_WORKS: CaseStudy[] = [
       },
       {
         title: "No fear, no false promises",
-        body: "No guaranteed outcomes, no alarmist framing, and no pressure-led messaging on a subject where patients are already anxious.",
+        body: "No guaranteed outcomes, no alarmist framing, no pressure-led messaging on a subject where patients are already anxious.",
         image: "/compliance/no-false-promises.png",
         alt: "No fear, no false promises icon",
       },
@@ -590,22 +590,22 @@ export const SPECIALTY_HUB_WORKS: CaseStudy[] = [
         alt: "Reputation first icon",
       },
     ],
-    changesTitle: "What the practice can now measure.",
+    changesTitle: "What the practice can now measure",
     changesHighlight: "measure",
     changesLead: "No smoke. No mirrors.",
     changesIntro: "Every claim on this page is something the practice can point at.",
     changes: [
       {
         title: "Condition-level search visibility",
-        body: "Search visibility across twenty-five plus conditions and procedures, from everyday skin concerns to surgical care.",
+        body: "Visibility across twenty-five plus conditions and procedures, from everyday skin concerns to surgical care.",
       },
       {
         title: "Medical and surgical routes",
-        body: "Medical and surgical care separated into clear patient routes, so serious and everyday concerns each feel correctly placed.",
+        body: "Serious and everyday concerns each feel correctly placed, in clear separate patient routes.",
       },
       {
         title: "Campaign landing pages",
-        body: "Campaign landing pages with click to booking attribution, including a dedicated skin cancer pathway.",
+        body: "Click-to-booking attribution, including a dedicated skin cancer pathway.",
       },
       {
         title: "Site-wide analytics",
@@ -627,21 +627,21 @@ export const SPECIALTY_HUB_WORKS: CaseStudy[] = [
     heroHighlight: "brand and a search presence",
     heroSubtitle: "Implanting the foundation of a timeless smile.",
     heroBody: "",
-    projectScope: ["Brand Strategy / Website", "SEO / SEM"],
+    heroEyebrow: "Case Study 04 / 10 · Dental + Implantology",
+    projectScope: ["Brand Strategy / Website / SEO / SEM"],
     projectArchitecture: [
       { value: "30+", label: "Years Practice" },
       { value: "09", label: "Treatment Areas" },
     ],
     snapshot: {
       clinicType: "Specialist dental implant practice",
-      projectFocus:
-        "Brand articulation, website structure, treatment architecture, healthcare SEO, and paid search",
+      projectFocus: "Brand articulation, website structure, treatment architecture, healthcare SEO, paid search",
       mainChallenge:
-        "Dental implants are one of the most competitive and most expensive categories in Singapore paid search. The practice had three decades of genuine expertise and a name that described the service rather than the standard. The work had to turn experience into something a patient could recognise before they ever sat in the chair.",
+        "Thirty years of clinical reputation does not automatically translate online. Dental implants are one of the most competitive and most expensive categories in Singapore paid search, and the practice had a name that described the service rather than the standard. The work had to turn experience into something a patient could recognise before they ever sat in the chair.",
       role: "Brand, website structure, treatment architecture, search planning, content direction, SEM, and landing page direction",
     },
     beforeIntro:
-      "Thirty years of clinical reputation does not automatically translate online. The starting point was a respected practice whose digital presence sat well behind its expertise.",
+      "Thirty years of clinical reputation does not automatically translate online. Dental implants are one of the most competitive and most expensive categories in Singapore paid search, and the practice had a name that described the service rather than the standard. The work had to turn experience into something a patient could recognise before they ever sat in the chair.",
     before: [
       {
         title: "Experience without a story",
@@ -649,21 +649,21 @@ export const SPECIALTY_HUB_WORKS: CaseStudy[] = [
       },
       {
         title: "A name that says one thing, a practice that does nine",
-        body: "The centre is known for implants but delivers full-scope dentistry, from check-ups to wisdom teeth. The structure had to serve both without diluting either.",
+        body: "Known for implants, delivering full-scope dentistry from check-ups to wisdom teeth. The structure had to serve both without diluting either.",
       },
       {
         title: "High-cost category, thin search structure",
-        body: "Implant keywords are among the priciest in Singapore. Sending that traffic to general pages wastes budget. The site needed dedicated intent-led landing pages.",
+        body: "Implant keywords are among the priciest in Singapore. Sending that traffic to general pages wastes budget.",
       },
     ],
     diagnosisIntro:
-      "We looked at the project through four lenses. How patients search, what they need to understand, where trust is built, and what makes them ready to enquire.",
+      "We looked at the project through four lenses: how patients search, what they need to understand, where trust is built, and what makes them ready to enquire.",
     diagnosisBody:
-      "That produced a brand framework the practice could own, a treatment structure patients could follow, and a paid search set-up that sends expensive clicks somewhere worth landing.",
+      "That produced one organising principle for everything that followed: expensive clicks deserve somewhere worth landing, and experience deserves a story patients can follow.",
     diagnosisLenses: [
       {
         title: "Search Intent",
-        body: "How patients look for care before they choose a clinic, and which queries signal real enquiry intent.",
+        body: "How patients look for care before choosing a clinic, and which queries signal real enquiry intent.",
       },
       {
         title: "Service Clarity",
@@ -679,27 +679,27 @@ export const SPECIALTY_HUB_WORKS: CaseStudy[] = [
       },
     ],
     workedOnIntro:
-      "Five workstreams, one goal. Help patients move from search to understanding to enquiry with less friction.",
+      "Five workstreams, one goal: help patients move from search to understanding to enquiry with less friction.",
     workedOn: [
       {
         title: "Brand framework",
-        body: "Built the ORAL Concept, four principles the practice already worked by but had never named. Optimisation, Restoration, Aesthetics, Longevity. A philosophy patients can grasp in one screen.",
+        body: "The ORAL Concept: four principles the practice already worked by but had never named. Optimisation, Restoration, Aesthetics, Longevity. A philosophy patients can grasp in one screen.",
       },
       {
         title: "Treatment architecture",
-        body: "Structured nine treatment areas into dedicated pages, then grouped them into four care categories so patients could self-select without dental vocabulary.",
+        body: "Nine treatment areas structured into dedicated pages, grouped into four care categories so patients can self-select without dental vocabulary.",
       },
       {
         title: "Search intent mapping",
-        body: "Mapped implant, restorative, and general dentistry queries separately, since a patient researching implants and a patient booking a scale and polish are not the same person.",
+        body: "Implant, restorative, and general dentistry queries mapped separately, since a patient researching implants and a patient booking a scale and polish are not the same person.",
       },
       {
         title: "Paid search landing pages",
-        body: "Built dedicated landing pages for high-value campaigns rather than pointing paid traffic at the homepage.",
+        body: "Dedicated landing pages for high-value campaigns, rather than paid traffic pointed at the homepage.",
       },
       {
         title: "Trust-led page flow",
-        body: "Led with the doctor, the philosophy, and the location before asking for the booking.",
+        body: "The doctor, the philosophy, and the location first, before asking for the booking.",
       },
     ],
     strategyIntro:
@@ -711,11 +711,11 @@ export const SPECIALTY_HUB_WORKS: CaseStudy[] = [
       { before: "Paid traffic to general pages", after: "Dedicated landing pages by campaign intent" },
     ],
     journeyIntro:
-      "We reframed the practice website as a guided patient journey, not a collection of disconnected pages.",
+      "We reframed the website as a guided patient journey built around a single treatment map.",
     journey: {
       flow: ["Search", "Learn", "Compare", "Trust", "Enquire"],
       websiteMap: {
-        old: "Homepage → general treatment page → contact",
+        old: ["Homepage", "General Treatment Page", "Contact"],
         new: [
           "Homepage or campaign landing page",
           "Treatment page",
@@ -744,7 +744,7 @@ export const SPECIALTY_HUB_WORKS: CaseStudy[] = [
     compliancePoints: [
       {
         title: "Built within the rules",
-        body: "Copy, structure, and claims were shaped around Singapore healthcare and dental advertising guidance from the first draft.",
+        body: "Copy, structure, and claims shaped around Singapore healthcare and dental advertising guidance from the first draft.",
         image: "/compliance/rules.png",
         alt: "Built within the rules icon",
       },
@@ -767,7 +767,7 @@ export const SPECIALTY_HUB_WORKS: CaseStudy[] = [
         alt: "Reputation first icon",
       },
     ],
-    changesTitle: "What the practice can now measure.",
+    changesTitle: "What the practice can now measure",
     changesHighlight: "measure",
     changesLead: "No smoke. No mirrors.",
     changesIntro: "Every claim on this page is something the practice can point at.",
@@ -778,15 +778,15 @@ export const SPECIALTY_HUB_WORKS: CaseStudy[] = [
       },
       {
         title: "Named brand framework",
-        body: "A named brand framework, the ORAL Concept, carried across every page.",
+        body: "The ORAL Concept carried across every page.",
       },
       {
         title: "Campaign landing pages",
-        body: "Campaign-level landing pages with click to booking attribution for high-value implant intent.",
+        body: "Click-to-booking attribution for high-value implant intent.",
       },
       {
         title: "Separate intent tracking",
-        body: "Separate tracking for implant and general dentistry intent, so budget follows the right patient.",
+        body: "Implant and general dentistry intent tracked separately, so budget follows the right patient.",
       },
     ],
   },
@@ -805,6 +805,7 @@ export const SPECIALTY_HUB_WORKS: CaseStudy[] = [
     heroHighlight: "find the right answer quickly",
     heroSubtitle: "Brain. Spine. Nerves.",
     heroBody: "",
+    heroEyebrow: "Case Study 06 / 10 · Neurosurgery + Spine",
     projectScope: ["Brand Strategy / Website", "SEO / SEM / Copywriting"],
     projectArchitecture: [
       { value: "03", label: "Clinical Pillars" },
@@ -812,18 +813,17 @@ export const SPECIALTY_HUB_WORKS: CaseStudy[] = [
     ],
     snapshot: {
       clinicType: "Specialist neurosurgery and spine practice",
-      projectFocus:
-        "Brand and voice, website architecture, condition structure, healthcare SEO, and paid search",
+      projectFocus: "Brand and voice, website architecture, condition structure, healthcare SEO, paid search",
       mainChallenge:
-        "Nobody browses for a neurosurgeon. Patients arrive after a scan result, a referral, or a symptom that has stopped being ignorable, and often they are searching on behalf of a parent or a spouse. The site had to hold everything from office lower back pain to brain tumours without the everyday feeling trivial or the serious feeling frightening.",
+        "One of Singapore's most credentialed neurosurgeons, an enormous clinical scope, and patients arriving in the worst week of their lives. Nobody browses for a neurosurgeon. Patients arrive after a scan, a referral, or a symptom that has stopped being ignorable, often searching for a parent or spouse. The site had to hold everything from office back pain to brain tumours without the everyday feeling trivial or the serious feeling frightening.",
       role: "Brand, copywriting, website structure, condition architecture, search planning, content direction, and SEM",
     },
     beforeIntro:
-      "One of Singapore's most credentialed neurosurgeons, an enormous clinical scope, and patients arriving in the worst week of their lives. Clarity was not a nice-to-have here.",
+      "One of Singapore's most credentialed neurosurgeons, an enormous clinical scope, and patients arriving in the worst week of their lives. Nobody browses for a neurosurgeon. Patients arrive after a scan, a referral, or a symptom that has stopped being ignorable, often searching for a parent or spouse. The site had to hold everything from office back pain to brain tumours without the everyday feeling trivial or the serious feeling frightening.",
     before: [
       {
         title: "Credentials that read as a wall",
-        body: "Cleveland Clinic, Mayo, MD Anderson, Toronto Sick Kids, five postgraduate fellowships. Extraordinary on paper, and genuinely hard to absorb when you are worried and scrolling on a phone.",
+        body: "International fellowships, decades of practice, world-renowned training. Extraordinary on paper, and a lot to take in when you are worried and scrolling on a phone.",
       },
       {
         title: "Everyday pain and life-changing diagnosis, same site",
@@ -835,13 +835,13 @@ export const SPECIALTY_HUB_WORKS: CaseStudy[] = [
       },
     ],
     diagnosisIntro:
-      "We looked at the project through four lenses. How patients search, what they need to understand, where trust is built, and what makes them ready to enquire.",
+      "We looked at the project through four lenses: how patients search, what they need to understand, where trust is built, and what makes them ready to enquire.",
     diagnosisBody:
-      "That produced a three-pillar structure taken straight from the clinic's own name, credentials translated into plain reassurance, and a tone calibrated for people making one of the hardest decisions of their lives.",
+      "That showed us where credentials needed translating into reassurance, and where tone had to be calibrated for people making one of the hardest decisions of their lives.",
     diagnosisLenses: [
       {
         title: "Search Intent",
-        body: "How patients look for care before they choose a specialist, and which queries signal real enquiry intent.",
+        body: "How patients look for care before choosing a specialist, and which queries signal real enquiry intent.",
       },
       {
         title: "Service Clarity",
@@ -857,27 +857,27 @@ export const SPECIALTY_HUB_WORKS: CaseStudy[] = [
       },
     ],
     workedOnIntro:
-      "Five workstreams, one goal. Help patients move from search to understanding to enquiry with less friction.",
+      "Five workstreams, one goal: help patients move from search to understanding to enquiry with less friction.",
     workedOn: [
       {
         title: "Brand and voice",
-        body: "Built an identity around the three things the practice treats, then wrote a voice that stays calm without going cold. Serious subject matter, human delivery.",
+        body: "An identity built around the three things the practice treats, with a voice that stays calm without going cold. Serious subject matter, human delivery.",
       },
       {
         title: "Three-pillar architecture",
-        body: "Turned the clinic's own name into its navigation. Brain, Spine, Nerves. Three doors, each leading to the conditions and treatments underneath.",
+        body: "The clinic's own name became its navigation. Brain, Spine, Nerves. Three doors, each leading to the conditions and treatments underneath.",
       },
       {
         title: "Copywriting",
-        body: "Translated fellowships and sub-specialties into what a patient actually wants to know. Who is treating me, what have they done before, and what happens next.",
+        body: "Fellowships and sub-specialties translated into what a patient wants to know: who is treating me, what have they done before, what happens next.",
       },
       {
         title: "Search intent mapping",
-        body: "Mapped high-volume everyday pain queries separately from low-volume, high-stakes surgical searches, so neither crowds the other out.",
+        body: "High-volume everyday pain queries mapped separately from low-volume, high-stakes surgical searches, with an SEO foundation, clinical article programme, and Google Ads structure built on the split.",
       },
       {
         title: "Trust-led page flow",
-        body: "Led with the pillar, then the condition, then the surgeon, then the four hospitals he operates from, before asking for the appointment.",
+        body: "Pillar, then condition, then the surgeon, then the four hospitals he operates from, before asking for the appointment.",
       },
     ],
     strategyIntro:
@@ -889,18 +889,18 @@ export const SPECIALTY_HUB_WORKS: CaseStudy[] = [
       { before: "One tone across all conditions", after: "Tone calibrated to what is at stake on each page" },
     ],
     journeyIntro:
-      "We reframed the clinic website as a guided patient journey, not a collection of disconnected pages.",
+      "We reframed the website as a guided patient journey organised around a single principle: reduce the effort a worried person has to spend.",
     journey: {
       flow: ["Search", "Learn", "Compare", "Trust", "Enquire"],
       websiteMap: {
-        old: "Homepage → general information page → contact",
+        old: ["Homepage", "General information page", "Contact"],
         new: [
           "Homepage",
           "Brain, Spine or Nerves",
           "Condition",
           "Treatment options",
           "Dr Prem",
-          "Hospitals and location",
+          "Hospitals",
           "Booking",
         ],
       },
@@ -923,7 +923,7 @@ export const SPECIALTY_HUB_WORKS: CaseStudy[] = [
     compliancePoints: [
       {
         title: "Built within the rules",
-        body: "Copy, structure, and claims were shaped around Singapore healthcare advertising guidelines from the first draft.",
+        body: "Copy, structure, and claims shaped around Singapore healthcare advertising guidelines from the first draft.",
         image: "/compliance/rules.png",
         alt: "Built within the rules icon",
       },
@@ -946,7 +946,7 @@ export const SPECIALTY_HUB_WORKS: CaseStudy[] = [
         alt: "Reputation first icon",
       },
     ],
-    changesTitle: "What the practice can now measure.",
+    changesTitle: "What the practice can now measure",
     changesHighlight: "measure",
     changesLead: "No smoke. No mirrors.",
     changesIntro: "Every claim on this page is something the practice can point at.",
@@ -956,8 +956,8 @@ export const SPECIALTY_HUB_WORKS: CaseStudy[] = [
         body: "Search visibility across brain, spine, and nerve conditions, matched to how patients describe their problem.",
       },
       {
-        title: "Three-pillar architecture",
-        body: "Three-pillar architecture matching how patients describe their problem: Brain, Spine, and Nerves.",
+        title: "Calibrated patient journeys",
+        body: "Everyday pain and serious diagnosis each have their own path through the same site.",
       },
       {
         title: "Surgeon-attributed articles",
@@ -965,7 +965,7 @@ export const SPECIALTY_HUB_WORKS: CaseStudy[] = [
       },
       {
         title: "Enquiry attribution",
-        body: "Click to enquiry attribution across call, WhatsApp, and booking.",
+        body: "Click-to-enquiry attribution across call, WhatsApp, and booking.",
       },
     ],
   },
@@ -984,29 +984,29 @@ export const SPECIALTY_HUB_WORKS: CaseStudy[] = [
     heroHighlight: "AI they now ask first",
     heroSubtitle: "Affordable heart care at Sembawang.",
     heroBody: "",
-    projectScope: ["Brand Strategy / Website", "SEO / SEM / GEO"],
+    heroEyebrow: "Case Study 07 / 10 · Cardiology + Community Care",
+    projectScope: ["Brand Strategy / Website / SEO / SEM / GEO"],
     projectArchitecture: [
       { value: "03", label: "Modes of Care" },
       { value: "05", label: "Northern Towns" },
     ],
     snapshot: {
       clinicType: "Community cardiology and internal medicine clinic",
-      projectFocus:
-        "Brand and voice, website structure, healthcare SEO, paid search, and generative search visibility",
+      projectFocus: "Brand and voice, website structure, healthcare SEO, paid search, generative search visibility",
       mainChallenge:
-        "Private cardiology in Singapore clusters around Orchard and the central hospitals. Sunrise Heart sits at Sembawang Crescent, serving the north on access and affordability rather than address. The work had to make a heartland clinic read as genuinely specialist, without borrowing the language of prestige it had deliberately chosen not to compete on.",
+        "A cardiologist with tertiary hospital credentials, a community mission, and a catchment underserved for years. Private cardiology in Singapore clusters around Orchard and the central hospitals. Sunrise Heart sits at Sembawang Crescent, serving the north on access and affordability rather than address. The work had to make a heartland clinic read as genuinely specialist, without borrowing the language of prestige it had chosen not to compete on.",
       role: "Brand, copywriting, website structure, service architecture, search planning, content direction, SEM, and AI search optimisation",
     },
     beforeIntro:
-      "A cardiologist with tertiary hospital credentials, a community mission, and a catchment that had been underserved for years. The pieces were all there. They were not yet joined up.",
+      "A cardiologist with tertiary hospital credentials, a community mission, and a catchment underserved for years. Private cardiology in Singapore clusters around Orchard and the central hospitals. Sunrise Heart sits at Sembawang Crescent, serving the north on access and affordability rather than address. The work had to make a heartland clinic read as genuinely specialist, without borrowing the language of prestige it had chosen not to compete on.",
     before: [
       {
         title: "Specialist care, heartland address",
-        body: "Patients associate specialist cardiology with Orchard and the major hospitals. The clinic needed to signal specialist standard and neighbourhood access at the same time.",
+        body: "Patients associate specialist cardiology with Orchard and the major hospitals. The clinic needed to signal specialist standard and neighbourhood access at once.",
       },
       {
         title: "A service model nobody was explaining",
-        body: "On-site, at-home, and off-site cardiac care is genuinely unusual. Without clear structure it looked like a list of tests rather than three distinct ways to be cared for.",
+        body: "On-site, at-home, and off-site cardiac care is genuinely unusual. Without structure, it looked like a list of tests rather than three ways to be cared for.",
       },
       {
         title: "Search was changing underneath everyone",
@@ -1014,13 +1014,13 @@ export const SPECIALTY_HUB_WORKS: CaseStudy[] = [
       },
     ],
     diagnosisIntro:
-      "We looked at the project through four lenses. How patients search, what they need to understand, where trust is built, and what makes them ready to enquire.",
+      "We looked at the project through four lenses: how patients search, what they need to understand, where trust is built, and what makes them ready to enquire.",
     diagnosisBody:
-      "That shaped a brand built on warmth and access, a site organised by how care is delivered rather than what equipment is used, and a content approach written to be understood by patients and quoted by machines.",
+      "That shaped a brand built on warmth and access, and content written to be understood by patients and quoted by machines.",
     diagnosisLenses: [
       {
         title: "Search Intent",
-        body: "How patients look for care before they choose a clinic, and which queries signal real enquiry intent.",
+        body: "How patients look for care before choosing a clinic, and which queries signal real enquiry intent.",
       },
       {
         title: "Service Clarity",
@@ -1036,31 +1036,31 @@ export const SPECIALTY_HUB_WORKS: CaseStudy[] = [
       },
     ],
     workedOnIntro:
-      "Six workstreams, one goal. Help patients move from search to understanding to enquiry with less friction.",
+      "Six workstreams, one goal: help patients move from search to understanding to enquiry with less friction.",
     workedOn: [
       {
         title: "Brand and voice",
-        body: "Built an identity around sunrise, warmth, and community rather than clinical distance, then wrote a voice that sounds like a neighbour who happens to be a cardiologist.",
+        body: "An identity built around sunrise, warmth, and community rather than clinical distance, with a voice like a neighbour who happens to be a cardiologist.",
       },
       {
         title: "Service architecture",
-        body: "Structured care into three clear modes. On-site at the clinic, at home, and off-site for advanced imaging. Patients now choose by circumstance, not by test name.",
+        body: "Care structured into three clear modes: on-site at the clinic, at home, and off-site for advanced imaging. Patients choose by circumstance, not by test name.",
       },
       {
         title: "Copywriting",
-        body: "Wrote the site around what patients are actually worried about, with plain explanations of what each test does and, just as importantly, what it does not.",
+        body: "The site written around what patients are actually worried about, with plain explanations of what each test does and, just as importantly, what it does not.",
       },
       {
         title: "Search intent mapping",
-        body: "Mapped screening, symptom, and condition queries separately, with attention to the northern catchment across Sembawang, Admiralty, Yishun, Woodlands, and Canberra.",
+        body: "Screening, symptom, and condition queries mapped separately, with attention to the northern catchment across Sembawang, Admiralty, Yishun, Woodlands, and Canberra.",
       },
       {
         title: "Paid search",
-        body: "Structured campaigns around screening and symptom intent, with tracking through to enquiry.",
+        body: "Campaigns structured around screening and symptom intent, with tracking through to enquiry.",
       },
       {
         title: "GEO and AI search",
-        body: "Built content designed to be cited by AI assistants. Question-shaped headings, direct answers up front, explicit limits, and doctor attribution on every article.",
+        body: "Content designed to be cited by AI assistants: question-shaped headings, direct answers up front, explicit limits, and doctor attribution on every article.",
       },
     ],
     strategyIntro:
@@ -1072,14 +1072,16 @@ export const SPECIALTY_HUB_WORKS: CaseStudy[] = [
       { before: "Specialist credentials buried", after: "Doctor attribution on every article" },
     ],
     journeyIntro:
-      "We reframed the clinic website as a guided patient journey, and extended it to where the journey now often begins, inside an AI answer.",
+      "We reframed the website as a guided patient journey, and extended it to where the journey now often begins: inside an AI answer.",
+    journeyTitle: "From ask to enquiry, mapped with intent",
+    journeyHighlight: "mapped with intent",
     journey: {
       flow: ["Ask", "Learn", "Compare", "Trust", "Enquire"],
       websiteMap: {
-        old: "Search → generic clinic page → contact",
+        old: ["Search", "Generic clinic page", "Contact"],
         new: [
           "AI answer or search",
-          "Article with doctor attribution",
+          "Doctor-attributed article",
           "Screening or treatment page",
           "Doctor",
           "Location and hours",
@@ -1106,13 +1108,13 @@ export const SPECIALTY_HUB_WORKS: CaseStudy[] = [
     compliancePoints: [
       {
         title: "Built within the rules",
-        body: "Copy, structure, and claims were shaped around Singapore healthcare advertising guidelines from the first draft.",
+        body: "Copy, structure, and claims shaped around Singapore healthcare advertising guidelines from the first draft.",
         image: "/compliance/rules.png",
         alt: "Built within the rules icon",
       },
       {
         title: "Honest about limits",
-        body: "Articles state plainly what screening can and cannot detect. Nothing on the site suggests a test rules out every condition.",
+        body: "Articles state plainly what screening can and cannot detect. Nothing suggests a test rules out every condition.",
         image: "/compliance/based-claims.png",
         alt: "Honest about limits icon",
       },
@@ -1129,18 +1131,18 @@ export const SPECIALTY_HUB_WORKS: CaseStudy[] = [
         alt: "Reputation first icon",
       },
     ],
-    changesTitle: "What the clinic can now measure.",
+    changesTitle: "What the clinic can now measure",
     changesHighlight: "measure",
     changesLead: "No smoke. No mirrors.",
     changesIntro: "Every claim on this page is something the clinic can point at.",
     changes: [
       {
         title: "Search visibility",
-        body: "Search visibility across screening, symptom, and condition intent for the northern catchment.",
+        body: "Visibility across screening, symptom, and condition intent for the northern catchment.",
       },
       {
         title: "Three modes of care",
-        body: "On-site, at-home, and off-site cardiac care structured and explained so patients choose by circumstance.",
+        body: "On-site, at-home, and off-site care structured so patients choose by circumstance.",
       },
       {
         title: "AI-ready content",
@@ -1148,7 +1150,7 @@ export const SPECIALTY_HUB_WORKS: CaseStudy[] = [
       },
       {
         title: "Enquiry attribution",
-        body: "Click to enquiry attribution across call, WhatsApp, and booking.",
+        body: "Click-to-enquiry attribution across call, WhatsApp, and booking.",
       },
     ],
   },
@@ -1166,25 +1168,25 @@ export const SPECIALTY_HUB_WORKS: CaseStudy[] = [
     heroHighlight: "from day one",
     heroSubtitle: "Face it. Fix it.",
     heroBody: "",
-    projectScope: ["Brand Strategy / Website", "SEO / SEM / Collaterals"],
+    heroEyebrow: "Case Study 08 / 10 · Skin + Aesthetics",
+    projectScope: ["Brand Strategy / Website / SEO / SEM / Collaterals / Social Video"],
     projectArchitecture: [
       { value: "05", label: "Acne Types" },
       { value: "01", label: "Clinic Focus" },
     ],
     snapshot: {
       clinicType: "Single-focus acne clinic",
-      projectFocus:
-        "Brand creation, website build, condition-led SEO, paid search, clinic collaterals, and social video",
+      projectFocus: "Brand creation, website build, condition-led SEO, paid search, collaterals, social video",
       mainChallenge:
-        "A brand new clinic entering one of Singapore's most crowded aesthetic categories, competing against established dermatology and medispa names with years of domain authority. The clinic had one real advantage. It does one thing only. The work had to make that specificity impossible to miss.",
+        "A brand new clinic entering one of Singapore's most crowded aesthetic categories, against established dermatology and medispa names with years of domain authority. The clinic had one real advantage: it does one thing only. The work had to make that specificity impossible to miss.",
       role: "Brand identity, website structure, condition architecture, search planning, content direction, SEM, collateral design, and social video production",
     },
     beforeIntro:
-      "Starting from nothing is a blank page, not a shortcut. Everything had to be conjured from scratch, and every decision had to earn its place in a competitive category.",
+      "A brand new clinic entering one of Singapore's most crowded aesthetic categories, against established dermatology and medispa names with years of domain authority. The clinic had one real advantage: it does one thing only. The work had to make that specificity impossible to miss.",
     before: [
       {
         title: "No brand, no presence",
-        body: "A new clinic with no identity, no site, and no search footprint in a category where competitors had years of head start.",
+        body: "No identity, no site, no search footprint, in a category where competitors had years of head start.",
       },
       {
         title: "Acne is not one condition",
@@ -1196,13 +1198,13 @@ export const SPECIALTY_HUB_WORKS: CaseStudy[] = [
       },
     ],
     diagnosisIntro:
-      "We looked at the project through four lenses. How patients search, what they need to understand, where trust is built, and what makes them ready to enquire.",
+      "We looked at the project through four lenses: how patients search, what they need to understand, where trust is built, and what makes them ready to enquire.",
     diagnosisBody:
-      "That shaped a brand built on focus, a site organised by acne type, and a content plan that meets patients at the exact breakout they are worried about.",
+      "That shaped a brand built on focus, and a content plan that meets patients at the exact breakout they are worried about.",
     diagnosisLenses: [
       {
         title: "Search Intent",
-        body: "How patients look for care before they choose a clinic, and which queries signal real enquiry intent.",
+        body: "How patients look for care before choosing a clinic, and which queries signal real enquiry intent.",
       },
       {
         title: "Service Clarity",
@@ -1218,31 +1220,31 @@ export const SPECIALTY_HUB_WORKS: CaseStudy[] = [
       },
     ],
     workedOnIntro:
-      "Six workstreams, one goal. Help patients move from search to understanding to enquiry with less friction.",
+      "Six workstreams, one goal: help patients move from search to understanding to enquiry with less friction.",
     workedOn: [
       {
         title: "Brand identity",
-        body: "Created the name treatment, voice, and visual system around one idea. Face it. Fix it. Direct, unfussy, and built for a patient who is tired of being sold to.",
+        body: "Name treatment, voice, and visual system built around one idea. Face it. Fix it. Direct, unfussy, and made for a patient tired of being sold to.",
       },
       {
         title: "Condition architecture",
-        body: "Structured the site around five acne types rather than one treatment list, so each patient lands on the page that matches their skin.",
+        body: "The site structured around five acne types rather than one treatment list, so each patient lands on the page that matches their skin.",
       },
       {
         title: "Search intent mapping",
-        body: "Mapped pages and campaigns around how patients actually describe acne, symptom first, diagnosis second.",
+        body: "Pages and campaigns mapped around how patients actually describe acne: symptom first, diagnosis second, with the SEO foundation and Google Ads setup built on it.",
       },
       {
         title: "Trust-led page flow",
-        body: "Built the four-step journey and doctor introduction so patients understand the care model before being asked to book.",
+        body: "A four-step journey and doctor introduction, so patients understand the care model before being asked to book.",
       },
       {
         title: "Conversion touchpoints",
-        body: "Placed call, WhatsApp, and booking across the site at the points where patients are ready to act.",
+        body: "Call, WhatsApp, and booking placed across the site at the points where patients are ready to act.",
       },
       {
         title: "Social video",
-        body: "Produced educational Reels and TikTok content that carries the clinic voice and feeds the same condition topics the site ranks for.",
+        body: "Educational Reels and TikTok content carrying the clinic voice, feeding the same condition topics the site ranks for.",
       },
     ],
     strategyIntro:
@@ -1254,11 +1256,11 @@ export const SPECIALTY_HUB_WORKS: CaseStudy[] = [
       { before: "Social and search running apart", after: "Video topics drawn from the same condition map" },
     ],
     journeyIntro:
-      "We built the clinic website as a guided patient journey, not a collection of disconnected pages.",
+      "We built the website as a guided patient journey from day one, with brand, search, collateral, and social launched together as one system.",
     journey: {
       flow: ["Search", "Learn", "Compare", "Trust", "Enquire"],
       websiteMap: {
-        old: "No site. Search visibility starting at zero.",
+        old: ["No site", "No brand presence", "Search visibility starting at zero"],
         new: [
           "Homepage",
           "Condition page",
@@ -1288,7 +1290,7 @@ export const SPECIALTY_HUB_WORKS: CaseStudy[] = [
     compliancePoints: [
       {
         title: "Built within the rules",
-        body: "Copy, structure, and claims were shaped around Singapore healthcare advertising guidelines from the first draft.",
+        body: "Copy, structure, and claims shaped around Singapore healthcare advertising guidelines from the first draft.",
         image: "/compliance/rules.png",
         alt: "Built within the rules icon",
       },
@@ -1311,7 +1313,7 @@ export const SPECIALTY_HUB_WORKS: CaseStudy[] = [
         alt: "Reputation first icon",
       },
     ],
-    changesTitle: "What the clinic can now measure.",
+    changesTitle: "What the clinic can now measure",
     changesHighlight: "measure",
     changesLead: "No smoke. No mirrors.",
     changesIntro: "Every claim on this page is something the clinic can point at.",
@@ -1322,15 +1324,15 @@ export const SPECIALTY_HUB_WORKS: CaseStudy[] = [
       },
       {
         title: "Brand from zero",
-        body: "A brand launched from zero to live presence across web, print, and social.",
+        body: "A brand launched from nothing to a live presence across web, print, and social.",
       },
       {
         title: "Paid search attribution",
-        body: "Click to booking attribution from paid search.",
+        body: "Click-to-booking attribution from paid search.",
       },
       {
         title: "One topic map",
-        body: "Social video and search content drawn from one topic map, so every channel reinforces the same condition structure.",
+        body: "Social video and search content drawn from one topic map, so every channel reinforces the same structure.",
       },
     ],
   },

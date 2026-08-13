@@ -78,7 +78,7 @@ export function ProjectCaseStudy({
         <Container className="flex flex-col gap-10">
           <SectionHeading
             kicker="Project snapshot"
-            title="The brief at a glance."
+            title="The brief at a glance"
             highlight="glance"
             tone="light"
           />
@@ -121,7 +121,7 @@ export function ProjectCaseStudy({
         <Container className="flex flex-col gap-12">
           <SectionHeading
             kicker="Clinic Genie diagnosis"
-            title="Four lenses. One clearer picture."
+            title="Four lenses. One clearer picture"
             highlight="clearer picture"
             tone="light"
             subtitle={study.diagnosisIntro}
@@ -146,7 +146,7 @@ export function ProjectCaseStudy({
         <Container className="flex flex-col gap-12">
           <SectionHeading
             kicker="What we worked on"
-            title="The work behind the clearer journey."
+            title="The work behind the clearer journey"
             highlight="clearer journey"
             subtitle={
               study.workedOnIntro ??
@@ -247,7 +247,11 @@ export function ProjectCaseStudy({
                 <div className="flex flex-col gap-4">
                   <div className="flex flex-col gap-2">
                     <Kicker>Old</Kicker>
-                    <p className="text-base text-onDark-muted">{study.journey.websiteMap.old}</p>
+                    <p className="text-base text-onDark-muted">
+                      {Array.isArray(study.journey.websiteMap.old)
+                        ? study.journey.websiteMap.old.join(" → ")
+                        : study.journey.websiteMap.old}
+                    </p>
                   </div>
                   <div className="flex flex-col gap-2 border-t border-white/15 pt-4">
                     <Kicker>New</Kicker>
@@ -318,7 +322,7 @@ export function ProjectCaseStudy({
         <Container className="flex flex-col gap-12">
           <SectionHeading
             kicker="What changed"
-            title={study.changesTitle ?? "Outcomes the clinic could measure."}
+            title={study.changesTitle ?? "Outcomes the clinic could measure"}
             highlight={study.changesHighlight ?? "measure"}
             tone="light"
             align="center"
@@ -411,7 +415,7 @@ export function ProjectCaseStudy({
         <Container className="flex flex-col gap-12">
           <SectionHeading
             kicker="Built for responsible healthcare marketing"
-            title="Clarity without overclaiming."
+            title="Clarity without overclaiming"
             highlight="overclaiming"
             subtitle={
               study.complianceIntro ??

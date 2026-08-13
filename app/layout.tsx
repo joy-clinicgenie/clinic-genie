@@ -11,7 +11,7 @@ import { CustomCursor } from "@/components/ui/CustomCursor";
 import { PointerRipples } from "@/components/ui/PointerRipples";
 import { SITE } from "@/lib/data/nav";
 
-const outfit = Outfit({ subsets: ["latin"], weight: ["600", "700"], variable: "--font-outfit", display: "swap" });
+const outfit = Outfit({ subsets: ["latin"], weight: ["400", "600", "700"], variable: "--font-outfit", display: "swap" });
 const instrumentSans = Instrument_Sans({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],

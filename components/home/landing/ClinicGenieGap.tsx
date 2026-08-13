@@ -28,7 +28,7 @@ export function ClinicGenieGap() {
   return (
     <GenieFeatureCards
       id="gap"
-      className="surface-cyan"
+      className="relative z-10 -mt-8 overflow-hidden rounded-t-2xl surface-cyan lg:-mt-11 lg:rounded-t-[44px]"
       kicker="Meet your Clinic Genie"
       title="A Singapore clinic marketing agency built for specialists"
       highlight="specialists"

@@ -291,7 +291,12 @@ export function MagicProcess({
   return (
     <div
       ref={sectionRef}
-      className={cn(styles.section, dark && styles.sectionDark, compact && styles.sectionCompact)}
+      className={cn(
+        styles.section,
+        dark && styles.sectionDark,
+        dark && "rounded-2xl lg:rounded-[44px]",
+        compact && styles.sectionCompact
+      )}
       style={{ minHeight: reduced ? undefined : `${steps.length * 100}vh` }}
     >
       <div ref={stageRef} className={styles.sticky}>
