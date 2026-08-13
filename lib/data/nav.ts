@@ -4,6 +4,12 @@ export interface NavDropdownItem {
   href: string;
 }
 
+export interface ServicesNavGroup {
+  id: string;
+  label: string;
+  items: NavDropdownItem[];
+}
+
 export interface NavItem {
   label: string;
   href: string;
@@ -12,48 +18,65 @@ export interface NavItem {
   disabled?: boolean;
 }
 
-export const SERVICES_DROPDOWN: NavDropdownItem[] = [
+export const SERVICES_GROUPS: ServicesNavGroup[] = [
   {
-    title: "FindClinic.sg",
-    description: "Verified clinic discovery for patients across Singapore.",
-    href: "/services/core-pillars/findclinic",
+    id: "discovery-growth",
+    label: "Discovery + Growth",
+    items: [
+      {
+        title: "FindClinic.sg",
+        description: "Support healthcare discovery across Singapore.",
+        href: "/services/core-pillars/findclinic",
+      },
+      {
+        title: "Healthcare SEO",
+        description: "Be found for specialist care searches.",
+        href: "/services/core-pillars/healthcare-seo",
+      },
+      {
+        title: "Medical SEM",
+        description: "Reach patients actively looking for care.",
+        href: "/services/core-pillars/medical-sem",
+      },
+      {
+        title: "GEO + AI Search",
+        description: "Build visibility across AI search and answers.",
+        href: "/services/core-pillars/geo-ai-search",
+      },
+    ],
   },
   {
-    title: "Healthcare SEO",
-    description: "Organic search visibility for specialty care searches.",
-    href: "/services/core-pillars/healthcare-seo",
-  },
-  {
-    title: "Medical SEM",
-    description: "Paid search that reaches ready-to-enquire patients.",
-    href: "/services/core-pillars/medical-sem",
-  },
-  {
-    title: "Branding + Copywriting",
-    description: "Clear clinic voice, identity, and trust-led messaging.",
-    href: "/services/core-pillars/branding-copywriting",
-  },
-  {
-    title: "Web Design + Development",
-    description: "Fast, accessible clinic websites built to convert.",
-    href: "/services/core-pillars/web-design-development",
-  },
-  {
-    title: "Photo + Video",
-    description: "Real clinic visuals that build instant credibility.",
-    href: "/services/core-pillars/photo-video",
-  },
-  {
-    title: "Social Media",
-    description: "Ongoing presence that keeps your clinic top of mind.",
-    href: "/services/core-pillars/social-media",
-  },
-  {
-    title: "GEO + AI Search",
-    description: "Structure your clinic for AI answers and discovery.",
-    href: "/services/core-pillars/geo-ai-search",
+    id: "brand-experience",
+    label: "Brand + Experience",
+    items: [
+      {
+        title: "Branding + Copywriting",
+        description: "Clear positioning, identity and clinic messaging.",
+        href: "/services/core-pillars/branding-copywriting",
+      },
+      {
+        title: "Web Design + Development",
+        description: "Clinic websites built for clarity and conversion.",
+        href: "/services/core-pillars/web-design-development",
+      },
+      {
+        title: "Photo + Video",
+        description: "Authentic clinic visuals that build credibility.",
+        href: "/services/core-pillars/photo-video",
+      },
+      {
+        title: "Social Media",
+        description: "Maintain a consistent and relevant presence.",
+        href: "/services/core-pillars/social-media",
+      },
+    ],
   },
 ];
+
+/** Flat list for mobile nav and any consumers that need a single array. */
+export const SERVICES_DROPDOWN: NavDropdownItem[] = SERVICES_GROUPS.flatMap(
+  (group) => group.items
+);
 
 export const NAV_ITEMS: NavItem[] = [
   { label: "About Us", href: "/about" },

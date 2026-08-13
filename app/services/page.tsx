@@ -6,6 +6,7 @@ import { PageFinale } from "@/components/ui/PageFinale";
 import { PageFinaleCTA } from "@/components/ui/PageFinaleCTA";
 import { PortfolioWorksCarousel } from "@/components/home/landing/PortfolioWorksCarousel";
 import styles from "@/components/services/ServicesHero.module.css";
+import { cn } from "@/lib/cn";
 
 export const metadata: Metadata = {
   title: "Services | Strategy, Digital Growth & Brand for Clinics | Clinic Genie",
@@ -15,8 +16,8 @@ export const metadata: Metadata = {
 
 export default function ServicesPage() {
   return (
-    <div className="min-h-screen surface-cyan text-ink-900">
-      <div className={styles.stage}>
+    <div className="min-h-screen bg-genie-20 text-ink-900">
+      <div className={cn(styles.stage, "bg-genie-20")}>
         <LightHero
           title="Everything your clinic needs to grow, under one lamp"
           highlight="grow"
@@ -36,7 +37,7 @@ export default function ServicesPage() {
           }}
           minHeight="max-lg:min-h-0 lg:min-h-[78vh]"
           subtitleClassName="max-w-sm whitespace-pre-line text-pretty max-lg:mx-auto sm:max-w-[75%]"
-          className={`${styles.hero} max-lg:items-start max-lg:rounded-b-2xl max-lg:pb-20 lg:rounded-b-[44px]`}
+          className={`${styles.hero} relative z-10 rounded-b-2xl shadow-lg max-lg:items-start max-lg:pb-20 lg:rounded-b-[44px]`}
         />
 
         <CorePillarsSection />
@@ -46,7 +47,7 @@ export default function ServicesPage() {
         <PortfolioWorksCarousel />
       </Reveal>
 
-      <PageFinale backdropClassName="surface-cyan">
+      <PageFinale backdropClassName="surface-light">
         <PageFinaleCTA
           kicker="Make your first wish"
           title="Tell us your wish."

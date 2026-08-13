@@ -27,7 +27,7 @@ export const metadata: Metadata = {
 
 export default function ClinicSpecialtiesPage() {
   return (
-    <>
+    <div className="min-h-screen bg-genie-20 text-ink-900">
       <LightHero
         title="Growth engines built for your specialty"
         highlight="your specialty"
@@ -48,10 +48,15 @@ export default function ClinicSpecialtiesPage() {
             "object-cover object-[30%_center] lg:object-[74%_center] lg:-translate-x-[4%]",
         }}
         minHeight="min-h-[78vh]"
+        className="relative z-10 rounded-b-2xl shadow-lg lg:rounded-b-[44px]"
       />
 
-      <Section id="clinic-specialties" tone="light">
-        <Container className="flex flex-col gap-12">
+      <Section id="clinic-specialties" tone="light" className="overflow-hidden">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 bg-gradient-to-b from-genie-20 via-8% via-cg-mist to-cg-mist"
+        />
+        <Container className="relative flex flex-col gap-12">
           <SectionHeading
             kicker="Clinic Specialties"
             title="Choose your specialty"
@@ -97,6 +102,6 @@ export default function ClinicSpecialtiesPage() {
           primaryCta={{ href: "/contact", label: "Make Your First Wish" }}
         />
       </PageFinale>
-    </>
+    </div>
   );
 }

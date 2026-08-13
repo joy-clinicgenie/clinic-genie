@@ -4,12 +4,15 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useId, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { ChevronDown } from "lucide-react";
+import { ArrowUpRight, ChevronDown } from "lucide-react";
 import { cn } from "@/lib/cn";
+import { ease } from "@/lib/motion";
 import {
+  SERVICES_GROUPS,
   SERVICES_PILLARS_INDEX,
   type NavDropdownItem,
 } from "@/lib/data/nav";
+import styles from "./ServicesNavDropdown.module.css";
 
 interface ServicesNavDropdownProps {
   label: string;
@@ -19,10 +22,55 @@ interface ServicesNavDropdownProps {
   light: boolean;
 }
 
+function ServiceRow({
+  item,
+  index,
+  reduceMotion,
+}: {
+  item: NavDropdownItem;
+  index: number;
+  reduceMotion: boolean | null;
+}) {
+  return (
+    <motion.li
+      initial={reduceMotion ? false : { opacity: 0, y: 4 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{
+        duration: 0.22,
+        ease: ease.outSoft,
+        delay: 0.08 + index * 0.025,
+      }}
+    >
+      <Link
+        href={item.href}
+        className={cn(
+          styles.row,
+          "group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-genie-400 focus-visible:ring-offset-2 focus-visible:ring-offset-night-950"
+        )}
+      >
+        <span aria-hidden="true" className={styles.rowGlow} />
+        <span className={cn(styles.rowContent, "relative")}>
+          <span className="font-display text-h6 font-semibold text-onDark transition-colors duration-micro group-hover:text-white group-focus-visible:text-white">
+            {item.title}
+          </span>
+          <span className="max-w-sm text-sm leading-snug text-onDark-muted/80">
+            {item.description}
+          </span>
+        </span>
+        <ArrowUpRight
+          aria-hidden="true"
+          strokeWidth={1.75}
+          className={cn(styles.rowArrow, "relative h-4 w-4 shrink-0 text-genie-300/70")}
+        />
+      </Link>
+    </motion.li>
+  );
+}
+
 export function ServicesNavDropdown({
   label,
   href,
-  items,
+  items: _items,
   active,
   light,
 }: ServicesNavDropdownProps) {
@@ -50,21 +98,41 @@ export function ServicesNavDropdown({
     setOpen(true);
   };
 
+  const closeMenu = () => {
+    clearCloseTimer();
+    setOpen(false);
+  };
+
   useEffect(() => {
     setOpen(false);
   }, [pathname]);
 
   useEffect(() => {
     if (!open) return;
+
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
-        setOpen(false);
+        closeMenu();
         const trigger = rootRef.current?.querySelector<HTMLElement>("[data-nav-trigger]");
         trigger?.focus();
       }
     };
+
+    const onPointerDown = (e: MouseEvent | TouchEvent) => {
+      const target = e.target as Node | null;
+      if (target && !rootRef.current?.contains(target)) {
+        closeMenu();
+      }
+    };
+
     window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
+    document.addEventListener("mousedown", onPointerDown);
+    document.addEventListener("touchstart", onPointerDown);
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      document.removeEventListener("mousedown", onPointerDown);
+      document.removeEventListener("touchstart", onPointerDown);
+    };
   }, [open]);
 
   useEffect(() => () => clearCloseTimer(), []);
@@ -115,55 +183,71 @@ export function ServicesNavDropdown({
           <motion.div
             id={panelId}
             role="region"
-            aria-label="Core service pillars"
-            initial={reduceMotion ? false : { opacity: 0, y: 8, x: "-50%" }}
-            animate={{ opacity: 1, y: 0, x: "-50%" }}
-            exit={reduceMotion ? undefined : { opacity: 0, y: 6, x: "-50%" }}
-            transition={{ duration: 0.45, ease: "easeOut" }}
-            className="absolute left-1/2 top-full z-50 mt-3 w-[min(40rem,calc(100vw-2rem))]"
+            aria-label="Services"
+            initial={
+              reduceMotion
+                ? false
+                : { opacity: 0, y: -8, x: "-50%", filter: "blur(4px)" }
+            }
+            animate={{ opacity: 1, y: 0, x: "-50%", filter: "blur(0px)" }}
+            exit={
+              reduceMotion
+                ? undefined
+                : { opacity: 0, y: -6, x: "-50%", filter: "blur(3px)" }
+            }
+            transition={{ duration: 0.3, ease: ease.outSoft }}
+            className="absolute left-1/2 top-full z-50 mt-4 w-[min(75rem,calc(100vw-2rem))]"
             onMouseEnter={openMenu}
             onMouseLeave={scheduleClose}
           >
-            <div className="overflow-hidden rounded-3xl border border-white/10 bg-night-900/95 shadow-glass-dark backdrop-blur-xl">
-              <div className="border-b border-white/10 px-6 py-4">
-                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-onDark-muted">
-                  Core service pillars
-                </p>
-              </div>
+            <div className={styles.shell}>
+              <div className={styles.panel}>
+                <header className="relative z-10 flex flex-col gap-4 px-6 pb-2 pt-7 sm:flex-row sm:items-end sm:justify-between sm:gap-8 sm:px-8 sm:pb-3 sm:pt-8">
+                  <div className="max-w-md">
+                    <p className="text-kicker uppercase text-genie-300">Services</p>
+                    <p className="mt-2 font-display text-h5 font-semibold tracking-tight text-onDark text-balance">
+                      A connected growth system
+                      <br className="hidden sm:block" /> for specialist clinics.
+                    </p>
+                  </div>
+                  <Link
+                    href={SERVICES_PILLARS_INDEX.href}
+                    className="inline-flex shrink-0 items-center gap-1.5 self-start text-sm font-medium text-genie-300 transition-colors duration-micro hover:text-genie-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-genie-400 sm:self-auto"
+                  >
+                    {SERVICES_PILLARS_INDEX.label}
+                    <ArrowUpRight aria-hidden="true" className="h-3.5 w-3.5" strokeWidth={1.75} />
+                  </Link>
+                </header>
 
-              <ul className="grid grid-cols-1 gap-1 p-3 sm:grid-cols-2 sm:gap-x-0 sm:p-2">
-                {items.map((item, index) => {
-                  const leftCol = index % 2 === 0;
-                  return (
-                    <li
-                      key={item.href}
-                      className={cn(
-                        leftCol ? "sm:border-r sm:border-white/10 sm:pr-2" : "sm:pl-2"
-                      )}
-                    >
-                      <Link
-                        href={item.href}
-                        className="group flex flex-col gap-0.5 rounded-lg px-3 py-3 transition-colors duration-ui hover:bg-white/10 focus-visible:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-genie-400"
-                      >
-                        <span className="font-display text-sm font-semibold text-onDark transition-colors group-hover:text-white">
-                          {item.title}
-                        </span>
-                        <span className="text-xs leading-relaxed text-onDark-muted">
-                          {item.description}
-                        </span>
-                      </Link>
-                    </li>
-                  );
-                })}
-              </ul>
+                <div className="relative z-10 grid grid-cols-1 gap-6 px-4 py-4 sm:gap-8 sm:px-6 sm:py-5 lg:grid-cols-2 lg:gap-10 lg:px-8 lg:pb-6 lg:pt-5">
+                  {SERVICES_GROUPS.map((group, groupIndex) => {
+                    const groupOffset = SERVICES_GROUPS.slice(0, groupIndex).reduce(
+                      (total, current) => total + current.items.length,
+                      0
+                    );
 
-              <div className="border-t border-white/10 px-6 py-3">
-                <Link
-                  href={SERVICES_PILLARS_INDEX.href}
-                  className="text-sm font-medium text-genie-300 transition-colors hover:text-genie-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-genie-400"
-                >
-                  {SERVICES_PILLARS_INDEX.label} →
-                </Link>
+                    return (
+                      <section key={group.id} aria-labelledby={`${panelId}-${group.id}`}>
+                        <h3
+                          id={`${panelId}-${group.id}`}
+                          className="mb-1 px-2 text-xs font-semibold uppercase tracking-[0.14em] text-onDark-muted/70"
+                        >
+                          {group.label}
+                        </h3>
+                        <ul>
+                          {group.items.map((item, itemIndex) => (
+                            <ServiceRow
+                              key={item.href}
+                              item={item}
+                              index={groupOffset + itemIndex}
+                              reduceMotion={reduceMotion}
+                            />
+                          ))}
+                        </ul>
+                      </section>
+                    );
+                  })}
+                </div>
               </div>
             </div>
           </motion.div>

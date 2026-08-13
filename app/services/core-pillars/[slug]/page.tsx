@@ -146,24 +146,29 @@ export default function PillarPage({ params }: { params: { slug: string } }) {
   const grantedSlides = grantedWishSlides(pillar.grantedWishes, pillar.slug);
 
   return (
-    <div className="min-h-screen surface-light text-ink-900">
-      <PillarHero
-        pillar={pillar}
-        wishImageSrc={heroImageSrc}
-        imageClassName={heroImageClass}
-      />
+    <div className="min-h-screen bg-genie-20 text-ink-900">
+      <div className="bg-genie-20">
+        <PillarHero
+          pillar={pillar}
+          wishImageSrc={heroImageSrc}
+          imageClassName={heroImageClass}
+        />
 
-      {/* 2 — Three wishes / ecosystem intro */}
-      <Section
-        tone="light"
-        className={cn(
-          "max-lg:pt-14 max-lg:pb-16",
-          hasWishesShine && shineStyles.shineHost
-        )}
-      >
+        {/* 2 — Three wishes / ecosystem intro */}
+        <Section
+          tone="light"
+          className={cn(
+            "overflow-hidden max-lg:pt-14 max-lg:pb-16",
+            hasWishesShine && shineStyles.shineHost
+          )}
+        >
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 bg-gradient-to-b from-genie-20 via-8% via-cg-mist to-cg-mist"
+        />
         <Container
           className={cn(
-            "flex flex-col",
+            "relative flex flex-col",
             hasWishes ? "max-lg:gap-8 lg:gap-12" : "max-lg:gap-0 lg:gap-12"
           )}
         >
@@ -234,7 +239,8 @@ export default function PillarPage({ params }: { params: { slug: string } }) {
             </>
           )}
         </Container>
-      </Section>
+        </Section>
+      </div>
 
       {/* 3 — Mechanics / offers */}
       <PillarMechanicsSection pillar={pillar} />

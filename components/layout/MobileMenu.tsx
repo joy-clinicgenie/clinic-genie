@@ -6,9 +6,11 @@ import { AnimatePresence, motion } from "framer-motion";
 import {
   NAV_ITEMS,
   PRIMARY_CTA,
+  SERVICES_GROUPS,
   SERVICES_PILLARS_INDEX,
   type NavItem,
 } from "@/lib/data/nav";
+import { ArrowUpRight } from "lucide-react";
 import { MagicOrb } from "@/components/orb/MagicOrb";
 import { Logo } from "@/components/ui/Logo";
 import { MagneticButton } from "@/components/ui/MagneticButton";
@@ -102,7 +104,7 @@ export function MobileMenu({ open, onClose }: { open: boolean; onClose: () => vo
                           aria-expanded={servicesOpen}
                           aria-controls="mobile-services-pillars"
                           className="grid h-11 w-11 shrink-0 place-items-center rounded-full text-onDark transition-colors hover:bg-white/10"
-                          aria-label={servicesOpen ? "Hide core service pillars" : "Show core service pillars"}
+                          aria-label={servicesOpen ? "Hide services" : "Show services"}
                         >
                           <svg
                             width="20"
@@ -124,7 +126,7 @@ export function MobileMenu({ open, onClose }: { open: boolean; onClose: () => vo
                       </div>
                       <AnimatePresence initial={false}>
                         {servicesOpen ? (
-                          <motion.ul
+                          <motion.div
                             id="mobile-services-pillars"
                             initial={{ height: 0, opacity: 0 }}
                             animate={{ height: "auto", opacity: 1 }}
@@ -132,32 +134,40 @@ export function MobileMenu({ open, onClose }: { open: boolean; onClose: () => vo
                             transition={{ duration: 0.35, ease: "easeOut" }}
                             className="overflow-hidden pl-1"
                           >
-                            <li>
-                              <p className="pb-2 pt-1 text-xs font-semibold uppercase tracking-[0.14em] text-onDark-muted">
-                                Core service pillars
-                              </p>
-                            </li>
-                            {children.map((child) => (
-                              <li key={child.href}>
-                                <Link
-                                  href={child.href}
-                                  onClick={onClose}
-                                  className="block py-2 text-lg font-medium text-onDark-muted transition-colors hover:text-genie-300"
-                                >
-                                  {child.title}
-                                </Link>
-                              </li>
-                            ))}
-                            <li>
-                              <Link
-                                href={SERVICES_PILLARS_INDEX.href}
-                                onClick={onClose}
-                                className="block py-2 text-base font-medium text-genie-300 transition-colors hover:text-genie-200"
-                              >
-                                {SERVICES_PILLARS_INDEX.label} →
-                              </Link>
-                            </li>
-                          </motion.ul>
+                            <p className="pb-3 pt-1 text-xs font-semibold uppercase tracking-[0.14em] text-genie-300">
+                              Services
+                            </p>
+                            <div className="flex flex-col gap-5">
+                              {SERVICES_GROUPS.map((group) => (
+                                <div key={group.id}>
+                                  <p className="pb-1 text-xs font-semibold uppercase tracking-[0.14em] text-onDark-muted/70">
+                                    {group.label}
+                                  </p>
+                                  <ul>
+                                    {group.items.map((child) => (
+                                      <li key={child.href}>
+                                        <Link
+                                          href={child.href}
+                                          onClick={onClose}
+                                          className="flex min-h-11 items-center py-2.5 text-lg font-medium text-onDark-muted transition-colors hover:text-genie-300"
+                                        >
+                                          {child.title}
+                                        </Link>
+                                      </li>
+                                    ))}
+                                  </ul>
+                                </div>
+                              ))}
+                            </div>
+                            <Link
+                              href={SERVICES_PILLARS_INDEX.href}
+                              onClick={onClose}
+                              className="mt-4 inline-flex min-h-11 items-center gap-1.5 py-2 text-base font-medium text-genie-300 transition-colors hover:text-genie-200"
+                            >
+                              {SERVICES_PILLARS_INDEX.label}
+                              <ArrowUpRight aria-hidden="true" className="h-3.5 w-3.5" strokeWidth={1.75} />
+                            </Link>
+                          </motion.div>
                         ) : null}
                       </AnimatePresence>
                     </>

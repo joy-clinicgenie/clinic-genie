@@ -1,0 +1,92 @@
+.shell {
+  position: relative;
+}
+
+.panel {
+  position: relative;
+  overflow: hidden;
+  border-radius: 1.75rem;
+  border: 1px solid rgba(24, 196, 217, 0.16);
+  background:
+    radial-gradient(ellipse 55% 45% at 50% -8%, rgba(24, 196, 217, 0.14), transparent 58%),
+    linear-gradient(165deg, rgba(8, 60, 71, 0.97) 0%, rgba(6, 45, 54, 0.98) 48%, rgba(4, 31, 39, 0.99) 100%);
+  box-shadow:
+    0 24px 60px rgba(4, 31, 39, 0.45),
+    0 8px 20px rgba(4, 31, 39, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(20px);
+}
+
+.row {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  column-gap: 0.85rem;
+  align-items: start;
+  width: 100%;
+  padding: 0.85rem 0.65rem;
+  border-radius: 0.75rem;
+  transition:
+    background-color 200ms var(--ease-out-soft),
+    transform 200ms var(--ease-out-soft);
+}
+
+.rowGlow {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  opacity: 0;
+  background: radial-gradient(ellipse 80% 120% at 12% 50%, rgba(24, 196, 217, 0.14), transparent 70%);
+  transition: opacity 200ms var(--ease-out-soft);
+}
+
+.rowContent {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  min-width: 0;
+  transition: transform 200ms var(--ease-out-soft);
+}
+
+.rowArrow {
+  margin-top: 0.2rem;
+  transition: transform 200ms var(--ease-out-soft), color 200ms var(--ease-out-soft);
+}
+
+.row:hover .rowGlow,
+.row:focus-visible .rowGlow {
+  opacity: 1;
+}
+
+.row:hover,
+.row:focus-visible {
+  background-color: rgba(24, 196, 217, 0.06);
+}
+
+.row:hover .rowContent,
+.row:focus-visible .rowContent {
+  transform: translateX(3px);
+}
+
+.row:hover .rowArrow,
+.row:focus-visible .rowArrow {
+  transform: translate(3px, -3px);
+  color: rgb(204 244 246);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .row,
+  .rowContent,
+  .rowArrow,
+  .rowGlow {
+    transition: none;
+  }
+
+  .row:hover .rowContent,
+  .row:focus-visible .rowContent,
+  .row:hover .rowArrow,
+  .row:focus-visible .rowArrow {
+    transform: none;
+  }
+}

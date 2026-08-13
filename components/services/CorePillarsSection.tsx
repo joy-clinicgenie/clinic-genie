@@ -17,11 +17,11 @@ export function CorePillarsSection() {
     <Section
       id="core-pillars"
       tone="light"
-      className="bg-gradient-to-b from-[#e3f6fa] to-white max-lg:pt-24"
+      className="overflow-hidden max-lg:pt-24"
     >
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 -top-8 hidden h-28 bg-[radial-gradient(ellipse_at_50%_0%,rgba(24,196,217,0.11),transparent_72%)] max-lg:block"
+        className="pointer-events-none absolute inset-0 bg-gradient-to-b from-genie-20 via-8% via-cg-mist to-cg-mist"
       />
       <Container className="relative flex flex-col gap-12 md:gap-14">
         <div className="flex max-w-xl flex-col items-start gap-4 text-left">

@@ -96,9 +96,18 @@ export function Nav() {
         animate={{ y: navVisible ? 0 : "-110%" }}
         transition={{ duration: 0.35, ease: "easeOut" }}
       >
+        <div
+          aria-hidden="true"
+          className={cn(
+            "pointer-events-none absolute inset-x-0 top-0 h-28 bg-gradient-to-b to-transparent transition-[background-color,opacity] duration-ui lg:h-32",
+            light
+              ? "from-white/80 via-white/40"
+              : "from-night-950/70 via-night-950/30"
+          )}
+        />
         <nav
           className={cn(
-            "grid w-full grid-cols-[1fr_auto] items-center gap-3 bg-transparent transition-colors duration-ui",
+            "relative z-10 grid w-full grid-cols-[1fr_auto] items-center gap-3 bg-transparent transition-colors duration-ui",
             "px-[var(--page-pad)] py-2.5 pt-[calc(0.625rem+env(safe-area-inset-top,0px))]",
             /* Desktop — transparent three-zone bar, no glass */
             "lg:grid-cols-[1fr_auto_1fr] lg:max-w-wide lg:gap-4 lg:px-6 lg:py-3 lg:pt-3"
