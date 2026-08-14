@@ -11,7 +11,7 @@ export function AboutOverlapHero() {
       <LightHero
         title="The genie behind better clinic growth"
         highlight="genie"
-        subtitle="Every clinic has a wish: to be found by the patients who need it Clinic Genie helps grant it"
+        subtitle="Every clinic has a wish: to be found by the patients who need it. Clinic Genie helps grant it"
         description="A medical marketing agency for specialist clinics in Singapore, helping good doctors get found, trusted and chosen."
         showOrb={false}
         showWishForm={false}

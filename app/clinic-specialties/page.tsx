@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import { Section } from "@/components/ui/Section";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
@@ -19,11 +20,19 @@ import specialistSectionStyles from "@/components/home/landing/SpecialistClinics
 import { SPECIALTY_HUBS } from "@/lib/data/specialty-hubs";
 import { cn } from "@/lib/cn";
 
-export const metadata: Metadata = {
-  title: "Clinic Specialties | Growth Engines for Specialist Clinics | Clinic Genie",
+export const metadata: Metadata = pageMetadata({
+  title: "Clinic Specialties",
   description:
-    "Specialty-specific marketing systems for Singapore specialist clinics. Explore Clinic Genie's clinic specialties: growth engines built for your field, from paediatrics to cardiology and beyond.",
-};
+    "Marketing systems shaped around how patients search for specialist care in Singapore, from paediatrics and cardiology to dermatology, dental, neurology, and rehabilitation.",
+  path: "/clinic-specialties",
+  keywords: [
+    "specialist clinic marketing",
+    "paediatric clinic marketing",
+    "cardiology clinic marketing",
+    "dermatology clinic marketing",
+    "clinic specialties Singapore",
+  ],
+});
 
 export default function ClinicSpecialtiesPage() {
   return (
@@ -93,7 +102,7 @@ export default function ClinicSpecialtiesPage() {
         </Reveal>
       </LandingSection>
 
-      <PageFinale backdropClassName="surface-light">
+      <PageFinale backdropClassName="bg-white">
         <PageFinaleCTA
           kicker="Your specialty not listed yet?"
           title="The magic still works."

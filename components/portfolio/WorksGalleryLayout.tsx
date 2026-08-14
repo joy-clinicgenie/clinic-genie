@@ -51,7 +51,7 @@ export function WorksGalleryLayout() {
     <section
       data-nav-theme="light"
       aria-labelledby="our-works-heading"
-      className="relative overflow-hidden text-ink-900"
+      className="relative overflow-hidden bg-cg-teal-5 text-ink-900"
     >
       <div aria-hidden="true" className={styles.mesh} />
 
@@ -62,10 +62,7 @@ export function WorksGalleryLayout() {
         <header className="mx-auto flex max-w-5xl flex-col items-center gap-6 text-center">
           <h1
             id="our-works-heading"
-            className={cn(
-              "font-display text-balance text-ink-900",
-              styles.heroTitle
-            )}
+            className={cn("font-display text-ink-900", styles.heroTitle)}
           >
             <RealFlipHeadline />
           </h1>

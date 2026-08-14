@@ -17,7 +17,7 @@ import styles from "./Hero.module.css";
 export function Hero() {
   const reduceMotion = useReducedMotion();
   const orbRef = useRef<HTMLDivElement>(null);
-  const [orbSize, setOrbSize] = useState(400);
+  const [orbSize, setOrbSize] = useState(380);
 
   useEffect(() => {
     const el = orbRef.current;

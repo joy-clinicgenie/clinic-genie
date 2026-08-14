@@ -141,7 +141,7 @@ export function Nav() {
                       aria-disabled="true"
                       title="Coming soon"
                       className={cn(
-                        "relative inline-flex cursor-default items-center rounded-pill px-4 py-2 text-[0.9375rem] font-medium",
+                        "relative inline-flex cursor-default items-center rounded-pill px-4 py-2 text-[0.9375rem] font-semibold tracking-[0.01em]",
                         light ? "text-ink-400" : "text-onDark-muted/60"
                       )}
                     >
@@ -156,7 +156,7 @@ export function Nav() {
                   <Link
                     href={item.href}
                     className={cn(
-                      "relative inline-flex items-center rounded-pill px-4 py-2 text-[0.9375rem] font-medium transition-colors duration-ui",
+                      "relative inline-flex items-center rounded-pill px-4 py-2 text-[0.9375rem] font-semibold tracking-[0.01em] transition-colors duration-ui",
                       light
                         ? active
                           ? "bg-ink-900 text-white"

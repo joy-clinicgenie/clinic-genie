@@ -8,22 +8,23 @@ const SIZE_THRESHOLD_SMALL = 50;
 const SIZE_THRESHOLD_TINY = 30;
 const BLUR_MULTIPLIER_SMALL = 0.008;
 const BLUR_MIN_SMALL = 1;
-const BLUR_MULTIPLIER_LARGE = 0.015;
+const BLUR_MULTIPLIER_LARGE = 0.02;
 const BLUR_MIN_LARGE = 4;
 const CONTRAST_MULTIPLIER_SMALL = 0.003;
 const CONTRAST_MIN_SMALL = 1.08;
-const CONTRAST_MULTIPLIER_LARGE = 0.005;
+const CONTRAST_MULTIPLIER_LARGE = 0.0036;
 const CONTRAST_MIN_LARGE = 1.2;
+const CONTRAST_MAX_LARGE = 1.45;
 const CONTRAST_TINY = 1.05;
 const CONTRAST_MULTIPLIER_FINAL = 1.1;
 const CONTRAST_MIN_FINAL = 1.12;
 
-/** SmoothUI SiriOrb defaults (soft mint, cyan, aqua). */
+/** SmoothUI SiriOrb defaults (quiet mint, clinic cyan, aqua). */
 export const SIRI_ORB_DEFAULT_COLORS = {
-  bg: "#C4C4C4",
-  c1: "color-mix(in srgb,rgb(192, 247, 230) 55%,rgb(82, 199, 174) 45%)",
-  c2: "oklch(85% 0.14 200)",
-  c3: "color-mix(in srgb,rgb(44, 229, 239) 55%, white 45%)",
+  bg: "#C2D0D2",
+  c1: "color-mix(in srgb,rgb(192, 247, 230) 28%,rgb(82, 199, 174) 72%)",
+  c2: "oklch(73% 0.11 200)",
+  c3: "color-mix(in srgb, rgb(44, 229, 239) 35%, #18C4D9 65%)",
 } as const;
 
 export interface SiriOrbProps {
@@ -76,7 +77,10 @@ export function SiriOrb({
   const contrastAmount =
     sizeValue < SIZE_THRESHOLD_SMALL
       ? Math.max(sizeValue * CONTRAST_MULTIPLIER_SMALL, CONTRAST_MIN_SMALL)
-      : Math.max(sizeValue * CONTRAST_MULTIPLIER_LARGE, CONTRAST_MIN_LARGE);
+      : Math.min(
+          Math.max(sizeValue * CONTRAST_MULTIPLIER_LARGE, CONTRAST_MIN_LARGE),
+          CONTRAST_MAX_LARGE
+        );
 
   const finalContrast = getFinalContrast(sizeValue, contrastAmount);
 

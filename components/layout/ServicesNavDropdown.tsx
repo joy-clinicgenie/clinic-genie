@@ -157,7 +157,7 @@ export function ServicesNavDropdown({
         aria-expanded={open}
         aria-controls={panelId}
         className={cn(
-          "relative inline-flex items-center gap-1 rounded-pill px-4 py-2 text-[0.9375rem] font-medium transition-colors duration-ui",
+          "relative inline-flex items-center gap-1 rounded-pill px-4 py-2 text-[0.9375rem] font-semibold tracking-[0.01em] transition-colors duration-ui",
           light
             ? active || open
               ? "bg-ink-900 text-white"

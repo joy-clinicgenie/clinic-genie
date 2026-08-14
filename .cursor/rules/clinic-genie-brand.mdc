@@ -274,8 +274,11 @@ Avoid:
 
 Use the approved font system.
 
-Title font: Outfit  
-Body font: Reddit Sans  
+Title font: **Outfit** (`font-display`, `--font-outfit`)  
+Body font: **Instrument Sans** (`font-sans`, `--font-instrument-sans`)  
+Mono accent: **JetBrains Mono** (`font-mono`, `--font-jetbrains`) for metrics, kickers, and keyword chips where specified
+
+Load fonts through `next/font/google` in `app/layout.tsx`. Apply body text with `font-sans` (or inherited body styles). Apply headings with `font-display`.
 
 Maintain clear hierarchy between:
 
@@ -323,7 +326,7 @@ The homepage should follow the approved simplified structure unless instructed o
 3. What We Do
 4. Specialist Clinics and Selected Work
 5. How We Work
-6. Genie Insights
+6. Genie Tips
 7. Final CTA
 
 Each section should have a clear strategic role.

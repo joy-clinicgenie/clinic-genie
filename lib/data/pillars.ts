@@ -95,7 +95,7 @@ export interface CorePillar {
 
 function specialtyHref(slug: string): string {
   const hub = getSpecialtyHub(slug);
-  return hub ? getSpecialtyHubHref(hub) : "/clinic-specialties";
+  return (hub && getSpecialtyHubHref(hub)) ?? "/clinic-specialties";
 }
 
 const CONTACT = "/contact";
@@ -121,10 +121,10 @@ const AESTHETIC_HREF = specialtyHref("dermatology");
 const DENTAL_HREF = specialtyHref("dental");
 const MEDICAL_HREF = "/clinic-specialties";
 
-/** Project detail pages are temporarily unlinked; point to the Our Works index. */
-const CEDAR = PORTFOLIO;
-const JOYFUL = PORTFOLIO;
-const ACNE = PORTFOLIO;
+/** Portfolio case study detail pages. */
+const CEDAR = "/portfolio/cedar-endocrine-clinic";
+const JOYFUL = "/portfolio/joyful-seeds";
+const ACNE = "/portfolio/the-acne-clinic";
 
 export const CORE_PILLARS: CorePillar[] = [
   // ───────────────────────────── 1. FindClinic.sg ─────────────────────────────
@@ -286,7 +286,7 @@ export const CORE_PILLARS: CorePillar[] = [
       },
       {
         title: "To Be Trusted",
-        body: "SPatient-focused content that earns confidence, written within SMC guidelines.",
+        body: "Patient-focused content that earns confidence, written within SMC guidelines.",
       },
       {
         title: "To Be Chosen",

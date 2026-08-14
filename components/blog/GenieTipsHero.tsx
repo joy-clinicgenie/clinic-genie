@@ -63,7 +63,7 @@ export function GenieTipsHero({
       <Container className="relative z-10 w-full">
         <div className={styles.content}>
           <motion.div className={styles.kicker} {...enter(0.06)}>
-            <Kicker tone="dark">Genie Insights</Kicker>
+            <Kicker tone="dark">Genie Tips</Kicker>
           </motion.div>
 
           <motion.h1 className={styles.title} {...enter(0.14)}>

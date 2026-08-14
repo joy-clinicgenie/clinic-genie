@@ -16,7 +16,7 @@ export function SpecialtyHubWorkTemplate({
   imageAlt,
   logo,
   logoAlt,
-  backLink = { href: "/clinic-specialties", label: "Clinic Specialties" },
+  backLink = { href: "/portfolio", label: "Our Works" },
 }: {
   study: CaseStudy;
   image?: string;

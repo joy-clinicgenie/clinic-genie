@@ -1,13 +1,20 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import { PageFinale } from "@/components/ui/PageFinale";
 import { PageFinaleCTA } from "@/components/ui/PageFinaleCTA";
 import { WorksGalleryLayout } from "@/components/portfolio/WorksGalleryLayout";
 
-export const metadata: Metadata = {
-  title: "Our Works — Specialist Clinic Projects | Clinic Genie",
+export const metadata: Metadata = pageMetadata({
+  title: "Our Works",
   description:
-    "Explore brands, websites and campaigns Clinic Genie has built for specialist clinics in Singapore. Strategy, design and search brought into one clear growth system.",
-};
+    "Selected brands, websites, and campaigns Clinic Genie has built for specialist clinics in Singapore. Strategy, design, and search brought into one clear growth system.",
+  path: "/portfolio",
+  keywords: [
+    "clinic website case studies",
+    "healthcare branding Singapore",
+    "specialist clinic marketing work",
+  ],
+});
 
 export default function PortfolioPage() {
   return (

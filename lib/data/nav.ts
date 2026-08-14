@@ -109,5 +109,5 @@ export const SITE = {
     instagram: "https://www.instagram.com/clinicgeniesg",
     linkedin: "https://www.linkedin.com/company/clinicgenie",
   },
-  url: "https://clinicgenie-site.vercel.app/",
+  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.clinic-genie.com",
 };

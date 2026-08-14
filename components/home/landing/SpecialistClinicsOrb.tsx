@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { MagneticButton } from "@/components/ui/MagneticButton";
 import { ParallaxBackground } from "@/components/ui/ParallaxBackground";
+import { cn } from "@/lib/cn";
 import {
   SPECIALTY_CATEGORIES,
   getSpecialtyCategoryItemHref,
@@ -34,19 +35,35 @@ export function SpecialistClinicsOrb() {
                 <h3 className={styles.categoryTitle}>{category.name}</h3>
                 {items.length > 0 ? (
                   <ul className={styles.specialistList}>
-                    {items.map((item) => (
-                      <li key={`${category.id}-${item.name}`}>
-                        <Link
-                          href={getSpecialtyCategoryItemHref(item)}
-                          className={styles.specialistBox}
-                        >
+                    {items.map((item) => {
+                      const href = getSpecialtyCategoryItemHref(item);
+                      const content = (
+                        <>
                           <span className={styles.specialistName}>{item.name}</span>
-                          <span className={styles.specialistArrow} aria-hidden="true">
-                            →
-                          </span>
-                        </Link>
-                      </li>
-                    ))}
+                          {href ? (
+                            <span className={styles.specialistArrow} aria-hidden="true">
+                              →
+                            </span>
+                          ) : null}
+                        </>
+                      );
+
+                      return (
+                        <li key={`${category.id}-${item.name}`}>
+                          {href ? (
+                            <Link href={href} className={styles.specialistBox}>
+                              {content}
+                            </Link>
+                          ) : (
+                            <span
+                              className={cn(styles.specialistBox, styles.specialistBoxStatic)}
+                            >
+                              {content}
+                            </span>
+                          )}
+                        </li>
+                      );
+                    })}
                   </ul>
                 ) : (
                   <p className={styles.categoryEmpty}>Coming soon</p>

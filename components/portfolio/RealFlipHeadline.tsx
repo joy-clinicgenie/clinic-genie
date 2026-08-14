@@ -27,34 +27,52 @@ export function RealFlipHeadline({ className }: { className?: string }) {
 
   if (reduceMotion) {
     return (
-      <span className={cn("inline", className)} aria-label={ACCESSIBLE_TITLE}>
-        Real <span className="genie-text">clinics</span>
+      <span
+        className={cn("inline-flex items-baseline justify-center gap-x-[0.28em]", className)}
+        aria-label={ACCESSIBLE_TITLE}
+      >
+        <span aria-hidden="true" className="text-right">
+          Real
+        </span>
+        <span aria-hidden="true" className="genie-text text-left">
+          clinics
+        </span>
       </span>
     );
   }
 
   return (
-    <span className={cn("inline-flex flex-wrap items-baseline gap-x-[0.28em]", className)}>
+    <span
+      className={cn("inline-flex items-baseline justify-center gap-x-[0.28em]", className)}
+    >
       <span className="sr-only">{ACCESSIBLE_TITLE}</span>
-      <span aria-hidden="true" className="inline-flex items-baseline gap-x-[0.28em]">
-        <span>Real</span>
-        <span className="relative inline-grid overflow-hidden pb-[0.18em] align-baseline">
-          <span className="invisible col-start-1 row-start-1 whitespace-nowrap" aria-hidden="true">
-            rankings
+      <span aria-hidden="true" className="text-right">
+        Real
+      </span>
+      <span
+        aria-hidden="true"
+        className="relative inline-grid justify-items-start overflow-hidden pb-[0.18em] text-left align-baseline"
+      >
+        {WORDS.map((placeholder) => (
+          <span
+            key={placeholder}
+            className="invisible col-start-1 row-start-1 whitespace-nowrap"
+          >
+            {placeholder}
           </span>
-          <AnimatePresence mode="wait" initial={false}>
-            <motion.span
-              key={word}
-              className="genie-text col-start-1 row-start-1 inline-block whitespace-nowrap"
-              initial={{ y: "100%" }}
-              animate={{ y: "0%" }}
-              exit={{ y: "-100%" }}
-              transition={{ duration: 0.45, ease: ease.glide }}
-            >
-              {word}
-            </motion.span>
-          </AnimatePresence>
-        </span>
+        ))}
+        <AnimatePresence mode="wait" initial={false}>
+          <motion.span
+            key={word}
+            className="genie-text col-start-1 row-start-1 inline-block whitespace-nowrap text-left"
+            initial={{ y: "100%" }}
+            animate={{ y: "0%" }}
+            exit={{ y: "-100%" }}
+            transition={{ duration: 0.45, ease: ease.glide }}
+          >
+            {word}
+          </motion.span>
+        </AnimatePresence>
       </span>
     </span>
   );

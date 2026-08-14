@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { DEFAULT_KEYWORDS, pageMetadata } from "@/lib/seo";
 import { FeaturedGenieTip } from "@/components/blog/FeaturedGenieTip";
 import { GenieTipsPagination } from "@/components/blog/GenieTipsPagination";
 import { NotionPostCard } from "@/components/blog/NotionPostCard";
@@ -13,11 +14,13 @@ export const revalidate = 60;
 
 const GRID_PAGE_SIZE = 6;
 
-export const metadata: Metadata = {
-  title: "Genie Tips | Clinic Marketing Insights | Clinic Genie",
+export const metadata: Metadata = pageMetadata({
+  title: "Genie Tips",
   description:
-    "Practical Genie Tips on healthcare SEO, medical SEM, clinic websites, AI search readiness, and compliance-aware growth for specialist clinics in Singapore.",
-};
+    "Practical clinic marketing insights on healthcare SEO, medical SEM, clinic websites, AI search readiness, and compliance-aware growth for specialist clinics in Singapore.",
+  path: "/genie-tips",
+  keywords: [...DEFAULT_KEYWORDS, "clinic marketing insights"],
+});
 
 type GenieTipsPageProps = {
   searchParams?: {
@@ -58,8 +61,7 @@ export default async function GenieTipsPage({
         subtitle="Explore our latest articles and clinic growth insights."
       />
 
-      <main>
-        <section
+      <section
           data-nav-theme="light"
           aria-labelledby="genie-tips-heading"
           className="pb-16 pt-10 sm:pb-20 sm:pt-14 lg:pt-16"
@@ -110,7 +112,6 @@ export default async function GenieTipsPage({
             )}
           </Container>
         </section>
-      </main>
 
       <PageFinale backdropClassName="bg-cg-teal-5">
         <PageFinaleCTA

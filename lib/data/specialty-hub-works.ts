@@ -1,7 +1,6 @@
 import type { CaseStudy } from "@/lib/data/portfolio";
 
-export interface SpecialtyHubWorkMeta {
-  studySlug: string;
+export interface PortfolioWorkMeta {
   image: string;
   imageAlt: string;
   /** Optional specialty hero background under /public/specialty-hub */
@@ -11,59 +10,52 @@ export interface SpecialtyHubWorkMeta {
   logoAlt?: string;
 }
 
-export const HUB_CASE_STUDY_META: Record<string, SpecialtyHubWorkMeta> = {
-  "aquatic-physio": {
-    studySlug: "aquaphysio",
+/** Visual assets for published portfolio case studies. Keyed by study slug. */
+export const PORTFOLIO_WORK_META: Record<string, PortfolioWorkMeta> = {
+  aquaphysio: {
     image: "/works/aquaphysio/aquaphysio-mockup.png",
     imageAlt: "AquaPhysio Rehab Centre website mockup on laptop",
     logo: "/clients/aquaphysio.png",
     logoAlt: "AquaPhysio Rehab Centre",
   },
-  endocrinology: {
-    studySlug: "cedar-endocrine-clinic",
+  "cedar-endocrine-clinic": {
     image: "/works/cedar/cedar-mockup.png",
     imageAlt: "Cedar Endocrine Clinic website mockup on laptop",
     logo: "/clients/cedar-endocrine.png",
     logoAlt: "Cedar Endocrine Clinic",
   },
-  dermatology: {
-    studySlug: "msdc",
+  msdc: {
     image: "/works/msdc/msdc-paperbag.jpg",
     imageAlt: "Medical and Surgical Dermatology Clinic website and brand work",
     logo: "/clients/medical-surgical-dermatology.png",
     logoAlt: "Medical & Surgical Dermatology",
   },
-  dental: {
-    studySlug: "singapore-dental-implant-centre",
+  "singapore-dental-implant-centre": {
     image: "/works/sdic.png",
     imageAlt: "Singapore Dental Implant Centre reception and clinic branding",
     logo: "/clients/singapore-dental-implant-centre.png",
     logoAlt: "Singapore Dental Implant Centre",
   },
-  neurology: {
-    studySlug: "singapore-brain-spine-nerves",
+  "singapore-brain-spine-nerves": {
     image: "/works/sbsn/sbsn-mockup.png",
     imageAlt: "Singapore Brain Spine Nerves Center website mockup on laptop",
     logo: "/clients/singapore-brain-spine-nerves-center.png",
     logoAlt: "Singapore Brain Spine Nerves Center",
   },
-  cardiology: {
-    studySlug: "sunrise-heart",
+  "sunrise-heart": {
     image: "/works/sunrise/sunrise-mockup.png",
     imageAlt: "Sunrise Heart Specialist Clinic website mockup on laptop",
     heroImage: "/specialty-hub/specialty-cardiology.png",
     logo: "/clients/sunrise-heart.png",
     logoAlt: "Sunrise Heart Clinic",
   },
-  acne: {
-    studySlug: "the-acne-clinic",
+  "the-acne-clinic": {
     image: "/works/tac/TAC-posters.png",
     imageAlt: "The Acne Clinic treatment room with educational posters on acne causes, scarring, and patient care",
     logo: "/clients/the-acne-clinic.png",
     logoAlt: "The Acne Clinic",
   },
-  paediatrics: {
-    studySlug: "joyful-seeds",
+  "joyful-seeds": {
     image: "/works/joyfulseeds/joyfulseeds-mockup.png",
     imageAlt: "Joyful Seeds Paediatric and Developmental Clinic website mockup on laptop",
     logo: "/clients/joyful-seeds.png",
@@ -71,8 +63,24 @@ export const HUB_CASE_STUDY_META: Record<string, SpecialtyHubWorkMeta> = {
   },
 };
 
-export function getSpecialtyHubWorkMeta(hubSlug: string): SpecialtyHubWorkMeta | undefined {
-  return HUB_CASE_STUDY_META[hubSlug];
+/**
+ * Legacy clinic-specialty URLs that previously hosted case studies.
+ * Paediatrics keeps its specialty hub page at /clinic-specialties/paediatrics.
+ */
+export const SPECIALTY_HUB_PORTFOLIO_REDIRECTS: Record<string, string> = {
+  "aquatic-physio": "aquaphysio",
+  endocrinology: "cedar-endocrine-clinic",
+  dermatology: "msdc",
+  dental: "singapore-dental-implant-centre",
+  neurology: "singapore-brain-spine-nerves",
+  cardiology: "sunrise-heart",
+  acne: "the-acne-clinic",
+};
+
+export function getPortfolioWorkMeta(
+  studySlug: string
+): PortfolioWorkMeta | undefined {
+  return PORTFOLIO_WORK_META[studySlug];
 }
 
 export const SPECIALTY_HUB_WORKS: CaseStudy[] = [

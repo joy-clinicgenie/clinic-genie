@@ -152,7 +152,7 @@
   display: grid;
   place-items: center;
   width: 100%;
-  min-height: clamp(18rem, 52vw, 28rem);
+  min-height: clamp(15.5rem, 44vw, 22rem);
   margin-top: 0;
   pointer-events: none;
 }
@@ -161,7 +161,7 @@
   position: relative;
   display: grid;
   place-items: center;
-  width: min(100%, clamp(18rem, 52vw, 28rem));
+  width: min(100%, clamp(15.5rem, 44vw, 22rem));
   aspect-ratio: 1;
   max-height: 100%;
 }
@@ -175,10 +175,26 @@
 .heroOrbWish {
   position: relative;
   z-index: 1;
-  width: auto;
-  max-width: 85%;
+  width: 78%;
+  max-width: 78%;
   padding: 0.5rem;
   pointer-events: none;
+  text-shadow: 0 1px 8px color-mix(in srgb, #0E5F6B 18%, transparent);
+}
+
+.heroOrbWish::before {
+  content: "";
+  position: absolute;
+  inset: -18% -12%;
+  z-index: -1;
+  border-radius: 50%;
+  pointer-events: none;
+  background: radial-gradient(
+    closest-side,
+    color-mix(in srgb, #0E5F6B 10%, transparent) 0%,
+    color-mix(in srgb, #0E5F6B 4%, transparent) 58%,
+    transparent 100%
+  );
 }
 
 .heroGrid {
@@ -247,18 +263,18 @@
   }
 
   .heroOrbCol {
-    min-height: clamp(20rem, 44vw, 26rem);
+    min-height: clamp(17rem, 36vw, 21rem);
   }
 
   .heroOrb {
-    width: min(100%, clamp(20rem, 44vw, 26rem));
+    width: min(100%, clamp(17rem, 36vw, 21rem));
   }
 }
 
 @media (min-width: 1024px) {
   .heroSplit {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
     align-items: center;
     gap: clamp(1.5rem, 4vw, 3rem);
   }
@@ -273,12 +289,12 @@
     order: 1;
     justify-self: stretch;
     align-self: stretch;
-    min-height: clamp(22rem, 36vw, 32rem);
+    min-height: clamp(18rem, 26vw, 24rem);
     margin-top: 0;
   }
 
   .heroOrb {
-    width: min(100%, clamp(22rem, 36vw, 32rem));
+    width: min(100%, clamp(18rem, 26vw, 24rem));
   }
 
   .heroGrid {

@@ -237,10 +237,10 @@ export function ContactForm() {
             <label htmlFor={fid("consent")} className="text-sm leading-relaxed text-ink-700">
               You agree that Clinic Genie may contact you about this enquiry, in line with our{" "}
               <Link
-                href="/terms"
+                href="/terms-privacy"
                 className="font-medium text-genie-600 underline-offset-2 hover:underline"
               >
-                privacy policy
+                terms and privacy
               </Link>
               .
             </label>

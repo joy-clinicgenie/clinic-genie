@@ -1,18 +1,24 @@
 import type { Metadata } from "next";
+import { DEFAULT_KEYWORDS, pageMetadata } from "@/lib/seo";
 import { Reveal } from "@/components/ui/Reveal";
 import { LightHero } from "@/components/ui/LightHero";
 import { CorePillarsSection } from "@/components/services/CorePillarsSection";
 import { PageFinale } from "@/components/ui/PageFinale";
 import { PageFinaleCTA } from "@/components/ui/PageFinaleCTA";
 import { PortfolioWorksCarousel } from "@/components/home/landing/PortfolioWorksCarousel";
+import { ComplianceCards } from "@/components/home/landing/ComplianceCards";
+import { LandingIntro, LandingSection } from "@/components/home/landing/LandingLayout";
+import { MagneticButton } from "@/components/ui/MagneticButton";
 import styles from "@/components/services/ServicesHero.module.css";
 import { cn } from "@/lib/cn";
 
-export const metadata: Metadata = {
-  title: "Services | Strategy, Digital Growth & Brand for Clinics | Clinic Genie",
+export const metadata: Metadata = pageMetadata({
+  title: "Services",
   description:
-    "Everything your clinic needs to grow under one lamp: business strategy, healthcare SEO and medical SEM, clinic websites, content, AI search and compliance-aware brand design — by a team that only works with clinics.",
-};
+    "Healthcare SEO, medical SEM, clinic websites, branding, content, AI search, and compliance-aware strategy for specialist clinics in Singapore. Eight services, one growth engine.",
+  path: "/services",
+  keywords: [...DEFAULT_KEYWORDS, "clinic digital strategy"],
+});
 
 export default function ServicesPage() {
   return (
@@ -47,7 +53,30 @@ export default function ServicesPage() {
         <PortfolioWorksCarousel />
       </Reveal>
 
-      <PageFinale backdropClassName="surface-light">
+      <LandingSection
+        id="compliance"
+        tone="white"
+        className="py-24"
+        containerClassName="flex flex-col gap-12"
+      >
+        <Reveal>
+          <LandingIntro
+            kicker="Magic with a Conscience"
+            title="Stay visible. Stay credible. Stay within the rules."
+            subtitle="We build Singapore's healthcare advertising standards into every draft, page, and campaign from the start. Nothing is bolted on after."
+          />
+        </Reveal>
+        <ComplianceCards />
+        <Reveal delay={0.08}>
+          <div className="flex justify-center">
+            <MagneticButton href="/contact" size="md" withMiniOrb>
+              Start a Conversation
+            </MagneticButton>
+          </div>
+        </Reveal>
+      </LandingSection>
+
+      <PageFinale backdropClassName="bg-white">
         <PageFinaleCTA
           kicker="Make your first wish"
           title="Tell us your wish."

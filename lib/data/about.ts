@@ -160,27 +160,27 @@ export const ABOUT_TRUSTED_CLIENTS: AboutTrustedClient[] = [
   {
     name: "The Acne Clinic",
     services: "Content, SEO, and SEM.",
-    href: "/portfolio",
+    href: "/portfolio/the-acne-clinic",
   },
   {
     name: "Singapore Dental Implant Centre",
     services: "Web, SEO, and SEM.",
-    href: "/contact",
+    href: "/portfolio/singapore-dental-implant-centre",
   },
   {
     name: "Singapore Brain Spine Nerves",
     services: "Web, SEO, and SEM.",
-    href: "/contact",
+    href: "/portfolio/singapore-brain-spine-nerves",
   },
   {
     name: "Joyful Seeds Paediatrics",
     services: "Branding, content, and design.",
-    href: "/clinic-specialties/paediatrics",
+    href: "/portfolio/joyful-seeds",
   },
   {
     name: "AquaPhysio",
     services: "Web, SEO, and content.",
-    href: "/contact",
+    href: "/portfolio/aquaphysio",
   },
 ];
 

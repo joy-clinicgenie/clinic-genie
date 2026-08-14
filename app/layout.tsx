@@ -9,6 +9,8 @@ import { Nav } from "@/components/layout/Nav";
 import { PageTransition } from "@/components/layout/PageTransition";
 import { CustomCursor } from "@/components/ui/CustomCursor";
 import { PointerRipples } from "@/components/ui/PointerRipples";
+import { RootJsonLd } from "@/components/seo/RootJsonLd";
+import { DEFAULT_OG_IMAGE } from "@/lib/seo";
 import { SITE } from "@/lib/data/nav";
 
 const outfit = Outfit({ subsets: ["latin"], weight: ["400", "600", "700"], variable: "--font-outfit", display: "swap" });
@@ -23,34 +25,42 @@ const jetbrains = JetBrains_Mono({ subsets: ["latin"], weight: ["500"], variable
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
   title: {
-    default: "Clinic Genie — Strategies for Specialist Growth",
+    default: "Clinic Genie | Strategies for Specialist Growth",
     template: "%s | Clinic Genie",
   },
   description: SITE.description,
+  applicationName: SITE.name,
   keywords: [
-    "healthcare marketing Singapore",
-    "medical SEO",
-    "clinic marketing agency",
+    "healthcare SEO",
     "medical SEM",
     "clinic websites",
-    "specialist clinic growth",
+    "specialist clinic marketing",
+    "AI search readiness",
+    "clinic marketing Singapore",
   ],
   openGraph: {
-    title: "Clinic Genie — Strategies for Specialist Growth",
+    title: "Clinic Genie | Strategies for Specialist Growth",
     description: SITE.description,
     url: SITE.url,
-    siteName: "Clinic Genie",
+    siteName: SITE.name,
     locale: "en_SG",
     type: "website",
+    images: [DEFAULT_OG_IMAGE],
   },
-  twitter: { card: "summary_large_image", title: "Clinic Genie", description: SITE.description },
+  twitter: {
+    card: "summary_large_image",
+    title: "Clinic Genie | Strategies for Specialist Growth",
+    description: SITE.description,
+    images: [DEFAULT_OG_IMAGE.url],
+  },
   icons: { icon: "/brand/brandmark.svg" },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${outfit.variable} ${instrumentSans.variable} ${jetbrains.variable}`}>
+    <html lang="en-GB" className={`${outfit.variable} ${instrumentSans.variable} ${jetbrains.variable}`}>
       <body>
+        <RootJsonLd />
         <MotionProvider>
           <OrbProvider>
             <LenisProvider>

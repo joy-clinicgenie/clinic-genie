@@ -67,7 +67,7 @@ export function OrbWishDecrypt({ className }: OrbWishDecryptProps) {
         <AnimatePresence mode="wait" initial={false}>
           <motion.p
             key={activeWish.prefix}
-            className="font-display text-sm font-medium tracking-wide text-ink-500 sm:text-base"
+            className="font-display text-sm font-medium tracking-wide text-ink-700 sm:text-base"
             aria-hidden="true"
             initial={reduceMotion ? false : { opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -80,7 +80,7 @@ export function OrbWishDecrypt({ className }: OrbWishDecryptProps) {
       </div>
 
       <p
-        className="relative mt-1 w-max max-w-none font-display text-[50px] font-black leading-[0.95] text-ink-700 sm:text-[calc(1rem+4.5em)] lg:text-[calc(1.045rem+2.8em)]"
+        className="relative mt-1 w-full max-w-full font-display text-[clamp(1.85rem,10.5vw,2.25rem)] font-extrabold leading-[0.95] tracking-tight text-genie-800 sm:text-[clamp(2.15rem,6.5vw,2.75rem)] lg:text-[clamp(2.4rem,4.2vw,3.25rem)]"
         aria-hidden="true"
       >
         <span className="invisible block" aria-hidden="true">

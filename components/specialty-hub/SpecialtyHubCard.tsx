@@ -9,6 +9,7 @@ interface SpecialtyHubCardProps {
 }
 
 export function SpecialtyHubCard({ hub, sparkleIndex = 0 }: SpecialtyHubCardProps) {
+  const href = getSpecialtyHubHref(hub);
   const card = (
     <FeatureInfoCard
       title={hub.name}
@@ -16,7 +17,7 @@ export function SpecialtyHubCard({ hub, sparkleIndex = 0 }: SpecialtyHubCardProp
       image={hub.image}
       alt=""
       graphicSize="lg"
-      href={hub.published ? getSpecialtyHubHref(hub) : undefined}
+      href={href}
       badge={hub.published ? undefined : "Coming soon"}
       showSparkles
       sparkleIndex={sparkleIndex}
@@ -24,9 +25,13 @@ export function SpecialtyHubCard({ hub, sparkleIndex = 0 }: SpecialtyHubCardProp
     />
   );
 
-  if (!hub.published) {
+  if (!href) {
     return (
-      <div className="h-full" aria-disabled="true" id={hub.slug}>
+      <div
+        className="h-full"
+        aria-disabled={hub.published ? undefined : true}
+        id={hub.slug}
+      >
         {card}
       </div>
     );

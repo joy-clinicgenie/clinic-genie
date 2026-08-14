@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { pageMetadata } from "@/lib/seo";
 import { Section } from "@/components/ui/Section";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
@@ -14,12 +15,13 @@ import {
 } from "@/components/home/landing/LandingLayout";
 import { ContactSection } from "@/components/contact/ContactSection";
 
-export const metadata: Metadata = {
-  title: "Contact — Tell Us Your Clinic's Wish",
+export const metadata: Metadata = pageMetadata({
+  title: "Contact",
   description:
-    "Whatever you are dreaming up, launching, redesigning, or growing, it starts with one conversation. Tell Clinic Genie where your clinic wants to grow.",
-  alternates: { canonical: "/contact" },
-};
+    "Tell Clinic Genie where your clinic wants to grow. Book a strategy conversation about healthcare SEO, clinic websites, medical SEM, and compliance-aware marketing in Singapore.",
+  path: "/contact",
+  keywords: ["clinic marketing enquiry", "book a strategy call", "Clinic Genie contact"],
+});
 
 const NEXT_STEPS = [
   {
@@ -98,12 +100,12 @@ export default function ContactPage() {
             </LandingBody>
             <Reveal variant="up" delay={0.1}>
               <MagneticButton href="/genie-tips" size="lg">
-                Read the Genie&apos;s Insights
+                Read the Genie&apos;s Tips
               </MagneticButton>
             </Reveal>
             <Reveal variant="up" delay={0.15}>
               <p className="text-sm text-[#8FB7C2]">
-                <span className="font-sans uppercase tracking-[0.14em] text-[#9FDCE8]">Genie Insights</span>
+                <span className="font-sans uppercase tracking-[0.14em] text-[#9FDCE8]">Genie Tips</span>
                 {" · "}
                 <Link href="/genie-tips" className="text-white/80 underline-offset-4 hover:text-white hover:underline">
                   Browse all articles

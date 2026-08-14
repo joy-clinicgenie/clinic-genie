@@ -144,15 +144,9 @@ export function Footer() {
         {/* Bottom bar */}
         <div className="flex flex-col gap-4 border-t border-white/10 pt-6 lg:flex-row lg:items-center lg:justify-between lg:gap-8">
           <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-4 sm:gap-y-2">
-            <p className="flex flex-wrap items-center gap-x-3 gap-y-1 font-sans text-sm text-onDark/65">
-              <Link href="/terms" className="transition-colors hover:text-onDark">
-                Terms &amp; Conditions
-              </Link>
-              <span className="text-onDark/25" aria-hidden="true">
-                ·
-              </span>
-              <Link href="/terms" className="transition-colors hover:text-onDark">
-                Privacy Policy
+            <p className="font-sans text-sm text-onDark/65">
+              <Link href="/terms-privacy" className="transition-colors hover:text-onDark">
+                Terms &amp; Privacy
               </Link>
             </p>
             <span className="hidden text-onDark/25 sm:inline" aria-hidden="true">

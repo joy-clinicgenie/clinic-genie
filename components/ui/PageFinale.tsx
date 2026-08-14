@@ -16,8 +16,10 @@ export function PageFinale({
   return (
     <div className={backdropClassName}>
       <div data-nav-theme="dark" className={cn("finale-shell text-onDark", className)}>
-        <div className="surface-finale">{children}</div>
-        <Footer />
+        <div className="overflow-hidden rounded-[inherit]">
+          <div className="surface-finale">{children}</div>
+          <Footer />
+        </div>
       </div>
     </div>
   );

@@ -245,26 +245,34 @@ export function MetricCell({
   label: string;
   index: number;
 }) {
-  const prefix = value.startsWith("S$") ? "S$" : value.startsWith("$") ? "$" : "";
-  const unsigned = prefix ? value.slice(prefix.length) : value;
+  let remainder = value;
+  const comparisonPrefix = remainder.startsWith(">") ? ">" : "";
+  if (comparisonPrefix) remainder = remainder.slice(1);
+
+  const currencyPrefix = remainder.startsWith("S$")
+    ? "S$"
+    : remainder.startsWith("$")
+      ? "$"
+      : "";
+  if (currencyPrefix) remainder = remainder.slice(currencyPrefix.length);
+
   let suffix = "";
-  let core = unsigned;
-  if (core.endsWith("K>")) {
-    suffix = "K>";
-    core = core.slice(0, -2);
-  } else if (core.endsWith("K+")) {
+  let core = remainder;
+  if (core.endsWith("K+")) {
     suffix = "K+";
     core = core.slice(0, -2);
+  } else if (core.endsWith("K")) {
+    suffix = "K";
+    core = core.slice(0, -1);
   } else if (core.endsWith("%")) {
     suffix = "%";
     core = core.slice(0, -1);
   } else if (core.endsWith("+")) {
     suffix = "+";
     core = core.slice(0, -1);
-  } else if (core.endsWith(">")) {
-    suffix = ">";
-    core = core.slice(0, -1);
   }
+
+  const prefix = `${comparisonPrefix}${currencyPrefix}`;
   const numericValue = Number(core.replace(/,/g, ""));
   const decimalPlaces = core.includes(".") ? (core.split(".")[1]?.length ?? 0) : 0;
 

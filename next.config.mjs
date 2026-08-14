@@ -23,6 +23,41 @@ const nextConfig = {
         destination: '/clinic-specialties/:slug',
         permanent: true,
       },
+      {
+        source: '/clinic-specialties/aquatic-physio',
+        destination: '/portfolio/aquaphysio',
+        permanent: true,
+      },
+      {
+        source: '/clinic-specialties/endocrinology',
+        destination: '/portfolio/cedar-endocrine-clinic',
+        permanent: true,
+      },
+      {
+        source: '/clinic-specialties/dermatology',
+        destination: '/portfolio/msdc',
+        permanent: true,
+      },
+      {
+        source: '/clinic-specialties/dental',
+        destination: '/portfolio/singapore-dental-implant-centre',
+        permanent: true,
+      },
+      {
+        source: '/clinic-specialties/neurology',
+        destination: '/portfolio/singapore-brain-spine-nerves',
+        permanent: true,
+      },
+      {
+        source: '/clinic-specialties/cardiology',
+        destination: '/portfolio/sunrise-heart',
+        permanent: true,
+      },
+      {
+        source: '/clinic-specialties/acne',
+        destination: '/portfolio/the-acne-clinic',
+        permanent: true,
+      },
     ];
   },
 };

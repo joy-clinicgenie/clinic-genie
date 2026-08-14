@@ -18,6 +18,20 @@ function isExternalHref(href: string): boolean {
   return href.startsWith("http://") || href.startsWith("https://");
 }
 
+function logoHeightClass(size: MarqueeLogo["size"], subtle: boolean) {
+  if (subtle) {
+    if (size === "xl") return "h-11 sm:h-12 lg:h-14";
+    if (size === "lg") return "h-9 sm:h-10 lg:h-11";
+    if (size === "sm") return "h-6 sm:h-7 lg:h-8";
+    return "h-7 sm:h-8 lg:h-9";
+  }
+
+  if (size === "xl") return "h-14 sm:h-16 lg:h-20";
+  if (size === "lg") return "h-11 sm:h-12 lg:h-14";
+  if (size === "sm") return "h-7 sm:h-8 lg:h-9";
+  return "h-9 sm:h-10 lg:h-11";
+}
+
 /**
  * Infinite, left-scrolling marquee of client logos. The list is rendered twice
  * and the track is shifted by exactly -50%, so the loop is seamless. Logos are
@@ -27,22 +41,29 @@ function isExternalHref(href: string): boolean {
  */
 export function LogoMarquee({
   logos,
-  durationSec = 38,
+  durationSec,
+  variant = "default",
   className,
 }: {
   logos: MarqueeLogo[];
   durationSec?: number;
+  variant?: "default" | "subtle";
   className?: string;
 }) {
+  const subtle = variant === "subtle";
+  const resolvedDuration = durationSec ?? (subtle ? 52 : 38);
   const loop = [...logos, ...logos];
 
   return (
     <div
-      className={cn(styles.viewport, className)}
+      className={cn(styles.viewport, subtle && styles.viewportSubtle, className)}
       role="group"
       aria-label="Clinics we've helped grow"
     >
-      <ul className={styles.track} style={{ ["--marquee-duration" as string]: `${durationSec}s` }}>
+      <ul
+        className={styles.track}
+        style={{ ["--marquee-duration" as string]: `${resolvedDuration}s` }}
+      >
         {loop.map((logo, i) => {
           const isClone = i >= logos.length;
           const external = isExternalHref(logo.href);
@@ -55,14 +76,11 @@ export function LogoMarquee({
               width={logo.width}
               height={logo.height}
               className={cn(
-                "w-auto object-contain opacity-55 grayscale transition duration-300 group-hover:opacity-100 group-hover:grayscale-0",
-                logo.size === "xl"
-                  ? "h-14 sm:h-16 lg:h-20"
-                  : logo.size === "lg"
-                    ? "h-11 sm:h-12 lg:h-14"
-                    : logo.size === "sm"
-                      ? "h-7 sm:h-8 lg:h-9"
-                      : "h-9 sm:h-10 lg:h-11"
+                "w-auto object-contain grayscale transition duration-300",
+                subtle
+                  ? "opacity-40 group-hover:opacity-70 group-hover:grayscale-[0.35]"
+                  : "opacity-55 group-hover:opacity-100 group-hover:grayscale-0",
+                logoHeightClass(logo.size, subtle)
               )}
               sizes="(max-width: 640px) 160px, 240px"
             />

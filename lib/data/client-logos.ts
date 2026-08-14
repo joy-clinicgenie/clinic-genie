@@ -8,6 +8,7 @@ export interface ClientLogo {
   size?: "sm" | "default" | "lg" | "xl";
 }
 
+/** Keep hrefs aligned with ABOUT_TRUSTED_CLIENTS in lib/data/about.ts */
 export const CLIENT_LOGOS: ClientLogo[] = [
   {
     src: "/clients/cedar-endocrine.png",
@@ -34,7 +35,7 @@ export const CLIENT_LOGOS: ClientLogo[] = [
   {
     src: "/clients/joyful-seeds.png",
     alt: "Joyful Seeds Paediatric & Developmental Clinic",
-    href: "/clinic-specialties/paediatrics",
+    href: "/portfolio/joyful-seeds",
     width: 503,
     height: 180,
     size: "lg",
@@ -42,7 +43,7 @@ export const CLIENT_LOGOS: ClientLogo[] = [
   {
     src: "/clients/singapore-brain-spine-nerves-center.png",
     alt: "Singapore Brain Spine Nerves Center",
-    href: "/clinic-specialties/neurology",
+    href: "/portfolio/singapore-brain-spine-nerves",
     width: 446,
     height: 180,
     size: "xl",
@@ -50,7 +51,7 @@ export const CLIENT_LOGOS: ClientLogo[] = [
   {
     src: "/clients/singapore-dental-implant-centre.png",
     alt: "Singapore Dental Implant Centre",
-    href: "/clinic-specialties/dental",
+    href: "/portfolio/singapore-dental-implant-centre",
     width: 451,
     height: 180,
     size: "lg",
@@ -58,7 +59,7 @@ export const CLIENT_LOGOS: ClientLogo[] = [
   {
     src: "/clients/aquaphysio.png",
     alt: "AquaPhysio Rehab Centre",
-    href: "/clinic-specialties/aquatic-physio",
+    href: "/portfolio/aquaphysio",
     width: 1263,
     height: 361,
     size: "lg",
@@ -74,7 +75,7 @@ export const CLIENT_LOGOS: ClientLogo[] = [
   {
     src: "/clients/the-acne-clinic.png",
     alt: "The Acne Clinic",
-    href: "/clinic-specialties/acne",
+    href: "/portfolio/the-acne-clinic",
     width: 291,
     height: 180,
     size: "lg",

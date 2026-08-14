@@ -12,6 +12,7 @@ import {
   getPublishedPosts,
   getPublishedPostSlugs,
 } from "@/lib/notion";
+import { pageMetadata } from "@/lib/seo";
 
 export const revalidate = 60;
 
@@ -32,18 +33,29 @@ export async function generateMetadata({
   const post = await getPostBySlug(params.slug);
 
   if (!post) {
-    return {
-      title: "Genie Tip not found | Clinic Genie",
-    };
+    return pageMetadata({
+      title: "Genie Tip not found",
+      description:
+        "This Genie Tip could not be found. Browse clinic marketing insights from Clinic Genie.",
+      path: "/genie-tips",
+      index: false,
+      follow: true,
+    });
   }
 
-  return {
-    title: `${post.title} | Genie Tips | Clinic Genie`,
+  return pageMetadata({
+    title: `${post.title} | Genie Tips`,
     description:
       post.description ||
       "Clinic marketing insight from Clinic Genie for specialist clinics in Singapore.",
-    robots: post.noIndex ? { index: false, follow: false } : undefined,
-  };
+    path: `/genie-tips/${post.slug}`,
+    keywords: post.tags.length > 0 ? post.tags : ["clinic marketing insights"],
+    ogType: "article",
+    index: !post.noIndex,
+    follow: !post.noIndex,
+    image: post.coverImage ?? undefined,
+    publishedTime: post.date ?? undefined,
+  });
 }
 
 export default async function GenieTipPage({ params }: GenieTipPageProps) {

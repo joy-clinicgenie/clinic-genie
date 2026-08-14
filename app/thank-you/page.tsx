@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import { Section } from "@/components/ui/Section";
 import { Container } from "@/components/ui/Container";
 import { Reveal, RevealGroup, RevealItem } from "@/components/ui/Reveal";
@@ -15,12 +16,14 @@ import {
 import { ThankYouHero } from "@/components/contact/ThankYouHero";
 import { SITE } from "@/lib/data/nav";
 
-export const metadata: Metadata = {
-  title: "Wish Received | Clinic Genie",
+export const metadata: Metadata = pageMetadata({
+  title: "Wish Received",
   description:
     "Thank you for reaching out to Clinic Genie. We have your enquiry and will look at it with your clinic, goals, and growth in mind.",
-  robots: { index: false, follow: false },
-};
+  path: "/thank-you",
+  index: false,
+  follow: false,
+});
 
 const NEXT_STEPS = [
   {
@@ -109,7 +112,7 @@ export default function ThankYouPage() {
       </Section>
 
       {/* Useful paths — FeatureInfoCard style from pillar specialty section */}
-      <Section tone="light" className="bg-white">
+      <Section tone="light" className="bg-none bg-white">
         <Container className="flex flex-col gap-12">
           <SectionHeading
             kicker="Useful paths"

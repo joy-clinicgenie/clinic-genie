@@ -222,9 +222,9 @@
     background: #e3f6fa;
   }
 
-  /* Closing unit shell — rounded top around bottom CTA + footer */
+  /* Closing unit shell — same lift as LightHero `shadow-lg`, flipped for the top edge. */
   .finale-shell {
-    @apply relative overflow-hidden rounded-t-[44px];
+    @apply relative z-10 rounded-t-2xl shadow-lg-up lg:rounded-t-[44px];
   }
 
   .surface-finale {

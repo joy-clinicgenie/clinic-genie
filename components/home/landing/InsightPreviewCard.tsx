@@ -1,14 +1,6 @@
 import Link from "next/link";
 import { cn } from "@/lib/cn";
-import type { Post } from "@/lib/data/posts";
-
-export type InsightPreviewPost = {
-  slug: string;
-  title: string;
-  dek: string;
-  category: string;
-  updated: string;
-};
+import type { NotionPost } from "@/lib/notion";
 
 function CardArrowIcon() {
   return (
@@ -48,10 +40,11 @@ export function InsightPreviewCard({
   post,
   className,
 }: {
-  post: InsightPreviewPost | Post;
+  post: NotionPost;
   className?: string;
 }) {
   const href = `/genie-tips/${post.slug}`;
+  const category = post.category ?? post.tags[0] ?? null;
 
   return (
     <Link
@@ -64,31 +57,56 @@ export function InsightPreviewCard({
     >
       <article
         className={cn(
-          "glass relative flex h-full min-h-[17.5rem] w-full flex-col items-start gap-5 rounded-xl p-6 text-left shadow-sm transition-[box-shadow] duration-ui hover:shadow-glow-sm motion-reduce:transition-none"
+          "glass relative flex h-full w-full flex-col overflow-hidden rounded-xl text-left shadow-sm transition-[box-shadow] duration-ui hover:shadow-glow-sm motion-reduce:transition-none"
         )}
       >
-        <div className="flex w-full items-start justify-between gap-3">
-          <span className="rounded-pill bg-white/10 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-onDark-muted">
-            {post.category}
+        <div className="overflow-hidden bg-white/10">
+          {post.coverImage ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={post.coverImage}
+              alt=""
+              loading="lazy"
+              decoding="async"
+              className="aspect-[16/10] h-auto w-full object-cover transition-transform duration-ui ease-out-soft group-hover/card:scale-[1.02] motion-reduce:transition-none motion-reduce:group-hover/card:scale-100"
+            />
+          ) : (
+            <div className="aspect-[16/10] w-full bg-gradient-to-br from-white/10 to-white/5" />
+          )}
+        </div>
+
+        <div className="flex flex-1 flex-col items-start gap-5 p-6">
+          <div className="flex w-full items-start justify-between gap-3">
+            {category ? (
+              <span className="rounded-pill bg-white/10 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-onDark-muted">
+                {category}
+              </span>
+            ) : (
+              <span />
+            )}
+            {post.dateLabel ? (
+              <time dateTime={post.date ?? undefined} className="shrink-0 text-xs text-onDark-faint">
+                {post.dateLabel}
+              </time>
+            ) : null}
+          </div>
+
+          <div className="flex w-full flex-col gap-2">
+            <h3 className="font-display text-[20px] font-semibold leading-snug text-onDark transition-colors group-hover/card:text-genie-200 lg:text-h4">
+              {post.title}
+            </h3>
+            {post.description ? (
+              <p className="line-clamp-3 text-body text-onDark-muted">{post.description}</p>
+            ) : null}
+          </div>
+
+          <span
+            aria-hidden="true"
+            className="card-arrow-btn mt-auto flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-onDark transition-[background-color,box-shadow,color] duration-ui group-hover/card:bg-white group-hover/card:ring-4 group-hover/card:ring-genie-100/10 motion-reduce:transition-none"
+          >
+            <CardArrowIcon />
           </span>
-          <time className="shrink-0 text-xs text-onDark-faint">{post.updated}</time>
         </div>
-
-        <div className="flex w-full flex-col gap-2">
-          <h3 className="font-display text-[20px] font-semibold leading-snug text-onDark transition-colors group-hover/card:text-genie-200 lg:text-h4">
-            {post.title}
-          </h3>
-          <p className="line-clamp-3 text-body text-onDark-muted">
-            {post.dek}
-          </p>
-        </div>
-
-        <span
-          aria-hidden="true"
-          className="card-arrow-btn mt-auto flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-onDark transition-[background-color,box-shadow,color] duration-ui group-hover/card:bg-white group-hover/card:ring-4 group-hover/card:ring-genie-100/10 motion-reduce:transition-none"
-        >
-          <CardArrowIcon />
-        </span>
       </article>
     </Link>
   );

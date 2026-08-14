@@ -95,7 +95,7 @@ export const PORTFOLIO_WORKS: PortfolioWorkSlide[] = [
     logo: "/clients/square/aquaphysio-rehab-square.png",
     image: "/works/aquaphysio/aquaphysio-mockup.png",
     cardColor: "#18C4D9",
-    href: "/clinic-specialties/aquatic-physio",
+    href: "/portfolio/aquaphysio",
   },
   {
     id: "cedar-endocrine",
@@ -107,7 +107,7 @@ export const PORTFOLIO_WORKS: PortfolioWorkSlide[] = [
     image: "/works/cedar/cedar-mockup.png",
     hoverImages: ["/works/cedar.png"],
     cardColor: "#2EC4CE",
-    href: "/clinic-specialties/endocrinology",
+    href: "/portfolio/cedar-endocrine-clinic",
   },
   {
     id: "thsc",
@@ -127,7 +127,7 @@ export const PORTFOLIO_WORKS: PortfolioWorkSlide[] = [
     image: "/works/msdc/msdc-paperbag.jpg",
     hoverImages: ["/works/msdc/msdc-namecard.png", "/works/msdc.png"],
     cardColor: "#3DB8C4",
-    href: "/clinic-specialties/dermatology",
+    href: "/portfolio/msdc",
   },
   {
     id: "sdic",
@@ -137,7 +137,7 @@ export const PORTFOLIO_WORKS: PortfolioWorkSlide[] = [
     logo: "/clients/square/sdic-square.png",
     image: "/works/sdic.png",
     cardColor: "#4DCFC9",
-    href: "/clinic-specialties/dental",
+    href: "/portfolio/singapore-dental-implant-centre",
   },
   {
     id: "joyful-seeds",
@@ -148,7 +148,7 @@ export const PORTFOLIO_WORKS: PortfolioWorkSlide[] = [
     image: "/works/joyfulseeds/joyfulseeds-mockup.png",
     hoverImages: ["/works/joyfulseeds.png"],
     cardColor: "#13A8BA",
-    href: "/clinic-specialties/paediatrics",
+    href: "/portfolio/joyful-seeds",
   },
   {
     id: "sbsn",
@@ -159,7 +159,7 @@ export const PORTFOLIO_WORKS: PortfolioWorkSlide[] = [
     image: "/works/sbsn/sbsn-mockup.png",
     hoverImages: ["/works/sbsn.png"],
     cardColor: "#78E2DD",
-    href: "/clinic-specialties/neurology",
+    href: "/portfolio/singapore-brain-spine-nerves",
   },
   {
     id: "sunrise-heart",
@@ -170,7 +170,7 @@ export const PORTFOLIO_WORKS: PortfolioWorkSlide[] = [
     image: "/works/sunrise/sunrise-mockup.png",
     hoverImages: ["/works/sunrise-heart.png"],
     cardColor: "#1A8C99",
-    href: "/clinic-specialties/cardiology",
+    href: "/portfolio/sunrise-heart",
   },
   {
     id: "tac",
@@ -189,7 +189,7 @@ export const PORTFOLIO_WORKS: PortfolioWorkSlide[] = [
       "/works/tac/TAC-posters.png",
     ],
     cardColor: "#33D0DD",
-    href: "/clinic-specialties/acne",
+    href: "/portfolio/the-acne-clinic",
   },
   {
     id: "straits-geriatrics",

@@ -26,6 +26,7 @@ import {
   getPillarHeroImageClass,
 } from "@/lib/data/pillar-hero-images";
 import { CORE_PILLARS, getPillar } from "@/lib/data/pillars";
+import { pageMetadata } from "@/lib/seo";
 import {
   normalizeClinicKey,
   PORTFOLIO_WORKS,
@@ -120,18 +121,40 @@ export function generateStaticParams() {
   return CORE_PILLARS.map((p) => ({ slug: p.slug }));
 }
 
+const PILLAR_KEYWORDS: Record<string, string[]> = {
+  findclinic: ["FindClinic.sg", "clinic discovery Singapore", "healthcare directory"],
+  "healthcare-seo": ["healthcare SEO", "medical SEO Singapore", "clinic search visibility"],
+  "medical-sem": ["medical SEM", "Google Ads for clinics", "healthcare paid search"],
+  "branding-copywriting": ["clinic branding", "healthcare copywriting", "clinic messaging"],
+  "web-design-development": [
+    "clinic website design",
+    "clinic website development",
+    "healthcare websites",
+  ],
+  "photo-video": ["clinic photography", "healthcare videography", "clinic visuals"],
+  "social-media": ["clinic social media", "healthcare social media Singapore"],
+  "geo-ai-search": ["GEO", "AI search readiness", "clinic AI visibility"],
+};
+
 export function generateMetadata({ params }: { params: { slug: string } }): Metadata {
   const pillar = getPillar(params.slug);
   if (!pillar) {
-    return {
-      title: "Service not found | Clinic Genie",
-      description: "The service pillar you're looking for couldn't be conjured.",
-    };
+    return pageMetadata({
+      title: "Service not found",
+      description:
+        "This Clinic Genie service page could not be found. Explore our core service pillars instead.",
+      path: "/services",
+      index: false,
+      follow: true,
+    });
   }
-  return {
-    title: `${pillar.name} — Core Service Pillar | Clinic Genie`,
-    description: pillar.heroParagraph[0],
-  };
+
+  return pageMetadata({
+    title: pillar.name,
+    description: pillar.heroParagraph.join(" "),
+    path: `/services/core-pillars/${pillar.slug}`,
+    keywords: PILLAR_KEYWORDS[pillar.slug],
+  });
 }
 
 export default function PillarPage({ params }: { params: { slug: string } }) {

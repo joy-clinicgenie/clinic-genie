@@ -1,65 +1,58 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { SpecialtyHubComingSoon } from "@/components/specialty-hub/SpecialtyHubComingSoon";
 import { SpecialtyHubTemplate } from "@/components/specialty-hub/SpecialtyHubTemplate";
-import { SpecialtyHubWorkTemplate } from "@/components/specialty-hub/SpecialtyHubWorkTemplate";
-import { getCaseStudy } from "@/lib/data/portfolio";
-import { getSpecialtyHubWorkMeta } from "@/lib/data/specialty-hub-works";
 import {
   getPublishedSpecialtyHubs,
   getSpecialtyHub,
   isSpecialtyHubDetail,
 } from "@/lib/data/specialty-hubs";
+import { pageMetadata } from "@/lib/seo";
 
 export function generateStaticParams() {
   return getPublishedSpecialtyHubs().map((hub) => ({ slug: hub.slug }));
 }
 
 export function generateMetadata({ params }: { params: { slug: string } }): Metadata {
-  const work = getSpecialtyHubWorkMeta(params.slug);
-  if (work) {
-    const study = getCaseStudy(work.studySlug);
-    if (study) {
-      return {
-        title: `${study.name} | Clinic Specialties | Clinic Genie`,
-        description: study.line,
-      };
-    }
+  const path = `/clinic-specialties/${params.slug}`;
+  const hub = getSpecialtyHub(params.slug);
+
+  if (!hub?.published) {
+    return pageMetadata({
+      title: "Clinic specialty not found",
+      description:
+        "This clinic specialty page could not be found. Explore Clinic Genie specialties for specialist clinic marketing in Singapore.",
+      path: "/clinic-specialties",
+      index: false,
+      follow: true,
+    });
   }
 
-  const hub = getSpecialtyHub(params.slug);
-  if (!hub?.published || !hub.metaTitle) {
-    return {
-      title: "Clinic specialty not found | Clinic Genie",
-      description: "The clinic specialty you're looking for couldn't be conjured.",
-    };
+  if (isSpecialtyHubDetail(hub) && hub.metaTitle && hub.metaDescription) {
+    return pageMetadata({
+      title: hub.metaTitle,
+      description: hub.metaDescription,
+      path,
+      keywords: [hub.name, "specialist clinic marketing Singapore"],
+    });
   }
-  return {
-    title: hub.metaTitle,
-    description: hub.metaDescription,
-  };
+
+  return pageMetadata({
+    title: `${hub.name} specialty insights`,
+    description: `${hub.name} specialty marketing insights from Clinic Genie are coming soon. Browse Our Works for live specialist clinic case studies.`,
+    path,
+    index: false,
+    follow: true,
+  });
 }
 
 export default function ClinicSpecialtyDetailPage({ params }: { params: { slug: string } }) {
-  const work = getSpecialtyHubWorkMeta(params.slug);
-  if (work) {
-    const study = getCaseStudy(work.studySlug);
-    if (!study) notFound();
+  const hub = getSpecialtyHub(params.slug);
+  if (!hub?.published) notFound();
 
-    return (
-      <SpecialtyHubWorkTemplate
-        study={study}
-        image={work.image}
-        imageAlt={work.imageAlt}
-        heroImage={work.heroImage}
-        logo={work.logo}
-        logoAlt={work.logoAlt}
-        backLink={{ href: "/clinic-specialties", label: "Clinic Specialties" }}
-      />
-    );
+  if (isSpecialtyHubDetail(hub)) {
+    return <SpecialtyHubTemplate hub={hub} />;
   }
 
-  const hub = getSpecialtyHub(params.slug);
-  if (!hub?.published || !isSpecialtyHubDetail(hub)) notFound();
-
-  return <SpecialtyHubTemplate hub={hub} />;
+  return <SpecialtyHubComingSoon specialtyName={hub.name} />;
 }

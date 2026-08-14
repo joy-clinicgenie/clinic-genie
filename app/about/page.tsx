@@ -1,18 +1,27 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import { Reveal } from "@/components/ui/Reveal";
 import { GenieFeatureCards } from "@/components/ui/GenieFeatureCards";
 import { AboutOverlapHero } from "@/components/about/AboutOverlapHero";
+import { AboutApproachTimeline } from "@/components/about/AboutApproachTimeline";
+import { AboutTrustedMarquee } from "@/components/about/AboutTrustedMarquee";
 import { LandingSection, LandingIntro } from "@/components/home/landing/LandingLayout";
 import { AboutValuesCards, AboutValuesTagline } from "@/components/about/AboutValuesCards";
 import { PageFinale } from "@/components/ui/PageFinale";
 import { PageFinaleCTA } from "@/components/ui/PageFinaleCTA";
 import { ABOUT_WISH_POINTS } from "@/lib/data/about";
 
-export const metadata: Metadata = {
-  title: "About Clinic Genie | The Genie Behind Better Clinic Growth",
+export const metadata: Metadata = pageMetadata({
+  title: "About Us",
   description:
-    "Clinic Genie is a medical marketing agency for specialist clinics in Singapore. Helping good doctors get found, trusted, and chosen while you focus on the magic only you can do.",
-};
+    "Clinic Genie is a medical marketing agency for specialist clinics in Singapore. We help clinics get found, trusted, and chosen, with strategy built around healthcare search, websites, and compliance-aware growth.",
+  path: "/about",
+  keywords: [
+    "about Clinic Genie",
+    "specialist clinic marketing",
+    "healthcare marketing Singapore",
+  ],
+});
 
 export default function AboutPage() {
   return (
@@ -23,7 +32,7 @@ export default function AboutPage() {
         id="why-we-exist"
         className="surface-cyan"
         kicker="Why we exist"
-        title="Every genie has an origins"
+        title="Every genie has an origin"
         highlight="origin"
         subtitle="Helping specialist clinics get found, trusted, and chosen by the patients who need them."
         headerClassName="max-w-wide"
@@ -52,6 +61,10 @@ export default function AboutPage() {
           <AboutValuesTagline />
         </div>
       </LandingSection>
+
+      <AboutApproachTimeline />
+
+      <AboutTrustedMarquee />
 
       {/* Final CTA */}
       <PageFinale backdropClassName="surface-cyan">

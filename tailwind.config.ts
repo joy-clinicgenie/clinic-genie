@@ -141,6 +141,7 @@ const config: Config = {
         sm:   "0 2px 8px rgba(6,45,54,0.06), 0 1px 2px rgba(6,45,54,0.04)",
         md:   "0 8px 24px rgba(6,45,54,0.10), 0 2px 6px rgba(6,45,54,0.06)",
         lg:   "0 20px 50px rgba(6,45,54,0.14), 0 6px 14px rgba(6,45,54,0.08)",
+        "lg-up": "0 -20px 50px rgba(6,45,54,0.14), 0 -6px 14px rgba(6,45,54,0.08)",
         card: "0 12px 32px rgba(6,45,54,0.10)",
         "glow-orb":       "0 0 80px 12px rgba(24,196,217,0.55), 0 0 160px 40px rgba(24,196,217,0.30), 0 0 240px 80px rgba(120,226,221,0.18)",
         "glow-sm":        "0 0 16px rgba(24,196,217,0.5)",

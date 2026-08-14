@@ -1,16 +1,13 @@
 import Link from "next/link";
-import type { Viewport } from "next";
+import type { Metadata, Viewport } from "next";
+import { DEFAULT_KEYWORDS, pageMetadata } from "@/lib/seo";
 import { Hero } from "@/components/home/Hero";
 import { LogoMarquee } from "@/components/home/LogoMarquee";
 import { Reveal, RevealGroup, RevealItem } from "@/components/ui/Reveal";
 import { MagneticButton } from "@/components/ui/MagneticButton";
-import {
-  InsightPreviewCard,
-  type InsightPreviewPost,
-} from "@/components/home/landing/InsightPreviewCard";
+import { InsightPreviewCard } from "@/components/home/landing/InsightPreviewCard";
 import { CORE_PILLARS } from "@/lib/data/pillars";
 import { HOME_PROCESS_STEPS } from "@/lib/data/services";
-import { POSTS } from "@/lib/data/posts";
 import { getPublishedPosts } from "@/lib/notion";
 import {
   LandingSection,
@@ -32,7 +29,7 @@ import { SpecialtyHubCard } from "@/components/specialty-hub/SpecialtyHubCard";
 import { Section } from "@/components/ui/Section";
 import { Container } from "@/components/ui/Container";
 import { CLIENT_LOGOS } from "@/lib/data/client-logos";
-import { SPECIALTY_HUBS } from "@/lib/data/specialty-hubs";
+import { getPublishedSpecialtyHubs } from "@/lib/data/specialty-hubs";
 
 const WISH_CHIPS: Record<string, string> = {
   findclinic: "PLATFORM",
@@ -47,33 +44,28 @@ const WISH_CHIPS: Record<string, string> = {
 
 const METRICS = [
   { value: "20+", label: "Specialist clinics served" },
-  { value: "47,000+", label: "Patient enquiries generated" },
-  { value: "S$350K>", label: "Google Ads spend managed" },
+  { value: "47,000+", label: "Patient enquiries" },
+  { value: ">S$350K", label: "Google Ads spend managed" },
   { value: "3+", label: "Years in healthcare marketing" },
 ];
+
+export const metadata: Metadata = pageMetadata({
+  title: "Clinic Genie | Strategies for Specialist Growth",
+  description:
+    "A healthcare focused marketing partner for specialist clinics in Singapore. Healthcare SEO, medical SEM, clinic websites, content, AI search, and compliance-aware strategy.",
+  path: "/",
+  keywords: [...DEFAULT_KEYWORDS],
+  absoluteTitle: true,
+});
 
 export const viewport: Viewport = {
   themeColor: "#F6F6F6",
 };
 
+export const revalidate = 60;
+
 export default async function HomePage() {
-  const notionPosts = await getPublishedPosts();
-  const insightPosts: InsightPreviewPost[] =
-    notionPosts.length > 0
-      ? notionPosts.slice(0, 3).map((post) => ({
-          slug: post.slug,
-          title: post.title,
-          dek: post.description,
-          category: post.category ?? post.tags[0] ?? "Growth Strategy",
-          updated: post.dateLabel ?? "",
-        }))
-      : POSTS.slice(0, 3).map((post) => ({
-          slug: post.slug,
-          title: post.title,
-          dek: post.dek,
-          category: post.category,
-          updated: post.updated,
-        }));
+  const insightPosts = (await getPublishedPosts()).slice(0, 3);
 
   return (
     <div className="home-landing-flow">
@@ -191,7 +183,7 @@ export default async function HomePage() {
             subtitle="Each specialty is tuned to how patients in your field find, trust, and decide, not a generic marketing package."
           />
           <RevealGroup className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-            {SPECIALTY_HUBS.map((hub, index) => (
+            {getPublishedSpecialtyHubs().map((hub, index) => (
               <RevealItem key={hub.slug} className="h-full">
                 <SpecialtyHubCard hub={hub} sparkleIndex={index} />
               </RevealItem>
@@ -223,43 +215,47 @@ export default async function HomePage() {
         </Reveal>
       </LandingSection>
 
-      {/* 10 — Dark finale: Genie Tips + final CTA */}
-      <PageFinale backdropClassName="bg-transparent">
-        <section className="py-24">
-          <div className="mx-auto w-full max-w-wide px-[var(--page-pad)]">
-            <div className="flex flex-col gap-10">
-              <div className="flex flex-col gap-6">
-                <div className="flex flex-col items-center gap-4 text-center">
-                  <LandingKicker light>Genie Insights</LandingKicker>
-                  <LandingHeading highlight="growth" light className="text-center">
-                    Clear insights on clinic growth today.
-                  </LandingHeading>
-                </div>
-                <div className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-end">
-                  <LandingBody light center={false}>
-                    Search, design, content, branding, and trust.
-                    <br />
-                    Genie Insights covers every part of how patients discover and choose specialist clinics.
-                  </LandingBody>
-                  <Link
-                    href="/genie-tips"
-                    className="inline-flex shrink-0 items-center gap-1.5 text-sm font-semibold text-white/90 transition-colors hover:text-white"
-                  >
-                    Read the Genie&apos;s Insights <span aria-hidden="true">→</span>
-                  </Link>
-                </div>
-              </div>
-              <RevealGroup className="grid gap-5 md:grid-cols-3">
-                {insightPosts.map((post) => (
-                  <RevealItem key={post.slug} className="h-full">
-                    <InsightPreviewCard post={post} />
-                  </RevealItem>
-                ))}
-              </RevealGroup>
-            </div>
+      {/* 10 — Genie Tips */}
+      <LandingSection
+        id="genie-tips"
+        navTheme="dark"
+        className="bg-night-900 py-24 text-onDark"
+        containerClassName="flex flex-col gap-10"
+      >
+        <div className="flex flex-col gap-6">
+          <div className="flex flex-col items-center gap-4 text-center">
+            <LandingKicker light>Genie Tips</LandingKicker>
+            <LandingHeading highlight="growth" light className="text-center">
+              Clear insights on clinic growth today.
+            </LandingHeading>
           </div>
-        </section>
+          <div className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-end">
+            <LandingBody light center={false}>
+              Search, design, content, branding, and trust.
+              <br />
+              Genie Tips covers every part of how patients discover and choose specialist clinics.
+            </LandingBody>
+            <Link
+              href="/genie-tips"
+              className="inline-flex shrink-0 items-center gap-1.5 text-sm font-semibold text-white/90 transition-colors hover:text-white"
+            >
+              Read the Genie&apos;s Tips <span aria-hidden="true">→</span>
+            </Link>
+          </div>
+        </div>
+        {insightPosts.length > 0 ? (
+          <RevealGroup className="grid gap-5 md:grid-cols-3">
+            {insightPosts.map((post) => (
+              <RevealItem key={post.id} className="h-full">
+                <InsightPreviewCard post={post} />
+              </RevealItem>
+            ))}
+          </RevealGroup>
+        ) : null}
+      </LandingSection>
 
+      {/* 11 — Final CTA */}
+      <PageFinale backdropClassName="bg-night-900">
         <section className="pb-16 pt-16 lg:pb-20">
           <div className="mx-auto flex max-w-wide flex-col items-center gap-7 px-[var(--page-pad)] text-center">
             <Reveal>

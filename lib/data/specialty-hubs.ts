@@ -12,6 +12,8 @@ export interface SpecialtyHubCard {
   /** Card graphic under /public/specialty-hub */
   image: string;
   published: boolean;
+  /** Future Genie Tips article. Cards stay unlinked until this is set. */
+  blogHref?: string;
 }
 
 export interface SpecialtyHubDetail extends SpecialtyHubCard {
@@ -402,8 +404,10 @@ export const SPECIALTY_HUBS: SpecialtyHub[] = [
 
 export interface SpecialtyCategoryItem {
   name: string;
-  /** Clinic specialties slug when a dedicated specialty or work page exists */
+  /** Specialty hub slug, used to resolve a future Genie Tips article */
   slug?: string;
+  /** Future Genie Tips article. Items stay unlinked until this is set. */
+  blogHref?: string;
 }
 
 export interface SpecialtyCategory {
@@ -573,14 +577,20 @@ export function getPublishedSpecialtyHubs(): SpecialtyHub[] {
   return SPECIALTY_HUBS.filter((hub) => hub.published);
 }
 
-export function getSpecialtyHubHref(hub: SpecialtyHubCard): string {
-  return hub.published ? `/clinic-specialties/${hub.slug}` : "/clinic-specialties";
+export function getSpecialtyHubHref(hub: SpecialtyHubCard): string | undefined {
+  if (hub.blogHref) return hub.blogHref;
+  if (!hub.published) return undefined;
+  return `/clinic-specialties/${hub.slug}`;
 }
 
-export function getSpecialtyCategoryItemHref(item: SpecialtyCategoryItem): string {
-  if (!item.slug) return "/clinic-specialties";
+export function getSpecialtyCategoryItemHref(
+  item: SpecialtyCategoryItem
+): string | undefined {
+  if (item.blogHref) return item.blogHref;
+  if (!item.slug) return undefined;
   const hub = getSpecialtyHub(item.slug);
-  return hub ? getSpecialtyHubHref(hub) : "/clinic-specialties";
+  if (!hub) return undefined;
+  return getSpecialtyHubHref(hub);
 }
 
 export function isSpecialtyHubDetail(hub: SpecialtyHub): hub is SpecialtyHubDetail {
