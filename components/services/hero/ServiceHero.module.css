@@ -3,10 +3,11 @@
   z-index: 10;
   display: flex;
   overflow: hidden;
-  min-height: 100vh;
-  min-height: 100svh;
+  min-height: 78vh;
+  min-height: 78svh;
   background-color: #ffffff;
   color: #062d36;
+  box-shadow: 0 20px 50px rgba(6, 45, 54, 0.14), 0 6px 14px rgba(6, 45, 54, 0.08);
 }
 
 .desktopBackdrop {
@@ -72,10 +73,8 @@
 
 @media (min-width: 1024px) {
   .hero {
-    height: 100vh;
-    height: 100svh;
-    min-height: 100vh;
-    min-height: 100svh;
+    min-height: 78vh;
+    min-height: 78svh;
     align-items: center;
     padding-top: 9rem;
     padding-bottom: 6rem;
