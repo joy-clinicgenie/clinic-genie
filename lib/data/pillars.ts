@@ -1,5 +1,4 @@
 import type { Faq } from "@/lib/data/faqs";
-import { getSpecialtyHub, getSpecialtyHubHref } from "@/lib/data/specialty-hubs";
 
 export interface CtaLink {
   label: string;
@@ -93,11 +92,6 @@ export interface CorePillar {
   finalSecondaryCta?: CtaLink;
 }
 
-function specialtyHref(slug: string): string {
-  const hub = getSpecialtyHub(slug);
-  return (hub && getSpecialtyHubHref(hub)) ?? "/clinic-specialties";
-}
-
 const CONTACT = "/contact";
 const PORTFOLIO = "/portfolio";
 const COMPLIANCE = "/services#compliance";
@@ -116,10 +110,6 @@ const PORTFOLIO_CTA: CtaLink = {
   label: "See Our Granted Wishes",
   href: PORTFOLIO,
 };
-
-const AESTHETIC_HREF = specialtyHref("dermatology");
-const DENTAL_HREF = specialtyHref("dental");
-const MEDICAL_HREF = "/clinic-specialties";
 
 /** Portfolio case study detail pages. */
 const CEDAR = "/portfolio/cedar-endocrine-clinic";
@@ -489,23 +479,14 @@ export const CORE_PILLARS: CorePillar[] = [
       {
         title: "Dermatology",
         body: 'Patients compare before they commit. Campaigns built for the research phase, right to the "near me" moment.',
-        link: { label: "Explore dermatology clinic SEM", href: AESTHETIC_HREF },
       },
       {
         title: "Cardiovascular Care",
         body: "Symptom-led searches with urgency behind them. Campaigns that reach patients the moment concern turns into action.",
-        link: {
-          label: "Explore cardiovascular clinic SEM",
-          href: specialtyHref("cardiology"),
-        },
       },
       {
         title: "Paediatrics",
         body: "Parents search carefully and decide slowly. Campaigns that build trust from first worry to booked appointment.",
-        link: {
-          label: "Explore paediatrics clinic SEM",
-          href: specialtyHref("paediatrics"),
-        },
       },
     ],
     grantedSubtitle: "Our work",
@@ -635,17 +616,14 @@ export const CORE_PILLARS: CorePillar[] = [
       {
         title: "Aesthetic and Dermatology",
         body: "Branding and copywriting for skin, aesthetic, and procedure-led clinics.",
-        link: { label: "Explore aesthetic clinic branding", href: AESTHETIC_HREF },
       },
       {
         title: "Dental and Orthodontics",
         body: "Branding and copywriting for dental, implant, and orthodontic practices.",
-        link: { label: "Explore dental clinic branding", href: DENTAL_HREF },
       },
       {
         title: "Medical and Specialist Clinics",
         body: "Copywriting for doctors across endocrine, cardiology, neurology, and other specialist care.",
-        link: { label: "Explore specialist clinic branding", href: MEDICAL_HREF },
       },
     ],
     grantedSubtitle: "Our work",
@@ -775,23 +753,14 @@ export const CORE_PILLARS: CorePillar[] = [
       {
         title: "Dental",
         body: "Websites that explain procedures, pricing, and next steps without friction.",
-        link: { label: "Explore dental clinic web design", href: DENTAL_HREF },
       },
       {
         title: "Ophthalmology",
         body: "Built for readability, accessibility, and easy booking.",
-        link: {
-          label: "Explore ophthalmology clinic web design",
-          href: specialtyHref("ophthalmology"),
-        },
       },
       {
         title: "Digestive Medicine",
         body: "Websites patients can research privately and book discreetly.",
-        link: {
-          label: "Explore specialist clinic web design",
-          href: MEDICAL_HREF,
-        },
       },
     ],
     grantedSubtitle: "Our work",
@@ -925,23 +894,14 @@ export const CORE_PILLARS: CorePillar[] = [
       {
         title: "Paediatrics",
         body: "Warm, friendly visuals that reassure parents and put children at ease.",
-        link: {
-          label: "Explore paediatrics clinic visuals",
-          href: specialtyHref("paediatrics"),
-        },
       },
       {
         title: "Cardiology",
         body: "Doctor interviews and clinic tours that make serious care feel approachable.",
-        link: {
-          label: "Explore cardiology clinic visuals",
-          href: specialtyHref("cardiology"),
-        },
       },
       {
         title: "ENT",
         body: "Procedure explainers and clinic visuals that demystify treatment for hesitant patients.",
-        link: { label: "Explore specialist clinic visuals", href: MEDICAL_HREF },
       },
     ],
     grantedSubtitle: "Our work",
@@ -1075,17 +1035,14 @@ export const CORE_PILLARS: CorePillar[] = [
       {
         title: "Dermatology",
         body: "Educational skin and treatment content, built to be followed and safely shared.",
-        link: { label: "Explore dermatology clinic social", href: AESTHETIC_HREF },
       },
       {
         title: "Women's Health",
         body: "Sensitive topics handled with warmth, building a community patients trust.",
-        link: { label: "Explore specialist clinic social", href: MEDICAL_HREF },
       },
       {
         title: "Musculoskeletal & Rehab",
         body: "Exercise tips, recovery stories, and content that keeps patients engaged between visits.",
-        link: { label: "Explore specialist clinic social", href: MEDICAL_HREF },
       },
     ],
     grantedSubtitle: "Our work",
@@ -1215,17 +1172,14 @@ export const CORE_PILLARS: CorePillar[] = [
       {
         title: "Respiratory Medicine",
         body: "Patients ask AI about symptoms first. Be the clinic those answers point to.",
-        link: { label: "Explore specialist clinic AI search", href: MEDICAL_HREF },
       },
       {
         title: "Renal & Urological Care",
         body: "Private questions go to AI before anyone else. Be the trusted name in the reply.",
-        link: { label: "Explore specialist clinic AI search", href: MEDICAL_HREF },
       },
       {
         title: "Infectious Diseases",
         body: "When health questions spike, AI answers first. Be the credible source it cites.",
-        link: { label: "Explore specialist clinic AI search", href: MEDICAL_HREF },
       },
     ],
     grantedSubtitle: "Our work",

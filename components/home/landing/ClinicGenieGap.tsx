@@ -6,7 +6,6 @@ const ROWS = [
     highlight: "specialists",
     body: "Marketing shaped around your specialty, never generic.",
     image: "/about/specialist.svg",
-    href: "/clinic-specialties",
   },
   {
     title: "Found by patients",
