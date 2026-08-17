@@ -14,7 +14,7 @@ export interface PillarCard {
 
 export interface SpecialtyCard {
   title: string;
-  body: string;
+  body?: string;
   link?: CtaLink;
 }
 
@@ -22,6 +22,9 @@ export interface GrantedWish {
   name: string;
   summary: string;
   href: string;
+  image?: string;
+  alt?: string;
+  imageClassName?: string;
 }
 
 export interface CorePillar {
@@ -54,15 +57,7 @@ export interface CorePillar {
   mechanicsIntro: string;
   mechanicsItems: PillarCard[];
 
-  // 4 — Why clinics join (FindClinic only)
-  whyJoin?: {
-    subtitle: string;
-    title: string;
-    paragraph: string;
-    points: PillarCard[];
-  };
-
-  // 5 — Specialty matrix
+  // 4 — Specialty matrix
   specialtySubtitle: string;
   specialtyTitle: string;
   specialtyLead: string;
@@ -169,75 +164,51 @@ export const CORE_PILLARS: CorePillar[] = [
         body: "A listing that strengthens your clinic's citations and search credibility.",
       },
     ],
-    whyJoin: {
-      subtitle: "The clinic advantage",
-      title: "Be discovered, understood, and chosen.",
-      paragraph:
-        "A listing on FindClinic.sg is more than a directory entry. It is doctor-led content marketing that builds trust before a patient ever enquires.",
-      points: [
-        {
-          title: "Specialist Practice Amplification",
-          body: "Extend your reach through specialist practice amplification across the platform and its channels.",
-        },
-        {
-          title: "Ethical Patient Acquisition",
-          body: "Ethical patient acquisition pathways that guide interested patients toward the right next step.",
-        },
-        {
-          title: "Trusted Discovery",
-          body: "A credible, SMC-compliant presence patients can rely on while they compare and decide.",
-        },
-      ],
-    },
-    specialtySubtitle: "Specialist discovery",
-    specialtyTitle: "Every specialty is searched differently",
-    specialtyLead:
-      "FindClinic.sg already features specialists across oncology, neurosurgery, dermatology, geriatrics, and dental care, with room for more.",
+    specialtySubtitle: "Who is already there",
+    specialtyTitle: "Who is already there",
+    specialtyLead: "FindClinic.sg already features specialists across these fields, with room for more.",
     specialties: [
-      {
-        title: "By Condition",
-        body: "Patients searching a symptom or diagnosis find the specialists who treat it.",
-      },
-      {
-        title: "By Specialist",
-        body: "Verified doctor profiles patients can compare, whatever the field.",
-      },
-      {
-        title: "By Location",
-        body: "Nearby care, clearly listed, across Singapore.",
-      },
+      { title: "Cardiology" },
+      { title: "Dentistry" },
+      { title: "Dermatology" },
+      { title: "Endocrinology" },
+      { title: "General Surgery" },
+      { title: "Geriatric Medicine" },
+      { title: "Neurosurgery" },
+      { title: "Obstetrics & Gynaecology" },
+      { title: "Ophthalmology" },
+      { title: "Orthopaedic Surgery" },
+      { title: "Paediatrics" },
+      { title: "Urology" },
     ],
-    grantedSubtitle: "Clinics on the platform",
-    grantedTitle: "Specialists patients are already finding.",
-    grantedIntro: "Clinics already discovered through FindClinic.sg include:",
+    grantedSubtitle: "On the platform",
+    grantedTitle: "Interviews, specialists, and health conditions",
+    grantedIntro:
+      "Patients use FindClinic.sg to hear from doctors, compare specialists, and understand health conditions before they choose care.",
     grantedWishes: [
       {
-        name: "Parkway Cancer Centre",
-        summary: "Oncology, Gleneagles Hospital.",
-        href: FINDCLINIC_URL,
+        name: "Interview",
+        summary: "Doctor interviews that explain real conditions and treatments.",
+        href: `${FINDCLINIC_URL}/blog/categories/doctor-interviews`,
+        image: "/services/findclinic/findclinic-interview.png",
+        alt: "FindClinic.sg doctor interview on a phone",
       },
       {
-        name: "Singapore Brain Spine Nerves Centre",
-        summary: "Neurosurgery, Camden Medical.",
-        href: FINDCLINIC_URL,
+        name: "Specialists",
+        summary: "Verified doctor profiles patients can compare with confidence.",
+        href: `${FINDCLINIC_URL}/specialist-listing`,
+        image: "/services/findclinic/findclinic-specialists.png",
+        alt: "FindClinic.sg specialist listing on tablet and phone",
       },
       {
-        name: "Medical and Surgical Dermatology Centre",
-        summary: "Dermatology, Novena Medical Centre.",
-        href: FINDCLINIC_URL,
-      },
-      {
-        name: "The Straits Geriatrics Centre",
-        summary: "Geriatrics, Gleneagles Medical Centre.",
-        href: FINDCLINIC_URL,
-      },
-      {
-        name: "Singapore Dental Implant Centre",
-        summary: "Dental and implants.",
-        href: FINDCLINIC_URL,
+        name: "Health Conditions",
+        summary: "Clear guides that help patients understand symptoms, treatments, and next steps.",
+        href: `${FINDCLINIC_URL}/heatlh-conditions/cataracts`,
+        image: "/services/findclinic/findclinic-health-conditions.png",
+        alt: "FindClinic.sg health condition guides",
       },
     ],
-    grantedCta: { label: "Explore Clinic Listings", href: FINDCLINIC_URL },
+    grantedCta: { label: "Explore FindClinic.sg", href: FINDCLINIC_URL },
     complianceTitle: "Magic with a conscience.",
     complianceBody:
       "A healthcare discovery platform carries a duty of care. FindClinic.sg maintains SMC-compliant clinic profiles and follows HCSA guidelines for medical directories, so every profile, interview, and article supports patients responsibly.",

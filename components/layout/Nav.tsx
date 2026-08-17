@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { cn } from "@/lib/cn";
 import { Logo } from "@/components/ui/Logo";
 import { MagneticButton } from "@/components/ui/MagneticButton";
@@ -16,6 +16,7 @@ const IDLE_SHOW_MS = 300;
 
 export function Nav() {
   const pathname = usePathname();
+  const reduceMotion = useReducedMotion();
   const [light, setLight] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [navVisible, setNavVisible] = useState(true);
@@ -48,7 +49,7 @@ export function Nav() {
 
       const y = window.scrollY;
 
-      if (menuOpen || y < TOP_SHOW_THRESHOLD) {
+      if (menuOpen || reduceMotion || y < TOP_SHOW_THRESHOLD) {
         setNavVisible(true);
         lastScrollY.current = y;
         clearIdleTimer();
@@ -78,7 +79,7 @@ export function Nav() {
       window.removeEventListener("scroll", onScroll);
       clearIdleTimer();
     };
-  }, [menuOpen]);
+  }, [menuOpen, reduceMotion]);
 
   useEffect(() => {
     if (menuOpen) setNavVisible(true);
@@ -89,11 +90,12 @@ export function Nav() {
   return (
     <>
       <motion.header
+        id="site-header"
         className={cn(
           "fixed inset-x-0 top-0 z-50 lg:flex lg:justify-center lg:px-[var(--page-pad)] lg:pt-4",
           !navVisible && "pointer-events-none"
         )}
-        animate={{ y: navVisible ? 0 : "-110%" }}
+        animate={reduceMotion ? false : { y: navVisible ? 0 : "-110%" }}
         transition={{ duration: 0.35, ease: "easeOut" }}
       >
         <div
@@ -114,7 +116,7 @@ export function Nav() {
           )}
         >
           <div className="justify-self-start">
-            <Logo tone={light ? "light" : "dark"} />
+            <Logo tone={light ? "light" : "dark"} current={pathname === "/"} />
           </div>
 
           <ul className="relative hidden items-center gap-1 lg:flex">
@@ -155,6 +157,7 @@ export function Nav() {
                 <li key={item.href}>
                   <Link
                     href={item.href}
+                    aria-current={active ? "page" : undefined}
                     className={cn(
                       "relative inline-flex items-center rounded-pill px-4 py-2 text-[0.9375rem] font-semibold tracking-[0.01em] transition-colors duration-ui",
                       light
@@ -175,7 +178,12 @@ export function Nav() {
 
           <div className="flex items-center justify-self-end gap-2">
             <div className="hidden sm:block">
-              <MagneticButton href={PRIMARY_CTA.href} size="sm" withMiniOrb>
+              <MagneticButton
+                href={PRIMARY_CTA.href}
+                size="sm"
+                withMiniOrb
+                ariaCurrent={pathname === PRIMARY_CTA.href ? "page" : undefined}
+              >
                 {PRIMARY_CTA.label}
               </MagneticButton>
             </div>
@@ -183,6 +191,8 @@ export function Nav() {
               type="button"
               onClick={() => setMenuOpen(true)}
               aria-label="Open menu"
+              aria-expanded={menuOpen}
+              aria-controls="site-mobile-menu"
               className={cn(
                 "grid h-10 w-10 place-items-center rounded-full transition-colors lg:hidden",
                 light ? "text-ink-900 hover:bg-ink-900/8" : "text-onDark hover:bg-white/10"

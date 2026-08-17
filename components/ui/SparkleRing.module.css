@@ -41,6 +41,7 @@
 
 .ringGlow.intensify:hover .core,
 .ringGlow.intensify:focus-within .core,
+.ringGlow.active .core,
 :global(.group):hover .ringIntensify.ringGlow .core,
 :global(.group):focus-within .ringIntensify.ringGlow .core {
   box-shadow:

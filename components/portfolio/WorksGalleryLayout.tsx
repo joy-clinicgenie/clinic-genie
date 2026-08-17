@@ -51,7 +51,7 @@ export function WorksGalleryLayout() {
     <section
       data-nav-theme="light"
       aria-labelledby="our-works-heading"
-      className="relative overflow-hidden bg-cg-teal-5 text-ink-900"
+      className="relative overflow-hidden bg-white text-ink-900"
     >
       <div aria-hidden="true" className={styles.mesh} />
 

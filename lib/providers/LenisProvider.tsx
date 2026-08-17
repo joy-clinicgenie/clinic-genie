@@ -1,37 +1,43 @@
 "use client";
 
 import { useEffect } from "react";
-import Lenis from "lenis";
 
 /**
- * Smooth scroll (Lenis) as the scroll source of truth. Disabled under
- * reduced-motion (native scroll). Lenis only smooths wheel/touch — it never
- * intercepts the orb's pointer handling.
+ * Smooth wheel scrolling. Only mounted by MotionChrome on fine pointers
+ * without reduced motion. Native scroll remains the default everywhere else.
  */
-export function LenisProvider({ children }: { children: React.ReactNode }) {
+export function LenisProvider() {
   useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    let cancelled = false;
+    let raf = 0;
+    let lenis: { raf: (time: number) => void; destroy: () => void } | null = null;
 
-    const lenis = new Lenis({
-      lerp: 0.1,
-      smoothWheel: true,
-      wheelMultiplier: 1,
-      touchMultiplier: 1.5,
-      prevent: (node) => node instanceof Element && node.closest("[data-lenis-prevent-wheel]") !== null,
+    void import("lenis").then(({ default: Lenis }) => {
+      if (cancelled) return;
+
+      lenis = new Lenis({
+        lerp: 0.1,
+        smoothWheel: true,
+        wheelMultiplier: 1,
+        touchMultiplier: 1,
+        prevent: (node) =>
+          node instanceof Element && node.closest("[data-lenis-prevent-wheel]") !== null,
+      });
+
+      const loop = (time: number) => {
+        lenis?.raf(time);
+        raf = requestAnimationFrame(loop);
+      };
+      raf = requestAnimationFrame(loop);
     });
 
-    let raf = 0;
-    const loop = (time: number) => {
-      lenis.raf(time);
-      raf = requestAnimationFrame(loop);
-    };
-    raf = requestAnimationFrame(loop);
-
     return () => {
+      cancelled = true;
       cancelAnimationFrame(raf);
-      lenis.destroy();
+      lenis?.destroy();
+      lenis = null;
     };
   }, []);
 
-  return <>{children}</>;
+  return null;
 }

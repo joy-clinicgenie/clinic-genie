@@ -2,17 +2,18 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 import { ABOUT_APPROACH_STEPS } from "@/lib/data/about";
+import { FeatureInfoCard } from "@/components/ui/FeatureInfoCard";
+import { ProcessStepIcon } from "@/components/ui/ProcessStepIcon";
 import { LandingIntro, LandingSection } from "@/components/home/landing/LandingLayout";
 import { MagneticButton } from "@/components/ui/MagneticButton";
 import { Reveal } from "@/components/ui/Reveal";
-import { cn } from "@/lib/cn";
 import { ease } from "@/lib/motion";
 
 const itemVariants = {
-  hidden: { opacity: 0, x: -12 },
+  hidden: { opacity: 0, y: 16 },
   show: {
     opacity: 1,
-    x: 0,
+    y: 0,
     transition: { duration: 0.5, ease: ease.glide },
   },
 };
@@ -30,7 +31,7 @@ export function AboutApproachTimeline() {
       id="how-we-work"
       tone="white"
       className="bg-gradient-to-b from-[#e3f6fa] via-[#f8fdfd] to-white py-24"
-      containerClassName="flex flex-col gap-12"
+      containerClassName="flex flex-col items-center gap-12"
     >
       <Reveal>
         <LandingIntro
@@ -41,8 +42,8 @@ export function AboutApproachTimeline() {
         />
       </Reveal>
 
-      <motion.ol
-        className="relative mx-auto flex w-full max-w-2xl flex-col gap-0"
+      <motion.ul
+        className="flex w-full flex-wrap justify-center gap-5"
         initial="hidden"
         whileInView="show"
         viewport={{ once: true, margin: "-10% 0px" }}
@@ -51,40 +52,23 @@ export function AboutApproachTimeline() {
           show: { transition: { staggerChildren: reduced ? 0 : 0.08 } },
         }}
       >
-        {ABOUT_APPROACH_STEPS.map((step, index) => {
-          const isLast = index === ABOUT_APPROACH_STEPS.length - 1;
-          return (
+        {ABOUT_APPROACH_STEPS.map((step) => (
             <motion.li
-              key={step.n}
-              className="relative flex gap-6 pb-10 last:pb-0"
+              key={step.slug}
+              className="flex w-full min-w-0 sm:w-[calc(50%-0.625rem)] lg:w-auto lg:min-w-0 lg:flex-1 lg:basis-0"
               variants={reduced ? itemReduced : itemVariants}
             >
-              <div className="relative flex shrink-0 flex-col items-center">
-                <span
-                  className={cn(
-                    "grid h-10 w-10 place-items-center rounded-full border border-genie-300/60",
-                    "bg-white font-mono text-sm font-semibold text-genie-700 shadow-sm"
-                  )}
-                  aria-hidden="true"
-                >
-                  {String(step.n).padStart(2, "0")}
-                </span>
-                {!isLast && (
-                  <span
-                    aria-hidden="true"
-                    className="absolute top-10 h-[calc(100%+0.5rem)] w-px bg-gradient-to-b from-genie-300/70 to-genie-200/30"
-                  />
-                )}
-              </div>
-
-              <div className="flex min-w-0 flex-1 flex-col gap-1.5 pt-1">
-                <h3 className="font-display text-h5 text-ink-900">{step.title}</h3>
-                <p className="text-base leading-relaxed text-ink-700">{step.body}</p>
-              </div>
+              <FeatureInfoCard
+                title={step.title}
+                body={step.body}
+                href={step.href}
+                align="center"
+                icon={<ProcessStepIcon title={step.title} className="h-10 w-10 text-genie-600" />}
+                className="h-full min-h-0"
+              />
             </motion.li>
-          );
-        })}
-      </motion.ol>
+        ))}
+      </motion.ul>
 
       <Reveal delay={0.08}>
         <div className="flex justify-center">

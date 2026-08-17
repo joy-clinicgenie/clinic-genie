@@ -126,6 +126,7 @@ export function MagneticButton({
   className,
   children,
   ariaLabel,
+  ariaCurrent,
 }: {
   href?: string;
   onClick?: () => void;
@@ -140,6 +141,7 @@ export function MagneticButton({
   className?: string;
   children: ReactNode;
   ariaLabel?: string;
+  ariaCurrent?: "page";
 }) {
   const { ref, x, y, onMove, onLeave } = useMagnetic(0.25, 90);
   const labelX = useTransform(x, (n) => n * 0.6);
@@ -208,7 +210,13 @@ export function MagneticButton({
           style={{ x, y }}
           className={cn("inline-block", showMagicSparkle && "overflow-visible")}
         >
-          <Link href={href} className={classes} aria-label={ariaLabel} {...handlers}>
+          <Link
+            href={href}
+            className={classes}
+            aria-label={ariaLabel}
+            aria-current={ariaCurrent}
+            {...handlers}
+          >
             {inner}
           </Link>
         </motion.span>

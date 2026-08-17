@@ -13,6 +13,8 @@ export interface FeatureInfoCardProps {
   icon?: ReactNode;
   alt?: string;
   highlight?: string;
+  /** Overrides the default genie cyan on the highlighted title phrase. */
+  highlightColor?: string;
   href?: string;
   /** Overrides the default `${title}: ${body}` accessible name when the card is a link. */
   ariaLabel?: string;
@@ -23,6 +25,7 @@ export interface FeatureInfoCardProps {
   graphicSize?: "default" | "lg";
   showSparkles?: boolean;
   sparkleIndex?: number;
+  align?: "start" | "center";
   className?: string;
 }
 
@@ -30,7 +33,15 @@ function isExternalHref(href: string): boolean {
   return href.startsWith("http://") || href.startsWith("https://");
 }
 
-function CardTitle({ title, highlight }: { title: string; highlight?: string }) {
+function CardTitle({
+  title,
+  highlight,
+  highlightColor,
+}: {
+  title: string;
+  highlight?: string;
+  highlightColor?: string;
+}) {
   if (!highlight || !title.includes(highlight)) {
     return title;
   }
@@ -41,7 +52,12 @@ function CardTitle({ title, highlight }: { title: string; highlight?: string }) 
   return (
     <>
       {before}
-      <span className="genie-text">{highlight}</span>
+      <span
+        className={highlightColor ? undefined : "genie-text"}
+        style={highlightColor ? { color: highlightColor } : undefined}
+      >
+        {highlight}
+      </span>
       {after}
     </>
   );
@@ -88,6 +104,7 @@ export function FeatureInfoCard({
   icon,
   alt = "",
   highlight,
+  highlightColor,
   href,
   ariaLabel,
   badge,
@@ -96,10 +113,12 @@ export function FeatureInfoCard({
   graphicSize = "default",
   showSparkles = false,
   sparkleIndex = 0,
+  align = "start",
   className,
 }: FeatureInfoCardProps) {
   const TitleTag = titleAs;
   const hasGraphic = Boolean(icon || image);
+  const isCentered = align === "center";
   const isLargeGraphic = !compact && graphicSize === "lg";
   const graphicPx = compact ? 81 : isLargeGraphic ? 67 : 56;
   const sparkles = showSparkles && hasGraphic ? buildCardSparkles(sparkleIndex) : [];
@@ -113,14 +132,20 @@ export function FeatureInfoCard({
     <article
       className={cn(
         styles.card,
-        "group/card relative flex h-full w-full min-w-0 flex-col items-start rounded-2xl bg-white p-7 text-left shadow-card transition-shadow duration-ui hover:shadow-lg motion-reduce:transition-none md:p-8",
+        "group/card relative flex h-full w-full min-w-0 flex-col rounded-2xl bg-white p-7 shadow-card transition-shadow duration-ui hover:shadow-lg motion-reduce:transition-none md:p-8",
+        isCentered ? "items-center text-center" : "items-start text-left",
         hasGraphic ? "min-h-[17.5rem] gap-5" : "gap-3",
         compact && styles.cardCompact,
         className
       )}
     >
       {hasGraphic || badge ? (
-        <div className="flex w-full min-w-0 items-start justify-between gap-3">
+        <div
+          className={cn(
+            "flex w-full min-w-0 items-start gap-3",
+            isCentered && !badge ? "justify-center" : "justify-between"
+          )}
+        >
           {hasGraphic ? (
             <div
               className={cn(
@@ -183,7 +208,13 @@ export function FeatureInfoCard({
         </div>
       ) : null}
 
-      <div className={cn("flex w-full min-w-0 flex-col gap-2", compact && styles.cardCopy)}>
+      <div
+        className={cn(
+          "flex w-full min-w-0 flex-col gap-2",
+          compact && styles.cardCopy,
+          isCentered && "items-center"
+        )}
+      >
         <TitleTag
           className={cn(
             styles.cardTitle,
@@ -192,7 +223,7 @@ export function FeatureInfoCard({
               : titleAs === "h6" && "text-h6"
           )}
         >
-          <CardTitle title={title} highlight={highlight} />
+          <CardTitle title={title} highlight={highlight} highlightColor={highlightColor} />
         </TitleTag>
         <p className={cn(styles.cardBody, compact && styles.cardBodyCompact)}>{body}</p>
       </div>

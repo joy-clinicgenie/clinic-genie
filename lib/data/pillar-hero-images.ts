@@ -1,6 +1,8 @@
 /** Hero backgrounds for services core-pillar subpages (`public/services`). */
 export const PILLAR_HERO_IMAGES: Record<string, string> = {
   findclinic: "/services/findclinic-hero.png",
+  "healthcare-seo": "/services/medical-seo.png",
+  "medical-sem": "/services/medical-sem.png",
   "branding-copywriting": "/services/branding-copywriting-hero.png",
   "web-design-development": "/services/web-design-development-hero.png",
   "photo-video": "/services/photo-video-hero.png",

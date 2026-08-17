@@ -3,12 +3,10 @@ import { Outfit, Instrument_Sans, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
 import { OrbProvider } from "@/lib/providers/OrbProvider";
-import { LenisProvider } from "@/lib/providers/LenisProvider";
 import { MotionProvider } from "@/lib/providers/MotionConfig";
+import { MotionChrome } from "@/components/layout/MotionChrome";
 import { Nav } from "@/components/layout/Nav";
 import { PageTransition } from "@/components/layout/PageTransition";
-import { CustomCursor } from "@/components/ui/CustomCursor";
-import { PointerRipples } from "@/components/ui/PointerRipples";
 import { RootJsonLd } from "@/components/seo/RootJsonLd";
 import { DEFAULT_OG_IMAGE } from "@/lib/seo";
 import { SITE } from "@/lib/data/nav";
@@ -63,20 +61,18 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <RootJsonLd />
         <MotionProvider>
           <OrbProvider>
-            <LenisProvider>
-              <a
-                href="#main"
-                className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[200] focus:rounded-md focus:bg-genie-600 focus:px-4 focus:py-2 focus:text-white"
-              >
-                Skip to content
-              </a>
-              <CustomCursor />
-              <PointerRipples />
-              <Nav />
-              <main id="main">
-                <PageTransition>{children}</PageTransition>
-              </main>
-            </LenisProvider>
+            <a
+              id="skip-to-content"
+              href="#main"
+              className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[200] focus:rounded-md focus:bg-genie-600 focus:px-4 focus:py-2 focus:text-white"
+            >
+              Skip to content
+            </a>
+            <MotionChrome />
+            <Nav />
+            <main id="main">
+              <PageTransition>{children}</PageTransition>
+            </main>
           </OrbProvider>
         </MotionProvider>
       </body>

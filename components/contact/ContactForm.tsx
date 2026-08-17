@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useId } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ChevronDown } from "lucide-react";
@@ -14,17 +14,53 @@ const FIELD_BASE =
 const FIELD_REST = "border-hairline-light hover:border-genie-300/70";
 const FIELD_FOCUS =
   "border-genie-400 shadow-[0_0_0_3px_rgba(24,196,217,0.18),0_0_18px_rgba(24,196,217,0.12)]";
+const FIELD_INVALID = "border-feedback-error/60 hover:border-feedback-error";
 
 const FIELD_LABEL = "font-display text-sm font-normal text-ink-700";
+
+type FieldName = "name" | "clinic" | "email" | "phone" | "specialty" | "message" | "consent";
+
+function FieldError({ id, message }: { id: string; message: string }) {
+  return (
+    <p id={id} className="text-sm text-feedback-error">
+      {message}
+    </p>
+  );
+}
 
 export function ContactForm() {
   const baseId = useId();
   const router = useRouter();
+  const errorRef = useRef<HTMLParagraphElement>(null);
 
   const [focused, setFocused] = useState<string | null>(null);
   const [consent, setConsent] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [errorField, setErrorField] = useState<FieldName | null>(null);
+
+  const fid = (name: FieldName) => `${baseId}-${name}`;
+  const fieldErrorId = (name: FieldName) => `${baseId}-${name}-error`;
+  const formErrorId = `${baseId}-form-error`;
+
+  const describedBy = (name: FieldName) =>
+    errorField === name ? fieldErrorId(name) : undefined;
+  const invalid = (name: FieldName) => (errorField === name ? true : undefined);
+
+  useEffect(() => {
+    if (!error) return;
+    if (errorField) {
+      document.getElementById(`${baseId}-${errorField}`)?.focus();
+      return;
+    }
+    errorRef.current?.focus();
+  }, [error, errorField, baseId]);
+
+  const fieldClass = (name: FieldName) =>
+    cn(
+      FIELD_BASE,
+      focused === name ? FIELD_FOCUS : errorField === name ? FIELD_INVALID : FIELD_REST
+    );
 
   const handleFocus = (name: string) => {
     setFocused(name);
@@ -34,14 +70,32 @@ export function ContactForm() {
     setFocused(null);
   };
 
+  const showError = (message: string, field: FieldName | null) => {
+    setError(message);
+    setErrorField(field);
+  };
+
+  const handleInvalid = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const target = e.target as HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement;
+    const name = target.name as FieldName;
+    if (!name) return;
+    if (name === "consent") {
+      showError("Please confirm that Clinic Genie may contact you.", "consent");
+      return;
+    }
+    showError(target.validationMessage || "Please complete this field.", name);
+  };
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (submitting) return;
 
     setError(null);
+    setErrorField(null);
 
     if (!consent) {
-      setError("Please confirm that Clinic Genie may contact you.");
+      showError("Please confirm that Clinic Genie may contact you.", "consent");
       return;
     }
 
@@ -73,22 +127,22 @@ export function ContactForm() {
 
       router.push("/thank-you");
     } catch (submitError) {
-      setError(
+      showError(
         submitError instanceof Error
           ? submitError.message
-          : "We could not send your enquiry right now. Please try again."
+          : "We could not send your enquiry right now. Please try again.",
+        null
       );
     } finally {
       setSubmitting(false);
     }
   };
 
-  const fid = (name: string) => `${baseId}-${name}`;
 
   return (
     <div className={styles.formCard}>
       <div className="p-7 sm:p-8">
-        <form onSubmit={handleSubmit} className={styles.formBody} noValidate={false}>
+        <form onSubmit={handleSubmit} onInvalid={handleInvalid} className={styles.formBody}>
           <div className="grid gap-5 sm:grid-cols-2">
             <div
               className="flex flex-col gap-2"
@@ -104,9 +158,14 @@ export function ContactForm() {
                 type="text"
                 autoComplete="name"
                 required
+                aria-invalid={invalid("name")}
+                aria-describedby={describedBy("name")}
                 placeholder="Your Name"
-                className={cn(FIELD_BASE, focused === "name" ? FIELD_FOCUS : FIELD_REST)}
+                className={fieldClass("name")}
               />
+              {errorField === "name" && error ? (
+                <FieldError id={fieldErrorId("name")} message={error} />
+              ) : null}
             </div>
 
             <div
@@ -123,9 +182,14 @@ export function ContactForm() {
                 type="text"
                 autoComplete="organization"
                 required
+                aria-invalid={invalid("clinic")}
+                aria-describedby={describedBy("clinic")}
                 placeholder="Your Clinic"
-                className={cn(FIELD_BASE, focused === "clinic" ? FIELD_FOCUS : FIELD_REST)}
+                className={fieldClass("clinic")}
               />
+              {errorField === "clinic" && error ? (
+                <FieldError id={fieldErrorId("clinic")} message={error} />
+              ) : null}
             </div>
 
             <div
@@ -142,9 +206,14 @@ export function ContactForm() {
                 type="email"
                 autoComplete="email"
                 required
+                aria-invalid={invalid("email")}
+                aria-describedby={describedBy("email")}
                 placeholder="yourname@email.com"
-                className={cn(FIELD_BASE, focused === "email" ? FIELD_FOCUS : FIELD_REST)}
+                className={fieldClass("email")}
               />
+              {errorField === "email" && error ? (
+                <FieldError id={fieldErrorId("email")} message={error} />
+              ) : null}
             </div>
 
             <div
@@ -160,9 +229,14 @@ export function ContactForm() {
                 name="phone"
                 type="tel"
                 autoComplete="tel"
+                aria-invalid={invalid("phone")}
+                aria-describedby={describedBy("phone")}
                 placeholder="+65 1234 5678"
-                className={cn(FIELD_BASE, focused === "phone" ? FIELD_FOCUS : FIELD_REST)}
+                className={fieldClass("phone")}
               />
+              {errorField === "phone" && error ? (
+                <FieldError id={fieldErrorId("phone")} message={error} />
+              ) : null}
             </div>
           </div>
 
@@ -180,11 +254,9 @@ export function ContactForm() {
                 name="specialty"
                 required
                 defaultValue=""
-                className={cn(
-                  FIELD_BASE,
-                  "appearance-none pr-10",
-                  focused === "specialty" ? FIELD_FOCUS : FIELD_REST
-                )}
+                aria-invalid={invalid("specialty")}
+                aria-describedby={describedBy("specialty")}
+                className={cn(fieldClass("specialty"), "appearance-none pr-10")}
               >
                 <option value="" disabled>
                   Select your specialty
@@ -201,6 +273,9 @@ export function ContactForm() {
                 strokeWidth={1.75}
               />
             </div>
+            {errorField === "specialty" && error ? (
+              <FieldError id={fieldErrorId("specialty")} message={error} />
+            ) : null}
           </div>
 
           <div
@@ -216,44 +291,56 @@ export function ContactForm() {
               name="message"
               rows={4}
               required
+              aria-invalid={invalid("message")}
+              aria-describedby={describedBy("message")}
               placeholder="Tell us about your clinic, your goals, and where you feel patients aren't finding you yet."
-              className={cn(
-                FIELD_BASE,
-                "resize-y leading-relaxed",
-                focused === "message" ? FIELD_FOCUS : FIELD_REST
-              )}
+              className={cn(fieldClass("message"), "resize-y leading-relaxed")}
             />
+            {errorField === "message" && error ? (
+              <FieldError id={fieldErrorId("message")} message={error} />
+            ) : null}
           </div>
 
-          <div className="flex items-start gap-3">
-            <input
-              id={fid("consent")}
-              name="consent"
-              type="checkbox"
-              checked={consent}
-              onChange={(e) => setConsent(e.target.checked)}
-              className="mt-1 h-4 w-4 shrink-0 rounded border-hairline-light text-genie-500 accent-genie-500 focus:outline-none focus-visible:shadow-[0_0_0_3px_rgba(24,196,217,0.35)]"
-            />
-            <label htmlFor={fid("consent")} className="text-sm leading-relaxed text-ink-700">
-              You agree that Clinic Genie may contact you about this enquiry, in line with our{" "}
-              <Link
-                href="/terms-privacy"
-                className="font-medium text-genie-600 underline-offset-2 hover:underline"
-              >
-                terms and privacy
-              </Link>
-              .
-            </label>
+          <div className="flex flex-col gap-2">
+            <div className="flex items-start gap-3">
+              <input
+                id={fid("consent")}
+                name="consent"
+                type="checkbox"
+                checked={consent}
+                required
+                aria-invalid={invalid("consent")}
+                aria-describedby={describedBy("consent")}
+                onChange={(e) => setConsent(e.target.checked)}
+                className="mt-1 h-4 w-4 shrink-0 rounded border-hairline-light text-genie-500 accent-genie-500 focus:outline-none focus-visible:shadow-[0_0_0_3px_rgba(24,196,217,0.35)]"
+              />
+              <label htmlFor={fid("consent")} className="text-sm leading-relaxed text-ink-700">
+                You agree that Clinic Genie may contact you about this enquiry, in line with our{" "}
+                <Link
+                  href="/terms-privacy"
+                  className="font-medium text-genie-600 underline-offset-2 hover:underline"
+                >
+                  terms and privacy
+                </Link>
+                .
+              </label>
+            </div>
+            {errorField === "consent" && error ? (
+              <FieldError id={fieldErrorId("consent")} message={error} />
+            ) : null}
           </div>
 
-          {error && (
+          {error && !errorField ? (
             <p
+              ref={errorRef}
+              id={formErrorId}
               role="alert"
-              className="rounded-xl border border-feedback-error/25 bg-feedback-error/10 px-4 py-3 text-sm text-feedback-error"
+              tabIndex={-1}
+              className="rounded-xl border border-feedback-error/25 bg-feedback-error/10 px-4 py-3 text-sm text-feedback-error focus:outline-none focus-visible:shadow-[0_0_0_3px_rgba(24,196,217,0.35)]"
             >
               {error}
             </p>
-          )}
+          ) : null}
 
           <div className="flex flex-col gap-3 pt-1">
             <MagneticButton

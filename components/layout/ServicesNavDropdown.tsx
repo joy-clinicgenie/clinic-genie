@@ -26,10 +26,12 @@ function ServiceRow({
   item,
   index,
   reduceMotion,
+  current,
 }: {
   item: NavDropdownItem;
   index: number;
   reduceMotion: boolean | null;
+  current: boolean;
 }) {
   return (
     <motion.li
@@ -43,6 +45,7 @@ function ServiceRow({
     >
       <Link
         href={item.href}
+        aria-current={current ? "page" : undefined}
         className={cn(
           styles.row,
           "group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-genie-400 focus-visible:ring-offset-2 focus-visible:ring-offset-night-950"
@@ -156,6 +159,7 @@ export function ServicesNavDropdown({
         aria-haspopup="true"
         aria-expanded={open}
         aria-controls={panelId}
+        aria-current={active ? "page" : undefined}
         className={cn(
           "relative inline-flex items-center gap-1 rounded-pill px-4 py-2 text-[0.9375rem] font-semibold tracking-[0.01em] transition-colors duration-ui",
           light
@@ -212,6 +216,7 @@ export function ServicesNavDropdown({
                   </div>
                   <Link
                     href={SERVICES_PILLARS_INDEX.href}
+                    aria-current={pathname === SERVICES_PILLARS_INDEX.href ? "page" : undefined}
                     className="inline-flex shrink-0 items-center gap-1.5 self-start text-sm font-medium text-genie-300 transition-colors duration-micro hover:text-genie-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-genie-400 sm:self-auto"
                   >
                     {SERVICES_PILLARS_INDEX.label}
@@ -241,6 +246,9 @@ export function ServicesNavDropdown({
                               item={item}
                               index={groupOffset + itemIndex}
                               reduceMotion={reduceMotion}
+                              current={
+                                pathname === item.href || pathname.startsWith(`${item.href}/`)
+                              }
                             />
                           ))}
                         </ul>

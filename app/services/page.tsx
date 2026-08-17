@@ -76,12 +76,12 @@ export default function ServicesPage() {
         </Reveal>
       </LandingSection>
 
-      <PageFinale backdropClassName="bg-white">
+      <PageFinale backdropClassName="bg-genie-20">
         <PageFinaleCTA
           kicker="Make your first wish"
           title="Tell us your wish."
           highlight="wish"
-          body="Book a free strategy call and we'll recommend the right mix for your clinic — no hard sell."
+          body="Book a free strategy call and we'll recommend the right mix for your clinic. No hard sell."
           primaryCta={{ href: "/contact", label: "Make Your First Wish" }}
           footnote="No obligation. No jargon. Just a clear next step."
         />

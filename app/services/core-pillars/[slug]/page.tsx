@@ -6,27 +6,33 @@ import { Section } from "@/components/ui/Section";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { SectionEyebrow } from "@/components/ui/SectionEyebrow";
-import { EcosystemConnection } from "@/components/ui/EcosystemConnection";
 import { Reveal, RevealGroup, RevealItem } from "@/components/ui/Reveal";
 import { MagneticButton } from "@/components/ui/MagneticButton";
 import { FaqSection } from "@/components/ui/FaqSection";
+import { CoverInfoCard } from "@/components/ui/CoverInfoCard";
 import { FeatureInfoCard } from "@/components/ui/FeatureInfoCard";
 import { PageFinale } from "@/components/ui/PageFinale";
 import { PageFinaleCTA } from "@/components/ui/PageFinaleCTA";
 import { ComplianceCards } from "@/components/home/landing/ComplianceCards";
-import { LandingIntro, LandingSection } from "@/components/home/landing/LandingLayout";
+import { LandingBody, LandingHeading, LandingIntro, LandingSection } from "@/components/home/landing/LandingLayout";
 import { PortfolioWorksCarousel } from "@/components/home/landing/PortfolioWorksCarousel";
 import { PillarHero } from "@/components/services/PillarHero";
 import { PillarMechanicsSection } from "@/components/services/PillarMechanicsSection";
 import { PillarSpecialtySection } from "@/components/services/PillarSpecialtySection";
-import { PillarWhyJoinSection } from "@/components/services/PillarWhyJoinSection";
 import shineStyles from "@/components/services/PillarShineTitle.module.css";
 import {
   getPillarHeroImage,
   getPillarHeroImageClass,
 } from "@/lib/data/pillar-hero-images";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { CORE_PILLARS, getPillar } from "@/lib/data/pillars";
 import { pageMetadata } from "@/lib/seo";
+import {
+  breadcrumbList,
+  faqPageSchema,
+  nestedBreadcrumbs,
+  schemaGraph,
+} from "@/lib/schema";
 import {
   normalizeClinicKey,
   PORTFOLIO_WORKS,
@@ -34,8 +40,15 @@ import {
 } from "@/lib/data/portfolio-works";
 import { cn } from "@/lib/cn";
 
+const WISH_TITLE_PREFIX = "To Be ";
+
+function wishTitleHighlight(title: string): string | undefined {
+  if (!title.startsWith(WISH_TITLE_PREFIX)) return undefined;
+  return title.slice(WISH_TITLE_PREFIX.length);
+}
+
 /**
- * Build a full 10-card works carousel: pillar-featured clinics first
+ * Build a full works carousel: pillar-featured clinics first
  * (with pillar-specific summaries), then the remaining portfolio works.
  */
 function grantedWishSlides(
@@ -166,10 +179,25 @@ export default function PillarPage({ params }: { params: { slug: string } }) {
   const hasFaqs = Boolean(pillar.faqs && pillar.faqs.length > 0);
   const heroImageSrc = getPillarHeroImage(pillar.slug);
   const heroImageClass = getPillarHeroImageClass(pillar.slug);
-  const grantedSlides = grantedWishSlides(pillar.grantedWishes, pillar.slug);
+  const isFindClinic = pillar.slug === "findclinic";
+  const grantedSlides = isFindClinic
+    ? []
+    : grantedWishSlides(pillar.grantedWishes, pillar.slug);
+  const pillarPath = `/services/core-pillars/${pillar.slug}`;
 
   return (
     <div className="min-h-screen bg-genie-20 text-ink-900">
+      <JsonLd
+        data={schemaGraph([
+          breadcrumbList(
+            nestedBreadcrumbs([
+              { name: "Services", path: "/services" },
+              { name: pillar.name, path: pillarPath },
+            ])
+          ),
+          faqPageSchema(pillar.faqs ?? [], pillarPath),
+        ])}
+      />
       <PillarHero
         pillar={pillar}
         wishImageSrc={heroImageSrc}
@@ -204,16 +232,13 @@ export default function PillarPage({ params }: { params: { slug: string } }) {
                 align="center"
                 titleClassName="max-w-none max-lg:max-w-xs"
               />
-              <EcosystemConnection
-                from="Clinic Genie"
-                to={pillar.name}
-                className="lg:hidden"
-              />
               <RevealGroup className="grid gap-5 md:grid-cols-3">
                 {pillar.wishes.map((wish) => (
                   <RevealItem key={wish.title} className="h-full">
                     <FeatureInfoCard
                       title={wish.title}
+                      highlight={wishTitleHighlight(wish.title)}
+                      highlightColor={pillar.accent}
                       body={wish.body}
                       href={wish.link?.href}
                       ariaLabel={
@@ -244,11 +269,6 @@ export default function PillarPage({ params }: { params: { slug: string } }) {
                   titleClassName="max-lg:max-w-xs"
                 />
               </div>
-              <EcosystemConnection
-                from="Clinic Genie"
-                to={pillar.name}
-                className="max-lg:mt-8 lg:hidden"
-              />
               {pillar.wishesIntro && (
                 <div className="mx-auto flex w-4/5 max-w-2xl flex-col gap-4 text-center max-lg:mt-8 lg:w-full">
                   {pillar.wishesIntro.map((para, i) => (
@@ -266,38 +286,69 @@ export default function PillarPage({ params }: { params: { slug: string } }) {
       {/* 3 — Mechanics / offers */}
       <PillarMechanicsSection pillar={pillar} />
 
-      {/* 4 — Why clinics join (FindClinic only) */}
-      {pillar.whyJoin && (
-        <PillarWhyJoinSection
-          kicker={pillar.whyJoin.subtitle}
-          title={pillar.whyJoin.title}
-          subtitle={pillar.whyJoin.paragraph}
-          points={pillar.whyJoin.points}
-        />
-      )}
+      {/* 4 — FindClinic destinations, directly after the offers band */}
+      {isFindClinic ? (
+        <LandingSection
+          tone="white"
+          className="py-24"
+          containerClassName="flex flex-col gap-12"
+        >
+          <Reveal>
+            <div className="flex flex-col items-center gap-4 text-center">
+              <LandingHeading>{pillar.grantedTitle}</LandingHeading>
+              <LandingBody>{pillar.grantedIntro}</LandingBody>
+            </div>
+          </Reveal>
+          <RevealGroup className="grid gap-5 md:grid-cols-3">
+            {pillar.grantedWishes.map((wish) => (
+              <RevealItem key={wish.name} className="h-full">
+                <CoverInfoCard
+                  title={wish.name}
+                  body={wish.summary}
+                  href={wish.href}
+                  image={wish.image ?? "/services/findclinic-hero.png"}
+                  alt={wish.alt ?? wish.name}
+                  imageClassName={wish.imageClassName}
+                  className="h-full"
+                />
+              </RevealItem>
+            ))}
+          </RevealGroup>
+          <Reveal delay={0.08}>
+            <div className="flex justify-center">
+              <MagneticButton href={pillar.grantedCta.href} size="md" withMiniOrb>
+                {pillar.grantedCta.label}
+              </MagneticButton>
+            </div>
+          </Reveal>
+        </LandingSection>
+      ) : null}
 
       {/* 5 — Specialty matrix (landing specialist design) */}
       <PillarSpecialtySection
-        kicker={pillar.specialtySubtitle}
+        kicker={isFindClinic ? undefined : pillar.specialtySubtitle}
         title={pillar.specialtyTitle}
         subtitle={pillar.specialtyLead}
         specialties={pillar.specialties}
+        variant={isFindClinic ? "chips" : "cards"}
       />
 
-      {/* 6 — Granted wishes / Our work */}
-      <Reveal delay={0.08} className="w-full overflow-visible">
-        <PortfolioWorksCarousel
-          variant="showcase"
-          kicker={pillar.grantedSubtitle}
-          title={pillar.grantedTitle}
-          body={pillar.grantedIntro}
-          cta={{
-            label: pillar.grantedCta.label,
-            href: pillar.grantedCta.href,
-          }}
-          slides={grantedSlides}
-        />
-      </Reveal>
+      {/* 7 — Granted wishes / Our work (other pillars) */}
+      {!isFindClinic ? (
+        <Reveal delay={0.08} className="w-full overflow-visible">
+          <PortfolioWorksCarousel
+            variant="showcase"
+            kicker={pillar.grantedSubtitle}
+            title={pillar.grantedTitle}
+            body={pillar.grantedIntro}
+            cta={{
+              label: pillar.grantedCta.label,
+              href: pillar.grantedCta.href,
+            }}
+            slides={grantedSlides}
+          />
+        </Reveal>
+      ) : null}
 
       {/* 7 — FAQs */}
       {hasFaqs && pillar.faqs ? (

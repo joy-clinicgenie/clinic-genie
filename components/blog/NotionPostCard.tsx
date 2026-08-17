@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { GenieTipAuthor } from "@/components/blog/GenieTipAuthor";
+import { GenieTipCoverImage, GENIE_TIP_COVER_SIZES } from "@/components/blog/GenieTipCoverImage";
 import { GenieTipMeta } from "@/components/blog/GenieTipMeta";
 import type { NotionPost } from "@/lib/notion";
 
@@ -15,13 +16,10 @@ export function NotionPostCard({ post }: { post: NotionPost }) {
       >
         <div className="overflow-hidden rounded-xl bg-cg-mist">
           {post.coverImage ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
+            <GenieTipCoverImage
               src={post.coverImage}
-              alt=""
-              loading="lazy"
-              decoding="async"
-              className="aspect-[16/10] h-auto w-full object-cover transition-transform duration-ui ease-out-soft group-hover:scale-[1.02] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
+              sizes={GENIE_TIP_COVER_SIZES.grid}
+              hoverScale
             />
           ) : (
             <div className="aspect-[16/10] w-full bg-gradient-to-br from-cg-mist to-cg-soft-grey" />

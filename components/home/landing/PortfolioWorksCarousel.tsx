@@ -292,6 +292,7 @@ function WorkCard({
   );
 
   const cardClass = cn(styles.card, isActive && styles.cardActive);
+  const isExternal = Boolean(slide.href && /^https?:\/\//.test(slide.href));
 
   if (slide.href) {
     return (
@@ -302,6 +303,8 @@ function WorkCard({
         tabIndex={tabIndex}
         onFocus={onFocus}
         draggable={false}
+        target={isExternal ? "_blank" : undefined}
+        rel={isExternal ? "noopener noreferrer" : undefined}
         aria-label={`${slide.title}, ${slide.category}`}
       >
         {content}

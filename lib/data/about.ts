@@ -29,6 +29,14 @@ export interface AboutExpertRole {
   body: string;
 }
 
+export interface AboutApproachStep {
+  n: number;
+  title: string;
+  body: string;
+  slug: string;
+  href?: string;
+}
+
 export const ABOUT_VALUES: AboutValue[] = [
   {
     title: "Doctor + clinic-focused",
@@ -103,33 +111,38 @@ export const ABOUT_WISH_POINTS: AboutWishPoint[] = [
   },
 ];
 
-export const ABOUT_APPROACH_STEPS = [
+export const ABOUT_APPROACH_STEPS: AboutApproachStep[] = [
   {
     n: 1,
     title: "Discover",
+    slug: "discover",
     body: "Your clinic, patients, services, and goals.",
   },
   {
     n: 2,
     title: "Strategise",
+    slug: "strategise",
     body: "The right keywords, channels, and content.",
   },
   {
     n: 3,
     title: "Create",
+    slug: "create",
     body: "Website, copy, SEO content, visuals, campaigns.",
   },
   {
     n: 4,
     title: "Launch",
+    slug: "launch",
     body: "SEO, forms, tracking, and key checks live.",
   },
   {
     n: 5,
     title: "Optimise",
+    slug: "optimise",
     body: "Measure, refine, and improve over time.",
   },
-] as const;
+];
 
 export const ABOUT_TRUSTED_CLIENTS: AboutTrustedClient[] = [
   {

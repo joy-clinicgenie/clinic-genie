@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { SpecialtyHubComingSoon } from "@/components/specialty-hub/SpecialtyHubComingSoon";
 import { SpecialtyHubTemplate } from "@/components/specialty-hub/SpecialtyHubTemplate";
 import {
@@ -8,6 +9,12 @@ import {
   isSpecialtyHubDetail,
 } from "@/lib/data/specialty-hubs";
 import { pageMetadata } from "@/lib/seo";
+import {
+  breadcrumbList,
+  faqPageSchema,
+  nestedBreadcrumbs,
+  schemaGraph,
+} from "@/lib/schema";
 
 export function generateStaticParams() {
   return getPublishedSpecialtyHubs().map((hub) => ({ slug: hub.slug }));
@@ -50,9 +57,27 @@ export default function ClinicSpecialtyDetailPage({ params }: { params: { slug: 
   const hub = getSpecialtyHub(params.slug);
   if (!hub?.published) notFound();
 
+  const path = `/clinic-specialties/${hub.slug}`;
+  const breadcrumbs = breadcrumbList(
+    nestedBreadcrumbs([
+      { name: "Clinic Specialties", path: "/clinic-specialties" },
+      { name: hub.name, path },
+    ])
+  );
+
   if (isSpecialtyHubDetail(hub)) {
-    return <SpecialtyHubTemplate hub={hub} />;
+    return (
+      <>
+        <JsonLd data={schemaGraph([breadcrumbs, faqPageSchema(hub.faqs, path)])} />
+        <SpecialtyHubTemplate hub={hub} />
+      </>
+    );
   }
 
-  return <SpecialtyHubComingSoon specialtyName={hub.name} />;
+  return (
+    <>
+      <JsonLd data={schemaGraph([breadcrumbs])} />
+      <SpecialtyHubComingSoon specialtyName={hub.name} />
+    </>
+  );
 }

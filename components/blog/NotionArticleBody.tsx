@@ -1,18 +1,38 @@
+import Image from "next/image";
 import type { Components } from "react-markdown";
 import ReactMarkdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
+import { GENIE_TIP_COVER_SIZES } from "@/components/blog/GenieTipCoverImage";
+
+function isLocalImageSrc(src: string): boolean {
+  return src.startsWith("/") && !src.startsWith("//");
+}
 
 const markdownComponents: Components = {
   img: ({ src, alt }) => {
     if (!src || typeof src !== "string") return null;
+    const label = alt?.trim() || "Article image";
+
+    if (!isLocalImageSrc(src)) {
+      return (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={src}
+          alt={label}
+          loading="lazy"
+          decoding="async"
+          className="my-8 h-auto w-full rounded-xl object-cover shadow-card"
+        />
+      );
+    }
+
     return (
-      // Notion media is proxied through /api/notion-image; keep native img for signed upstream URLs.
-      // eslint-disable-next-line @next/next/no-img-element
-      <img
+      <Image
         src={src}
-        alt={alt || "Article image"}
-        loading="lazy"
-        decoding="async"
+        alt={label}
+        width={1600}
+        height={1000}
+        sizes={GENIE_TIP_COVER_SIZES.body}
         className="my-8 h-auto w-full rounded-xl object-cover shadow-card"
       />
     );

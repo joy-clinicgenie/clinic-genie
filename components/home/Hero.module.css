@@ -1,5 +1,5 @@
 .heroSection {
-  background-color: #F6F6F6;
+  background-color: #EAFBFB;
 }
 
 .heroBackground {
@@ -8,7 +8,7 @@
   z-index: 0;
   overflow: hidden;
   pointer-events: none;
-  background-color: #F6F6F6;
+  background-color: #EAFBFB;
 }
 
 .heroSparkleField,
@@ -170,6 +170,7 @@
   position: absolute;
   inset: 0;
   pointer-events: none;
+  opacity: 0.82;
 }
 
 .heroOrbWish {

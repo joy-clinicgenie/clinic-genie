@@ -100,6 +100,7 @@ export function ServiceVisual({
       ) : config.src ? (
         <div className={styles.imageWrap}>
           <Image
+            key={config.src}
             src={config.src}
             alt={config.alt ?? ""}
             fill

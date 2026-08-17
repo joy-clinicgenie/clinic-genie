@@ -16,16 +16,19 @@ export function Logo({
   className,
   tone = "dark",
   onClick,
+  current = false,
 }: {
   className?: string;
   showWordmark?: boolean;
   tone?: "dark" | "light";
   onClick?: () => void;
+  current?: boolean;
 }) {
   return (
     <Link
       href="/"
       aria-label="Clinic Genie — home"
+      aria-current={current ? "page" : undefined}
       onClick={onClick}
       className={cn("group inline-flex items-center", className)}
     >

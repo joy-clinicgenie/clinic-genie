@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { SectionEyebrow } from "@/components/ui/SectionEyebrow";
 import { Reveal, RevealGroup, RevealItem } from "@/components/ui/Reveal";
+import { cn } from "@/lib/cn";
 import type { CorePillar } from "@/lib/data/pillars";
 
 function isExternalHref(href: string): boolean {
@@ -56,20 +57,45 @@ export function PillarMechanicsSection({ pillar }: { pillar: CorePillar }) {
             </header>
           </Reveal>
 
-          <RevealGroup className="grid gap-x-10 gap-y-10 sm:grid-cols-2 lg:col-span-8">
-            {items.map((item) => (
-              <RevealItem key={item.title}>
-                <article className="flex flex-col items-start">
-                  <h3 className="font-display text-[1.125rem] font-semibold leading-snug text-white">
-                    {item.title}
-                  </h3>
-                  <p className="mt-2 text-body leading-relaxed text-onDark-muted">{item.body}</p>
-                  {item.link ? (
-                    <ItemLink href={item.link.href} label={item.link.label || "Learn more"} />
-                  ) : null}
-                </article>
-              </RevealItem>
-            ))}
+          <RevealGroup className="grid sm:grid-cols-2 lg:col-span-8">
+            {items.map((item, index) => {
+              const lastRowCount = items.length % 2 === 0 ? 2 : 1;
+              const isLastRow = index >= items.length - lastRowCount;
+              const isLeftCol = index % 2 === 0;
+
+              return (
+                <RevealItem
+                  key={item.title}
+                  className={cn(
+                    "relative py-8 first:pt-0 last:max-sm:pb-0",
+                    index < items.length - 1 &&
+                      "max-sm:after:pointer-events-none max-sm:after:absolute max-sm:after:inset-x-4 max-sm:after:bottom-0 max-sm:after:h-px max-sm:after:bg-white/10 max-sm:after:content-['']",
+                    "sm:py-8",
+                    index < 2 && "sm:pt-0",
+                    isLastRow && "sm:pb-0",
+                    isLeftCol ? "sm:pr-10" : "sm:pl-10",
+                    isLeftCol &&
+                      "sm:before:pointer-events-none sm:before:absolute sm:before:right-0 sm:before:w-px sm:before:bg-white/10 sm:before:content-['']",
+                    isLeftCol && (index < 2 ? "sm:before:top-8" : "sm:before:top-0"),
+                    isLeftCol && (isLastRow ? "sm:before:bottom-8" : "sm:before:bottom-0"),
+                    !isLastRow &&
+                      "sm:after:pointer-events-none sm:after:absolute sm:after:bottom-0 sm:after:h-px sm:after:bg-white/10 sm:after:content-['']",
+                    !isLastRow &&
+                      (isLeftCol ? "sm:after:left-8 sm:after:right-0" : "sm:after:left-0 sm:after:right-8")
+                  )}
+                >
+                  <article className="flex flex-col items-start">
+                    <h3 className="font-display text-[1.125rem] font-semibold leading-snug text-white">
+                      {item.title}
+                    </h3>
+                    <p className="mt-2 text-body leading-relaxed text-onDark-muted">{item.body}</p>
+                    {item.link ? (
+                      <ItemLink href={item.link.href} label={item.link.label || "Learn more"} />
+                    ) : null}
+                  </article>
+                </RevealItem>
+              );
+            })}
           </RevealGroup>
         </div>
       </div>

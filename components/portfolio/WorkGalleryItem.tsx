@@ -1,11 +1,12 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, type CSSProperties } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useReducedMotion } from "framer-motion";
 import { cn } from "@/lib/cn";
 import type { PortfolioWorkSlide } from "@/lib/data/portfolio-works";
+import styles from "./WorkGalleryItem.module.css";
 
 const HOVER_CYCLE_MS = 1800;
 
@@ -42,7 +43,7 @@ export function WorkGalleryItem({ work, index }: WorkGalleryItemProps) {
   const media = (
     <div
       className={cn(
-        "relative aspect-square w-full overflow-hidden rounded-2xl shadow-xs",
+        "relative aspect-square w-full overflow-hidden rounded-2xl shadow-glass-light",
         "transition-[transform,box-shadow] duration-ui ease-out-soft",
         "group-hover:-translate-y-1 group-hover:shadow-lg",
         "group-focus-visible:-translate-y-1 group-focus-visible:shadow-lg",
@@ -51,32 +52,38 @@ export function WorkGalleryItem({ work, index }: WorkGalleryItemProps) {
     >
       <div
         className={cn(
-          "absolute inset-0 flex items-center justify-center px-10 transition-opacity duration-ui ease-out-soft",
+          styles.glass,
+          "absolute inset-0 flex flex-col transition-opacity duration-ui ease-out-soft",
           showWorkMedia ? "pointer-events-none opacity-0" : "opacity-100"
         )}
-        style={{ backgroundColor: work.cardColor }}
+        style={{ "--tile-color": work.cardColor } as CSSProperties}
         aria-hidden={showWorkMedia}
       >
-        <Image
-          src={work.logo}
-          alt=""
-          width={320}
-          height={110}
-          className={cn(
-            "h-auto w-auto object-contain",
-            work.id === "tac"
-              ? "max-h-20 max-w-[62%] sm:max-h-24 lg:max-h-28"
-              : work.id === "aquaphysio"
-                ? "max-h-[6.65rem] max-w-[57%] sm:max-h-[7.6rem] lg:max-h-[8.55rem]"
-                : work.logo.includes("/square/")
-                  ? "max-h-32 max-w-[70%] sm:max-h-40 lg:max-h-44"
-                  : "max-h-28 max-w-[86%] sm:max-h-32 lg:max-h-40",
-            work.invertLogo !== false && "brightness-0 invert",
-            "transition-transform duration-ui ease-out-soft",
-            "group-hover:scale-[1.03] motion-reduce:group-hover:scale-100"
-          )}
-          priority={index < 4}
-        />
+        <span className={styles.sheen} aria-hidden="true" />
+        <div className="relative z-10 flex min-h-0 flex-1 items-center justify-center px-10">
+          <Image
+            src={work.logo}
+            alt=""
+            width={320}
+            height={110}
+            className={cn(
+              "h-auto w-auto object-contain",
+              work.id === "tac"
+                ? "max-h-16 max-w-[58%] sm:max-h-20 lg:max-h-24"
+                : work.id === "aquaphysio"
+                  ? "max-h-[5.5rem] max-w-[52%] sm:max-h-[6.4rem] lg:max-h-[7.2rem]"
+                  : work.logo.includes("/square/")
+                    ? "max-h-24 max-w-[64%] sm:max-h-32 lg:max-h-36"
+                    : "max-h-24 max-w-[80%] sm:max-h-28 lg:max-h-32",
+              "transition-transform duration-ui ease-out-soft",
+              "group-hover:scale-[1.03] motion-reduce:group-hover:scale-100"
+            )}
+            priority={index < 4}
+          />
+        </div>
+        <p className="relative z-10 line-clamp-2 px-7 pb-5 text-center font-display text-sm font-semibold leading-none tracking-tight text-ink-500 sm:px-8 sm:text-base sm:leading-none">
+          {work.title}
+        </p>
       </div>
 
       {galleryImages.length > 0 ? (

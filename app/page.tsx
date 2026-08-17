@@ -43,10 +43,10 @@ const WISH_CHIPS: Record<string, string> = {
 };
 
 const METRICS = [
-  { value: "20+", label: "Specialist clinics served" },
-  { value: "47,000+", label: "Patient enquiries" },
-  { value: ">S$350K", label: "Google Ads spend managed" },
-  { value: "3+", label: "Years in healthcare marketing" },
+  { value: "20+", label: "Specialist Clinics Served" },
+  { value: "50K+", label: "Patient Enquiries Generated Per Year" },
+  { value: ">S$350K", label: "Google Ads Spent Annually" },
+  { value: "3+", label: "Years in Healthcare Marketing" },
 ];
 
 export const metadata: Metadata = pageMetadata({
@@ -59,7 +59,7 @@ export const metadata: Metadata = pageMetadata({
 });
 
 export const viewport: Viewport = {
-  themeColor: "#F6F6F6",
+  themeColor: "#EAFBFB",
 };
 
 export const revalidate = 60;
@@ -278,8 +278,8 @@ export default async function HomePage() {
                 <MagneticButton href="/contact" size="lg" withMiniOrb>
                   Make Your First Wish
                 </MagneticButton>
-                <MagneticButton href="/contact" size="lg" variant="ghost" tone="light">
-                  Send Your Wish to the Genie
+                <MagneticButton href="/portfolio" size="lg" variant="ghost" tone="light">
+                  View Our Works
                 </MagneticButton>
               </div>
             </Reveal>

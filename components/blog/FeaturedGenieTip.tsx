@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { GenieTipAuthor } from "@/components/blog/GenieTipAuthor";
+import { GenieTipCoverImage, GENIE_TIP_COVER_SIZES } from "@/components/blog/GenieTipCoverImage";
 import { GenieTipMeta } from "@/components/blog/GenieTipMeta";
 import type { NotionPost } from "@/lib/notion";
 
@@ -15,11 +16,12 @@ export function FeaturedGenieTip({ post }: { post: NotionPost }) {
       >
         <div className="overflow-hidden rounded-lg bg-cg-mist lg:rounded-xl">
           {post.coverImage ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
+            <GenieTipCoverImage
               src={post.coverImage}
-              alt=""
-              className="aspect-[16/11] h-auto w-full object-cover transition-transform duration-ui ease-out-soft group-hover:scale-[1.02] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
+              sizes={GENIE_TIP_COVER_SIZES.featured}
+              aspectClassName="aspect-[16/11]"
+              priority
+              hoverScale
             />
           ) : (
             <div className="aspect-[16/11] w-full bg-gradient-to-br from-cg-mist to-cg-soft-grey" />

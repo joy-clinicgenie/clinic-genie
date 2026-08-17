@@ -13,6 +13,7 @@ import {
 import type { ProcessStep } from "@/lib/data/services";
 import { LandingIntro } from "@/components/home/landing/LandingLayout";
 import { MagneticButton } from "@/components/ui/MagneticButton";
+import { ProcessStepIcon } from "@/components/ui/ProcessStepIcon";
 import { SparkleRing } from "@/components/ui/SparkleRing";
 import { cn } from "@/lib/cn";
 import { useScrollExitDelay } from "@/lib/hooks/useScrollExitDelay";
@@ -55,6 +56,11 @@ function alignPathPoints(points: Point[], layout: "horizontal" | "vertical" | "f
   return points.map((point) => ({ x, y: point.y }));
 }
 
+function pointerProgress(count: number, index: number) {
+  if (count <= 1) return 0.1;
+  return 0.1 + 0.8 * (index / (count - 1));
+}
+
 function stepThresholds(count: number, index: number) {
   if (index === 0) {
     return { start: 0, end: 0, activeAt: 0 };
@@ -67,7 +73,7 @@ function stepThresholds(count: number, index: number) {
   const revealIndex = index - 1;
   const start = lead + revealIndex * span;
   const end = start + span * 0.72;
-  return { start, end, activeAt: start + span * 0.2 };
+  return { start, end, activeAt: pointerProgress(count, index) };
 }
 
 function useCompactProcess() {
@@ -84,32 +90,36 @@ function useCompactProcess() {
 
 function MagicNumber({
   n,
+  title,
   active,
   circleRef,
   compact = false,
 }: {
   n: number;
+  title: string;
   active: boolean;
   circleRef?: (el: HTMLSpanElement | null) => void;
   compact?: boolean;
 }) {
-  const reduced = useReducedMotion();
-
   return (
     <SparkleRing
       size={compact ? "sm" : "md"}
       ambient={false}
-      active={active && !reduced}
+      active={active}
       glow
       intensifyOnHover
       coreRef={circleRef}
       coreClassName={cn(
         styles.numberCircle,
-        "grid place-items-center rounded-full border border-[#9CC8D2]/80 bg-white/75 font-display text-ink-900 backdrop-blur-glass-light",
-        compact ? "h-10 w-10 text-base" : "h-16 w-16 text-h4"
+        "grid place-items-center rounded-full border border-[#9CC8D2]/80 bg-white/75 backdrop-blur-glass-light",
+        compact ? "h-10 w-10" : "h-16 w-16"
       )}
     >
-      {n}
+      <span className="sr-only">{n}</span>
+      <ProcessStepIcon
+        title={title}
+        className={cn(styles.stepIcon, active && styles.stepIconGlow, compact ? "h-5 w-5" : "h-7 w-7")}
+      />
     </SparkleRing>
   );
 }
@@ -148,7 +158,7 @@ function ProcessCard({
         className
       )}
     >
-      <MagicNumber n={step.n} active={active} circleRef={circleRef} compact={compact} />
+      <MagicNumber n={step.n} title={step.title} active={active} circleRef={circleRef} compact={compact} />
       <motion.div
         className="flex min-w-0 flex-1 flex-col gap-1.5 lg:flex-none lg:gap-2"
         style={reduced ? undefined : { opacity, y }}

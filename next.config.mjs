@@ -4,6 +4,9 @@ const nextConfig = {
   transpilePackages: ['three', '@react-three/fiber', '@react-three/drei'],
   images: {
     formats: ['image/avif', 'image/webp'],
+    // Dev: replacing files in /public must show immediately.
+    // Prod: keep a 1 hour optimizer cache.
+    minimumCacheTTL: process.env.NODE_ENV === 'development' ? 1 : 3600,
   },
   async redirects() {
     return [

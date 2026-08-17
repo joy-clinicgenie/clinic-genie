@@ -102,8 +102,28 @@
   box-shadow: 0 0 0 6px rgba(227, 246, 250, 0.65);
 }
 
+.stepIcon {
+  color: #0e8fa0;
+  opacity: 0.3;
+  transition: color 0.435s ease, opacity 0.35s ease, filter 0.35s ease;
+}
+
+.stepIconGlow {
+  color: #18c4d9;
+  opacity: 1;
+  filter:
+    drop-shadow(0 0 4px rgba(24, 196, 217, 0.75))
+    drop-shadow(0 0 12px rgba(120, 226, 221, 0.8));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stepIcon {
+    transition: none;
+  }
+}
+
 .lineGlow {
-  filter: drop-shadow(0 0 4px rgba(204, 244, 246, 0.95))
+  filter: drop-shadow(0 0 4px rgba(204, 244, 246, 0.75))
     drop-shadow(0 0 12px rgba(120, 226, 221, 0.75))
     drop-shadow(0 0 24px rgba(84, 185, 206, 0.45));
 }

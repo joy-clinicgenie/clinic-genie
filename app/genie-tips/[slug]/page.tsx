@@ -2,17 +2,25 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { GenieTipArticleSidebar } from "@/components/blog/GenieTipArticleSidebar";
+import { GenieTipCoverImage, GENIE_TIP_COVER_SIZES } from "@/components/blog/GenieTipCoverImage";
 import { LatestGenieTipsSection } from "@/components/blog/LatestGenieTipsSection";
 import { NotionArticleBody } from "@/components/blog/NotionArticleBody";
 import { Container } from "@/components/ui/Container";
 import { PageFinale } from "@/components/ui/PageFinale";
 import { PageFinaleCTA } from "@/components/ui/PageFinaleCTA";
+import { JsonLd } from "@/components/seo/JsonLd";
 import {
   getPostBySlug,
   getPublishedPosts,
   getPublishedPostSlugs,
 } from "@/lib/notion";
 import { pageMetadata } from "@/lib/seo";
+import {
+  articleSchema,
+  breadcrumbList,
+  nestedBreadcrumbs,
+  schemaGraph,
+} from "@/lib/schema";
 
 export const revalidate = 60;
 
@@ -71,9 +79,33 @@ export default async function GenieTipPage({ params }: GenieTipPageProps) {
   const latestPosts = allPosts
     .filter((item) => item.slug !== post.slug)
     .slice(0, 3);
+  const path = `/genie-tips/${post.slug}`;
+  const description =
+    post.description ||
+    "Clinic marketing insight from Clinic Genie for specialist clinics in Singapore.";
 
   return (
     <div className="min-h-screen bg-white text-ink-900">
+      <JsonLd
+        data={schemaGraph([
+          breadcrumbList(
+            nestedBreadcrumbs([
+              { name: "Genie Tips", path: "/genie-tips" },
+              { name: post.title, path },
+            ])
+          ),
+          post.noIndex
+            ? null
+            : articleSchema({
+                title: post.title,
+                description,
+                path,
+                datePublished: post.date,
+                image: post.coverImage,
+                keywords: post.tags.length > 0 ? post.tags : undefined,
+              }),
+        ])}
+      />
       <article data-nav-theme="light">
         <Container size="content" className="pb-16 pt-24 sm:pb-20 sm:pt-28 lg:pt-32">
           <Link
@@ -108,11 +140,10 @@ export default async function GenieTipPage({ params }: GenieTipPageProps) {
           <div className="mt-10 grid gap-10 lg:mt-12 lg:grid-cols-12 lg:items-start lg:gap-x-12 lg:gap-y-12">
             {post.coverImage ? (
               <figure className="overflow-hidden rounded-2xl bg-cg-mist lg:col-span-8 lg:col-start-1 lg:row-start-1 xl:col-span-9">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
+                <GenieTipCoverImage
                   src={post.coverImage}
-                  alt=""
-                  className="aspect-[16/10] h-auto w-full object-cover"
+                  sizes={GENIE_TIP_COVER_SIZES.article}
+                  priority
                 />
               </figure>
             ) : null}

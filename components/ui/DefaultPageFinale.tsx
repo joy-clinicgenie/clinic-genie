@@ -15,7 +15,7 @@ export function DefaultPageFinale({
         highlight="wish"
         body="Tell us about your clinic, your specialty, and the enquiries you want to attract."
         primaryCta={{ href: "/contact", label: "Make Your First Wish" }}
-        secondaryCta={{ href: "/contact", label: "Send Your Wish to the Genie" }}
+        secondaryCta={{ href: "/portfolio", label: "View Our Works" }}
         footnote="No vague wishes. No confusing jargon. Just a clearer path to responsible clinic marketing."
       />
     </PageFinale>

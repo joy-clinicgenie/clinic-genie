@@ -108,7 +108,10 @@ export function ServiceHero({
           </motion.div>
 
           <motion.div {...enter(t.serviceName)}>
-            <h1 className="font-display text-h1 uppercase text-balance text-ink-900">
+            <h1
+              className="font-display text-h1 font-semibold uppercase tracking-tight text-balance lg:text-display"
+              style={{ color: highlightColor ?? accent }}
+            >
               {title}
             </h1>
             {supportingLine ? (
@@ -120,8 +123,7 @@ export function ServiceHero({
 
           <div className={cn(styles.highlight, "overflow-hidden pb-[0.22em]")}>
             <motion.p
-              className="font-display text-h3 text-balance leading-[1.2] lg:text-h2 lg:leading-[1.18]"
-              style={{ color: highlightColor }}
+              className="font-display text-h3 text-balance leading-[1.2] text-ink-700 lg:text-h2 lg:leading-[1.18]"
               initial={reduceMotion ? false : { y: 8, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ duration: 0.5, ease: ease.glide, delay: t.headline }}

@@ -90,6 +90,7 @@ export function ParallaxBackground({
       >
         {typeof src === "string" ? (
           <Image
+            key={src}
             src={src}
             alt={alt}
             fill

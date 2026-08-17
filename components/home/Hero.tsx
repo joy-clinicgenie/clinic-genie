@@ -106,6 +106,11 @@ export function Hero() {
                 <SiriOrb
                   size={orbSize}
                   reducedMotion={reduceMotion ?? false}
+                  colors={{
+                    bg: "#C5DDE3",
+                    c1: "color-mix(in srgb, #78E2DD 45%, #18C4D9 55%)",
+                    c2: "color-mix(in srgb, #7DAFE3 65%, #18C4D9 35%)",
+                  }}
                 />
               </div>
               <OrbWishDecrypt className={styles.heroOrbWish} />

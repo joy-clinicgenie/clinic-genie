@@ -433,9 +433,6 @@
 }
 
 @media (pointer: fine) {
-  body[data-custom-cursor="on"],
-  body[data-custom-cursor="on"] * { cursor: none; }
-
   body[data-hero-orb-cursor="grab"] #hero canvas { cursor: grab; }
   body[data-hero-orb-cursor="grabbing"] #hero canvas { cursor: grabbing; }
 }

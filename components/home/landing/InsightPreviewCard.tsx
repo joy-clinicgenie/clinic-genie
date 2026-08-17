@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { GenieTipCoverImage, GENIE_TIP_COVER_SIZES } from "@/components/blog/GenieTipCoverImage";
 import { cn } from "@/lib/cn";
 import type { NotionPost } from "@/lib/notion";
 
@@ -62,13 +63,10 @@ export function InsightPreviewCard({
       >
         <div className="overflow-hidden bg-white/10">
           {post.coverImage ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
+            <GenieTipCoverImage
               src={post.coverImage}
-              alt=""
-              loading="lazy"
-              decoding="async"
-              className="aspect-[16/10] h-auto w-full object-cover transition-transform duration-ui ease-out-soft group-hover/card:scale-[1.02] motion-reduce:transition-none motion-reduce:group-hover/card:scale-100"
+              sizes={GENIE_TIP_COVER_SIZES.grid}
+              hoverScale
             />
           ) : (
             <div className="aspect-[16/10] w-full bg-gradient-to-br from-white/10 to-white/5" />
