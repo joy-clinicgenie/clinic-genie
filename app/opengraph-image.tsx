@@ -31,7 +31,7 @@ export default function OpenGraphImage() {
               width: 56,
               height: 56,
               borderRadius: 999,
-              background: "linear-gradient(135deg, #18C4D9 0%, #78E2DD 100%)",
+              background: "linear-gradient(165deg, #18C4D9 0%, #78E2DD 100%)",
             }}
           />
           <span

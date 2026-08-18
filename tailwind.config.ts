@@ -157,14 +157,14 @@ const config: Config = {
       backgroundImage: {
         // === Official Clinic Genie gradients ===
         "aurora-hero":   "linear-gradient(160deg, #062D36 0%, #0B4652 55%, #083C47 100%)",
-        "primary-grad":  "linear-gradient(135deg, #EAFBFB 0%, #FFFFFF 50%, #DDF7F8 100%)",
-        "accent-glow":   "linear-gradient(135deg, #18C4D9 0%, #78E2DD 100%)",
-        "btn-cta":       "linear-gradient(92deg, rgba(24,196,217,0.9), rgba(120,226,221,0.84) 60%, rgba(125,175,227,0.9))",
+        "primary-grad":  "linear-gradient(165deg, #EAFBFB 0%, #FFFFFF 50%, #DDF7F8 100%)",
+        "accent-glow":   "linear-gradient(165deg, #18C4D9 0%, #78E2DD 100%)",
+        "btn-cta":       "linear-gradient(128deg, rgba(24,196,217,0.9) 0%, rgba(120,226,221,0.84) 32%, rgba(125,175,227,0.9) 100%)",
         "premium-dark":  "linear-gradient(160deg, #062D36 0%, #0B4652 100%)",
         // Legacy names kept so existing pages don't break
-        "conjure-sweep": "linear-gradient(135deg, #18C4D9 0%, #78E2DD 50%, #7DAFE3 100%)",
+        "conjure-sweep": "linear-gradient(165deg, #18C4D9 0%, #78E2DD 38%, #7DAFE3 100%)",
         "plasma-orb":    "radial-gradient(circle at 35% 30%, #EAFBFB 0%, #78E2DD 20%, #18C4D9 48%, #0E5F6B 78%, #062D36 100%)",
-        "genie-text":    "linear-gradient(92deg, #18C4D9, #78E2DD 60%, #7DAFE3)",
+        "genie-text":    "linear-gradient(128deg, #18C4D9 0%, #78E2DD 32%, #7DAFE3 100%)",
         "orb-bloom":     "radial-gradient(closest-side, rgba(24,196,217,.55), rgba(24,196,217,0) 70%)",
         "clarity-fade":  "linear-gradient(180deg, #062D36 0%, #0B4652 40%, #EAFBFB 100%)",
         "stardust":      "radial-gradient(2px 2px at 20% 30%, rgba(120,226,221,0.8), transparent), radial-gradient(1px 1px at 60% 70%, rgba(125,175,227,0.7), transparent), radial-gradient(1.5px 1.5px at 80% 20%, rgba(221,247,248,0.5), transparent)",
