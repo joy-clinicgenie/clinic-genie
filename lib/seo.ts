@@ -32,6 +32,8 @@ export interface PageSeoInput {
   ogType?: "website" | "article";
   /** Use the title as-is. Skip the root `%s | Clinic Genie` template. */
   absoluteTitle?: boolean;
+  /** Social title. Defaults to the document title. */
+  ogTitle?: string;
   image?: string;
   publishedTime?: string;
 }
@@ -54,12 +56,15 @@ export function pageMetadata({
   follow = true,
   ogType = "website",
   absoluteTitle = false,
+  ogTitle,
   image,
   publishedTime,
 }: PageSeoInput): Metadata {
   const cleanTitle = sanitiseMetaText(title);
   const cleanDescription = sanitiseMetaText(description);
-  const socialTitle = absoluteTitle ? cleanTitle : withBrand(cleanTitle);
+  const socialTitle = sanitiseMetaText(
+    ogTitle ?? (absoluteTitle ? cleanTitle : withBrand(cleanTitle))
+  );
   const canonical = path
     ? path === "/"
       ? "/"

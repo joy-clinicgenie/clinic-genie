@@ -52,16 +52,6 @@ export function Hero() {
         <div className={styles.heroSplit}>
           <div className={styles.heroCopyCol}>
             <div className={styles.heroGrid}>
-              <motion.h1
-                id="hero-title"
-                className={cn(styles.headline, "font-display text-h1 text-balance text-ink-900")}
-                initial={reduceMotion ? false : { opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.65, ease: ease.glide, delay: 0.05 }}
-              >
-                <span className="genie-text">Clinic Genie</span> helps patients find you
-              </motion.h1>
-
               <motion.p
                 className={cn(
                   styles.tagline,
@@ -69,10 +59,20 @@ export function Hero() {
                 )}
                 initial={reduceMotion ? false : { opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, ease: ease.glide, delay: 0.08 }}
+                transition={{ duration: 0.6, ease: ease.glide, delay: 0.05 }}
               >
-                Clinic marketing, granted
+                CLINIC MARKETING, GRANTED
               </motion.p>
+
+              <motion.h1
+                id="hero-title"
+                className={cn(styles.headline, "font-display text-h1 text-balance text-ink-900")}
+                initial={reduceMotion ? false : { opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.65, ease: ease.glide, delay: 0.08 }}
+              >
+                <span className="genie-text">Clinic Genie</span> helps the right patients find your clinic
+              </motion.h1>
 
               <motion.p
                 className={cn(styles.body, "text-body text-pretty text-ink-700")}
@@ -80,8 +80,7 @@ export function Hero() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, ease: ease.glide, delay: 0.12 }}
               >
-                Online, the clinic that ranks first often wins the booking. Clinic Genie makes sure that clinic is
-                yours.
+                Patients rarely scroll past the first few results. Clinic Genie builds the search visibility that puts your clinic in front of them.
               </motion.p>
 
               <motion.div

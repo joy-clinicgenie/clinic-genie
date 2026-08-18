@@ -50,9 +50,10 @@ const METRICS = [
 ];
 
 export const metadata: Metadata = pageMetadata({
-  title: "Clinic Genie | Strategies for Specialist Growth",
+  title: "Healthcare Marketing Agency Singapore | Clinic Genie",
+  ogTitle: "Clinic Genie | Strategies for Specialist Growth",
   description:
-    "A healthcare focused marketing partner for specialist clinics in Singapore. Healthcare SEO, medical SEM, clinic websites, content, AI search, and compliance-aware strategy.",
+    "Clinic Genie is a Singapore healthcare marketing agency for specialist clinics. Healthcare SEO, medical SEM, clinic websites, content and AI search, built within PHMC and HCSA guidelines.",
   path: "/",
   keywords: [...DEFAULT_KEYWORDS],
   absoluteTitle: true,
@@ -96,7 +97,7 @@ export default async function HomePage() {
             </MetricsRowStats>
 
             <LandingBody className="text-sm">
-              Figures are based on aggregated campaign data across clients. Results vary by specialty, budget, competition, and patient journey.
+              Figures are aggregated from client campaign data across all accounts and reporting periods. They describe past performance and are not a projection for any individual clinic. Results vary by specialty, budget, competition and patient journey.
             </LandingBody>
 
             <MagneticButton href="/portfolio" size="md" withMiniOrb>

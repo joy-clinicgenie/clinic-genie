@@ -30,7 +30,7 @@ export function ServiceHero({
   breadcrumbHref = "/services",
   breadcrumbLabel = "Services",
   title,
-  supportingLine = "for clinics",
+  supportingLine = "for Singapore specialist clinics",
   highlight,
   highlightColor,
   description,

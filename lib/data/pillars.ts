@@ -35,6 +35,8 @@ export interface CorePillar {
 
   // 1 — Hero
   heroSubtitle: string;
+  /** Line under the service name. Defaults to "for Singapore specialist clinics". */
+  heroSupportingLine?: string;
   heroTitle: string;
   heroParagraph: string[];
   heroPrimaryCta: CtaLink;
@@ -232,7 +234,7 @@ export const CORE_PILLARS: CorePillar[] = [
     name: "Healthcare SEO",
     accent: "#7FE9F0",
     heroSubtitle: "Healthcare SEO",
-    heroTitle: "Make your clinic the answer patients are searching for.",
+    heroTitle: "Make your clinic the answer patients are searching for",
     heroParagraph: [
       "Patients search long before they call. Our healthcare SEO turns those quiet searches into real enquiries for your specialist clinic, guided by search data, not guesswork.",
     ],
@@ -243,11 +245,11 @@ export const CORE_PILLARS: CorePillar[] = [
     wishes: [
       {
         title: "To Be Found",
-        body: "Pages built around the exact terms patients type, ranked where they look first.",
+        body: "Pages built around the exact treatment terms patients search in Singapore.",
       },
       {
         title: "To Be Trusted",
-        body: "Patient-focused content that earns confidence, written within SMC guidelines.",
+        body: "Doctor-reviewed content written within SMC and HCSA guidelines.",
       },
       {
         title: "To Be Chosen",
@@ -345,11 +347,11 @@ export const CORE_PILLARS: CorePillar[] = [
     faqs: [
       {
         q: "How long does healthcare SEO take to work?",
-        a: "Most clinics see early movement within three to four months, with stronger results as content and authority build. SEO is a compound investment, not an overnight switch.",
+        a: "In our experience, early movement usually appears within three to four months, with stronger results as content and authority build. Timelines vary with competition and your starting point. SEO is a compound investment, not an overnight switch.",
       },
       {
         q: "Is healthcare SEO compliant with HCSA and SMC rules?",
-        a: "Yes. Every page we build is created within Singapore's HCSA, PHMC, and SMC guidelines, with no exaggerated claims.",
+        a: "Yes. Every page is written within Singapore's HCSA, PHMC and SMC guidelines — no outcome guarantees, no superlatives, no unfair comparisons — and reviewed before it goes live.",
       },
       {
         q: "What is the difference between SEO and SEM for clinics?",
@@ -357,7 +359,7 @@ export const CORE_PILLARS: CorePillar[] = [
       },
       {
         q: "Can SEO help my clinic appear in AI search and Google AI Overviews?",
-        a: "Yes. We structure content so both search engines and AI tools can understand and surface your clinic.",
+        a: "It can help. We structure content and schema so both search engines and AI tools can understand and surface your clinic. No one can guarantee an AI citation, but clear structure and strong authority signals are what these systems look for.",
       },
       {
         q: "Do you offer local SEO for clinics?",
@@ -377,9 +379,9 @@ export const CORE_PILLARS: CorePillar[] = [
     name: "Medical SEM",
     accent: "#8E7BE8",
     heroSubtitle: "Medical SEM",
-    heroTitle: "Appear the instant a patient makes a wish.",
+    heroTitle: "Turning clicks into qualified enquiries",
     heroParagraph: [
-      "Some patients are not browsing. They are ready. Medical SEM puts your specialist clinic at the top of Google the instant they search, with every enquiry measured.",
+      "Some patients are not browsing. They are ready. Medical SEM puts your clinic in front of those high-intent searches through Google Ads with every click, enquiry and dollar measured.",
     ],
     heroPrimaryCta: CONTACT_CTA,
     heroSecondaryCta: { label: "See How the Magic Works", href: "#mechanics" },
@@ -387,8 +389,8 @@ export const CORE_PILLARS: CorePillar[] = [
     wishesHighlight: "medical SEM",
     wishes: [
       {
-        title: "To Be Seen First",
-        body: "Campaigns built around the high-intent searches patients make just before they book.",
+        title: "To Be Seen",
+        body: "Campaigns built around the high-intent searches patients make before booking.",
       },
       {
         title: "To Be Trusted",
@@ -416,11 +418,11 @@ export const CORE_PILLARS: CorePillar[] = [
       },
       {
         title: "Performance Max Campaigns",
-        body: "One campaign, conjured across Search, Display, YouTube, Maps, and Gmail through Google's AI, with our hands on every lever.",
+        body: "One campaign conjured across Search, Display, YouTube, Maps and Gmail — with our hands on every lever.",
       },
       {
         title: "Video Ads",
-        body: "Short, compliant video that builds trust and recall across YouTube and Discovery.",
+        body: "Short video built within HCSA guidelines, building trust and recall across YouTube and Discovery.",
         link: {
           label: "See our Photo and Video Production",
           href: "/services/core-pillars/photo-video",
@@ -428,7 +430,7 @@ export const CORE_PILLARS: CorePillar[] = [
       },
       {
         title: "Negative Keyword Filtering",
-        body: "We filter out the wrong searches through negative keyword filtering, so your budget reaches patients who are ready to book, not browsers.",
+        body: "We filter out the wrong searches, so your budget reaches patients ready to book, not browsers.",
       },
       {
         title: "Conversion + Landing Pages",
@@ -440,7 +442,7 @@ export const CORE_PILLARS: CorePillar[] = [
       },
       {
         title: "Tracking + Reporting",
-        body: "We measure clicks, conversions, and patient acquisition cost through Google Ads and Analytics. Every dollar accounted for, every result in the light.",
+        body: "	We measure clicks, conversions and patient acquisition cost in Google Ads and Analytics.",
       },
     ],
     specialtySubtitle: "Specialist clinic SEM",
@@ -494,15 +496,15 @@ export const CORE_PILLARS: CorePillar[] = [
     faqs: [
       {
         q: "How much should a clinic spend on Google Ads?",
-        a: "It depends on your specialty, competition, and goals. We build budgets around a realistic patient acquisition cost, never guesswork.",
+        a: "Yes. Every ad and landing page is written within Singapore's HCSA and SMC guidelines for medical advertising, and reviewed before it goes live.",
       },
       {
         q: "Are your Google Ads compliant with HCSA rules?",
         a: "Yes. We run HCSA compliant Google Ads, with every ad and landing page built within Singapore's SMC guidelines for medical advertising.",
       },
       {
-        q: "What is the difference between SEO and SEM for clinics?",
-        a: "SEO earns organic visibility over time. SEM uses paid ads for immediate reach. Most clinics grow fastest with both.",
+        q: "How much does it cost to run Google Ads for a clinic in Singapore?",
+        a: "Two costs: your ad spend, which goes to Google, and management, which goes to us. Ad spend depends on your specialty and competition. Some treatment keywords cost several times others. We'll model a realistic monthly range on the strategy call before you commit to anything.",
       },
       {
         q: "What are Performance Max campaigns?",
@@ -510,7 +512,7 @@ export const CORE_PILLARS: CorePillar[] = [
       },
       {
         q: "How do you measure SEM success?",
-        a: "We track conversions and patient acquisition cost, not just clicks, so every dollar ties to a qualified clinic enquiry.",
+        a: "We track qualified enquiries and cost per enquiry, not just clicks. Every dollar is tied to a measurable action, so you can see what each campaign returned.",
       },
     ],
     finalSubtitle: "Ready to be found?",
@@ -526,9 +528,9 @@ export const CORE_PILLARS: CorePillar[] = [
     name: "Branding + Copywriting",
     accent: "#F2A65A",
     heroSubtitle: "Branding + Copywriting",
-    heroTitle: "Words patients remember. A brand they trust.",
+    heroTitle: "Words patients remember a brand they trust",
     heroParagraph: [
-      "Your name, your message, your words. Patients judge them in seconds. Healthcare branding and medical copywriting make sure the verdict is trust.",
+      "Patients judge your name, message and words in seconds. Healthcare branding and medical copywriting shape what they decide.",
     ],
     heroPrimaryCta: CONTACT_CTA,
     heroSecondaryCta: { label: "See how the magic works", href: "#mechanics" },
@@ -541,7 +543,7 @@ export const CORE_PILLARS: CorePillar[] = [
       },
       {
         title: "To Be Trusted",
-        body: "Words that ease patient concerns and signal clinical authority, within HCSA guidelines.",
+        body: "Words that signal clinical authority, within HCSA guidelines.",
       },
       {
         title: "To Be Chosen",
@@ -639,15 +641,15 @@ export const CORE_PILLARS: CorePillar[] = [
       },
       {
         q: "Is your copywriting compliant with HCSA and SMC rules?",
-        a: "Yes. Every word follows HCSA guidelines for medical text and SMC rules, with no exaggerated claims.",
+        a: "Yes. Every line follows HCSA guidance on medical text and SMC advertising rules — no outcome claims, no before-and-after promises, no testimonial language that breaches the rules.",
       },
       {
         q: "Do you use AI to write the content?",
         a: "We use AI to research and draft faster, then a human writer shapes every line for tone, accuracy, and compliance. The judgement is always human.",
       },
       {
-        q: "Can a good copy really bring more patients?",
-        a: "Yes. Clear positioning and patient-centric messaging remove trust barriers and turn more readers into enquiries.",
+        q: "Can copywriting really bring more patients?",
+        a: "Clear positioning and patient-centred messaging remove the trust barriers that stop people enquiring. It cannot manufacture demand but it can stop you losing patients who were already looking for exactly what you do.",
       },
     ],
     finalSubtitle: "Ready to be heard?",
@@ -663,9 +665,9 @@ export const CORE_PILLARS: CorePillar[] = [
     name: "Web Design + Development",
     accent: "#6CBAD9",
     heroSubtitle: "Web Design and Development",
-    heroTitle: "Where first impressions become first appointments.",
+    heroTitle: "Where first impressions become first appointments",
     heroParagraph: [
-      "A patient's first impression is your website. Clinic web design that earns trust in seconds and turns visitors into enquiries.",
+      "Most patients decide within seconds of landing. We build clinic websites that load fast, read clearly on a phone, and make enquiring the easiest thing on the page.",
     ],
     heroPrimaryCta: CONTACT_CTA,
     heroSecondaryCta: { label: "See how the magic works", href: "#mechanics" },
@@ -768,7 +770,7 @@ export const CORE_PILLARS: CorePillar[] = [
     faqs: [
       {
         q: "How long does it take to build a clinic website?",
-        a: "Most specialist clinic websites take four to eight weeks, depending on size and content. We keep every stage clear and on schedule.",
+        a: "Most specialist clinic websites take four to eight weeks, depending on size and content. We keep every stage clear, with agreed milestones — the timeline usually depends on how quickly content and approvals come back from your team.",
       },
       {
         q: "Will my clinic website be mobile-friendly?",
@@ -776,11 +778,11 @@ export const CORE_PILLARS: CorePillar[] = [
       },
       {
         q: "Is my patients' data secure?",
-        a: "Yes. We build secure patient intake forms and a PDPA-compliant medical website, protecting patient information at every step.",
+        a: "We build secure patient intake forms and PDPA-aligned websites — encrypted in transit, with access controls on every submission. Data protection is designed in, not added later.",
       },
       {
         q: "Will the website be built for SEO?",
-        a: "Yes. We build SEO-friendly medical web design with clean code and fast loading, so your site is ready to rank.",
+        a: "Yes. We build SEO-friendly medical web design with clean code, fast loading and proper structure, so your site is technically ready to compete.",
       },
       {
         q: "Do you use AI to build the site?",
@@ -800,7 +802,7 @@ export const CORE_PILLARS: CorePillar[] = [
     name: "Photo + Video",
     accent: "#F27A8E",
     heroSubtitle: "Photography and Videography",
-    heroTitle: "Faces build trust faster than words.",
+    heroTitle: "Faces build trust faster than words",
     heroParagraph: [
       "Patients trust what they can see. Medical photography and video capture your clinic, your team, and your care as they really are.",
     ],
@@ -815,7 +817,7 @@ export const CORE_PILLARS: CorePillar[] = [
       },
       {
         title: "To Be Trusted",
-        body: "Visuals that signal clinical authority and ease patient concerns, within HCSA guidelines.",
+        body: "Patient education that earns belief, within HCSA guidelines.",
       },
       {
         title: "To Be Remembered",
@@ -909,15 +911,15 @@ export const CORE_PILLARS: CorePillar[] = [
     faqs: [
       {
         q: "Why does my clinic need professional photos and video?",
-        a: "Patients trust what they see. Authentic visuals ease patient trust barriers and help patients choose you with confidence.",
+        a: "Patients trust what they see. Authentic visuals of your clinic, your team and your space ease the uncertainty patients feel before a first visit, and help them decide with confidence.",
       },
       {
         q: "Do you produce doctor interview videos?",
-        a: "Yes. Doctor interviews are one of the strongest ways to build clinical authority and personal branding.",
+        a: "Yes. Doctor interviews are among the most effective ways to build clinical authority and personal branding. Patients get to assess you before they ever book.",
       },
       {
         q: "Are your videos compliant with HCSA rules?",
-        a: "Yes. We produce HCSA compliant medical video, with every piece built within Singapore's SMC guidelines for medical visuals.",
+        a: "Yes. Every video is produced within Singapore's HCSA and SMC guidelines for medical visuals — no before-and-after sequences that imply guaranteed results, and no patient footage without documented consent.",
       },
       {
         q: "Can you create short videos for social media?",
@@ -956,11 +958,11 @@ export const CORE_PILLARS: CorePillar[] = [
       },
       {
         title: "To Be Trusted",
-        body: "Patient education that builds understanding and earns belief, within HCSA guidelines.",
+        body: "Patient education that earns belief, within HCSA guidelines.",
       },
       {
         title: "To Be Remembered",
-        body: "Engagement that keeps your clinic the first name patients think of.",
+        body: "Engagement that keeps your clinic front of mind when patients are ready.",
       },
     ],
     mechanicsId: "mechanics",
@@ -1050,11 +1052,11 @@ export const CORE_PILLARS: CorePillar[] = [
     faqs: [
       {
         q: "Why does my clinic need social media?",
-        a: "Patients research and judge clinics on social long before they book. A credible presence builds trust and keeps you top of mind for specialist clinic engagement.",
+        a: "Many patients research and judge clinics on social long before they book. A credible, consistent presence builds trust and keeps you in mind when they're ready to act.",
       },
       {
         q: "Is healthcare social media compliant with HCSA rules?",
-        a: "Yes. We run HCSA compliant social media, with every post and video built within Singapore's SMC guidelines for social media.",
+        a: "Yes. Every post, caption and video is written within Singapore's HCSA and SMC guidelines for social media, including how comments and patient messages are handled, which is where most clinics get caught out.",
       },
       {
         q: "Do you create video content?",
@@ -1066,7 +1068,7 @@ export const CORE_PILLARS: CorePillar[] = [
       },
       {
         q: "Do you use AI to create the content?",
-        a: "We use AI to plan and produce faster, then a human shapes every piece for tone, accuracy, and compliance.",
+        a: "We use AI to plan and produce faster, then a human shapes every piece for tone, accuracy and compliance.",
       },
     ],
     finalSubtitle: "Ready to be followed?",
@@ -1082,9 +1084,10 @@ export const CORE_PILLARS: CorePillar[] = [
     name: "GEO + AI Search",
     accent: "#8E7BE8",
     heroSubtitle: "GEO and AI Search",
+    heroSupportingLine: "for clinics",
     heroTitle: "When patients ask AI, be the answer.",
     heroParagraph: [
-      "Patients no longer just Google. They ask AI for a recommendation and act on the answer. GEO makes sure your clinic is the answer they receive.",
+      "Patients no longer just Google. Many now ask AI and act on the answer. GEO structures your clinic's content so AI tools can cite it accurately.",
     ],
     heroPrimaryCta: CONTACT_CTA,
     heroSecondaryCta: { label: "See how the magic works", href: "#mechanics" },
@@ -1101,7 +1104,7 @@ export const CORE_PILLARS: CorePillar[] = [
       },
       {
         title: "To Be Cited",
-        body: "When patients ask AI for a recommendation, your clinic gets named.",
+        body: "Structured content and authority signals that AI tools can read and reference.",
       },
     ],
     mechanicsId: "mechanics",
@@ -1187,11 +1190,11 @@ export const CORE_PILLARS: CorePillar[] = [
     faqs: [
       {
         q: "What is AI search optimization?",
-        a: "It prepares your clinic to be found and cited by AI tools like Google AI Overviews, ChatGPT, and Perplexity, not just traditional search. It is also called answer engine optimization, or GEO.",
+        a: "It prepares your clinic to be found and cited by AI tools like Google AI Overviews, ChatGPT and Perplexity, not just traditional search. It's also called answer engine optimisation, or GEO.",
       },
       {
         q: "How do I get my clinic to appear in ChatGPT or Perplexity?",
-        a: "Through LLM optimization: structured data, clear authority signals, and content built so AI can understand and cite you.",
+        a: "There's no direct submission or paid placement. These tools draw on what they can find and verify about you. The work is structured data, clear authority signals, consistent information across the web, and content written so an AI can understand and reference it.",
       },
       {
         q: "Is schema markup important for clinics?",
@@ -1199,11 +1202,11 @@ export const CORE_PILLARS: CorePillar[] = [
       },
       {
         q: "What is E-E-A-T and why does it matter?",
-        a: "E-E-A-T for medical websites (experience, expertise, authoritativeness, trust) is how Google and AI judge medical content. Strong E-E-A-T means you are surfaced more often.",
+        a: "E-E-A-T (experience, expertise, authoritativeness, trust) is how Google and AI systems judge medical content. Strong E-E-A-T improves your chances of being surfaced. Weak E-E-A-T makes it far less likely.",
       },
       {
         q: "Is AI search optimisation compliant with HCSA rules?",
-        a: "Yes. We build HCSA compliant AI marketing, with all content structured and reviewed within Singapore's guidelines.",
+        a: "Yes. Everything we structure for AI is written within Singapore's guidelines first. The content an AI cites is the same content a regulator could read, so it has to hold up to both.",
       },
     ],
     finalSubtitle: "Ready to be the answer?",

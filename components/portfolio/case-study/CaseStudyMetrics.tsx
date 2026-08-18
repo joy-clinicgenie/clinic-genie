@@ -1,6 +1,7 @@
 import { Container } from "@/components/ui/Container";
 import { Reveal, RevealGroup, RevealItem } from "@/components/ui/Reveal";
 import { LandingKicker } from "@/components/home/landing/LandingLayout";
+import { hairlineGridItemClass } from "@/lib/hairline-grid";
 import type { CaseStudy } from "@/lib/data/portfolio";
 
 export function CaseStudyMetrics({ study }: { study: CaseStudy }) {
@@ -31,9 +32,12 @@ export function CaseStudyMetrics({ study }: { study: CaseStudy }) {
             </header>
           </Reveal>
 
-          <RevealGroup className="grid gap-x-10 gap-y-10 sm:grid-cols-2 lg:col-span-8">
-            {study.changes.map((change) => (
-              <RevealItem key={change.title}>
+          <RevealGroup className="grid sm:grid-cols-2 lg:col-span-8">
+            {study.changes.map((change, index) => (
+              <RevealItem
+                key={change.title}
+                className={hairlineGridItemClass(index, study.changes.length)}
+              >
                 <article className="flex flex-col items-start">
                   <h3 className="font-display text-[1.125rem] font-semibold leading-snug text-white">
                     {change.title}

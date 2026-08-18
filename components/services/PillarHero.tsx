@@ -21,7 +21,7 @@ export function PillarHero({
   return (
     <ServiceHero
       title={pillar.name}
-      supportingLine="for clinics"
+      supportingLine={pillar.heroSupportingLine ?? "for Singapore specialist clinics"}
       highlight={pillar.heroTitle}
       highlightColor={pillar.accent}
       description={pillar.heroParagraph}
