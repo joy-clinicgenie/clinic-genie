@@ -10,6 +10,47 @@ const nextConfig = {
   },
   async redirects() {
     return [
+      // Legacy Wix URLs
+      {
+        source: '/contact-8',
+        destination: '/contact',
+        permanent: true,
+      },
+      {
+        source: '/works',
+        destination: '/portfolio',
+        permanent: true,
+      },
+      {
+        source: '/copy-of-terms-conditions',
+        destination: '/terms-privacy',
+        permanent: true,
+      },
+      {
+        source: '/blog',
+        destination: '/genie-tips',
+        permanent: true,
+      },
+      {
+        source: '/blog-1',
+        destination: '/genie-tips',
+        permanent: true,
+      },
+      {
+        source: '/blog/:slug',
+        destination: '/genie-tips/:slug',
+        permanent: true,
+      },
+      {
+        source: '/tips',
+        destination: '/genie-tips',
+        permanent: true,
+      },
+      {
+        source: '/tips/:slug',
+        destination: '/genie-tips/:slug',
+        permanent: true,
+      },
       {
         source: '/services/core-pillars',
         destination: '/services',

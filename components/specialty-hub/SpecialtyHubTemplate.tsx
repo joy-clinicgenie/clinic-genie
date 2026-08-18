@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Section } from "@/components/ui/Section";
 import { Container } from "@/components/ui/Container";
+import { BackLink } from "@/components/ui/BackLink";
 import { Kicker } from "@/components/ui/Kicker";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal, RevealGroup, RevealItem } from "@/components/ui/Reveal";
@@ -43,12 +44,11 @@ export function SpecialtyHubTemplate({ hub }: { hub: SpecialtyHubDetail }) {
 
         <Container className="relative z-10 w-full">
           <div className="flex max-w-xl flex-col items-start text-left">
-            <Link
+            <BackLink
               href="/clinic-specialties"
-              className="mb-5 inline-flex w-fit items-center gap-2 font-sans text-kicker uppercase text-genie-700 transition-colors hover:text-genie-900"
-            >
-              <span aria-hidden="true">←</span> Clinic Specialties
-            </Link>
+              label="Clinic Specialties"
+              className="mb-5"
+            />
 
             <h1 className="font-display text-h1 text-balance text-ink-900">
               {hub.heroHighlight && hub.heroTitle.includes(hub.heroHighlight) ? (

@@ -60,7 +60,6 @@
 
 .rootPaused::before {
   animation: none;
-  filter: none;
 }
 
 @keyframes siriOrbRotate {
@@ -69,21 +68,8 @@
   }
 }
 
-@media (max-width: 1023px) {
-  .root::before {
-    animation: none;
-    filter: none;
-  }
-}
-
-:global(html[data-pointer="coarse"]) .root::before {
-  animation: none;
-  filter: none;
-}
-
 @media (prefers-reduced-motion: reduce) {
   .root::before {
     animation: none;
-    filter: none;
   }
 }

@@ -57,7 +57,7 @@ export function WorksGalleryLayout() {
 
       <Container
         size="wide"
-        className="relative z-10 flex flex-col items-center gap-12 pb-20 pt-[calc(7rem+env(safe-area-inset-top,0px))] sm:gap-14 sm:pb-24 lg:gap-16 lg:pt-[calc(8rem+env(safe-area-inset-top,0px))]"
+        className="relative z-10 flex flex-col items-center gap-8 pb-20 pt-[calc(7rem+env(safe-area-inset-top,0px))] sm:gap-14 sm:pb-24 lg:gap-16 lg:pt-[calc(8rem+env(safe-area-inset-top,0px))]"
       >
         <header className="mx-auto flex max-w-5xl flex-col items-center gap-6 text-center">
           <h1
@@ -75,7 +75,7 @@ export function WorksGalleryLayout() {
         <div
           role="group"
           aria-label="Filter works by specialty"
-          className="flex w-full max-w-5xl flex-wrap items-center justify-center gap-2"
+          className={cn("flex w-full max-w-5xl flex-wrap items-center justify-center", styles.filterGroup)}
         >
           <LayoutGroup>
             {FILTERS.map((filter) => {
@@ -87,7 +87,8 @@ export function WorksGalleryLayout() {
                   aria-pressed={isActive}
                   onClick={() => setActiveFilter(filter)}
                   className={cn(
-                    "relative rounded-pill px-4 py-2 font-sans text-xs font-semibold tracking-wide transition-colors duration-ui ease-out-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-genie-500/40 sm:text-sm",
+                    styles.filterPill,
+                    "relative rounded-pill font-sans transition-colors duration-ui ease-out-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-genie-500/40",
                     isActive
                       ? "text-white"
                       : "border border-ink-900/20 bg-white/80 text-ink-900 backdrop-blur-sm hover:border-ink-900/40 hover:bg-white"
@@ -113,7 +114,7 @@ export function WorksGalleryLayout() {
         <div className="w-full">
           <motion.ul
             layout
-            className="grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3 xl:grid-cols-4 xl:gap-7"
+            className="grid grid-cols-2 gap-3 sm:gap-6 lg:grid-cols-3 xl:grid-cols-4 xl:gap-7"
           >
             <AnimatePresence mode="popLayout">
               {visibleWorks.map((work, index) => (

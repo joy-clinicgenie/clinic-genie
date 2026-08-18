@@ -1,10 +1,10 @@
-import Link from "next/link";
+import { BackLink } from "@/components/ui/BackLink";
+import { PostHeroImage } from "@/components/blog/PostHeroImage";
 import {
   POST_AUTHOR,
   getPostPublishedLabel,
   type Post,
 } from "@/lib/data/posts";
-import { PostHeroImage } from "@/components/blog/PostHeroImage";
 
 function MetaDot() {
   return (
@@ -18,12 +18,7 @@ function MetaDot() {
 export function PostArticleHeader({ post }: { post: Post }) {
   return (
     <header className="flex w-full flex-col gap-5">
-      <Link
-        href="/genie-tips"
-        className="inline-flex w-fit items-center gap-1.5 text-sm text-ink-500 transition-colors hover:text-genie-700"
-      >
-        <span aria-hidden="true">←</span> Genie Tips
-      </Link>
+      <BackLink href="/genie-tips" label="Genie Tips" />
 
       <h1 className="font-display text-h1 text-balance text-ink-900">{post.title}</h1>
 

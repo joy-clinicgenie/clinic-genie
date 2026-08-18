@@ -27,7 +27,7 @@
 .categoryGrid {
   display: grid;
   grid-template-columns: repeat(1, minmax(0, 1fr));
-  gap: 2rem;
+  gap: 1rem;
   align-self: stretch;
   width: 100%;
   max-width: 100%;
@@ -38,12 +38,27 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 2.25rem 1.5rem;
   }
+
+  .categoryGrid > *:nth-child(2n) {
+    border-left: 1px solid #e5eaec;
+    padding-left: 1.5rem;
+  }
 }
 
 @media (min-width: 1024px) {
   .categoryGrid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 2.5rem 1.75rem;
+  }
+
+  .categoryGrid > *:nth-child(2n) {
+    border-left: none;
+    padding-left: 0;
+  }
+
+  .categoryGrid > *:not(:nth-child(3n + 1)) {
+    border-left: 1px solid #e5eaec;
+    padding-left: 1.75rem;
   }
 }
 

@@ -79,10 +79,7 @@ export function ServiceHero({
             entranceScale
             imageClassName={backgroundImageClassName}
           >
-            <div
-              aria-hidden="true"
-              className="pointer-events-none absolute inset-0 bg-gradient-to-r from-white from-10% via-white/85 via-45% to-transparent to-80%"
-            />
+            <div aria-hidden="true" className={styles.desktopImageGradient} />
           </ParallaxBackground>
         ) : (
           <>
@@ -93,10 +90,7 @@ export function ServiceHero({
                 background: `linear-gradient(135deg, color-mix(in srgb, ${accent ?? "#18C4D9"} 28%, white), color-mix(in srgb, ${accent ?? "#18C4D9"} 12%, #f7fafb))`,
               }}
             />
-            <div
-              aria-hidden="true"
-              className="pointer-events-none absolute inset-0 bg-gradient-to-r from-white from-10% via-white/85 via-45% to-transparent to-80%"
-            />
+            <div aria-hidden="true" className={styles.desktopImageGradient} />
           </>
         )}
       </div>

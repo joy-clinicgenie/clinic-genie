@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { BackLink } from "@/components/ui/BackLink";
 import { Section } from "@/components/ui/Section";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
@@ -37,14 +37,7 @@ export function ProjectCaseStudy({
   return (
     <>
       <LightHero
-        leading={
-          <Link
-            href={backLink.href}
-            className="inline-flex w-fit items-center gap-2 font-sans text-kicker uppercase text-genie-700 transition-colors hover:text-genie-900"
-          >
-            <span aria-hidden="true">←</span> {backLink.label}
-          </Link>
-        }
+        leading={<BackLink href={backLink.href} label={backLink.label} />}
         kicker={study.specialty}
         title={study.heroTitle}
         highlight={study.heroHighlight ?? "clearer clinic enquiry journey"}

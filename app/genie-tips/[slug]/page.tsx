@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import { GenieTipArticleSidebar } from "@/components/blog/GenieTipArticleSidebar";
 import { GenieTipCoverImage, GENIE_TIP_COVER_SIZES } from "@/components/blog/GenieTipCoverImage";
 import { LatestGenieTipsSection } from "@/components/blog/LatestGenieTipsSection";
 import { NotionArticleBody } from "@/components/blog/NotionArticleBody";
+import { BackLink } from "@/components/ui/BackLink";
 import { Container } from "@/components/ui/Container";
 import { PageFinale } from "@/components/ui/PageFinale";
 import { PageFinaleCTA } from "@/components/ui/PageFinaleCTA";
@@ -108,13 +108,7 @@ export default async function GenieTipPage({ params }: GenieTipPageProps) {
       />
       <article data-nav-theme="light">
         <Container size="content" className="pb-16 pt-24 sm:pb-20 sm:pt-28 lg:pt-32">
-          <Link
-            href="/genie-tips"
-            className="inline-flex w-fit items-center gap-1.5 rounded-pill px-3.5 py-2 text-sm font-medium text-ink-500 transition-[background-color,color,box-shadow] duration-ui ease-out-soft hover:bg-cg-mist hover:text-genie-700 hover:shadow-xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-genie-500/50"
-          >
-            <span aria-hidden="true">←</span>
-            Genie Tips
-          </Link>
+          <BackLink href="/genie-tips" label="Genie Tips" />
 
           <header className="mt-8 max-w-article">
             {post.dateLabel ? (

@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Container } from "@/components/ui/Container";
+import { BackLink } from "@/components/ui/BackLink";
 import { ParallaxBackground } from "@/components/ui/ParallaxBackground";
 import { formatPortfolioCaseLabel } from "@/lib/data/portfolio-works";
 import type { CaseStudy } from "@/lib/data/portfolio";
@@ -51,13 +52,14 @@ export function CaseStudyHero({
   return (
     <section
       data-nav-theme="light"
-      className="relative z-10 flex min-h-[70svh] items-center overflow-hidden rounded-b-2xl bg-white pb-16 pt-[calc(3.25rem+env(safe-area-inset-top,0px))] text-ink-900 lg:rounded-b-[44px] lg:pb-24 lg:pt-36"
+      className="relative z-10 flex min-h-[70svh] items-start overflow-hidden rounded-b-2xl bg-white pb-16 pt-[calc(6.5rem+env(safe-area-inset-top,0px))] text-ink-900 lg:items-center lg:rounded-b-[44px] lg:pb-24 lg:pt-36"
     >
       {image ? (
         <ParallaxBackground
           src={image}
           alt=""
           priority
+          className="z-0"
           imageClassName="object-contain object-right"
         >
           <div
@@ -75,21 +77,16 @@ export function CaseStudyHero({
         </ParallaxBackground>
       ) : null}
 
-      <Container className="relative z-10 w-full">
+      <Container className="relative z-20 w-full">
         <div className="flex w-full max-w-content flex-col items-stretch text-left">
-          <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-3">
-            <Link
-              href={backLink.href}
-              className="inline-flex w-fit items-center gap-2 font-sans text-kicker uppercase text-genie-700 transition-colors hover:text-genie-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-genie-500/50"
-            >
-              <span aria-hidden="true">←</span> {backLink.label}
-            </Link>
+          <div className="relative z-20 flex flex-wrap items-center justify-between gap-x-6 gap-y-3">
+            <BackLink href={backLink.href} label={backLink.label} />
             {caseLabel ? (
               <p className="font-sans text-kicker uppercase text-genie-700">{caseLabel}</p>
             ) : null}
           </div>
 
-          <div className="mt-10 flex flex-col gap-0.5 sm:mt-12">
+          <div className="mt-12 flex flex-col gap-0.5 sm:mt-14">
             {specialtyLines.map((line) => (
               <p key={line} className="font-sans text-kicker uppercase text-genie-700">
                 {line}

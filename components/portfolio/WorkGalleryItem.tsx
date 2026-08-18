@@ -60,28 +60,23 @@ export function WorkGalleryItem({ work, index }: WorkGalleryItemProps) {
         aria-hidden={showWorkMedia}
       >
         <span className={styles.sheen} aria-hidden="true" />
-        <div className="relative z-10 flex min-h-0 flex-1 items-center justify-center px-10">
-          <Image
-            src={work.logo}
-            alt=""
-            width={320}
-            height={110}
-            className={cn(
-              "h-auto w-auto object-contain",
-              work.id === "tac"
-                ? "max-h-16 max-w-[58%] sm:max-h-20 lg:max-h-24"
-                : work.id === "aquaphysio"
-                  ? "max-h-[5.5rem] max-w-[52%] sm:max-h-[6.4rem] lg:max-h-[7.2rem]"
-                  : work.logo.includes("/square/")
-                    ? "max-h-24 max-w-[64%] sm:max-h-32 lg:max-h-36"
-                    : "max-h-24 max-w-[80%] sm:max-h-28 lg:max-h-32",
-              "transition-transform duration-ui ease-out-soft",
-              "group-hover:scale-[1.03] motion-reduce:group-hover:scale-100"
-            )}
-            priority={index < 4}
-          />
+        <div className="relative z-10 flex min-h-0 flex-1 items-center justify-center px-3 sm:px-8">
+          <div className={styles.logoFrame}>
+            <Image
+              src={work.logo}
+              alt=""
+              width={320}
+              height={110}
+              className={cn(
+                styles.logoImage,
+                "transition-transform duration-ui ease-out-soft",
+                "group-hover:scale-[1.03] motion-reduce:group-hover:scale-100"
+              )}
+              priority={index < 4}
+            />
+          </div>
         </div>
-        <p className="relative z-10 line-clamp-2 px-7 pb-5 text-center font-display text-sm font-semibold leading-none tracking-tight text-ink-500 sm:px-8 sm:text-base sm:leading-none">
+        <p className="relative z-10 line-clamp-2 px-3 pb-3 text-center font-display text-xs font-semibold leading-snug tracking-tight text-ink-500 sm:px-8 sm:pb-5 sm:text-base sm:leading-none">
           {work.title}
         </p>
       </div>
@@ -100,7 +95,7 @@ export function WorkGalleryItem({ work, index }: WorkGalleryItemProps) {
               src={src}
               alt=""
               fill
-              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+              sizes="(max-width: 640px) 46vw, (max-width: 1024px) 50vw, 25vw"
               className={cn(
                 "object-cover transition-opacity duration-ui ease-out-soft",
                 showWorkMedia && imageIndex === activeImageIndex

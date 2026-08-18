@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { BackLink } from "@/components/ui/BackLink";
 import { cn } from "@/lib/cn";
 
 export function ServiceBreadcrumb({
@@ -10,15 +10,5 @@ export function ServiceBreadcrumb({
   label?: string;
   className?: string;
 }) {
-  return (
-    <Link
-      href={href}
-      className={cn(
-        "inline-flex w-fit items-center gap-2 font-sans text-kicker uppercase text-genie-700 transition-colors hover:text-genie-900",
-        className
-      )}
-    >
-      <span aria-hidden="true">←</span> {label}
-    </Link>
-  );
+  return <BackLink href={href} label={label} className={cn(className)} />;
 }
