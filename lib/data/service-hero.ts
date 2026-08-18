@@ -37,7 +37,7 @@ export const SERVICE_HERO_VISUAL: Record<string, ServiceHeroVisualConfig> = {
   "healthcare-seo": {
     variant: "right",
     kind: "image",
-    src: "/services/medical-seo.png",
+    src: "/services/healthcare-seo.png",
     alt: "Healthcare SEO specialist working at a laptop, reaching toward a search interface",
     imageClassName: "object-cover object-[center_30%]",
     surface: "white",
