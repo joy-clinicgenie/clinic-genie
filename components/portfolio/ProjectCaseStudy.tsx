@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { BackLink } from "@/components/ui/BackLink";
 import { Section } from "@/components/ui/Section";
 import { Container } from "@/components/ui/Container";
