@@ -42,6 +42,11 @@ const nextConfig = {
         permanent: true,
       },
       {
+        source: '/sunrise',
+        destination: '/portfolio/sunrise-heart',
+        permanent: true,
+      },
+      {
         source: '/blog',
         destination: '/genie-tips',
         permanent: true,
