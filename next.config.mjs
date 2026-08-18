@@ -37,6 +37,11 @@ const nextConfig = {
         permanent: true,
       },
       {
+        source: '/cedar',
+        destination: '/portfolio/cedar-endocrine-clinic',
+        permanent: true,
+      },
+      {
         source: '/blog',
         destination: '/genie-tips',
         permanent: true,
