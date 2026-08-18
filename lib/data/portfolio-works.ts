@@ -162,7 +162,7 @@ export const PORTFOLIO_WORKS: PortfolioWorkSlide[] = [
   },
   {
     id: "sunrise-heart",
-    title: "Sunrise Heart Clinic",
+    title: "Sunrise Heart Specialist Clinic",
     category: "Heart & Cardiology",
     line: "Trusted pathways for heart health discovery",
     logo: "/clients/square/sunrise-square.png",

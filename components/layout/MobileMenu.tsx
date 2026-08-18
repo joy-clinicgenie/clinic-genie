@@ -12,7 +12,6 @@ import {
   type NavItem,
 } from "@/lib/data/nav";
 import { ArrowUpRight } from "lucide-react";
-import { MagicOrb } from "@/components/orb/MagicOrb";
 import { Logo } from "@/components/ui/Logo";
 import { MagneticButton } from "@/components/ui/MagneticButton";
 import { cn } from "@/lib/cn";
@@ -120,10 +119,6 @@ export function MobileMenu({ open, onClose }: { open: boolean; onClose: () => vo
           exit={reduceMotion ? { opacity: 0 } : { clipPath: "circle(0% at 90% 5%)" }}
           transition={{ duration: reduceMotion ? 0.01 : 0.5, ease: [0.22, 1, 0.36, 1] }}
         >
-          <div className="pointer-events-none absolute inset-0 flex items-center justify-center opacity-50">
-            <MagicOrb variant="home" className="w-72" />
-          </div>
-
           <div className="relative flex items-center justify-between px-[var(--page-pad)] pb-2.5 pt-[calc(0.625rem+env(safe-area-inset-top,0px))]">
             <Logo tone="dark" onClick={onClose} current={pathname === "/"} />
             <button

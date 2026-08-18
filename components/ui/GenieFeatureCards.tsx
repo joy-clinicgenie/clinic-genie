@@ -42,7 +42,7 @@ export function GenieFeatureCards({
   subtitleClassName,
 }: GenieFeatureCardsProps) {
   return (
-    <section id={id} data-nav-theme="light" className={cn(styles.section, className)}>
+    <section id={id} data-nav-theme="light" data-debug-section="feature-cards" className={cn(styles.section, className)}>
       <div className="mx-auto w-full max-w-wide px-[var(--page-pad)]">
         <Reveal>
           <header className={cn(styles.header, "max-w-2xl", headerClassName)}>

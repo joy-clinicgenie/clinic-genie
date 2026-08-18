@@ -30,7 +30,7 @@ export function AboutApproachTimeline() {
     <LandingSection
       id="how-we-work"
       tone="white"
-      className="bg-gradient-to-b from-[#e3f6fa] via-[#f8fdfd] to-white py-24"
+      className="bg-gradient-to-b from-[#e3f6fa] via-[#f8fdfd] to-white pb-16 pt-8 md:py-20 lg:py-24"
       containerClassName="flex flex-col items-center gap-12"
     >
       <Reveal>

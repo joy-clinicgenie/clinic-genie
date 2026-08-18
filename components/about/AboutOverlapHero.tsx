@@ -18,6 +18,7 @@ export function AboutOverlapHero() {
         showSparkles={false}
         surface="white"
         align="center"
+        mobileAlign="left"
         minHeight="min-h-0"
         copyClassName="max-w-5xl"
         titleClassName="max-w-none md:whitespace-nowrap"

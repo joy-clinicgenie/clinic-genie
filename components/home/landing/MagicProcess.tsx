@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore } from "react";
+import { useCallback, useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore, type CSSProperties } from "react";
 import {
   motion,
   useMotionValueEvent,
@@ -161,7 +161,7 @@ function ProcessCard({
       <MagicNumber n={step.n} title={step.title} active={active} circleRef={circleRef} compact={compact} />
       <motion.div
         className="flex min-w-0 flex-1 flex-col gap-1.5 lg:flex-none lg:gap-2"
-        style={reduced ? undefined : { opacity, y }}
+        style={reduced || compact ? undefined : { opacity, y }}
       >
         <h3 className={cn("font-display text-h4", dark ? "text-white" : "text-ink-900")}>{step.title}</h3>
         <p
@@ -200,6 +200,7 @@ export function MagicProcess({
 
   const reduced = useReducedMotion();
   const compact = useCompactProcess();
+  const instant = Boolean(reduced || compact);
   const [pathD, setPathD] = useState("");
   const [pathLength, setPathLength] = useState(1);
   const [lineAxis, setLineAxis] = useState({ x1: 0, y1: 0, x2: 1, y2: 0 });
@@ -230,7 +231,7 @@ export function MagicProcess({
     scrollYProgress,
     threshold: ctaRevealEnd,
     delayMs: 500,
-    enabled: !reduced,
+    enabled: !instant,
   });
 
   const measurePath = useCallback(() => {
@@ -288,8 +289,13 @@ export function MagicProcess({
     };
   }, [measurePath]);
 
+  useEffect(() => {
+    if (!instant) return;
+    setActiveSteps(steps.map(() => true));
+  }, [instant, steps]);
+
   useMotionValueEvent(progress, "change", (value) => {
-    if (reduced) {
+    if (instant) {
       setActiveSteps(steps.map(() => true));
       return;
     }
@@ -301,13 +307,18 @@ export function MagicProcess({
   return (
     <div
       ref={sectionRef}
+      data-debug-section="magic-process"
       className={cn(
         styles.section,
         dark && styles.sectionDark,
         dark && "rounded-2xl lg:rounded-[44px]",
         compact && styles.sectionCompact
       )}
-      style={{ minHeight: reduced ? undefined : `${steps.length * 100}vh` }}
+      style={
+        reduced
+          ? undefined
+          : ({ "--process-scroll-height": `${steps.length * 100}vh` } as CSSProperties)
+      }
     >
       <div ref={stageRef} className={styles.sticky}>
         <div className={styles.stickyInner}>
@@ -327,7 +338,7 @@ export function MagicProcess({
             ref={svgRef}
             aria-hidden="true"
             className="pointer-events-none absolute inset-0 h-full w-full overflow-visible"
-            style={{ opacity: reduced ? 1 : lineReveal }}
+            style={{ opacity: instant ? 1 : lineReveal }}
           >
             <defs>
               <linearGradient
@@ -367,7 +378,7 @@ export function MagicProcess({
                   filter="url(#magic-process-glow)"
                   strokeDasharray={pathLength}
                   style={{
-                    strokeDashoffset: reduced ? 0 : dashOffset,
+                    strokeDashoffset: instant ? 0 : dashOffset,
                     opacity: 0.55,
                   }}
                 />
@@ -382,7 +393,7 @@ export function MagicProcess({
                   className={styles.lineGlow}
                   strokeDasharray={pathLength}
                   style={{
-                    strokeDashoffset: reduced ? 0 : dashOffset,
+                    strokeDashoffset: instant ? 0 : dashOffset,
                   }}
                 />
               </>
@@ -409,7 +420,7 @@ export function MagicProcess({
 
           <motion.div
             className={cn("relative z-10 flex justify-center", styles.ctaBlock)}
-            style={reduced ? undefined : { opacity: ctaOpacity, y: ctaY }}
+            style={instant ? undefined : { opacity: ctaOpacity, y: ctaY }}
           >
             <MagneticButton href="/contact" size="lg" withMiniOrb tone="dark">
               Make Your First Wish

@@ -67,6 +67,8 @@ export function LightHero({
     treatment?: "light" | "dark";
     /** Applied to the background Image (object-position, etc.). */
     imageClassName?: string;
+    /** Light hero wash. `bottom-fade` keeps the photo visible at the top on mobile. */
+    lightOverlay?: "flat" | "bottom-fade";
   };
   /** Section fill when no background image is set. */
   surface?: "mist" | "white";
@@ -131,8 +133,9 @@ export function LightHero({
       <div
         className={cn(
           "flex flex-col flex-wrap items-center gap-5 sm:flex-row sm:gap-4",
-          centered || mobileCentered ? "justify-center" : "justify-center lg:justify-start",
-          !centered && mobileCentered && "lg:justify-start"
+          centered && mobileCentered && "justify-center",
+          centered && !mobileCentered && "justify-start lg:justify-center",
+          !centered && "justify-center lg:justify-start"
         )}
       >
         {primaryCta && (
@@ -168,7 +171,9 @@ export function LightHero({
     <motion.div
       className={cn(
         styles.copyBlock,
-        centered ? "mx-auto max-w-3xl items-center text-center" : "max-w-3xl lg:text-left",
+        centered && mobileCentered && "mx-auto max-w-3xl items-center text-center",
+        centered && !mobileCentered && "max-w-3xl items-start text-left lg:mx-auto lg:items-center lg:text-center",
+        !centered && "max-w-3xl lg:text-left",
         !centered && mobileCentered && "max-lg:mx-auto max-lg:items-center max-lg:text-center",
         copyClassName
       )}
@@ -237,6 +242,18 @@ export function LightHero({
               <div
                 aria-hidden="true"
                 className="absolute inset-x-0 top-0 h-[58%] bg-[radial-gradient(ellipse_at_50%_12%,rgba(4,31,39,0.5),transparent_72%)] lg:hidden"
+              />
+            </>
+          ) : backgroundImage?.lightOverlay === "bottom-fade" ? (
+            <>
+              <div aria-hidden="true" className="absolute inset-0 hidden bg-white/55 lg:block" />
+              <div
+                aria-hidden="true"
+                className={cn("absolute inset-0 lg:hidden", styles.bottomFadeMobile)}
+              />
+              <div
+                aria-hidden="true"
+                className={cn("absolute inset-x-0 top-0 h-20 lg:hidden", styles.topScrimMobile)}
               />
             </>
           ) : (

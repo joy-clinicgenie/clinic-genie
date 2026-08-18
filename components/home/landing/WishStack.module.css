@@ -64,6 +64,10 @@
   flex-direction: column;
 }
 
+.card {
+  position: sticky;
+}
+
 .cardBody {
   display: flex;
   flex-direction: column;
@@ -197,6 +201,19 @@
 
   .exploreButton::before {
     transition: none;
+  }
+
+  .introSticky {
+    position: static;
+  }
+
+  .card {
+    position: static;
+    top: auto !important;
+  }
+
+  .spacer {
+    display: none;
   }
 }
 

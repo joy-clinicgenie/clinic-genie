@@ -71,6 +71,12 @@
   --footer-to:   #062D36;
 }
 
+@media (max-width: 1023px) {
+  :root {
+    --text-lead: var(--text-body);
+  }
+}
+
 @media (max-width: 639px) {
   :root {
     --text-h1: 2.25rem;

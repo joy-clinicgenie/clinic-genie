@@ -65,15 +65,19 @@ export function SectionHeading({
   const hasSubheading = Boolean(subtitle && description);
   const bodyText = description ?? subtitle;
   const resolvedMobileAlign = mobileAlign ?? align;
+  const desktopCentered = align === "center";
+  const mobileCentered = resolvedMobileAlign === "center";
+  const centerAll = desktopCentered && mobileCentered;
+  const centerDesktopLeftMobile = desktopCentered && !mobileCentered;
+  const leftDesktopCenterMobile = !desktopCentered && mobileCentered;
 
   return (
     <div
       className={cn(
         "flex flex-col gap-4",
-        align === "center" && "items-center text-center",
-        resolvedMobileAlign === "center" &&
-          align !== "center" &&
-          "max-lg:items-center max-lg:text-center lg:items-start lg:text-left",
+        centerAll && "items-center text-center",
+        centerDesktopLeftMobile && "items-start text-left lg:items-center lg:text-center",
+        leftDesktopCenterMobile && "max-lg:items-center max-lg:text-center lg:items-start lg:text-left",
         className
       )}
     >
@@ -90,10 +94,9 @@ export function SectionHeading({
             SIZE[as],
             "whitespace-pre-line text-balance",
             tone === "dark" ? "text-onDark" : "text-ink-900",
-            align === "center" && "mx-auto max-w-5xl",
-            resolvedMobileAlign === "center" &&
-              align !== "center" &&
-              "max-lg:mx-auto lg:mx-0",
+            centerAll && "mx-auto max-w-5xl",
+            centerDesktopLeftMobile && "max-w-5xl max-lg:mx-0 lg:mx-auto",
+            leftDesktopCenterMobile && "max-lg:mx-auto lg:mx-0",
             titleClassName
           )}
         >
@@ -104,9 +107,11 @@ export function SectionHeading({
         <Reveal variant="up" delay={0.1}>
           <p
             className={cn(
-              "font-display text-subtitle font-normal text-pretty max-w-sm sm:max-w-[75%] sm:text-h5",
+              "font-display text-body font-normal text-pretty max-w-sm sm:max-w-[75%] lg:text-h6 xl:text-subtitle",
               tone === "dark" ? "text-onDark-muted" : "text-ink-700",
-              align === "center" && "mx-auto"
+              centerAll && "mx-auto",
+              centerDesktopLeftMobile && "max-lg:mx-0 lg:mx-auto",
+              leftDesktopCenterMobile && "max-lg:mx-auto lg:mx-0"
             )}
           >
             {subtitle}
@@ -117,12 +122,11 @@ export function SectionHeading({
         <Reveal variant="up" delay={hasSubheading ? 0.14 : 0.12}>
           <p
             className={cn(
-              as === "h1" ? "text-body" : "text-lead",
+              as === "h1" ? "text-body" : "text-body lg:text-lead",
               tone === "dark" ? "text-onDark-muted" : "text-ink-700",
-              align === "center" && "mx-auto",
-              resolvedMobileAlign === "center" &&
-                align !== "center" &&
-                "max-lg:mx-auto lg:mx-0",
+              centerAll && "mx-auto",
+              centerDesktopLeftMobile && "max-lg:mx-0 lg:mx-auto",
+              leftDesktopCenterMobile && "max-lg:mx-auto lg:mx-0",
               subtitleClassName ??
                 "max-w-full sm:max-w-[75%] whitespace-pre-line text-pretty"
             )}

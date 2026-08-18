@@ -3,6 +3,7 @@
 import { motion, useTransform } from "framer-motion";
 import { useMemo, type CSSProperties } from "react";
 import { cn } from "@/lib/cn";
+import { useCoarsePointer } from "@/lib/hooks/useConstrainedMotion";
 import { usePointer } from "@/lib/hooks/usePointer";
 import { SparkleCluster } from "@/components/ui/SparkleCluster";
 import styles from "./SparkleField.module.css";
@@ -33,6 +34,8 @@ export function SparkleField({
   parallax?: boolean;
   className?: string;
 }) {
+  const coarsePointer = useCoarsePointer();
+  const enableParallax = parallax && !coarsePointer;
   const { mx, my } = usePointer();
   const tx = useTransform(mx, (v) => v * -8);
   const ty = useTransform(my, (v) => v * -8);
@@ -60,7 +63,7 @@ export function SparkleField({
   return (
     <motion.div
       aria-hidden="true"
-      style={parallax ? { x: tx, y: ty } : undefined}
+      style={enableParallax ? { x: tx, y: ty } : undefined}
       className={cn("pointer-events-none absolute inset-0 overflow-hidden", className)}
     >
       {stars.map((s, i) =>

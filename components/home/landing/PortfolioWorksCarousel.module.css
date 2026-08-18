@@ -498,6 +498,32 @@
   margin-right: var(--carousel-gap, -1.75rem);
 }
 
+@media (max-width: 1023px) {
+  .stage {
+    perspective: none;
+  }
+
+  .track,
+  .slide {
+    transform-style: flat;
+  }
+
+  .slide {
+    will-change: auto;
+  }
+
+  .viewport {
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
+  .cardActive,
+  .carouselGlow,
+  .bandStars {
+    animation: none;
+  }
+}
+
 @media (max-width: 767px) {
   .viewport,
   .band,
@@ -533,13 +559,7 @@
   }
 
   .stage {
-    perspective: none;
     height: calc(var(--carousel-card-width) * 5 / 4 + 2.5rem);
-  }
-
-  .viewport {
-    -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 6%, #000 94%, transparent 100%);
-    mask-image: linear-gradient(to right, transparent 0%, #000 6%, #000 94%, transparent 100%);
   }
 }
 
@@ -547,8 +567,8 @@
   .viewport,
   .band,
   .carouselShell {
-    --carousel-card-width: 18rem;
-    --carousel-gap: -1rem;
+    --carousel-card-width: 17.5rem;
+    --carousel-gap: -2.5rem;
   }
 
   .carouselGlow {
@@ -559,6 +579,30 @@
   .intro {
     padding-bottom: 2.75rem;
   }
+}
+
+:global(html[data-pointer="coarse"]) .stage {
+  perspective: none;
+}
+
+:global(html[data-pointer="coarse"]) .track,
+:global(html[data-pointer="coarse"]) .slide {
+  transform-style: flat;
+}
+
+:global(html[data-pointer="coarse"]) .slide {
+  will-change: auto;
+}
+
+:global(html[data-pointer="coarse"]) .viewport {
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+
+:global(html[data-pointer="coarse"]) .cardActive,
+:global(html[data-pointer="coarse"]) .carouselGlow,
+:global(html[data-pointer="coarse"]) .bandStars {
+  animation: none;
 }
 
 @media (min-width: 1024px) {
@@ -745,11 +789,6 @@
 
   .bandShowcase .intro :global(h3) {
     margin-top: 0.25rem;
-  }
-
-  .bandShowcase .viewport {
-    -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 6%, #000 94%, transparent 100%);
-    mask-image: linear-gradient(to right, transparent 0%, #000 6%, #000 94%, transparent 100%);
   }
 
   .bandShowcase .carouselShell {

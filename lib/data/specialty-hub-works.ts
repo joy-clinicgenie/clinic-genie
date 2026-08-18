@@ -90,6 +90,8 @@ export const SPECIALTY_HUB_WORKS: CaseStudy[] = [
     tagline: "The flow of healing.",
     specialty: "Physiotherapy + Rehabilitation",
     line: "A licensed aquatic physiotherapy centre, positioned as clinical care, not wellness",
+    metaDescription:
+      "Brand, website and healthcare SEO for a licensed aquatic physiotherapy centre at Camden Medical Centre, structured across four therapy streams.",
     tags: ["Branding", "Content", "Web Design", "SEO", "SEM"],
     serviceTags: ["Branding", "Copywriting", "Web Design", "SEO", "SEM"],
     result: "4 therapy streams · 1 heated pool inside a medical centre",
@@ -269,6 +271,8 @@ export const SPECIALTY_HUB_WORKS: CaseStudy[] = [
     tagline: "Your health nurtured.",
     specialty: "Endocrinology + Hormone Health",
     line: "Specialist endocrine care across two hospitals, made findable and easy to understand.",
+    metaDescription:
+      "Brand, website and healthcare SEO for a Singapore endocrinology clinic. Six condition pillars across two hospital locations.",
     tags: ["Branding", "Web Design", "SEO", "SEM"],
     serviceTags: ["Branding", "Web Design", "SEO", "SEM", "Collaterals"],
     result: "6 treatment pillars structured · 2 locations, one enquiry path",
@@ -449,6 +453,8 @@ export const SPECIALTY_HUB_WORKS: CaseStudy[] = [
     tagline: "Quality skincare for your whole family.",
     specialty: "Dermatology + Skin Surgery",
     line: "Medical and surgical dermatology, structured to read clinical, not cosmetic.",
+    metaDescription:
+      "Brand, website architecture and healthcare SEO for a specialist medical and surgical dermatology practice in Singapore, structured across 25+ conditions.",
     tags: ["Branding", "Content", "Web Design", "SEO", "SEM"],
     serviceTags: ["Branding", "Copywriting", "Web Design", "SEO", "SEM"],
     result: "25+ condition pages structured · 18 years of specialist practice",
@@ -627,6 +633,8 @@ export const SPECIALTY_HUB_WORKS: CaseStudy[] = [
     tagline: "Implanting the foundation of a timeless smile.",
     specialty: "Dental + Implantology",
     line: "Thirty years of implant expertise, given a brand and a search presence to match.",
+    metaDescription:
+      "Brand framework, website and paid search for a Singapore dental implant practice with 30 years of implant experience across nine treatment areas.",
     tags: ["Branding", "Web Design", "SEO", "SEM"],
     serviceTags: ["Branding", "Web Design", "SEO", "SEM"],
     result: "30+ years of practice · 9 treatment areas structured",
@@ -804,6 +812,8 @@ export const SPECIALTY_HUB_WORKS: CaseStudy[] = [
     tagline: "Brain. Spine. Nerves.",
     specialty: "Neurosurgery + Spine",
     line: "International fellowships. Three decades of practice, subspecialty training abroad",
+    metaDescription:
+      "Brand, website and search for a Singapore neurosurgery and spine practice. A three-pillar architecture built for patients facing serious diagnoses.",
     tags: ["Branding", "Content", "Web Design", "SEO", "SEM"],
     serviceTags: ["Branding", "Copywriting", "Web Design", "SEO", "SEM"],
     result: "3 clinical pillars · 4 hospitals covered",
@@ -983,6 +993,8 @@ export const SPECIALTY_HUB_WORKS: CaseStudy[] = [
     tagline: "Affordable heart care at Sembawang.",
     specialty: "Cardiology + Community Care",
     line: "Specialist cardiac care in the heartlands, built to be found by patients and by the AI they now ask first.",
+    metaDescription:
+      "Brand, website, SEO and AI search optimisation for a community cardiology clinic serving Singapore's northern towns.",
     tags: ["Branding", "Content", "Web Design", "SEO", "SEM", "AI Search"],
     serviceTags: ["Branding", "Copywriting", "Web Design", "SEO", "SEM", "GEO"],
     result: "3 modes of care · 5 northern towns served",
@@ -1168,6 +1180,8 @@ export const SPECIALTY_HUB_WORKS: CaseStudy[] = [
     tagline: "Face it. Fix it.",
     specialty: "Skin + Aesthetics",
     line: "A clinic devoted entirely to acne, built for acne search from day one",
+    metaDescription:
+      "Brand, website, condition-led SEO and paid search for a single-focus acne clinic in Singapore. Five condition pages built around how patients describe their skin.",
     tags: ["Branding", "Web Design", "SEO", "SEM", "Video", "Social Media"],
     serviceTags: ["Branding", "Web Design", "SEO", "SEM", "Collaterals", "Social Video"],
     result: "5 acne types mapped · 1 clinic, 1 focus",

@@ -22,6 +22,7 @@ import {
 } from "@/components/home/landing/LandingLayout";
 import { PORTFOLIO_WORKS, type PortfolioWorkSlide } from "@/lib/data/portfolio-works";
 import { cn } from "@/lib/cn";
+import { hasCoarsePointer } from "@/lib/hooks/useConstrainedMotion";
 import styles from "./PortfolioWorksCarousel.module.css";
 
 export type CarouselVariant = "cinematic" | "showcase";
@@ -40,14 +41,11 @@ export type PortfolioWorksCarouselProps = {
 
 const GRANTED_HEADING = "Clinics whose wishes we have granted.";
 const CARD_GAP_DESKTOP = -28;
-const CARD_GAP_TABLET = -16;
 const CARD_GAP_SHOWCASE = -40;
-const CARD_WIDTH_TABLET = 288;
 const CARD_WIDTH_DESKTOP = 320;
 const CARD_WIDTH_DESKTOP_XL = 336;
 const CARD_WIDTH_SHOWCASE_MIN = 180;
 const CARD_WIDTH_SHOWCASE_MAX = 210;
-const MD_BREAKPOINT = 768;
 const LG_BREAKPOINT = 1024;
 const XL_BREAKPOINT = 1440;
 const LOOP_COPIES = 3;
@@ -114,42 +112,41 @@ function getCinematicMobileWidth(viewportWidth: number) {
   return Math.round(Math.min(280, Math.max(228, viewportWidth * 0.72)));
 }
 
-function getMotionMode(variant: CarouselVariant, viewportWidth: number): MotionMode {
-  if (viewportWidth < MD_BREAKPOINT) return "coverflow";
-  if (variant === "showcase" && viewportWidth < LG_BREAKPOINT) return "coverflow";
+function getMotionMode(viewportWidth: number, constrained: boolean): MotionMode {
+  if (constrained || viewportWidth < LG_BREAKPOINT) return "coverflow";
   return "editorial";
 }
 
-function getCardWidth(viewportWidth: number, variant: CarouselVariant = "cinematic") {
-  if (getMotionMode(variant, viewportWidth) === "coverflow") {
+function getCardWidth(
+  viewportWidth: number,
+  variant: CarouselVariant,
+  mode: MotionMode
+) {
+  if (mode === "coverflow") {
     return variant === "showcase"
       ? getShowcaseCardWidth(viewportWidth)
       : getCinematicMobileWidth(viewportWidth);
   }
-  if (viewportWidth < LG_BREAKPOINT) return CARD_WIDTH_TABLET;
   if (viewportWidth < XL_BREAKPOINT) return CARD_WIDTH_DESKTOP;
   return CARD_WIDTH_DESKTOP_XL;
 }
 
-function getCardGap(mode: MotionMode, viewportWidth: number) {
-  if (mode === "coverflow") return CARD_GAP_SHOWCASE;
-  if (viewportWidth < LG_BREAKPOINT) return CARD_GAP_TABLET;
-  return CARD_GAP_DESKTOP;
+function getCardGap(mode: MotionMode) {
+  return mode === "coverflow" ? CARD_GAP_SHOWCASE : CARD_GAP_DESKTOP;
 }
 
-function getMotionIntensity(viewportWidth: number) {
-  if (viewportWidth < LG_BREAKPOINT) return 0.62;
-  return 1;
-}
-
-function measureLayout(viewportWidth: number, variant: CarouselVariant): CarouselLayout {
-  const mode = getMotionMode(variant, viewportWidth);
+function measureLayout(
+  viewportWidth: number,
+  variant: CarouselVariant,
+  constrained = false
+): CarouselLayout {
+  const mode = getMotionMode(viewportWidth, constrained);
   return {
-    cardWidth: getCardWidth(viewportWidth, variant),
+    cardWidth: getCardWidth(viewportWidth, variant, mode),
     viewportWidth,
-    gap: getCardGap(mode, viewportWidth),
+    gap: getCardGap(mode),
     mode,
-    intensity: getMotionIntensity(viewportWidth),
+    intensity: 1,
   };
 }
 
@@ -270,7 +267,8 @@ function WorkCard({
             alt={slide.title}
             fill
             className={styles.cardImage}
-            sizes="(max-width: 767px) 72vw, (max-width: 1023px) 288px, (max-width: 1439px) 320px, 336px"
+            sizes="(max-width: 767px) 72vw, (max-width: 1023px) 280px, (max-width: 1439px) 320px, 336px"
+            priority={isActive}
           />
         ) : (
           <div className={styles.cardPlaceholder} aria-hidden="true">
@@ -351,18 +349,19 @@ function CarouselSlide({
   const layoutRef = useRef({ cardWidth, viewportWidth, gap, mode, intensity });
   layoutRef.current = { cardWidth, viewportWidth, gap, mode, intensity };
 
-  const offset = useTransform(x, (currentX) => {
+  const pose = useTransform(x, (currentX) => {
     const l = layoutRef.current;
-    return index - getVirtualIndex(currentX, l.cardWidth, l.viewportWidth, l.gap);
+    const offset = index - getVirtualIndex(currentX, l.cardWidth, l.viewportWidth, l.gap);
+    return slideTransform(offset, l.mode, l.intensity);
   });
-  const rotateY = useTransform(offset, (o) => slideTransform(o, layoutRef.current.mode, layoutRef.current.intensity).rotateY);
-  const rotateZ = useTransform(offset, (o) => slideTransform(o, layoutRef.current.mode, layoutRef.current.intensity).rotateZ);
-  const scale = useTransform(offset, (o) => slideTransform(o, layoutRef.current.mode, layoutRef.current.intensity).scale);
-  const translateZ = useTransform(offset, (o) => slideTransform(o, layoutRef.current.mode, layoutRef.current.intensity).translateZ);
-  const translateX = useTransform(offset, (o) => slideTransform(o, layoutRef.current.mode, layoutRef.current.intensity).translateX);
-  const translateY = useTransform(offset, (o) => slideTransform(o, layoutRef.current.mode, layoutRef.current.intensity).translateY);
-  const opacity = useTransform(offset, (o) => slideTransform(o, layoutRef.current.mode, layoutRef.current.intensity).opacity);
-  const zIndex = useTransform(offset, (o) => slideTransform(o, layoutRef.current.mode, layoutRef.current.intensity).zIndex);
+  const rotateY = useTransform(pose, (p) => p.rotateY);
+  const rotateZ = useTransform(pose, (p) => p.rotateZ);
+  const scale = useTransform(pose, (p) => p.scale);
+  const translateZ = useTransform(pose, (p) => p.translateZ);
+  const translateX = useTransform(pose, (p) => p.translateX);
+  const translateY = useTransform(pose, (p) => p.translateY);
+  const opacity = useTransform(pose, (p) => p.opacity);
+  const zIndex = useTransform(pose, (p) => p.zIndex);
 
   return (
     <motion.div
@@ -552,11 +551,16 @@ const DragCarousel = forwardRef<
   useEffect(() => {
     const updateLayout = () => {
       const viewportWidth = regionRef.current?.clientWidth ?? window.innerWidth;
-      setLayout(measureLayout(viewportWidth, variant));
+      setLayout(measureLayout(viewportWidth, variant, hasCoarsePointer()));
     };
     updateLayout();
     window.addEventListener("resize", updateLayout);
-    return () => window.removeEventListener("resize", updateLayout);
+    const coarseMq = window.matchMedia("(any-pointer: coarse)");
+    coarseMq.addEventListener("change", updateLayout);
+    return () => {
+      window.removeEventListener("resize", updateLayout);
+      coarseMq.removeEventListener("change", updateLayout);
+    };
   }, [variant]);
 
   const { cardWidth, viewportWidth, gap, mode, intensity } = layout;
@@ -877,7 +881,7 @@ export function PortfolioWorksCarousel({
   kicker = "Our Work",
   title = GRANTED_HEADING,
   highlight,
-  body = "Specialist clinics across Singapore trust Clinic Genie with their paid search.",
+  body = "Specialist clinics across Singapore trust Clinic Genie with their brand, their website, and their search.",
   cta = { label: "See Our Granted Wishes", href: "/portfolio" },
   slides = PORTFOLIO_WORKS,
   variant = "cinematic",
@@ -925,7 +929,7 @@ export function PortfolioWorksCarousel({
 
   return (
     <div className="flex w-full flex-col">
-      <div className={cn(styles.band, showcase && styles.bandShowcase)}>
+      <div data-debug-section="works-carousel" className={cn(styles.band, showcase && styles.bandShowcase)}>
         <div className={styles.bandBackdrop} aria-hidden="true">
           <div className={styles.bandStars} />
         </div>

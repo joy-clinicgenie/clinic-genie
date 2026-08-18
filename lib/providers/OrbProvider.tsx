@@ -3,6 +3,11 @@
 import { useEffect } from "react";
 import { useOrbStore, type OrbRenderer } from "@/components/orb/store";
 import { startPointerTracking } from "@/lib/hooks/usePointer";
+import {
+  isLowPowerDevice,
+  prefersReducedMotion,
+  syncPointerDataset,
+} from "@/lib/hooks/useConstrainedMotion";
 
 function canUseWebGL(): boolean {
   try {
@@ -17,24 +22,10 @@ function canUseWebGL(): boolean {
   }
 }
 
-function isLowPower(): boolean {
-  const n = navigator as Navigator & {
-    connection?: { saveData?: boolean };
-    deviceMemory?: number;
-  };
-  if (n.connection?.saveData) return true;
-  if (typeof n.deviceMemory === "number" && n.deviceMemory < 4) return true;
-  if (typeof navigator.hardwareConcurrency === "number" && navigator.hardwareConcurrency <= 4) return true;
-  // coarse pointer on a small viewport = phone
-  const coarse = window.matchMedia("(pointer: coarse)").matches;
-  if (coarse && window.innerWidth < 768) return true;
-  return false;
-}
-
 function detectRenderer(): OrbRenderer {
-  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return "static";
+  if (prefersReducedMotion()) return "static";
   if (!canUseWebGL()) return "canvas2d";
-  if (isLowPower()) return "canvas2d";
+  if (isLowPowerDevice()) return "canvas2d";
   return "webgl";
 }
 
@@ -44,14 +35,25 @@ export function OrbProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     startPointerTracking();
+    syncPointerDataset();
     setScene({ renderer: detectRenderer() });
 
-    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const onChange = () => setScene({ renderer: detectRenderer() });
-    mq.addEventListener("change", onChange);
+    const onChange = () => {
+      syncPointerDataset();
+      setScene({ renderer: detectRenderer() });
+    };
 
-    // pause/resume on tab visibility is handled inside each renderer
-    return () => mq.removeEventListener("change", onChange);
+    const motionMq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const coarseMq = window.matchMedia("(any-pointer: coarse)");
+    motionMq.addEventListener("change", onChange);
+    coarseMq.addEventListener("change", onChange);
+    window.addEventListener("resize", onChange);
+
+    return () => {
+      motionMq.removeEventListener("change", onChange);
+      coarseMq.removeEventListener("change", onChange);
+      window.removeEventListener("resize", onChange);
+    };
   }, [setScene]);
 
   return <>{children}</>;

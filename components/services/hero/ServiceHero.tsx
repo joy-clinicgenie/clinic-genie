@@ -115,7 +115,7 @@ export function ServiceHero({
               {title}
             </h1>
             {supportingLine ? (
-              <p className={cn(styles.supportingLine, "font-display text-subtitle font-normal text-ink-700")}>
+              <p className={cn(styles.supportingLine, "font-display text-body font-normal text-ink-700 lg:text-subtitle")}>
                 {supportingLine}
               </p>
             ) : null}

@@ -32,7 +32,7 @@ export function generateMetadata({
 
   return pageMetadata({
     title: study.name,
-    description: study.line,
+    description: study.metaDescription ?? study.line,
     path: `/portfolio/${params.slug}`,
     keywords: [study.name, "specialist clinic marketing Singapore"],
   });

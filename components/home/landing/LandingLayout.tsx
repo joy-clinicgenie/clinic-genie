@@ -85,6 +85,22 @@ export function LandingKicker({
   );
 }
 
+function renderHighlightedTitle(title: string, highlight: string) {
+  const index = title.indexOf(highlight);
+  if (index === -1) return title;
+
+  const before = title.slice(0, index);
+  const after = title.slice(index + highlight.length);
+  const punct = after.match(/^[,.:;!?]+/)?.[0] ?? "";
+  const rest = after.slice(punct.length);
+
+  return (
+    <>
+      {before}<span className="genie-text whitespace-nowrap">{`${highlight}${punct}`}</span>{rest}
+    </>
+  );
+}
+
 export function LandingHeading({
   children,
   highlight,
@@ -107,15 +123,7 @@ export function LandingHeading({
   );
 
   if (typeof children === "string" && highlight && children.includes(highlight)) {
-    const [before, ...rest] = children.split(highlight);
-    const after = rest.join(highlight);
-    return (
-      <Tag className={base}>
-        {before}
-        <span className="genie-text">{highlight}</span>
-        {after}
-      </Tag>
-    );
+    return <Tag className={base}>{renderHighlightedTitle(children, highlight)}</Tag>;
   }
 
   return <Tag className={base}>{children}</Tag>;

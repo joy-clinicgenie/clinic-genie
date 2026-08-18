@@ -88,7 +88,7 @@ function WishCardImage({ slug, accent }: { slug: string; accent: string }) {
             src={image.src}
             alt=""
             fill
-            className="object-cover"
+            className={image.className ?? "object-cover"}
             sizes="(max-width: 768px) 100vw, 240px"
             onError={() => setFailed(true)}
           />
@@ -141,7 +141,7 @@ export function WishStack({
   }, [intro.kicker, intro.title, intro.subtitle, intro.highlight]);
 
   return (
-    <div ref={rootRef} className={styles.root}>
+    <div ref={rootRef} className={cn("wish-stack", styles.root)}>
       <div ref={introRef} className={styles.introSticky}>
         <LandingIntro
           kicker={intro.kicker}
@@ -155,7 +155,7 @@ export function WishStack({
         {pillars.map((pillar, index) => (
           <article
             key={pillar.slug}
-            className="sticky"
+            className={styles.card}
             style={{
               top: stackBase + index * STACK_STEP,
               zIndex: index + 1,

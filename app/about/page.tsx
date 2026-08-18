@@ -43,7 +43,7 @@ export default function AboutPage() {
       {/* What we stand for */}
       <LandingSection
         tone="white"
-        className="bg-gradient-to-b from-[#f8fdfd] via-[#eafbfb] to-[#e3f6fa] py-24"
+        className="bg-gradient-to-b from-[#f8fdfd] via-[#eafbfb] to-[#e3f6fa] pb-10 pt-16 md:py-20 lg:py-24"
         containerClassName="flex flex-col gap-12"
       >
         <Reveal>

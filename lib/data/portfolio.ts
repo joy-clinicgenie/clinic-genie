@@ -48,6 +48,8 @@ export interface CaseStudy {
   tagline?: string;
   specialty: string;
   line: string;
+  /** Search snippet. Falls back to `line` when omitted. */
+  metaDescription?: string;
   tags: WorkTag[];
   /** Display tags for hero chips when they differ from filterable WorkTag values */
   serviceTags?: string[];
@@ -321,6 +323,8 @@ export const CASE_STUDIES: CaseStudy[] = [
     tagline: "Planting joy. Harvesting potential.",
     specialty: "Paediatrics + Child Development",
     line: "A new paediatric clinic launched into Bukit Timah with a brand, a search footprint, and a listed presence from day one.",
+    metaDescription:
+      "Brand, website, SEO and directory presence for a new paediatric and developmental clinic in Bukit Timah, launched from zero online.",
     tags: ["Branding", "Content", "Web Design", "SEO", "SEM"],
     serviceTags: ["Branding", "Copywriting", "Web Design", "SEO", "SEM", "FindClinic"],
     result: "2 care pillars · 2 paediatricians · 4 hospitals covered",

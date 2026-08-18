@@ -30,6 +30,27 @@
   }
 }
 
+.bottomFadeMobile {
+  background: linear-gradient(
+    to top,
+    #ffffff 0%,
+    #ffffff 14%,
+    rgb(255 255 255 / 0.97) 24%,
+    rgb(255 255 255 / 0.82) 42%,
+    rgb(255 255 255 / 0.45) 56%,
+    transparent 72%
+  );
+}
+
+.topScrimMobile {
+  background: linear-gradient(
+    to bottom,
+    rgb(255 255 255 / 0.62) 0%,
+    rgb(255 255 255 / 0.28) 45%,
+    transparent 100%
+  );
+}
+
 @media (max-width: 1023px) {
   .lightHeroContent {
     transform: translateY(-10svh);
