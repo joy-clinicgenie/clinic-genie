@@ -11,6 +11,7 @@ import { PageTransition } from "@/components/layout/PageTransition";
 import { RootJsonLd } from "@/components/seo/RootJsonLd";
 import { DEFAULT_OG_IMAGE } from "@/lib/seo";
 import { SITE } from "@/lib/data/nav";
+import { Analytics } from "@vercel/analytics/next";
 
 const outfit = Outfit({ subsets: ["latin"], weight: ["400", "600", "700"], variable: "--font-outfit", display: "swap" });
 const instrumentSans = Instrument_Sans({
