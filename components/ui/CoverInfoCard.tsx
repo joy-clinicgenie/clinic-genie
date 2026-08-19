@@ -1,6 +1,10 @@
+"use client";
+
+import { useRef, type RefObject } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { cn } from "@/lib/cn";
+import { usePrefersReducedMotion } from "@/lib/hooks/useReducedMotion";
 
 export interface CoverInfoCardProps {
   title: string;
@@ -8,6 +12,8 @@ export interface CoverInfoCardProps {
   image: string;
   alt: string;
   href: string;
+  /** Optional cover video. Paused by default; plays on hover and focus. */
+  video?: string;
   /** Extra classes for the image, typically object-position. */
   imageClassName?: string;
   className?: string;
@@ -15,6 +21,10 @@ export interface CoverInfoCardProps {
 
 function isExternalHref(href: string): boolean {
   return href.startsWith("http://") || href.startsWith("https://");
+}
+
+function isSameOriginMediaSrc(src: string): boolean {
+  return src.startsWith("/") && !src.startsWith("//") && !src.includes("\\");
 }
 
 function CardArrowIcon() {
@@ -51,15 +61,99 @@ function CardArrowIcon() {
   );
 }
 
+function showFirstFrame(node: HTMLVideoElement) {
+  if (node.readyState < 1) return;
+  try {
+    node.currentTime = 0.001;
+  } catch {
+    node.currentTime = 0;
+  }
+}
+
+function CoverCardMedia({
+  image,
+  alt,
+  video,
+  imageClassName,
+  videoRef,
+  reduceMotion,
+}: {
+  image: string;
+  alt: string;
+  video?: string;
+  imageClassName?: string;
+  videoRef: RefObject<HTMLVideoElement | null>;
+  reduceMotion: boolean;
+}) {
+  const mediaClassName = cn("absolute inset-0 h-full w-full object-cover", imageClassName);
+  const showVideo = Boolean(video) && !reduceMotion && isSameOriginMediaSrc(video ?? "");
+
+  if (showVideo && video) {
+    return (
+      <video
+        ref={videoRef}
+        className={mediaClassName}
+        muted
+        loop
+        playsInline
+        preload="auto"
+        aria-hidden="true"
+        onLoadedData={(event) => showFirstFrame(event.currentTarget)}
+      >
+        <source src={video} type="video/mp4" />
+      </video>
+    );
+  }
+
+  return (
+    <Image
+      key={image}
+      src={image}
+      alt={alt}
+      fill
+      className={cn("object-cover", imageClassName)}
+      sizes="(max-width: 767px) 100vw, (max-width: 1023px) 50vw, 33vw"
+    />
+  );
+}
+
 export function CoverInfoCard({
   title,
   body,
   image,
   alt,
   href,
+  video,
   imageClassName,
   className,
 }: CoverInfoCardProps) {
+  const reduceMotion = usePrefersReducedMotion();
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  const playVideo = () => {
+    const node = videoRef.current;
+    if (!node) return;
+    node.muted = true;
+    void node.play().catch(() => undefined);
+  };
+
+  const pauseVideo = () => {
+    const node = videoRef.current;
+    if (!node) return;
+    node.pause();
+    showFirstFrame(node);
+  };
+
+  const hoverPlay = Boolean(video) && !reduceMotion;
+  const hoverProps = hoverPlay
+    ? {
+        onMouseEnter: playVideo,
+        onMouseLeave: pauseVideo,
+        onFocus: playVideo,
+        onBlur: pauseVideo,
+      }
+    : undefined;
+
   const article = (
     <article
       className={cn(
@@ -67,19 +161,19 @@ export function CoverInfoCard({
         className
       )}
     >
-      <Image
-        key={image}
-        src={image}
+      <CoverCardMedia
+        image={image}
         alt={alt}
-        fill
-        className={cn("object-cover", imageClassName)}
-        sizes="(max-width: 767px) 100vw, (max-width: 1023px) 50vw, 33vw"
+        video={video}
+        imageClassName={imageClassName}
+        videoRef={videoRef}
+        reduceMotion={reduceMotion}
       />
       <div
         aria-hidden="true"
-        className="absolute inset-0 bg-gradient-to-t from-night-900 via-night-900/50 to-transparent"
+        className="absolute inset-0 z-[1] bg-gradient-to-t from-night-900 via-night-900/50 to-transparent"
       />
-      <div className="relative mt-auto flex flex-col items-start gap-3 p-7 md:p-8">
+      <div className="relative z-[1] mt-auto flex flex-col items-start gap-3 p-7 md:p-8">
         <div className="flex w-full flex-col gap-2">
           <h3 className="font-display text-h4 font-semibold leading-snug text-white">{title}</h3>
           <p className="text-body leading-relaxed text-onDark-muted">{body}</p>
@@ -105,6 +199,7 @@ export function CoverInfoCard({
         aria-label={`${title}: ${body}`}
         target="_blank"
         rel="noopener noreferrer"
+        {...hoverProps}
       >
         {article}
       </a>
@@ -112,7 +207,12 @@ export function CoverInfoCard({
   }
 
   return (
-    <Link href={href} className={linkClassName} aria-label={`${title}: ${body}`}>
+    <Link
+      href={href}
+      className={linkClassName}
+      aria-label={`${title}: ${body}`}
+      {...hoverProps}
+    >
       {article}
     </Link>
   );

@@ -23,6 +23,8 @@ export interface GrantedWish {
   summary: string;
   href: string;
   image?: string;
+  /** Optional looping cover video. `image` is used as the poster and reduced-motion fallback. */
+  video?: string;
   alt?: string;
   imageClassName?: string;
 }
@@ -120,7 +122,7 @@ export const CORE_PILLARS: CorePillar[] = [
     name: "FindClinic.sg",
     accent: "#FF575C",
     heroSubtitle: "FindClinic.sg",
-    heroTitle: "Where patients discover the right care, with clarity.",
+    heroTitle: "Where patients discover the right care, with clarity",
     heroParagraph: [
       "The wish does not stop at your website.",
       "FindClinic.sg connects patients with specialist clinics across Singapore through verified listings and doctor profiles. One more way for the right patients to find you.",
@@ -193,6 +195,7 @@ export const CORE_PILLARS: CorePillar[] = [
         summary: "Doctor interviews that explain real conditions and treatments.",
         href: `${FINDCLINIC_URL}/blog/categories/doctor-interviews`,
         image: "/services/findclinic/findclinic-interview.png",
+        video: "/services/findclinic/findclinic-interview.mp4",
         alt: "FindClinic.sg doctor interview on a phone",
       },
       {
@@ -200,6 +203,7 @@ export const CORE_PILLARS: CorePillar[] = [
         summary: "Verified doctor profiles patients can compare with confidence.",
         href: `${FINDCLINIC_URL}/specialist-listing`,
         image: "/services/findclinic/findclinic-specialists.png",
+        video: "/services/findclinic/findclinic-specialists.mp4",
         alt: "FindClinic.sg specialist listing on tablet and phone",
       },
       {
@@ -207,6 +211,7 @@ export const CORE_PILLARS: CorePillar[] = [
         summary: "Clear guides that help patients understand symptoms, treatments, and next steps.",
         href: `${FINDCLINIC_URL}/heatlh-conditions/cataracts`,
         image: "/services/findclinic/findclinic-health-conditions.png",
+        video: "/services/findclinic/findclinic-healthconditions.mp4",
         alt: "FindClinic.sg health condition guides",
       },
     ],

@@ -41,15 +41,12 @@ export async function POST(request: Request) {
 
   try {
     let record: ContactSubmissionRecord;
-    let storage: "supabase" | "local-fallback";
 
     if (hasSupabaseConfig()) {
       record = await saveContactSubmission(parsed.data);
-      storage = "supabase";
     } else {
       // Allow Resend verification / local testing when Supabase is not configured.
       record = buildLocalRecord(parsed.data);
-      storage = "local-fallback";
     }
 
     try {
@@ -58,7 +55,7 @@ export async function POST(request: Request) {
       console.error("Contact saved but email failed:", emailError);
     }
 
-    return NextResponse.json({ ok: true, id: record.id, storage });
+    return NextResponse.json({ ok: true, id: record.id });
   } catch (error) {
     console.error("Contact submission failed:", error);
     return NextResponse.json(

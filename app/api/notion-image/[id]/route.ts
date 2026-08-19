@@ -23,6 +23,49 @@ function extractFileUrl(
   return null;
 }
 
+function isSafeUpstreamImageUrl(urlString: string): boolean {
+  let url: URL;
+  try {
+    url = new URL(urlString);
+  } catch {
+    return false;
+  }
+
+  if (url.protocol !== "https:") return false;
+
+  const host = url.hostname.toLowerCase().replace(/\.$/, "");
+  if (
+    host === "localhost" ||
+    host.endsWith(".localhost") ||
+    host.endsWith(".local") ||
+    host === "0.0.0.0" ||
+    host === "127.0.0.1" ||
+    host === "::1"
+  ) {
+    return false;
+  }
+
+  const ipv4 = /^(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})$/.exec(host);
+  if (ipv4) {
+    const octets = ipv4.slice(1, 5).map(Number);
+    const [a, b] = octets;
+    if (
+      a === 0 ||
+      a === 10 ||
+      a === 127 ||
+      (a === 169 && b === 254) ||
+      (a === 172 && b >= 16 && b <= 31) ||
+      (a === 192 && b === 168)
+    ) {
+      return false;
+    }
+  }
+
+  if (host.includes(":")) return false;
+
+  return true;
+}
+
 async function resolveNotionImageUrl(id: string): Promise<string | null> {
   const notion = getNotionClient();
   if (!notion) return null;
@@ -50,11 +93,11 @@ export async function GET(
 
   try {
     const sourceUrl = await resolveNotionImageUrl(id);
-    if (!sourceUrl) {
+    if (!sourceUrl || !isSafeUpstreamImageUrl(sourceUrl)) {
       return NextResponse.json({ error: "Image not found" }, { status: 404 });
     }
 
-    const upstream = await fetch(sourceUrl, { cache: "no-store" });
+    const upstream = await fetch(sourceUrl, { cache: "no-store", redirect: "error" });
     if (!upstream.ok || !upstream.body) {
       return NextResponse.json(
         { error: "Failed to fetch Notion image" },
@@ -62,7 +105,10 @@ export async function GET(
       );
     }
 
-    const contentType = upstream.headers.get("content-type") || "image/jpeg";
+    const contentType = upstream.headers.get("content-type") || "";
+    if (!contentType.toLowerCase().startsWith("image/")) {
+      return NextResponse.json({ error: "Image not found" }, { status: 404 });
+    }
     return new NextResponse(upstream.body, {
       status: 200,
       headers: {

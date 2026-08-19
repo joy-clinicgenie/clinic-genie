@@ -307,6 +307,7 @@ export default function PillarPage({ params }: { params: { slug: string } }) {
                   body={wish.summary}
                   href={wish.href}
                   image={wish.image ?? "/services/findclinic-hero.png"}
+                  video={wish.video}
                   alt={wish.alt ?? wish.name}
                   imageClassName={wish.imageClassName}
                   className="h-full"

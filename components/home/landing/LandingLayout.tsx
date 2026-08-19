@@ -296,7 +296,7 @@ export function MetricCell({
           style={{ lineHeight: 1 }}
         />
         {suffix ? (
-          <span className="ml-0.5 text-[0.55em] font-bold leading-none tracking-tighter">
+          <span className="ml-0.5 text-[0.55em] font-bold leading-none tracking-tighter text-genie-500/85">
             {suffix}
           </span>
         ) : null}
