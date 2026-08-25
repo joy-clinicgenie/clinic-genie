@@ -31,6 +31,17 @@ export interface CaseStudyCard {
   diagram?: "pillars";
 }
 
+export interface CaseStudyWorkImage {
+  src: string;
+  alt: string;
+}
+
+export interface CaseStudyWorkImages {
+  brand?: CaseStudyWorkImage;
+  structure?: CaseStudyWorkImage;
+  patientJourney?: CaseStudyWorkImage;
+}
+
 export interface CaseStudyShift {
   before: string;
   after: string;
@@ -74,6 +85,8 @@ export interface CaseStudy {
   diagnosisBody: string;
   diagnosisLenses: CaseStudyCard[];
   workedOnIntro?: string;
+  /** Three landscape frames for Brand, Structure, and Patient journey. Omitted slots render empty. */
+  workedOnImages?: CaseStudyWorkImages;
   workedOn: CaseStudyCard[];
   strategyIntro: string;
   strategyBody: string;
@@ -93,6 +106,8 @@ export interface CaseStudy {
   changesLead?: string;
   changesIntro?: string;
   changes: CaseStudyCard[];
+  /** When false, the case study is omitted from the sitemap and marked noindex. */
+  index?: boolean;
 }
 
 const DEFAULT_DIAGNOSIS_LENSES: CaseStudyCard[] = [
@@ -139,6 +154,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     slug: "pilotpulse",
     name: "PilotPulse",
     specialty: "Other",
+    index: false,
     line: "Premium rebrand + content engine for chemical peels, fractional laser and skin boosters.",
     tags: ["Web Design", "SEO", "Content"],
     result: "Page 1 for 6 priority treatment keywords",
@@ -230,6 +246,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     slug: "stellaris",
     name: "Stellaris",
     specialty: "Other",
+    index: false,
     line: "A reassuring, compliant brand for a sensitive specialty.",
     tags: ["Branding", "Social Media", "Strategy"],
     result: "+64% qualified enquiries in 5 months",
@@ -389,6 +406,16 @@ export const CASE_STUDIES: CaseStudy[] = [
     ],
     workedOnIntro:
       "Six workstreams, one goal: help parents move from search to understanding to enquiry with less friction.",
+    workedOnImages: {
+      brand: {
+        src: "/works/journey/joyfulseeds-image1.png",
+        alt: "Joyful Seeds brochure explaining guanfacine for ADHD for parents",
+      },
+      patientJourney: {
+        src: "/works/journey/joyfulseeds-image3.png",
+        alt: "Joyful Seeds parent journey from FindClinic discovery through care pillars to booking",
+      },
+    },
     workedOn: [
       {
         title: "Brand and voice",
@@ -523,4 +550,8 @@ export const WORK_FILTERS: ("All" | WorkTag)[] = [
 
 export function getCaseStudy(slug: string) {
   return CASE_STUDIES.find((c) => c.slug === slug);
+}
+
+export function isIndexableCaseStudy(study: CaseStudy): boolean {
+  return study.index !== false;
 }

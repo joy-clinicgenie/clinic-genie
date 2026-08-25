@@ -2,6 +2,7 @@
 
 import type { ReactNode } from "react";
 import { useRef } from "react";
+import dynamic from "next/dynamic";
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 import { Container } from "@/components/ui/Container";
@@ -9,7 +10,6 @@ import { ParallaxBackground } from "@/components/ui/ParallaxBackground";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { MagneticButton } from "@/components/ui/MagneticButton";
 import { SparkleField } from "@/components/ui/SparkleField";
-import { HeroOrb } from "@/components/home/HeroOrb";
 import heroStyles from "@/components/home/Hero.module.css";
 import { cn } from "@/lib/cn";
 import { ease } from "@/lib/motion";
@@ -21,6 +21,11 @@ type CtaLink = {
   /** Defaults to true for the primary CTA. */
   withMiniOrb?: boolean;
 };
+
+const HeroOrb = dynamic(
+  () => import("@/components/home/HeroOrb").then((module) => module.HeroOrb),
+  { ssr: false }
+);
 
 export function LightHero({
   kicker,

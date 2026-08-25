@@ -32,6 +32,10 @@ export function parseContactSubmission(body: unknown): ContactValidationResult {
   }
 
   const raw = body as Record<string, unknown>;
+  if (trim(raw.website)) {
+    return { ok: false, error: "Invalid submission." };
+  }
+
   const name = trim(raw.name);
   const clinic = trim(raw.clinic);
   const email = trim(raw.email).toLowerCase();

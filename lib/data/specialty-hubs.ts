@@ -577,14 +577,18 @@ export function getPublishedSpecialtyHubs(): SpecialtyHub[] {
   return SPECIALTY_HUBS.filter((hub) => hub.published);
 }
 
-export function getSpecialtyHubHref(_hub: SpecialtyHubCard): string | undefined {
-  return undefined;
+export function getSpecialtyHubHref(hub: SpecialtyHubCard): string | undefined {
+  if (!hub.published) return undefined;
+  return `/clinic-specialties/${hub.slug}`;
 }
 
 export function getSpecialtyCategoryItemHref(
-  _item: SpecialtyCategoryItem
+  item: SpecialtyCategoryItem
 ): string | undefined {
-  return undefined;
+  if (!item.slug) return undefined;
+  const hub = getSpecialtyHub(item.slug);
+  if (!hub?.published) return undefined;
+  return `/clinic-specialties/${hub.slug}`;
 }
 
 export function isSpecialtyHubDetail(hub: SpecialtyHub): hub is SpecialtyHubDetail {

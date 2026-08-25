@@ -20,16 +20,24 @@ function JourneyFlow({ steps }: { steps: string[] }) {
       aria-label="Patient journey stages"
     >
       {steps.map((step, index) => {
+        const isFirst = index === 0;
         const isLast = index === steps.length - 1;
 
         return (
           <li
             key={step}
-            className="flex flex-1 gap-4 lg:flex-col lg:items-center lg:gap-4"
+            className="flex gap-4 lg:min-w-0 lg:flex-1 lg:flex-col lg:items-center lg:gap-4"
           >
             <div className="flex flex-col items-center self-stretch lg:w-full lg:flex-row lg:items-center">
+              <span
+                aria-hidden="true"
+                className={cn(
+                  "hidden h-px flex-1 lg:block",
+                  isFirst ? "bg-transparent" : "bg-genie-500/40"
+                )}
+              />
               <motion.span
-                className="grid h-12 w-12 shrink-0 place-items-center rounded-full border border-hairline-light bg-white font-display text-sm font-semibold text-ink-900"
+                className="relative z-10 grid h-12 w-12 shrink-0 place-items-center rounded-full border border-hairline-light bg-white font-display text-sm font-semibold text-ink-900"
                 initial={reduced ? false : { opacity: 0, y: 8 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-10% 0px" }}
@@ -42,23 +50,15 @@ function JourneyFlow({ steps }: { steps: string[] }) {
                 {padIndex(index)}
               </motion.span>
               {!isLast ? (
-                <motion.span
+                <span
                   aria-hidden="true"
-                  className="w-px min-h-8 flex-1 bg-genie-500/40 lg:h-px lg:min-h-0 lg:w-auto"
-                  initial={reduced ? false : { opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
-                  viewport={{ once: true, margin: "-10% 0px" }}
-                  transition={{
-                    duration: 0.45,
-                    ease: ease.glide,
-                    delay: reduced ? 0 : 0.12 + index * 0.08,
-                  }}
+                  className="w-px min-h-8 flex-1 bg-genie-500/40 lg:h-px lg:min-h-0"
                 />
               ) : (
-                <span aria-hidden="true" className="hidden lg:block lg:flex-1" />
+                <span aria-hidden="true" className="hidden flex-1 lg:block" />
               )}
             </div>
-            <p className="pb-8 font-display text-h6 font-semibold text-ink-900 lg:pb-0 lg:pt-0 lg:text-center">
+            <p className="pb-8 font-display text-h6 font-semibold text-ink-900 lg:w-full lg:max-w-[10rem] lg:pb-0 lg:text-center">
               {step}
             </p>
           </li>
@@ -83,41 +83,56 @@ function ArchitecturePath({
     <div className="flex flex-col gap-5">
       <Kicker tone="light">{label}</Kicker>
       <ol className="flex list-none flex-col" aria-label={`${label} website path`}>
-        {steps.map((step, index) => (
-          <li key={`${label}-${step}`} className="flex flex-col">
-            <div
-              className={cn(
-                "rounded-2xl border px-4 py-3",
-                isClear
-                  ? "border-genie-500/30 bg-white text-ink-900 shadow-card"
-                  : "border-hairline-light bg-cg-mist/60 text-ink-700"
-              )}
-            >
-              <span className="flex items-center gap-3">
+        {steps.map((step, index) => {
+          const isLast = index === steps.length - 1;
+
+          return (
+            <li key={`${label}-${step}`} className="flex gap-4">
+              <div className="flex w-10 shrink-0 flex-col items-center">
                 {isClear ? (
                   <span
                     aria-hidden="true"
-                    className="font-display text-sm font-semibold tabular-nums text-genie-700"
+                    className={cn(
+                      "grid h-8 w-8 place-items-center rounded-full font-display text-xs font-semibold tabular-nums",
+                      isLast
+                        ? "bg-genie-500 text-white"
+                        : "border border-genie-500/40 bg-white text-genie-700"
+                    )}
                   >
                     {padIndex(index)}
                   </span>
-                ) : null}
-                <span className={cn("font-sans text-sm sm:text-base", isClear && "font-medium")}>
-                  {step}
-                </span>
-              </span>
-            </div>
-            {index < steps.length - 1 ? (
-              <span
-                aria-hidden="true"
-                className={cn(
-                  "mx-auto h-5 w-px",
-                  isClear ? "bg-genie-500/50" : "bg-hairline-light"
+                ) : (
+                  <span
+                    aria-hidden="true"
+                    className="mt-2 size-2.5 rounded-full border border-hairline-light bg-cg-mist"
+                  />
                 )}
-              />
-            ) : null}
-          </li>
-        ))}
+                {!isLast ? (
+                  <span
+                    aria-hidden="true"
+                    className={cn(
+                      "flex-1",
+                      isClear
+                        ? "min-h-6 w-px bg-genie-500/40"
+                        : "min-h-5 w-0 border-l border-dashed border-hairline-light"
+                    )}
+                  />
+                ) : null}
+              </div>
+              <p
+                className={cn(
+                  "min-w-0 pb-6 font-sans text-sm sm:text-base",
+                  isClear && "pt-1 text-ink-900",
+                  isClear && isLast && "font-semibold",
+                  !isClear && "pt-0.5 text-ink-700",
+                  isLast && "pb-0"
+                )}
+              >
+                {step}
+              </p>
+            </li>
+          );
+        })}
       </ol>
     </div>
   );
@@ -128,7 +143,7 @@ export function PatientJourney({ study }: { study: CaseStudy }) {
   const afterSteps = toPathSteps(study.journey.websiteMap.new);
 
   return (
-    <Section tone="light" className="![background:white]">
+    <Section tone="light" className="bg-cg-mist ![background:theme(colors.cg-mist)]">
       <Container className="flex flex-col gap-14 lg:gap-20">
         <SectionHeading
           kicker="Patient journey map"

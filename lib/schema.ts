@@ -28,8 +28,8 @@ export function organizationSchema() {
     logo: {
       "@type": "ImageObject",
       url: siteUrl("/brand/brandmark.png"),
-      width: 512,
-      height: 512,
+      width: 574,
+      height: 576,
     },
     description: SITE.description,
     email: SITE.email,
