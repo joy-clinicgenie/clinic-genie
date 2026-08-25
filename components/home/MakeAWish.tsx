@@ -68,7 +68,7 @@ const FALLBACK: Wish = {
   match: [],
 };
 
-const CHIPS = ["More patients", "Rank #1 on Google", "A new website", "Trust & compliance"];
+const CHIPS = ["More patients", "Search visibility", "A new website", "Trust & compliance"];
 const PLACEHOLDER = "What's your clinic's wish?";
 
 function resolveWish(input: string): Wish {

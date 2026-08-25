@@ -2,6 +2,15 @@ export function padIndex(index: number): string {
   return String(index + 1).padStart(2, "0");
 }
 
+export type WorkstreamImageSlotKey = "brand" | "structure" | "patientJourney";
+
+/** 01 → Brand, 02 → Structure, 03 onwards → Patient journey. */
+export function slotKeyForWorkstreamIndex(index: number): WorkstreamImageSlotKey {
+  if (index <= 0) return "brand";
+  if (index === 1) return "structure";
+  return "patientJourney";
+}
+
 export function toPathSteps(value: string | string[]): string[] {
   if (Array.isArray(value)) {
     return value.map((step) => step.trim()).filter(Boolean);

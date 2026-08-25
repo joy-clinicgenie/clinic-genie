@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, type RefObject } from "react";
+import { useEffect, useRef, useState, type RefObject } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { cn } from "@/lib/cn";
@@ -82,11 +82,18 @@ function CoverCardMedia({
   alt: string;
   video?: string;
   imageClassName?: string;
-  videoRef: RefObject<HTMLVideoElement | null>;
+  videoRef: RefObject<HTMLVideoElement>;
   reduceMotion: boolean;
 }) {
+  const [canPlayVideo, setCanPlayVideo] = useState(false);
+
+  useEffect(() => {
+    setCanPlayVideo(!reduceMotion);
+  }, [reduceMotion]);
+
   const mediaClassName = cn("absolute inset-0 h-full w-full object-cover", imageClassName);
-  const showVideo = Boolean(video) && !reduceMotion && isSameOriginMediaSrc(video ?? "");
+  const showVideo =
+    Boolean(video) && canPlayVideo && !reduceMotion && isSameOriginMediaSrc(video ?? "");
 
   if (showVideo && video) {
     return (
@@ -96,7 +103,7 @@ function CoverCardMedia({
         muted
         loop
         playsInline
-        preload="auto"
+        preload="metadata"
         aria-hidden="true"
         onLoadedData={(event) => showFirstFrame(event.currentTarget)}
       >
@@ -129,6 +136,11 @@ export function CoverInfoCard({
 }: CoverInfoCardProps) {
   const reduceMotion = usePrefersReducedMotion();
   const videoRef = useRef<HTMLVideoElement>(null);
+  const [canPlayVideo, setCanPlayVideo] = useState(false);
+
+  useEffect(() => {
+    setCanPlayVideo(!reduceMotion);
+  }, [reduceMotion]);
 
   const playVideo = () => {
     const node = videoRef.current;
@@ -144,7 +156,7 @@ export function CoverInfoCard({
     showFirstFrame(node);
   };
 
-  const hoverPlay = Boolean(video) && !reduceMotion;
+  const hoverPlay = Boolean(video) && canPlayVideo && !reduceMotion;
   const hoverProps = hoverPlay
     ? {
         onMouseEnter: playVideo,

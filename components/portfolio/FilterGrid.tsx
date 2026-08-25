@@ -5,7 +5,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { cn } from "@/lib/cn";
 import { ease } from "@/lib/motion";
 import { useOrbStore } from "@/components/orb/store";
-import { CASE_STUDIES, WORK_FILTERS, type WorkTag } from "@/lib/data/portfolio";
+import { CASE_STUDIES, WORK_FILTERS, isIndexableCaseStudy, type WorkTag } from "@/lib/data/portfolio";
 import { CaseCard } from "./CaseCard";
 
 type Filter = (typeof WORK_FILTERS)[number];
@@ -15,8 +15,9 @@ export function FilterGrid() {
   const pulse = useOrbStore((s) => s.pulse);
 
   const visible = useMemo(() => {
-    if (active === "All") return CASE_STUDIES;
-    return CASE_STUDIES.filter((c) => c.tags.includes(active as WorkTag));
+    const published = CASE_STUDIES.filter(isIndexableCaseStudy);
+    if (active === "All") return published;
+    return published.filter((c) => c.tags.includes(active as WorkTag));
   }, [active]);
 
   function selectFilter(filter: Filter) {

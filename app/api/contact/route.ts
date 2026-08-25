@@ -6,6 +6,7 @@ import {
   type ContactSubmissionRecord,
 } from "@/lib/contact/schema";
 import { sendContactNotification } from "@/lib/contact/notify";
+import { allowContactAttempt, getClientIp } from "@/lib/contact/rate-limit";
 import { saveContactSubmission } from "@/lib/supabase/admin";
 
 function hasSupabaseConfig(): boolean {
@@ -26,6 +27,16 @@ function buildLocalRecord(
 }
 
 export async function POST(request: Request) {
+  if (!allowContactAttempt(getClientIp(request))) {
+    return NextResponse.json(
+      {
+        error:
+          "Too many enquiries from this connection. Please wait a few minutes or email hello@clinic-genie.com.",
+      },
+      { status: 429 }
+    );
+  }
+
   let body: unknown;
 
   try {
@@ -41,18 +52,31 @@ export async function POST(request: Request) {
 
   try {
     let record: ContactSubmissionRecord;
+    let persisted = false;
 
     if (hasSupabaseConfig()) {
       record = await saveContactSubmission(parsed.data);
+      persisted = true;
     } else {
-      // Allow Resend verification / local testing when Supabase is not configured.
       record = buildLocalRecord(parsed.data);
     }
 
+    let emailed = false;
     try {
       await sendContactNotification(record);
+      emailed = true;
     } catch (emailError) {
-      console.error("Contact saved but email failed:", emailError);
+      console.error("Contact notification failed:", emailError);
+    }
+
+    if (!persisted && !emailed) {
+      return NextResponse.json(
+        {
+          error:
+            "We could not send your enquiry right now. Please try again or email hello@clinic-genie.com.",
+        },
+        { status: 500 }
+      );
     }
 
     return NextResponse.json({ ok: true, id: record.id });

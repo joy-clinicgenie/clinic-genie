@@ -209,7 +209,7 @@ export const CORE_PILLARS: CorePillar[] = [
       {
         name: "Health Conditions",
         summary: "Clear guides that help patients understand symptoms, treatments, and next steps.",
-        href: `${FINDCLINIC_URL}/heatlh-conditions/cataracts`,
+        href: `${FINDCLINIC_URL}/heatlh-conditions/cataracts`, // Live FindClinic.sg path (legacy spelling).
         image: "/services/findclinic/findclinic-health-conditions.png",
         video: "/services/findclinic/findclinic-healthconditions.mp4",
         alt: "FindClinic.sg health condition guides",

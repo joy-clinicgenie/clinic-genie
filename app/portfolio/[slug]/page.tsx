@@ -4,7 +4,7 @@ import { JsonLd } from "@/components/seo/JsonLd";
 import { ProjectCaseStudy } from "@/components/portfolio/ProjectCaseStudy";
 import { ProjectComingSoon } from "@/components/portfolio/ProjectComingSoon";
 import { SpecialtyHubWorkTemplate } from "@/components/specialty-hub/SpecialtyHubWorkTemplate";
-import { CASE_STUDIES, getCaseStudy } from "@/lib/data/portfolio";
+import { CASE_STUDIES, getCaseStudy, isIndexableCaseStudy } from "@/lib/data/portfolio";
 import { getPortfolioWorkMeta } from "@/lib/data/specialty-hub-works";
 import { pageMetadata } from "@/lib/seo";
 import { breadcrumbList, nestedBreadcrumbs, schemaGraph } from "@/lib/schema";
@@ -35,6 +35,8 @@ export function generateMetadata({
     description: study.metaDescription ?? study.line,
     path: `/portfolio/${params.slug}`,
     keywords: [study.name, "specialist clinic marketing Singapore"],
+    index: isIndexableCaseStudy(study),
+    follow: isIndexableCaseStudy(study),
   });
 }
 

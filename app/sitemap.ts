@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 import { SITE } from "@/lib/data/nav";
-import { CASE_STUDIES } from "@/lib/data/portfolio";
+import { CASE_STUDIES, isIndexableCaseStudy } from "@/lib/data/portfolio";
 import { CORE_PILLARS } from "@/lib/data/pillars";
 import { getPublishedSpecialtyHubs, isSpecialtyHubDetail } from "@/lib/data/specialty-hubs";
 import { getPublishedPosts } from "@/lib/notion";
@@ -29,7 +29,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     .filter(isSpecialtyHubDetail)
     .map((hub) => `/clinic-specialties/${hub.slug}`);
 
-  const portfolioRoutes = CASE_STUDIES.map((study) => `/portfolio/${study.slug}`);
+  const portfolioRoutes = CASE_STUDIES.filter(isIndexableCaseStudy).map(
+    (study) => `/portfolio/${study.slug}`
+  );
 
   let genieTipRoutes: string[] = [];
   try {

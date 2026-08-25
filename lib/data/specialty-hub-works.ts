@@ -154,6 +154,16 @@ export const SPECIALTY_HUB_WORKS: CaseStudy[] = [
     ],
     workedOnIntro:
       "Five workstreams, one goal: help patients move from search to understanding to enquiry with less friction.",
+    workedOnImages: {
+      brand: {
+        src: "/works/journey/aquaphysio-image1.png",
+        alt: "Indoor aquatic therapy pool at Aqua Physio Rehab Centre with wall branding and treatment equipment",
+      },
+      patientJourney: {
+        src: "/works/journey/aquaphysio-image3.png",
+        alt: "AquaPhysio patient journey from search through condition, therapy, licensing, and booking pages",
+      },
+    },
     workedOn: [
       {
         title: "Brand and voice",
@@ -331,12 +341,24 @@ export const SPECIALTY_HUB_WORKS: CaseStudy[] = [
     ],
     workedOnIntro:
       "Five workstreams, one goal: help patients move from search to understanding to enquiry with less friction.",
+    workedOnImages: {
+      brand: {
+        src: "/works/cedar.png",
+        alt: "Cedar Endocrine Clinic reception with brand identity on the clinic wall",
+      },
+      structure: {
+        src: "/works/journey/cedar-image2.png",
+        alt: "Cedar Endocrine Clinic condition cards covering six endocrine service areas",
+      },
+      patientJourney: {
+        src: "/works/journey/cedar-image3.png",
+        alt: "Cedar patient journey from search through condition pages, location choice, and booking",
+      },
+    },
     workedOn: [
       {
         title: "Brand identity",
         body: "A calmer, warmer clinical identity built around nurtured care, carried across web, print, and clinic collateral.",
-        image: "/works/cedar.png",
-        alt: "Cedar Endocrine Clinic reception with brand identity on the clinic wall",
       },
       {
         title: "Condition architecture",
@@ -350,8 +372,6 @@ export const SPECIALTY_HUB_WORKS: CaseStudy[] = [
       {
         title: "Trust-led page flow",
         body: "Page sections reordered so patients understand the doctor and the clinic before being asked to enquire.",
-        image: "/works/cedar/cedar-mockup.png",
-        alt: "Cedar Endocrine Clinic website homepage on a laptop mockup",
       },
       {
         title: "Conversion touchpoints",
@@ -517,6 +537,16 @@ export const SPECIALTY_HUB_WORKS: CaseStudy[] = [
     ],
     workedOnIntro:
       "Five workstreams, one goal: help patients move from search to understanding to enquiry with less friction.",
+    workedOnImages: {
+      brand: {
+        src: "/works/journey/msdc-image1.png",
+        alt: "Medical and Surgical Dermatology Clinic name cards for Dr Sue-Ann Ho",
+      },
+      patientJourney: {
+        src: "/works/journey/msdc-image3.png",
+        alt: "MSDC patient journey from search through condition pages, consultation, and next steps",
+      },
+    },
     workedOn: [
       {
         title: "Brand and voice",
@@ -696,6 +726,20 @@ export const SPECIALTY_HUB_WORKS: CaseStudy[] = [
     ],
     workedOnIntro:
       "Five workstreams, one goal: help patients move from search to understanding to enquiry with less friction.",
+    workedOnImages: {
+      brand: {
+        src: "/works/sdic.png",
+        alt: "Singapore Dental Implant Centre reception and clinic branding",
+      },
+      structure: {
+        src: "/works/journey/sdic-image2.png",
+        alt: "Singapore Dental Implant Centre condition cards covering toothache, anxiety, implants, and related concerns",
+      },
+      patientJourney: {
+        src: "/works/journey/sdic-image3.png",
+        alt: "SDIC patient journey from search through landing pages, dentist profiles, FAQ, and mobile booking",
+      },
+    },
     workedOn: [
       {
         title: "Brand framework",
@@ -1057,6 +1101,12 @@ export const SPECIALTY_HUB_WORKS: CaseStudy[] = [
     ],
     workedOnIntro:
       "Six workstreams, one goal: help patients move from search to understanding to enquiry with less friction.",
+    workedOnImages: {
+      patientJourney: {
+        src: "/works/journey/sunrise-image3.png",
+        alt: "Sunrise Heart patient journey from search through doctor-led content, screening, location, and enquiry",
+      },
+    },
     workedOn: [
       {
         title: "Brand and voice",
@@ -1243,6 +1293,16 @@ export const SPECIALTY_HUB_WORKS: CaseStudy[] = [
     ],
     workedOnIntro:
       "Six workstreams, one goal: help patients move from search to understanding to enquiry with less friction.",
+    workedOnImages: {
+      brand: {
+        src: "/works/journey/tac-image1.jpg",
+        alt: "The Acne Clinic brand identity and clinic collateral",
+      },
+      patientJourney: {
+        src: "/works/journey/tac-image3.png",
+        alt: "The Acne Clinic patient journey from social discovery through condition pages, care steps, and booking",
+      },
+    },
     workedOn: [
       {
         title: "Brand identity",

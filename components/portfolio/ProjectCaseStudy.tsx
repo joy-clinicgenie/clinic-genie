@@ -10,8 +10,9 @@ import { GlassCard } from "@/components/ui/GlassCard";
 import { LightHero } from "@/components/ui/LightHero";
 import { PageFinale } from "@/components/ui/PageFinale";
 import { PageFinaleCTA } from "@/components/ui/PageFinaleCTA";
+import { WorkstreamImageSlots } from "@/components/portfolio/case-study/WorkstreamImageSlots";
 import type { CaseStudy } from "@/lib/data/portfolio";
-import { CASE_STUDIES } from "@/lib/data/portfolio";
+import { CASE_STUDIES, isIndexableCaseStudy } from "@/lib/data/portfolio";
 
 function SnapshotItem({ label, value }: { label: string; value: string }) {
   return (
@@ -33,7 +34,9 @@ export function ProjectCaseStudy({
   backLink?: { href: string; label: string };
   showRelatedWorks?: boolean;
 }) {
-  const others = CASE_STUDIES.filter((c) => c.slug !== study.slug).slice(0, 3);
+  const others = CASE_STUDIES.filter(
+    (c) => c.slug !== study.slug && isIndexableCaseStudy(c)
+  ).slice(0, 3);
 
   return (
     <>
@@ -146,6 +149,11 @@ export function ProjectCaseStudy({
               study.workedOnIntro ??
               "Each workstream supported the same goal: help patients move from search to understanding to enquiry with less friction."
             }
+          />
+          <WorkstreamImageSlots
+            images={study.workedOnImages}
+            tone="dark"
+            className="lg:grid-cols-3"
           />
           <RevealGroup className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
             {study.workedOn.map((item, i) => (
