@@ -13,14 +13,14 @@ export interface PortfolioWorkMeta {
 /** Visual assets for published portfolio case studies. Keyed by study slug. */
 export const PORTFOLIO_WORK_META: Record<string, PortfolioWorkMeta> = {
   aquaphysio: {
-    image: "/works/aquaphysio/aquaphysio-mockup.png",
-    imageAlt: "AquaPhysio Rehab Centre website mockup on laptop",
+    image: "/works/hero/aquaphysio-hero.png",
+    imageAlt: "AquaPhysio Rehab Centre website hero with hydrotherapy treatment scenes",
     logo: "/clients/aquaphysio.png",
     logoAlt: "AquaPhysio Rehab Centre",
   },
   "cedar-endocrine-clinic": {
-    image: "/works/cedar/cedar-mockup.png",
-    imageAlt: "Cedar Endocrine Clinic website mockup on laptop",
+    image: "/works/hero/cedar-hero.png",
+    imageAlt: "Cedar Endocrine Clinic website hero with Cedar Care message",
     logo: "/clients/cedar-endocrine.png",
     logoAlt: "Cedar Endocrine Clinic",
   },
@@ -43,9 +43,8 @@ export const PORTFOLIO_WORK_META: Record<string, PortfolioWorkMeta> = {
     logoAlt: "Singapore Brain Spine Nerves Center",
   },
   "sunrise-heart": {
-    image: "/works/sunrise/sunrise-mockup.png",
-    imageAlt: "Sunrise Heart Specialist Clinic website mockup on laptop",
-    heroImage: "/specialty-hub/specialty-cardiology.png",
+    image: "/works/hero/sunrise-hero.png",
+    imageAlt: "Sunrise Heart Specialist Clinic website hero with clinic team",
     logo: "/clients/sunrise-heart.png",
     logoAlt: "Sunrise Heart Clinic",
   },
@@ -1297,6 +1296,10 @@ export const SPECIALTY_HUB_WORKS: CaseStudy[] = [
       brand: {
         src: "/works/journey/tac-image1.jpg",
         alt: "The Acne Clinic brand identity and clinic collateral",
+      },
+      structure: {
+        src: "/works/tac/TAC-ads-ls.jpg",
+        alt: "The Acne Clinic landscape campaign ads organised around acne types and search intent",
       },
       patientJourney: {
         src: "/works/journey/tac-image3.png",

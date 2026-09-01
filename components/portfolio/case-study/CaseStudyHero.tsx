@@ -2,7 +2,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { Container } from "@/components/ui/Container";
 import { BackLink } from "@/components/ui/BackLink";
-import { ParallaxBackground } from "@/components/ui/ParallaxBackground";
 import { formatPortfolioCaseLabel } from "@/lib/data/portfolio-works";
 import type { CaseStudy } from "@/lib/data/portfolio";
 import { cn } from "@/lib/cn";
@@ -55,26 +54,23 @@ export function CaseStudyHero({
       className="relative z-10 flex min-h-[70svh] items-start overflow-hidden rounded-b-2xl bg-white pb-16 pt-[calc(6.5rem+env(safe-area-inset-top,0px))] text-ink-900 lg:items-center lg:rounded-b-[44px] lg:pb-24 lg:pt-36"
     >
       {image ? (
-        <ParallaxBackground
-          src={image}
-          alt=""
-          priority
-          className="z-0"
-          imageClassName="object-contain object-right"
+        <div
+          className="pointer-events-none absolute inset-0 z-0 overflow-hidden"
+          aria-hidden="true"
         >
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-0 bg-gradient-to-r from-white from-10% via-white/85 via-45% to-transparent to-80%"
+          <Image
+            src={image}
+            alt=""
+            width={1920}
+            height={1080}
+            priority
+            className="absolute inset-y-0 right-0 h-full w-auto max-w-none translate-x-1/4 object-contain object-right"
+            sizes="(min-width: 1024px) 70vw, 100vw"
           />
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-0 bg-gradient-to-r from-white from-20% via-white/80 via-60% to-transparent to-88%"
-          />
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-white via-white/90 to-transparent"
-          />
-        </ParallaxBackground>
+          <div className="absolute inset-0 bg-gradient-to-r from-white from-10% via-white/85 via-45% to-transparent to-80%" />
+          <div className="absolute inset-0 bg-gradient-to-r from-white from-20% via-white/80 via-60% to-transparent to-88%" />
+          <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-white via-white/90 to-transparent" />
+        </div>
       ) : null}
 
       <Container className="relative z-20 w-full">
