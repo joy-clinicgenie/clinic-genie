@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Outfit, Instrument_Sans, JetBrains_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 
 import { OrbProvider } from "@/lib/providers/OrbProvider";
@@ -77,6 +78,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </OrbProvider>
         </MotionProvider>
         <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
