@@ -157,6 +157,85 @@ export interface ArticleSchemaInput {
   keywords?: string[];
 }
 
+export type WebPageSchemaType =
+  | "WebPage"
+  | "AboutPage"
+  | "ContactPage"
+  | "CollectionPage";
+
+export function webPageSchema({
+  path,
+  name,
+  description,
+  type = "WebPage",
+}: {
+  path: string;
+  name: string;
+  description: string;
+  type?: WebPageSchemaType;
+}): SchemaNode {
+  const url = siteUrl(path);
+
+  return {
+    "@type": type,
+    "@id": `${url}#webpage`,
+    url,
+    name: plainText(name),
+    description: plainText(description),
+    inLanguage: "en-GB",
+    isPartOf: { "@id": `${siteUrl()}/#website` },
+    publisher: { "@id": `${siteUrl()}/#organization` },
+  };
+}
+
+export function serviceSchema({
+  name,
+  description,
+  path,
+}: {
+  name: string;
+  description: string;
+  path: string;
+}): SchemaNode {
+  const url = siteUrl(path);
+
+  return {
+    "@type": "Service",
+    "@id": `${url}#service`,
+    name: plainText(name),
+    description: plainText(description),
+    url,
+    provider: { "@id": `${siteUrl()}/#organization` },
+    areaServed: {
+      "@type": "Country",
+      name: "Singapore",
+    },
+  };
+}
+
+export function creativeWorkSchema({
+  name,
+  description,
+  path,
+}: {
+  name: string;
+  description: string;
+  path: string;
+}): SchemaNode {
+  const url = siteUrl(path);
+
+  return {
+    "@type": "CreativeWork",
+    "@id": `${url}#work`,
+    name: plainText(name),
+    description: plainText(description),
+    url,
+    inLanguage: "en-GB",
+    creator: { "@id": `${siteUrl()}/#organization` },
+    publisher: { "@id": `${siteUrl()}/#organization` },
+  };
+}
+
 export function articleSchema({
   title,
   description,
@@ -176,7 +255,7 @@ export function articleSchema({
     url,
     mainEntityOfPage: {
       "@type": "WebPage",
-      "@id": url,
+      "@id": `${url}#webpage`,
     },
     image: {
       "@type": "ImageObject",

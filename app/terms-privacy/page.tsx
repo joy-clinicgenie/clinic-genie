@@ -1,5 +1,12 @@
 import type { Metadata } from "next";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { pageMetadata } from "@/lib/seo";
+import {
+  breadcrumbList,
+  nestedBreadcrumbs,
+  schemaGraph,
+  webPageSchema,
+} from "@/lib/schema";
 import { Section } from "@/components/ui/Section";
 import { Container } from "@/components/ui/Container";
 import { DefaultPageFinale } from "@/components/ui/DefaultPageFinale";
@@ -10,11 +17,15 @@ import {
   type LegalBlock,
 } from "@/lib/data/terms-privacy";
 
+const TERMS_TITLE = "Terms and Privacy";
+const TERMS_DESCRIPTION =
+  "The terms and privacy provisions that apply when you use the Clinic Genie website, including how we collect, use, protect, and manage information shared with us.";
+const TERMS_PATH = "/terms-privacy";
+
 export const metadata: Metadata = pageMetadata({
-  title: "Terms and Privacy",
-  description:
-    "The terms and privacy provisions that apply when you use the Clinic Genie website, including how we collect, use, protect, and manage information shared with us.",
-  path: "/terms-privacy",
+  title: TERMS_TITLE,
+  description: TERMS_DESCRIPTION,
+  path: TERMS_PATH,
 });
 
 function LegalBlockView({ block }: { block: LegalBlock }) {
@@ -46,6 +57,16 @@ function LegalBlockView({ block }: { block: LegalBlock }) {
 export default function TermsPrivacyPage() {
   return (
     <>
+      <JsonLd
+        data={schemaGraph([
+          webPageSchema({
+            path: TERMS_PATH,
+            name: TERMS_TITLE,
+            description: TERMS_DESCRIPTION,
+          }),
+          breadcrumbList(nestedBreadcrumbs([{ name: TERMS_TITLE, path: TERMS_PATH }])),
+        ])}
+      />
       <Section tone="light" className="pt-36">
         <Container size="prose" className="flex flex-col gap-6">
           <header className="flex flex-col gap-3">

@@ -1,6 +1,13 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { pageMetadata } from "@/lib/seo";
+import {
+  breadcrumbList,
+  nestedBreadcrumbs,
+  schemaGraph,
+  webPageSchema,
+} from "@/lib/schema";
 import { Section } from "@/components/ui/Section";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
@@ -15,11 +22,15 @@ import {
 } from "@/components/home/landing/LandingLayout";
 import { ContactSection } from "@/components/contact/ContactSection";
 
+const CONTACT_TITLE = "Contact";
+const CONTACT_DESCRIPTION =
+  "Tell Clinic Genie where your clinic wants to grow. Book a strategy conversation about healthcare SEO, clinic websites, medical SEM, and compliance-aware marketing in Singapore.";
+const CONTACT_PATH = "/contact";
+
 export const metadata: Metadata = pageMetadata({
-  title: "Contact",
-  description:
-    "Tell Clinic Genie where your clinic wants to grow. Book a strategy conversation about healthcare SEO, clinic websites, medical SEM, and compliance-aware marketing in Singapore.",
-  path: "/contact",
+  title: CONTACT_TITLE,
+  description: CONTACT_DESCRIPTION,
+  path: CONTACT_PATH,
   keywords: ["clinic marketing enquiry", "book a strategy call", "Clinic Genie contact"],
 });
 
@@ -45,6 +56,19 @@ const NEXT_STEPS = [
 export default function ContactPage() {
   return (
     <>
+      <JsonLd
+        data={schemaGraph([
+          webPageSchema({
+            path: CONTACT_PATH,
+            name: CONTACT_TITLE,
+            description: CONTACT_DESCRIPTION,
+            type: "ContactPage",
+          }),
+          breadcrumbList(
+            nestedBreadcrumbs([{ name: CONTACT_TITLE, path: CONTACT_PATH }])
+          ),
+        ])}
+      />
       <ContactSection />
 
       {/* 3 — What happens next */}

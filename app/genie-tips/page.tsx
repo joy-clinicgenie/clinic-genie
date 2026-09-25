@@ -1,6 +1,14 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { permanentRedirect } from "next/navigation";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { DEFAULT_KEYWORDS, pageMetadata } from "@/lib/seo";
+import {
+  breadcrumbList,
+  nestedBreadcrumbs,
+  schemaGraph,
+  webPageSchema,
+} from "@/lib/schema";
 import { FeaturedGenieTip } from "@/components/blog/FeaturedGenieTip";
 import { GenieTipsPagination } from "@/components/blog/GenieTipsPagination";
 import { NotionPostCard } from "@/components/blog/NotionPostCard";
@@ -13,14 +21,10 @@ import { getPublishedPosts } from "@/lib/notion";
 export const revalidate = 60;
 
 const GRID_PAGE_SIZE = 6;
-
-export const metadata: Metadata = pageMetadata({
-  title: "Genie Tips",
-  description:
-    "Practical clinic marketing insights on healthcare SEO, medical SEM, clinic websites, AI search readiness, and compliance-aware growth for specialist clinics in Singapore.",
-  path: "/genie-tips",
-  keywords: [...DEFAULT_KEYWORDS, "clinic marketing insights"],
-});
+const GENIE_TIPS_TITLE = "Genie Tips";
+const GENIE_TIPS_DESCRIPTION =
+  "Practical clinic marketing insights on healthcare SEO, medical SEM, clinic websites, AI search readiness, and compliance-aware growth for specialist clinics in Singapore.";
+const GENIE_TIPS_PATH = "/genie-tips";
 
 type GenieTipsPageProps = {
   searchParams?: {
@@ -34,9 +38,37 @@ function parsePage(value: string | undefined): number {
   return parsed;
 }
 
+export function generateMetadata({
+  searchParams,
+}: GenieTipsPageProps): Metadata {
+  const page = parsePage(searchParams?.page);
+
+  if (page > 1) {
+    return pageMetadata({
+      title: `${GENIE_TIPS_TITLE}, page ${page}`,
+      description: GENIE_TIPS_DESCRIPTION,
+      path: `${GENIE_TIPS_PATH}?page=${page}`,
+      keywords: [...DEFAULT_KEYWORDS, "clinic marketing insights"],
+      index: false,
+      follow: true,
+    });
+  }
+
+  return pageMetadata({
+    title: GENIE_TIPS_TITLE,
+    description: GENIE_TIPS_DESCRIPTION,
+    path: GENIE_TIPS_PATH,
+    keywords: [...DEFAULT_KEYWORDS, "clinic marketing insights"],
+  });
+}
+
 export default async function GenieTipsPage({
   searchParams,
 }: GenieTipsPageProps) {
+  if (searchParams?.page === "1") {
+    permanentRedirect(GENIE_TIPS_PATH);
+  }
+
   const posts = await getPublishedPosts();
   const [featuredPost, ...remainingPosts] = posts;
   const currentPage = parsePage(searchParams?.page);
@@ -53,9 +85,24 @@ export default async function GenieTipsPage({
           (page - 1) * GRID_PAGE_SIZE,
           page * GRID_PAGE_SIZE
         );
+  const listingSchema =
+    page === 1
+      ? schemaGraph([
+          webPageSchema({
+            path: GENIE_TIPS_PATH,
+            name: GENIE_TIPS_TITLE,
+            description: GENIE_TIPS_DESCRIPTION,
+            type: "CollectionPage",
+          }),
+          breadcrumbList(
+            nestedBreadcrumbs([{ name: GENIE_TIPS_TITLE, path: GENIE_TIPS_PATH }])
+          ),
+        ])
+      : null;
 
   return (
     <div className="min-h-screen bg-cg-teal-5 text-ink-900">
+      {listingSchema ? <JsonLd data={listingSchema} /> : null}
       <GenieTipsHero
         title="Genie Tips"
         subtitle="Explore our latest articles and clinic growth insights."

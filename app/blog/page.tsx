@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { redirect } from "next/navigation";
+import { permanentRedirect } from "next/navigation";
 import { DEFAULT_KEYWORDS, pageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = pageMetadata({
@@ -11,5 +11,5 @@ export const metadata: Metadata = pageMetadata({
 });
 
 export default function BlogIndexPage() {
-  redirect("/genie-tips");
+  permanentRedirect("/genie-tips");
 }

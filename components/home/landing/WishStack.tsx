@@ -68,7 +68,15 @@ function WishExploreCta() {
   );
 }
 
-function WishCardImage({ slug, accent }: { slug: string; accent: string }) {
+function WishCardImage({
+  slug,
+  name,
+  accent,
+}: {
+  slug: string;
+  name: string;
+  accent: string;
+}) {
   const image = WISH_STACK_IMAGES[slug];
   const [failed, setFailed] = useState(false);
   const showPhoto = Boolean(image) && !failed;
@@ -86,7 +94,7 @@ function WishCardImage({ slug, accent }: { slug: string; accent: string }) {
         <>
           <Image
             src={image.src}
-            alt=""
+            alt={name}
             fill
             className={image.className ?? "object-cover"}
             sizes="(max-width: 768px) 100vw, 240px"
@@ -182,7 +190,7 @@ export function WishStack({
                     <WishExploreCta />
                   </div>
                 </div>
-                <WishCardImage slug={pillar.slug} accent={pillar.accent} />
+                <WishCardImage slug={pillar.slug} name={pillar.name} accent={pillar.accent} />
               </div>
             </Link>
           </article>

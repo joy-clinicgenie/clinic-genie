@@ -20,6 +20,7 @@ import {
   breadcrumbList,
   nestedBreadcrumbs,
   schemaGraph,
+  webPageSchema,
 } from "@/lib/schema";
 
 export const revalidate = 60;
@@ -88,6 +89,11 @@ export default async function GenieTipPage({ params }: GenieTipPageProps) {
     <div className="min-h-screen bg-white text-ink-900">
       <JsonLd
         data={schemaGraph([
+          webPageSchema({
+            path,
+            name: post.title,
+            description,
+          }),
           breadcrumbList(
             nestedBreadcrumbs([
               { name: "Genie Tips", path: "/genie-tips" },
@@ -136,6 +142,7 @@ export default async function GenieTipPage({ params }: GenieTipPageProps) {
               <figure className="overflow-hidden rounded-2xl bg-cg-mist lg:col-span-8 lg:col-start-1 lg:row-start-1 xl:col-span-9">
                 <GenieTipCoverImage
                   src={post.coverImage}
+                  alt={post.title}
                   sizes={GENIE_TIP_COVER_SIZES.article}
                   priority
                 />

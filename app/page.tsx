@@ -1,6 +1,8 @@
 import Link from "next/link";
 import type { Metadata, Viewport } from "next";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { DEFAULT_KEYWORDS, pageMetadata } from "@/lib/seo";
+import { schemaGraph, webPageSchema } from "@/lib/schema";
 import { Hero } from "@/components/home/Hero";
 import { LogoMarquee } from "@/components/home/LogoMarquee";
 import { Reveal, RevealGroup, RevealItem } from "@/components/ui/Reveal";
@@ -49,11 +51,14 @@ const METRICS = [
   { value: "3+", label: "Years in Healthcare Marketing" },
 ];
 
+const HOME_TITLE = "Healthcare Marketing Agency Singapore | Clinic Genie";
+const HOME_DESCRIPTION =
+  "Clinic Genie is a Singapore healthcare marketing agency for specialist clinics. Healthcare SEO, medical SEM, clinic websites, content and AI search, built within PHMC and HCSA guidelines.";
+
 export const metadata: Metadata = pageMetadata({
-  title: "Healthcare Marketing Agency Singapore | Clinic Genie",
+  title: HOME_TITLE,
   ogTitle: "Clinic Genie | Strategies for Specialist Growth",
-  description:
-    "Clinic Genie is a Singapore healthcare marketing agency for specialist clinics. Healthcare SEO, medical SEM, clinic websites, content and AI search, built within PHMC and HCSA guidelines.",
+  description: HOME_DESCRIPTION,
   path: "/",
   keywords: [...DEFAULT_KEYWORDS],
   absoluteTitle: true,
@@ -70,6 +75,15 @@ export default async function HomePage() {
 
   return (
     <div className="home-landing-flow">
+      <JsonLd
+        data={schemaGraph([
+          webPageSchema({
+            path: "/",
+            name: HOME_TITLE,
+            description: HOME_DESCRIPTION,
+          }),
+        ])}
+      />
       {/* 1 — Hero */}
       <Hero />
 

@@ -174,7 +174,7 @@ export async function sendContactNotification(
   record: ContactSubmissionRecord
 ): Promise<void> {
   const apiKey = process.env.RESEND_API_KEY;
-  const to = process.env.CONTACT_NOTIFICATION_EMAIL ?? "hello@clinic-genie.com";
+  const to = process.env.CONTACT_NOTIFICATION_EMAIL ?? "hello@clinicgenie.com";
   const from =
     process.env.RESEND_FROM_EMAIL ?? "Clinic Genie <onboarding@resend.dev>";
 

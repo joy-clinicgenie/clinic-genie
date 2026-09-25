@@ -64,7 +64,7 @@ export function WorkGalleryItem({ work, index }: WorkGalleryItemProps) {
           <div className={styles.logoFrame}>
             <Image
               src={work.logo}
-              alt=""
+              alt={work.title}
               width={320}
               height={110}
               className={cn(

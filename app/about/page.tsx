@@ -1,5 +1,12 @@
 import type { Metadata } from "next";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { pageMetadata } from "@/lib/seo";
+import {
+  breadcrumbList,
+  nestedBreadcrumbs,
+  schemaGraph,
+  webPageSchema,
+} from "@/lib/schema";
 import { Reveal } from "@/components/ui/Reveal";
 import { GenieFeatureCards } from "@/components/ui/GenieFeatureCards";
 import { AboutOverlapHero } from "@/components/about/AboutOverlapHero";
@@ -11,11 +18,15 @@ import { PageFinale } from "@/components/ui/PageFinale";
 import { PageFinaleCTA } from "@/components/ui/PageFinaleCTA";
 import { ABOUT_WISH_POINTS } from "@/lib/data/about";
 
+const ABOUT_TITLE = "About Us";
+const ABOUT_DESCRIPTION =
+  "Clinic Genie is a medical marketing agency for specialist clinics in Singapore. We help clinics get found, trusted, and chosen, with strategy built around healthcare search, websites, and compliance-aware growth.";
+const ABOUT_PATH = "/about";
+
 export const metadata: Metadata = pageMetadata({
-  title: "About Us",
-  description:
-    "Clinic Genie is a medical marketing agency for specialist clinics in Singapore. We help clinics get found, trusted, and chosen, with strategy built around healthcare search, websites, and compliance-aware growth.",
-  path: "/about",
+  title: ABOUT_TITLE,
+  description: ABOUT_DESCRIPTION,
+  path: ABOUT_PATH,
   keywords: [
     "about Clinic Genie",
     "specialist clinic marketing",
@@ -26,6 +37,17 @@ export const metadata: Metadata = pageMetadata({
 export default function AboutPage() {
   return (
     <div className="min-h-screen bg-[#ffffff] text-ink-900">
+      <JsonLd
+        data={schemaGraph([
+          webPageSchema({
+            path: ABOUT_PATH,
+            name: ABOUT_TITLE,
+            description: ABOUT_DESCRIPTION,
+            type: "AboutPage",
+          }),
+          breadcrumbList(nestedBreadcrumbs([{ name: ABOUT_TITLE, path: ABOUT_PATH }])),
+        ])}
+      />
       <AboutOverlapHero />
 
       <GenieFeatureCards

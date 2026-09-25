@@ -7,7 +7,13 @@ import { SpecialtyHubWorkTemplate } from "@/components/specialty-hub/SpecialtyHu
 import { CASE_STUDIES, getCaseStudy, isIndexableCaseStudy } from "@/lib/data/portfolio";
 import { getPortfolioWorkMeta } from "@/lib/data/specialty-hub-works";
 import { pageMetadata } from "@/lib/seo";
-import { breadcrumbList, nestedBreadcrumbs, schemaGraph } from "@/lib/schema";
+import {
+  breadcrumbList,
+  creativeWorkSchema,
+  nestedBreadcrumbs,
+  schemaGraph,
+  webPageSchema,
+} from "@/lib/schema";
 
 export function generateStaticParams() {
   return CASE_STUDIES.map((study) => ({ slug: study.slug }));
@@ -45,13 +51,27 @@ export default function CaseStudyPage({ params }: { params: { slug: string } }) 
   if (!study) notFound();
 
   const workMeta = getPortfolioWorkMeta(params.slug);
+  const workPath = `/portfolio/${study.slug}`;
+  const workDescription = study.metaDescription ?? study.line;
   const breadcrumbs = (
     <JsonLd
       data={schemaGraph([
+        webPageSchema({
+          path: workPath,
+          name: study.name,
+          description: workDescription,
+        }),
+        isIndexableCaseStudy(study)
+          ? creativeWorkSchema({
+              name: study.name,
+              description: workDescription,
+              path: workPath,
+            })
+          : null,
         breadcrumbList(
           nestedBreadcrumbs([
             { name: "Our Works", path: "/portfolio" },
-            { name: study.name, path: `/portfolio/${study.slug}` },
+            { name: study.name, path: workPath },
           ])
         ),
       ])}

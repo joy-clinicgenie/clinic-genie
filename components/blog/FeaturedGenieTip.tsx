@@ -18,6 +18,7 @@ export function FeaturedGenieTip({ post }: { post: NotionPost }) {
           {post.coverImage ? (
             <GenieTipCoverImage
               src={post.coverImage}
+              alt={post.title}
               sizes={GENIE_TIP_COVER_SIZES.featured}
               aspectClassName="aspect-[16/11]"
               priority

@@ -66,7 +66,7 @@ export function CorePillarsSection() {
                     {imageSrc ? (
                       <Image
                         src={imageSrc}
-                        alt=""
+                        alt={pillar.name}
                         fill
                         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                         className="object-cover transition-transform duration-ui ease-out-soft group-hover/card:scale-[1.03] motion-reduce:group-hover/card:scale-100"
