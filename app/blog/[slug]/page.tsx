@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { redirect } from "next/navigation";
+import { permanentRedirect } from "next/navigation";
 import { pageMetadata } from "@/lib/seo";
 
 type BlogPostPageProps = {
@@ -18,5 +18,5 @@ export function generateMetadata({ params }: BlogPostPageProps): Metadata {
 }
 
 export default function BlogPostPage({ params }: BlogPostPageProps) {
-  redirect(`/genie-tips/${params.slug}`);
+  permanentRedirect(`/genie-tips/${params.slug}`);
 }

@@ -64,7 +64,7 @@ export function GenieFeatureCards({
                 highlight={card.highlight}
                 body={card.body}
                 image={card.image}
-                alt=""
+                alt={card.title}
                 href={card.href}
                 showSparkles
                 sparkleIndex={index}

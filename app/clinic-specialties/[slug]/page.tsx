@@ -14,6 +14,7 @@ import {
   faqPageSchema,
   nestedBreadcrumbs,
   schemaGraph,
+  webPageSchema,
 } from "@/lib/schema";
 
 export function generateStaticParams() {
@@ -58,17 +59,31 @@ export default function ClinicSpecialtyDetailPage({ params }: { params: { slug: 
   if (!hub?.published) notFound();
 
   const path = `/clinic-specialties/${hub.slug}`;
-  const breadcrumbs = breadcrumbList(
-    nestedBreadcrumbs([
-      { name: "Clinic Specialties", path: "/clinic-specialties" },
-      { name: hub.name, path },
-    ])
-  );
+  const breadcrumbs = nestedBreadcrumbs([
+    { name: "Clinic Specialties", path: "/clinic-specialties" },
+    { name: hub.name, path },
+  ]);
+  const pageName =
+    isSpecialtyHubDetail(hub) && hub.metaTitle ? hub.metaTitle : `${hub.name} specialty insights`;
+  const pageDescription =
+    isSpecialtyHubDetail(hub) && hub.metaDescription
+      ? hub.metaDescription
+      : `${hub.name} specialty marketing insights from Clinic Genie are coming soon. Browse Our Works for live specialist clinic case studies.`;
 
   if (isSpecialtyHubDetail(hub)) {
     return (
       <>
-        <JsonLd data={schemaGraph([breadcrumbs, faqPageSchema(hub.faqs, path)])} />
+        <JsonLd
+          data={schemaGraph([
+            webPageSchema({
+              path,
+              name: pageName,
+              description: pageDescription,
+            }),
+            breadcrumbList(breadcrumbs),
+            faqPageSchema(hub.faqs, path),
+          ])}
+        />
         <SpecialtyHubTemplate hub={hub} />
       </>
     );
@@ -76,7 +91,16 @@ export default function ClinicSpecialtyDetailPage({ params }: { params: { slug: 
 
   return (
     <>
-      <JsonLd data={schemaGraph([breadcrumbs])} />
+      <JsonLd
+        data={schemaGraph([
+          webPageSchema({
+            path,
+            name: pageName,
+            description: pageDescription,
+          }),
+          breadcrumbList(breadcrumbs),
+        ])}
+      />
       <SpecialtyHubComingSoon specialtyName={hub.name} />
     </>
   );

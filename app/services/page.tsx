@@ -1,5 +1,12 @@
 import type { Metadata } from "next";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { DEFAULT_KEYWORDS, pageMetadata } from "@/lib/seo";
+import {
+  breadcrumbList,
+  nestedBreadcrumbs,
+  schemaGraph,
+  webPageSchema,
+} from "@/lib/schema";
 import { Reveal } from "@/components/ui/Reveal";
 import { LightHero } from "@/components/ui/LightHero";
 import { CorePillarsSection } from "@/components/services/CorePillarsSection";
@@ -12,17 +19,34 @@ import { MagneticButton } from "@/components/ui/MagneticButton";
 import styles from "@/components/services/ServicesHero.module.css";
 import { cn } from "@/lib/cn";
 
+const SERVICES_TITLE = "Services";
+const SERVICES_DESCRIPTION =
+  "Healthcare SEO, medical SEM, clinic websites, branding, content, AI search, and compliance-aware strategy for specialist clinics in Singapore. Eight services, one growth engine.";
+const SERVICES_PATH = "/services";
+
 export const metadata: Metadata = pageMetadata({
-  title: "Services",
-  description:
-    "Healthcare SEO, medical SEM, clinic websites, branding, content, AI search, and compliance-aware strategy for specialist clinics in Singapore. Eight services, one growth engine.",
-  path: "/services",
+  title: SERVICES_TITLE,
+  description: SERVICES_DESCRIPTION,
+  path: SERVICES_PATH,
   keywords: [...DEFAULT_KEYWORDS, "clinic digital strategy"],
 });
 
 export default function ServicesPage() {
   return (
     <div className="min-h-screen bg-genie-20 text-ink-900">
+      <JsonLd
+        data={schemaGraph([
+          webPageSchema({
+            path: SERVICES_PATH,
+            name: SERVICES_TITLE,
+            description: SERVICES_DESCRIPTION,
+            type: "CollectionPage",
+          }),
+          breadcrumbList(
+            nestedBreadcrumbs([{ name: SERVICES_TITLE, path: SERVICES_PATH }])
+          ),
+        ])}
+      />
       <div className={cn(styles.stage, "bg-genie-20")}>
         <LightHero
           title="Everything your clinic needs to grow, under one lamp"

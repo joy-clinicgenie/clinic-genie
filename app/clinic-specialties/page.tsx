@@ -1,5 +1,12 @@
 import type { Metadata } from "next";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { pageMetadata } from "@/lib/seo";
+import {
+  breadcrumbList,
+  nestedBreadcrumbs,
+  schemaGraph,
+  webPageSchema,
+} from "@/lib/schema";
 import { Section } from "@/components/ui/Section";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
@@ -21,11 +28,15 @@ import { SPECIALTY_HUBS } from "@/lib/data/specialty-hubs";
 import { cn } from "@/lib/cn";
 import styles from "@/components/services/ServicesHero.module.css";
 
+const SPECIALTIES_TITLE = "Clinic Specialties";
+const SPECIALTIES_DESCRIPTION =
+  "Marketing systems shaped around how patients search for specialist care in Singapore, from paediatrics and cardiology to dermatology, dental, neurology, and rehabilitation.";
+const SPECIALTIES_PATH = "/clinic-specialties";
+
 export const metadata: Metadata = pageMetadata({
-  title: "Clinic Specialties",
-  description:
-    "Marketing systems shaped around how patients search for specialist care in Singapore, from paediatrics and cardiology to dermatology, dental, neurology, and rehabilitation.",
-  path: "/clinic-specialties",
+  title: SPECIALTIES_TITLE,
+  description: SPECIALTIES_DESCRIPTION,
+  path: SPECIALTIES_PATH,
   keywords: [
     "specialist clinic marketing",
     "paediatric clinic marketing",
@@ -38,6 +49,19 @@ export const metadata: Metadata = pageMetadata({
 export default function ClinicSpecialtiesPage() {
   return (
     <div className="min-h-screen bg-genie-20 text-ink-900">
+      <JsonLd
+        data={schemaGraph([
+          webPageSchema({
+            path: SPECIALTIES_PATH,
+            name: SPECIALTIES_TITLE,
+            description: SPECIALTIES_DESCRIPTION,
+            type: "CollectionPage",
+          }),
+          breadcrumbList(
+            nestedBreadcrumbs([{ name: SPECIALTIES_TITLE, path: SPECIALTIES_PATH }])
+          ),
+        ])}
+      />
       <div className={cn(styles.stage, "bg-genie-20")}>
         <LightHero
           title="Growth engines built for your specialty"

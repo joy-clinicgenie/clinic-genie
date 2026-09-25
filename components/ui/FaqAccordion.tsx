@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useId, useState } from "react";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { cn } from "@/lib/cn";
 import { useOrbStore } from "@/components/orb/store";
 import type { Faq } from "@/lib/data/faqs";
@@ -78,33 +78,30 @@ export function FaqAccordion({
               <FaqToggleIcon open={isOpen} />
             </button>
 
-            <AnimatePresence initial={false}>
-              {isOpen ? (
-                <motion.div
-                  id={panelId}
-                  role="region"
-                  aria-labelledby={btnId}
-                  initial={reduceMotion ? false : { height: 0, opacity: 0 }}
-                  animate={{ height: "auto", opacity: 1 }}
-                  exit={reduceMotion ? { opacity: 0 } : { height: 0, opacity: 0 }}
-                  transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-                  className="overflow-hidden"
-                >
-                  <div className="flex flex-col gap-3 px-5 pb-5 pt-0 sm:px-6 sm:pb-6">
-                    <p className="text-sm leading-relaxed text-ink-700 sm:text-base">{item.a}</p>
-                    {item.link ? (
-                      <Link
-                        href={item.link.href}
-                        className="inline-flex w-fit items-center gap-1.5 text-sm font-semibold text-genie-700 transition-colors hover:text-genie-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-genie-100 focus-visible:ring-offset-2"
-                      >
-                        {item.link.label}
-                        <span aria-hidden="true">→</span>
-                      </Link>
-                    ) : null}
-                  </div>
-                </motion.div>
-              ) : null}
-            </AnimatePresence>
+            <motion.div
+              id={panelId}
+              role="region"
+              aria-labelledby={btnId}
+              inert={isOpen ? undefined : true}
+              initial={false}
+              animate={{ height: isOpen ? "auto" : 0, opacity: isOpen ? 1 : 0 }}
+              transition={{ duration: reduceMotion ? 0 : 0.3, ease: [0.22, 1, 0.36, 1] }}
+              className="overflow-hidden"
+            >
+              <div className="flex flex-col gap-3 px-5 pb-5 pt-0 sm:px-6 sm:pb-6">
+                <p className="text-sm leading-relaxed text-ink-700 sm:text-base">{item.a}</p>
+                {item.link ? (
+                  <Link
+                    href={item.link.href}
+                    tabIndex={isOpen ? undefined : -1}
+                    className="inline-flex w-fit items-center gap-1.5 text-sm font-semibold text-genie-700 transition-colors hover:text-genie-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-genie-100 focus-visible:ring-offset-2"
+                  >
+                    {item.link.label}
+                    <span aria-hidden="true">→</span>
+                  </Link>
+                ) : null}
+              </div>
+            </motion.div>
           </div>
         );
       })}

@@ -62,9 +62,8 @@ export function pageMetadata({
 }: PageSeoInput): Metadata {
   const cleanTitle = sanitiseMetaText(title);
   const cleanDescription = sanitiseMetaText(description);
-  const socialTitle = sanitiseMetaText(
-    ogTitle ?? (absoluteTitle ? cleanTitle : withBrand(cleanTitle))
-  );
+  const documentTitle = absoluteTitle ? cleanTitle : withBrand(cleanTitle);
+  const socialTitle = sanitiseMetaText(ogTitle ?? documentTitle);
   const canonical = path
     ? path === "/"
       ? "/"
@@ -77,17 +76,14 @@ export function pageMetadata({
     : [DEFAULT_OG_IMAGE];
 
   return {
-    title: absoluteTitle ? { absolute: cleanTitle } : cleanTitle,
+    title: { absolute: documentTitle },
     description: cleanDescription,
     keywords: keywords && keywords.length > 0 ? [...keywords] : undefined,
     alternates: canonical ? { canonical } : undefined,
-    robots:
-      index && follow
-        ? undefined
-        : {
-            index,
-            follow,
-          },
+    robots: {
+      index,
+      follow,
+    },
     openGraph: {
       title: socialTitle,
       description: cleanDescription,

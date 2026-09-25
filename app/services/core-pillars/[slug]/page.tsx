@@ -32,6 +32,8 @@ import {
   faqPageSchema,
   nestedBreadcrumbs,
   schemaGraph,
+  serviceSchema,
+  webPageSchema,
 } from "@/lib/schema";
 import {
   normalizeClinicKey,
@@ -189,6 +191,16 @@ export default function PillarPage({ params }: { params: { slug: string } }) {
     <div className="min-h-screen bg-genie-20 text-ink-900">
       <JsonLd
         data={schemaGraph([
+          webPageSchema({
+            path: pillarPath,
+            name: pillar.name,
+            description: pillar.heroParagraph.join(" "),
+          }),
+          serviceSchema({
+            name: pillar.name,
+            description: pillar.heroParagraph.join(" "),
+            path: pillarPath,
+          }),
           breadcrumbList(
             nestedBreadcrumbs([
               { name: "Services", path: "/services" },
