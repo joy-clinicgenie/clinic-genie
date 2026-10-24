@@ -11,6 +11,12 @@ export type FaqItem = Faq & {
   link?: { label: string; href: string };
 };
 
+function setClosedInert(node: HTMLElement | null, closed: boolean): void {
+  if (!node) return;
+  if (closed) node.setAttribute("inert", "");
+  else node.removeAttribute("inert");
+}
+
 function FaqToggleIcon({ open }: { open: boolean }) {
   return (
     <span
@@ -82,7 +88,9 @@ export function FaqAccordion({
               id={panelId}
               role="region"
               aria-labelledby={btnId}
-              inert={isOpen ? undefined : true}
+              ref={(node) => {
+                setClosedInert(node, !isOpen);
+              }}
               initial={false}
               animate={{ height: isOpen ? "auto" : 0, opacity: isOpen ? 1 : 0 }}
               transition={{ duration: reduceMotion ? 0 : 0.3, ease: [0.22, 1, 0.36, 1] }}

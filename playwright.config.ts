@@ -18,8 +18,9 @@ export default defineConfig({
   reporter: [["list"], ["html", { open: "never" }]],
   use: {
     baseURL,
+    // Leave prefers-reduced-motion to the browser. Forcing it hydrates
+    // differently from the server because motion preferences are client-only.
     headless: !process.env.HEADED,
-    reducedMotion: "reduce",
     trace: "on-first-retry",
     screenshot: "only-on-failure",
     video: "retain-on-failure",
