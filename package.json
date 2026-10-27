@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@base-ui/react": "^1.5.0",
+    "@next/third-parties": "^14.2.35",
     "@notionhq/client": "^5.23.3",
     "@radix-ui/react-hover-card": "^1.1.19",
     "@react-three/drei": "^9.114.3",

@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Outfit, Instrument_Sans, JetBrains_Mono } from "next/font/google";
+import { GoogleAnalytics } from "@next/third-parties/google";
+import { GoogleAnalyticsPageViews } from "@/components/analytics/GoogleAnalyticsPageViews";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
@@ -21,6 +23,8 @@ const instrumentSans = Instrument_Sans({
   display: "swap",
 });
 const jetbrains = JetBrains_Mono({ subsets: ["latin"], weight: ["500"], variable: "--font-jetbrains", display: "swap" });
+
+const GA_MEASUREMENT_ID = "G-Q1K5C2ME2V";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
@@ -79,6 +83,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </MotionProvider>
         <Analytics />
         <SpeedInsights />
+        <GoogleAnalytics gaId={GA_MEASUREMENT_ID} />
+        <GoogleAnalyticsPageViews gaId={GA_MEASUREMENT_ID} />
       </body>
     </html>
   );
