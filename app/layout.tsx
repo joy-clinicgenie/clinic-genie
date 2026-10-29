@@ -58,6 +58,9 @@ export const metadata: Metadata = {
     images: [DEFAULT_OG_IMAGE.url],
   },
   icons: { icon: "/brand/brandmark.svg" },
+  verification: {
+    google: "fNF_2Wz9XYg_ZzPdnW8lleeBBbILqxIZEc5ZAjWs6v4",
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
