@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Outfit, Instrument_Sans, JetBrains_Mono } from "next/font/google";
-import { GoogleAnalytics } from "@next/third-parties/google";
+import Script from "next/script";
 import { GoogleAnalyticsPageViews } from "@/components/analytics/GoogleAnalyticsPageViews";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
@@ -86,7 +86,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </MotionProvider>
         <Analytics />
         <SpeedInsights />
-        <GoogleAnalytics gaId={GA_MEASUREMENT_ID} />
+        <Script src="/analytics.js" strategy="beforeInteractive" />
+        <Script src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`} strategy="afterInteractive" />
         <GoogleAnalyticsPageViews gaId={GA_MEASUREMENT_ID} />
       </body>
     </html>
