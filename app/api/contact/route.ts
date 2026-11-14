@@ -7,6 +7,7 @@ import {
 } from "@/lib/contact/schema";
 import { sendContactNotification } from "@/lib/contact/notify";
 import { allowContactAttempt, getClientIp } from "@/lib/contact/rate-limit";
+import { hasEnquiryDatabase, markEnquiryNotification, saveEnquirySubmission } from "@/lib/contact/enquiry-store";
 import { saveContactSubmission } from "@/lib/supabase/admin";
 
 function hasSupabaseConfig(): boolean {
@@ -54,7 +55,10 @@ export async function POST(request: Request) {
     let record: ContactSubmissionRecord;
     let persisted = false;
 
-    if (hasSupabaseConfig()) {
+    if (hasEnquiryDatabase()) {
+      record = await saveEnquirySubmission(parsed.data);
+      persisted = true;
+    } else if (hasSupabaseConfig()) {
       record = await saveContactSubmission(parsed.data);
       persisted = true;
     } else {
@@ -67,6 +71,10 @@ export async function POST(request: Request) {
       emailed = true;
     } catch (emailError) {
       console.error("Contact notification failed:", emailError);
+    }
+
+    if (hasEnquiryDatabase()) {
+      await markEnquiryNotification(record.id, emailed);
     }
 
     if (!persisted && !emailed) {
